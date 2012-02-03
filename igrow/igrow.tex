@@ -4,7 +4,6 @@
 \usepackage{subfig}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{url}
 \usepackage{algorithm, algorithmic}
 \DeclareGraphicsExtensions{.jpg,.png,.eps}
 %
@@ -69,7 +68,7 @@ Computational fragment-based algorithms produce {\itshape de novo} structures \c
 Evolutionary algorithms (EAs) are also employed to produce larger diversity of structures \cite{ref7,ref9}.
 The computational fragment-based approach has been recognised and contributed to many FDA-approved drugs \cite{ref2}.
 However, most of the fragment-based approaches do not account for the flexibility of the ligands resulting in inaccurate results in many situations.
-A recent system, AutoGrow, addresses the issue by incorporating a docking algorithm into fragment growing techniques \cite{RefWorks:114}.
+A recent system, AutoGrow, addresses the issue by incorporating a docking algorithm into fragment growing techniques \cite{114}.
 AutoGrow is one of the drug design algorithms which uses a growing strategy to build upon an initial core scaffold; molecular fragments are added at random to this scaffold, thereby generating a population of novel compounds.
 The EA then evaluates the docking scores of each population member, and the best candidates become the initial population of the subsequent generation.
 Nevertheless, the EA in AutoGrow is underutilised and could suffer from early convergence.
@@ -316,22 +315,22 @@ To maintain diversity, a ligand is only rejected if it cannot satisfy any more t
 In case a ligand could only satisfy two or three rules, there is a 20\% chance that the ligand is evaluated.
 
 \section{Data Preparation}\label{sec:data preparation}
-In order to test igrow comprehensively, we collected 3 receptors from PDB \cite{RefWorks:96} and 8 unique initial ligands from PDB and ZINC \cite{RefWorks:55}. From these data, 18 test cases could be formed, as detailed below.
+In order to test igrow comprehensively, we collected 3 receptors from PDB \cite{96} and 8 unique initial ligands from PDB and ZINC \cite{55}. From these data, 18 test cases could be formed, as detailed below.
 
 \subsection{Receptors}
-We aim to select receptors that are of real-life importance. Glycogen synthase kinase 3 beta (GSK3$\beta$) is a theoretically promising pharmacotherapeutic target for the treatment of several human diseases, including type-2 diabetes \cite{RefWorks:247} and Alzheimer's disease (AD) \cite{RefWorks:248}.
-Efforts into discovering new inhibitors of GSK3$\beta$ never stop \cite{RefWorks:246}.
+We aim to select receptors that are of real-life importance. Glycogen synthase kinase 3 beta (GSK3$\beta$) is a theoretically promising pharmacotherapeutic target for the treatment of several human diseases, including type-2 diabetes \cite{247} and Alzheimer's disease (AD) \cite{248}.
+Efforts into discovering new inhibitors of GSK3$\beta$ never stop \cite{246}.
 Therefore it was included into our test data.
 
 HIV was also selected for its impact to human kind. According to the latest fact sheets of World Health Organization in 2010, 33.4 million people live with HIV/AIDS worldwide.
 HIV reverse transcriptase (HIV RT) and HIV protease (HIV PR), two viral proteins residing in the body of the virus, assist the virus in infecting human cells.
-Researchers have spent over 30 years in discovering new inhibitors of HIV RT and HIV PR \cite{RefWorks:221,RefWorks:222,RefWorks:223}.
+Researchers have spent over 30 years in discovering new inhibitors of HIV RT and HIV PR \cite{221,RefWorks:222,RefWorks:223}.
 Therefore, they were also included into our test data.
 
-Totally 3 receptors were collected from PDB \cite{RefWorks:96} for testing.
-They are glycogen synthase kinase 3 beta (GSK3$\beta$) of PDB ID 1J1B \cite{RefWorks:245} of resolution 1.80 \AA, HIV reverse transcriptase (HIV RT) of PDB ID 2ZD1 \cite{RefWorks:180} of resolution 1.80 \AA, and HIV protease (HIV PR) of PDB ID 3KFN \cite{RefWorks:243} of resolution 1.77 \AA.
+Totally 3 receptors were collected from PDB \cite{96} for testing.
+They are glycogen synthase kinase 3 beta (GSK3$\beta$) of PDB ID 1J1B \cite{245} of resolution 1.80 \AA, HIV reverse transcriptase (HIV RT) of PDB ID 2ZD1 \cite{180} of resolution 1.80 \AA, and HIV protease (HIV PR) of PDB ID 3KFN \cite{243} of resolution 1.77 \AA.
 
-We manually extracted the 3 receptors out of their PDB complexes, and queried CSA (Catalytic Site Altas) \cite{RefWorks:206} and relevant publications \cite{RefWorks:245,RefWorks:246,RefWorks:180,RefWorks:221,RefWorks:222,RefWorks:223,RefWorks:243} for their possible binding sites, as shown in table \ref{tab:searchspace}.
+We manually extracted the 3 receptors out of their PDB complexes, and queried CSA (Catalytic Site Altas) \cite{206} and relevant publications \cite{245,RefWorks:246,RefWorks:180,RefWorks:221,RefWorks:222,RefWorks:223,RefWorks:243} for their possible binding sites, as shown in table \ref{tab:searchspace}.
 
 \begin{table*}
 \centering
@@ -356,7 +355,7 @@ Grid box size & 22 x 18 x 20 \AA$^3$ & 16 x 16 x 18 \AA$^3$ & 22 x 26 x 22 \AA$^
 We aimed to select initial ligands that spread across wide ranges of free energies and molecular weights.
 The 3 ligands of PDB heterogeneous molecule IDs TRS, T27 and 4DX are respectively native ligands of GSK3$\beta$, HIV RT and HIV PR, hence they were included.
 
-Additionally, we retrieved 5 more ligands from ZINC \cite{RefWorks:55}, namely ZINC01019824, ZINC08442219, ZINC09365179, ZINC18153302, and ZINC20030231.
+Additionally, we retrieved 5 more ligands from ZINC \cite{55}, namely ZINC01019824, ZINC08442219, ZINC09365179, ZINC18153302, and ZINC20030231.
 The free energies and molecular weights of these 5 ligands spread across a wide range.
 
 Totally 8 unique initial ligands were chosen, as shown in figure \ref{fig:UniqueInitialLigands}.
@@ -365,35 +364,35 @@ Note that even for the same ZINC initial ligand, its predicted free energy varie
 
 \begin{figure*}
   \centering
-  \subfigure[TRS]{
+  \subfloat[TRS]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/TRS.eps}
     \label{subfig:Ligands-TRS}
   }
-  \subfigure[T27]{
+  \subfloat[T27]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/T27.eps}
     \label{subfig:Ligands-T27}
   }
-  \subfigure[4DX]{
+  \subfloat[4DX]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/4DX.eps}
     \label{subfig:Ligands-4DX}
   }
-  \subfigure[ZINC01019824]{
+  \subfloat[ZINC01019824]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/ZINC01019824.eps}
     \label{subfig:Ligands-ZINC01019824}
   }
-  \subfigure[ZINC08442219]{
+  \subfloat[ZINC08442219]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/ZINC08442219.eps}
     \label{subfig:Ligands-ZINC08442219}
   }
-  \subfigure[ZINC09365179]{
+  \subfloat[ZINC09365179]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/ZINC09365179.eps}
     \label{subfig:Ligands-ZINC09365179}
   }
-  \subfigure[ZINC18153302]{
+  \subfloat[ZINC18153302]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/ZINC18153302.eps}
     \label{subfig:Ligands-ZINC18153302}
   }
-  \subfigure[ZINC20030231]{
+  \subfloat[ZINC20030231]{
     \includegraphics[width=0.10\linewidth]{Figures/Ligands/ZINC20030231.eps}
     \label{subfig:Ligands-ZINC20030231}
   }
@@ -445,7 +444,7 @@ Ligands are mutated by appending new fragments from a fragment library.
 There are two fragment libraries that accompanied with the release of AutoGrow, namely the small-fragment and the large-fragment libraries.
 We tested both libraries internally, and noticed early convergence when using the large-fragment library, which was quite problematic for testing purposes.
 So we focused on the small-fragment library, which is made up of 46 fragments.
-They are small in size, having 3 to 15 atoms and an average of 9.6 atoms with a standard deviation of 2.8 \cite{RefWorks:114}.
+They are small in size, having 3 to 15 atoms and an average of 9.6 atoms with a standard deviation of 2.8 \cite{114}.
 
 \section{Results}\label{sec:results}
 We tested igrow v1.14 and compared it with AutoGrow 2.0.4, the most recent versions of both programs at the moment this paper was composed.
@@ -494,15 +493,15 @@ Figure \ref{fig:BestLigands} demonstrates one particular test case.
 
 \begin{figure*}
   \centering
-  \subfigure[Initial ligand.]{
+  \subfloat[Initial ligand.]{
     \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824.eps}
     \label{subfig:1J1B-ZINC01019824}
   }
-  \subfigure[The best ligand generated by AutoGrow.]{
+  \subfloat[The best ligand generated by AutoGrow.]{
     \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-AutoGrow.eps}
     \label{subfig:1J1B-ZINC01019824-AutoGrow}
   }
-  \subfigure[The best ligand generated by igrow.]{
+  \subfloat[The best ligand generated by igrow.]{
     \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-igrow.eps}
     \label{subfig:1J1B-ZINC01019824-igrow}
   }
@@ -519,39 +518,39 @@ Figure \ref{fig:BestLigands} demonstrates one particular test case.
 
 %\begin{figure*}
 %  \centering
-%  \subfigure[GSK3$\beta$-ZINC01019824-Initial Lig.]{
+%  \subfloat[GSK3$\beta$-ZINC01019824-Initial Lig.]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824.eps}
 %    \label{subfig:1J1B-ZINC01019824}
 %  }
-%  \subfigure[GSK3$\beta$-ZINC01019824-AutoGrow]{
+%  \subfloat[GSK3$\beta$-ZINC01019824-AutoGrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-AutoGrow.eps}
 %    \label{subfig:1J1B-ZINC01019824-AutoGrow}
 %  }
-%  \subfigure[GSK3$\beta$-ZINC01019824-igrow]{
+%  \subfloat[GSK3$\beta$-ZINC01019824-igrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-igrow.eps}
 %    \label{subfig:1J1B-ZINC01019824-igrow}
 %  }
-%  \subfigure[HIV RT-ZINC08442219-Initial Lig.]{
+%  \subfloat[HIV RT-ZINC08442219-Initial Lig.]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/2ZD1-ZINC08442219.eps}
 %    \label{subfig:2ZD1-ZINC08442219}
 %  }
-%  \subfigure[HIV RT-ZINC08442219-AutoGrow]{
+%  \subfloat[HIV RT-ZINC08442219-AutoGrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/2ZD1-ZINC08442219-AutoGrow.eps}
 %    \label{subfig:2ZD1-ZINC08442219-AutoGrow}
 %  }
-%  \subfigure[HIV RT-ZINC08442219-igrow]{
+%  \subfloat[HIV RT-ZINC08442219-igrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/2ZD1-ZINC08442219-igrow.eps}
 %    \label{subfig:2ZD1-ZINC08442219-igrow}
 %  }
-%  \subfigure[HIV PR-ZINC20030231-Initial Lig.]{
+%  \subfloat[HIV PR-ZINC20030231-Initial Lig.]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/3KFN-ZINC20030231.eps}
 %    \label{subfig:3KFN-ZINC20030231}
 %  }
-%  \subfigure[HIV PR-ZINC20030231-AutoGrow]{
+%  \subfloat[HIV PR-ZINC20030231-AutoGrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/3KFN-ZINC20030231-AutoGrow.eps}
 %    \label{subfig:3KFN-ZINC20030231-AutoGrow}
 %  }
-%  \subfigure[HIV PR-ZINC20030231-igrow]{
+%  \subfloat[HIV PR-ZINC20030231-igrow]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/3KFN-ZINC20030231-igrow.eps}
 %    \label{subfig:3KFN-ZINC20030231-igrow}
 %  }
@@ -592,51 +591,51 @@ Hence the predicted free energies and molecular weights of the best 5 ligands we
 
 %\begin{figure*}
 %  \centering
-%  \subfigure[GSK3$\beta$ - TRS]{
+%  \subfloat[GSK3$\beta$ - TRS]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-TRS.eps}
 %    \label{subfig:Best5-1J1B-TRS}
 %  }
-%  \subfigure[GSK3$\beta$ - ZINC01019824]{
+%  \subfloat[GSK3$\beta$ - ZINC01019824]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-ZINC01019824.eps}
 %    \label{subfig:Best5-1J1B-ZINC01019824}
 %  }
-%  \subfigure[GSK3$\beta$ - ZINC08442219]{
+%  \subfloat[GSK3$\beta$ - ZINC08442219]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-ZINC08442219.eps}
 %    \label{subfig:Best5-1J1B-ZINC08442219}
 %  }
-%  \subfigure[GSK3$\beta$ - ZINC09365179]{
+%  \subfloat[GSK3$\beta$ - ZINC09365179]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-ZINC09365179.eps}
 %    \label{subfig:Best5-1J1B-ZINC09365179}
 %  }
-%  \subfigure[GSK3$\beta$ - ZINC18153302]{
+%  \subfloat[GSK3$\beta$ - ZINC18153302]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-ZINC18153302.eps}
 %    \label{subfig:Best5-1J1B-ZINC18153302}
 %  }
-%  \subfigure[GSK3$\beta$ - ZINC20030231]{
+%  \subfloat[GSK3$\beta$ - ZINC20030231]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-1J1B-ZINC20030231.eps}
 %    \label{subfig:Best5-1J1B-ZINC20030231}
 %  }
-%  \subfigure[HIV RT - T27]{
+%  \subfloat[HIV RT - T27]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-T27.eps}
 %    \label{subfig:Best5-2ZD1-T27}
 %  }
-%  \subfigure[HIV RT - ZINC01019824]{
+%  \subfloat[HIV RT - ZINC01019824]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-ZINC01019824.eps}
 %    \label{subfig:Best5-2ZD1-ZINC01019824}
 %  }
-%  \subfigure[HIV RT - ZINC08442219]{
+%  \subfloat[HIV RT - ZINC08442219]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-ZINC08442219.eps}
 %    \label{subfig:Best5-2ZD1-ZINC08442219}
 %  }
-%  \subfigure[HIV RT - ZINC09365179]{
+%  \subfloat[HIV RT - ZINC09365179]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-ZINC09365179.eps}
 %    \label{subfig:Best5-2ZD1-ZINC09365179}
 %  }
-%  \subfigure[HIV RT - ZINC18153302]{
+%  \subfloat[HIV RT - ZINC18153302]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-ZINC18153302.eps}
 %    \label{subfig:Best5-2ZD1-ZINC18153302}
 %  }
-%  \subfigure[HIV RT - ZINC20030231]{
+%  \subfloat[HIV RT - ZINC20030231]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-2ZD1-ZINC20030231.eps}
 %    \label{subfig:Best5-2ZD1-ZINC20030231}
 %  }
@@ -646,27 +645,27 @@ Hence the predicted free energies and molecular weights of the best 5 ligands we
 
 %\begin{figure*}[ht!]
 %  \centering
-%  \subfigure[HIV PR - 4DX]{
+%  \subfloat[HIV PR - 4DX]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-4DX.eps}
 %    \label{subfig:Best5-3KFN-4DX}
 %  }
-%  \subfigure[HIV PR - ZINC01019824]{
+%  \subfloat[HIV PR - ZINC01019824]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-ZINC01019824.eps}
 %    \label{subfig:Best5-3KFN-ZINC01019824}
 %  }
-%  \subfigure[HIV PR - ZINC08442219]{
+%  \subfloat[HIV PR - ZINC08442219]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-ZINC08442219.eps}
 %    \label{subfig:Best5-3KFN-ZINC08442219}
 %  }
-%  \subfigure[HIV PR - ZINC09365179]{
+%  \subfloat[HIV PR - ZINC09365179]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-ZINC09365179.eps}
 %    \label{subfig:Best5-3KFN-ZINC09365179}
 %  }
-%  \subfigure[HIV PR - ZINC18153302]{
+%  \subfloat[HIV PR - ZINC18153302]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-ZINC18153302.eps}
 %    \label{subfig:Best5-3KFN-ZINC18153302}
 %  }
-%  \subfigure[HIV RT - ZINC20030231]{
+%  \subfloat[HIV RT - ZINC20030231]{
 %    \includegraphics[width=0.28\linewidth]{Figures/Results/Best5-3KFN-ZINC20030231.eps}
 %    \label{subfig:Best5-3KFN-ZINC20030231}
 %  }
@@ -680,27 +679,27 @@ Since all the test cases were run for 9 times, their average execution times are
 
 %\begin{figure*}[ht!]
 %  \centering
-%  \subfigure[GSK3$\beta$]{
+%  \subfloat[GSK3$\beta$]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/ExecutionTime-1J1B.eps}
 %    \label{subfig:ExecutionTime-1J1B}
 %  }
-%  \subfigure[HIV RT]{
+%  \subfloat[HIV RT]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/ExecutionTime-2ZD1.eps}
 %    \label{subfig:ExecutionTime-2ZD1}
 %  }
-%  \subfigure[HIV PR]{
+%  \subfloat[HIV PR]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/ExecutionTime-3KFN.eps}
 %    \label{subfig:ExecutionTime-3KFN}
 %  }
-%  \subfigure[GSK3$\beta$]{
+%  \subfloat[GSK3$\beta$]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/Speedup-1J1B.eps}
 %    \label{subfig:Speedup-1J1B}
 %  }
-%  \subfigure[HIV RT]{
+%  \subfloat[HIV RT]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/Speedup-2ZD1.eps}
 %    \label{subfig:Speedup-2ZD1}
 %  }
-%  \subfigure[HIV PR]{
+%  \subfloat[HIV PR]{
 %    \includegraphics[width=0.31\linewidth]{Figures/Results/Speedup-3KFN.eps}
 %    \label{subfig:Speedup-3KFN}
 %  }
@@ -713,11 +712,11 @@ igrow has built-in support for phosphorus. To examine such capability, from PDB 
 
 %\begin{figure}[hb!]
 %  \centering
-%  \subfigure[The best ligand generated by igrow.]{
+%  \subfloat[The best ligand generated by igrow.]{
 %    \includegraphics[width=1.0\linewidth]{Figures/Results/2ZD1-TFO-igrow.eps}
 %    \label{subfig:2ZD1-TFO-igrow}
 %  }
-%  \subfigure[Average free energies and molecular weights of the best 5 ligands generated by igrow from TFO docking to HIV RT. Generation 0 refers to the initial ligand. Blue curve: average free energies. Red curve: average molecular weights.]{
+%  \subfloat[Average free energies and molecular weights of the best 5 ligands generated by igrow from TFO docking to HIV RT. Generation 0 refers to the initial ligand. Blue curve: average free energies. Red curve: average molecular weights.]{
 %    \includegraphics[width=1.0\linewidth]{Figures/Results/Best5-2ZD1-TFO.eps}
 %    \label{subfig:Best5-2ZD1-TFO}
 %  }
@@ -737,17 +736,15 @@ For the test case with HIV RT as the receptor and T27 as the initial ligand, alt
 Averaging all the 18 test cases, in general igrow executes about 30\% faster than AutoGrow.
 
 \section{Availability}
-igrow is free and open source under no license. It is written in C++ and available at http://www.cse.cuhk.edu.hk/~hjli/igrow.tar.gz.
+igrow is free and open source under Apache License 2.0. It is written in C++ and available at http://GitHub.com/HongjianLi/igrow.
 
-\section{Conclusion}\label{sec:conclusion}
+\section{Conclusions}
 We have developed igrow, an efficient tool for computational synthesis of potent ligands.
 igrow has inherited the existing mutation and crossover operators from AutoGrow and we have invented two new genetic operators, namely split and merging.
 The split operator ensures that ligands will not exceed upper bound.
 The merging operator is basically a reversed operator of split which accelerates ligand growing.
 igrow implements Lipinski's rule of five to ensure druggability.
 The comprehensive results show that igrow outperforms AutoGrow in terms of free energy, molecular weight and execution time.
-
-igrow is free and open source, hence users are encouraged to modify and recompile its source code to suit their own needs.
 
 \bibliographystyle{IEEEtran}
 \bibliography{../refworks}
