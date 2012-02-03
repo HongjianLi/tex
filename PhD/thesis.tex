@@ -1,0 +1,64 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{xltxtra}
+\usepackage{setspace}
+\usepackage{thesis}
+\usepackage{latexsym}
+\usepackage{epsfig}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xeCJK}
+\DeclareGraphicsExtensions{.jpg,.png,.eps}
+\topmargin 0.0cm
+\textheight 21cm
+
+\begin{document}
+
+\thesistitle{Structure-Based Molecular Docking and Molecule Design for Drug Discovery}
+\authorname{LI, Hongjian} 
+\degree{Doctor of Philosophy}
+\programme{Computer Science and Engineering}
+\submitdate{May 2014}
+\coverpage
+
+\chair{Professor WONG Kin Hong}
+\principalsupervisor{Professor LEUNG Kwong Sak}
+\secondarysupervisor{Professor WONG Man Hon}
+\committeemember{Professor LUI Chi Shing John}
+\externalexaminer{Professor LEONG Hong Va}
+\committeepage
+
+\pagenumbering{roman}
+\abstractpage
+\chineseabstractpage
+\acknowledgementpage
+\dedicationpage
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\setcounter{page}{0}
+\pagenumbering{arabic}
+\pagestyle{headings}
+\onehalfspacing
+
+\input introduction.tex
+\input background.tex
+\input idock.tex
+\input igrow.tex
+\input conclusion.tex
+
+\appendix
+\input publications.tex
+
+\newpage
+\singlespacing
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{unsrtnat}
+\bibliography{thesis}
+
+\end{document}
+
