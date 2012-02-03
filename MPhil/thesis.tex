@@ -1,0 +1,109 @@
+\documentclass[12pt]{report}
+\usepackage{xltxtra}
+\usepackage{setspace}
+\usepackage{graphics}
+\usepackage{thesis}
+\usepackage{latexsym}
+\usepackage[dvips]{epsfig}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[numbers,sort&compress]{natbib}
+\DeclareGraphicsExtensions{.jpg,.png,.eps}
+
+\topmargin	0.0cm
+\textheight 21cm
+
+\begin{document}
+
+\thesistitle{A Computational Framework for Structure-Based Drug Discovery with GPU Acceleration}
+\authorname{LI, Hongjian}
+\degree{Master of Philosophy}
+\programme{Computer Science and Engineering}
+\submitdate{August 2011}
+\coverpage
+
+% Committee page
+\thispagestyle{empty}
+\vspace*{2cm}
+\begin{center}
+\vskip 4cm
+\Large
+Thesis/Assessment Committee
+\vskip 2cm
+\large
+Professor WONG Kin Hong (Chair)\\
+\vskip 0.2cm
+Professor LEUNG Kwong Sak (Thesis Supervisor)\\
+\vskip 0.2cm
+Professor WONG Man Hon (Thesis Supervisor)\\
+\vskip 0.2cm
+Professor LUI Chi Shing John (Committee Member)\\
+\vskip 0.2cm
+Professor LEONG Hong Va (External Examiner)\\
+\end{center}
+\newpage
+
+\pagenumbering{roman}
+
+\abstractpage
+
+% Abstract in Chinese
+\XeTeXlinebreaklocale "zh"
+\newfontfamily\chinesefont{NSimSun}
+\addcontentsline{toc}{chapter}{Abstract in Chinese}
+\vspace*{1cm}
+\large \noindent
+\begin{center}
+{\chinesefont 摘要}\\
+\end{center}
+\vskip 1cm \noindent
+{\chinesefont 藥物研發是一項昂貴和長期的商業。開發一種新藥需要18億美元和13年半的時間。因此，我們意圖針對藥物研發開發一個計算框架，當中利用圖形處理器實現加速，從而模擬現代藥物研發的初始階段，以節省金錢和時間。
+
+從計算的角度而言，這種模擬一般涉及DNA樣式的模糊匹配、基於結構的虛擬篩選、以及強效藥物的計算生成。到目前為止，我們為此開發了三個工具。
+
+第一個工具叫CUDAagrep，是用來快速模糊匹配DNA樣式。它利用了NVIDIA圖形處理器強大的計算能力。相比於OpenMP的實現，CUDAagrep有著70倍的速度提升。相比於Bowtie和BWA，CUDAagrep的敏感度在單端模式下有25\%的提升，在雙端模式下有18\%的提升。
+
+第二個工具叫idock，是用於基於結構的快速虛擬篩選。它預測小分子和給定蛋白質的粘合構象以及粘合程度。相比於AutoDock Vina，idock有著6.3倍至10.4倍的速度提升，每CPU分鐘可以篩選1.3個類似藥物的小分子。
+
+第三個工具叫SmartGrow，是用來計算生成強效藥物。它通過組合小分子塊來生成藥物。相比於AutoGrow，由SmartGrow生成的藥物平均有著100 Da更低的分子量。再者，SmartGrow有著30\%的速度提升。
+
+我們已經使用了這三個工具，連同其他一些現有工具，為艾滋病和老人癡呆症研發潛在的新藥。有部分新藥已經被計算篩選和生成，以後將進行臨床研究。
+
+這三個工具的開發只是一個開始。最終我們要開發一個全面的統一的計算框架，當中包括粘合位置的識別、分子對接、虛擬篩選、藥物生成、藥性預測、以及交互式的可視化。最終也是最重要的一點，我們應當利用此框架去研發新藥，以拯救數以百萬計的人類生命。}
+\newpage
+\XeTeXlinebreaklocale "en"
+
+\acknowledgementpage
+\dedicationpage
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\setcounter{page}{0}
+\pagenumbering{arabic}
+\pagestyle{headings}
+
+\doublespacing
+
+\input ./Introduction/Introduction.tex
+\input ./Background/Background.tex
+\input ./SequenceMatching/SequenceMatching.tex
+\input ./VirtualScreening/VirtualScreening.tex
+\input ./LigandSynthesis/LigandSynthesis.tex
+\input ./Conclusion/Conclusion.tex
+
+\appendix
+\input ./publications.tex
+
+\singlespacing
+
+\newpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plainnat}
+\bibliography{thesis}
+
+\end{document}
