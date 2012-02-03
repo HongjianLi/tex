@@ -105,11 +105,11 @@ bioinformatics, chemoinformatics, drug discovery, molecular docking, virtual scr
 
 \section{Introduction}
 
-As the X-ray crystallography technology evolves, more and more structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository Protein Data Bank (PDB) \cite{539-2000,537-2003}. This rapid evolution catalyzes the development of various protein-ligand docking tools for structure-based drug discovery.
+As the X-ray crystallography technology evolves, more and more structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository Protein Data Bank (PDB) \cite{539,537}. This rapid evolution catalyzes the development of various protein-ligand docking tools for structure-based drug discovery.
 
 Protein-ligand docking is a method which predicts the preferred conformation of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved. The lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover. Structure-based virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a target, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
 
-Among the many docking programs, AutoDock Vina \cite{595-2010} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596-2009} by an order of magnitude \cite{556-2010}. First released in 2010, Vina has been cited by over 200 publications according to Google Scholar and adopted by quite many researchers \cite{609-2010}, demonstrating its popularity.
+Among the many docking programs, AutoDock Vina \cite{595} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596} by an order of magnitude \cite{556}. First released in 2010, Vina has been cited by over 200 publications according to Google Scholar and adopted by quite many researchers \cite{609}, demonstrating its popularity.
 
 \section{Motivation}
 
@@ -117,9 +117,9 @@ Vina is a competitive tool well known for its fast execution and high accuracy. 
 
 \section{Problem Definition}
 
-At present, 25 drugs have been approved by US Food and Drug Administration (FDA) for the treatment of HIV/AIDS \cite{300-2010}. Among them, tenofovir disoproxil fumarate (TDF) is for the treatments of both human immunodeficiency virus (HIV) and hepatitis B virus (HBV). It is a nucleoside inhibitor of reverse transcriptase (RTs) of HIV and HBV. A considerably greater proportion of HBV+ recipients of TDF 300 mg once daily achieves a complete response at week 48 than oral adefovir dipivoxil 10 mg once daily \cite{165-2008}. TDF is also generally less expensive and more convenient to administer, as it does not require dosing on an empty stomach \cite{159-2009}.
+At present, 25 drugs have been approved by US Food and Drug Administration (FDA) for the treatment of HIV/AIDS \cite{300}. Among them, tenofovir disoproxil fumarate (TDF) is for the treatments of both human immunodeficiency virus (HIV) and hepatitis B virus (HBV). It is a nucleoside inhibitor of reverse transcriptase (RTs) of HIV and HBV. A considerably greater proportion of HBV+ recipients of TDF 300 mg once daily achieves a complete response at week 48 than oral adefovir dipivoxil 10 mg once daily \cite{165}. TDF is also generally less expensive and more convenient to administer, as it does not require dosing on an empty stomach \cite{159}.
 
-However, clinical feedback reveals that TDF exhibits strong side effects, causing osteomalacia and mitochondrial toxicity on the renal proximal tubule \cite{185-2006}. Justification of the side effects shows that 1) S-Adenosyl-L-homocysteine hydrolase (SAHH), a highly conserved ubiquitous enzyme that catalyzes the hydrolysis of S-Adenosyl-L-homocysteine (SAH) into adenosine and homocysteine, is affected, leading to defect in DNA methylation-dependent gene silencing \cite{182-2005}. SAHH inhibitor has signs of immunosuppressive activity \cite{183-2007}. 2) Adenosine deaminase (ADA) is inhibited, resulting in reduced breakdown of adenosine from food and decreased turnover of nucleic acids in tissues \cite{184-2005}. ADA inhibitor 2′-deoxycoformycin (dCF) shows signs of hepatic and adrenal toxicity \cite{187-2000}. 3) Purine nucleoside phosphorylase is also inhibited. Figure \ref{fig:EnzymaticAssay}, reprinted from Sigma-Aldrich Co., shows the enzymatic assay of the above three enzymes, which break down SAH eventually into uric acid inside human body. Table \ref{tab:TanimotoCoefficients} indicates that TDF is structurally similar to the inhibitors of SAHH, ADA, and PNP, hence TDF is likely to inhibit them in addition to HIV RT. For HIV-infected or HBV-infected patients who take TDF as the primary drug, it is unfortunate that these three essential enzymes are simultaneously inhibited by TDF.
+However, clinical feedback reveals that TDF exhibits strong side effects, causing osteomalacia and mitochondrial toxicity on the renal proximal tubule \cite{185}. Justification of the side effects shows that 1) S-Adenosyl-L-homocysteine hydrolase (SAHH), a highly conserved ubiquitous enzyme that catalyzes the hydrolysis of S-Adenosyl-L-homocysteine (SAH) into adenosine and homocysteine, is affected, leading to defect in DNA methylation-dependent gene silencing \cite{182}. SAHH inhibitor has signs of immunosuppressive activity \cite{183}. 2) Adenosine deaminase (ADA) is inhibited, resulting in reduced breakdown of adenosine from food and decreased turnover of nucleic acids in tissues \cite{999}. ADA inhibitor 2′-deoxycoformycin (dCF) shows signs of hepatic and adrenal toxicity \cite{187}. 3) Purine nucleoside phosphorylase is also inhibited. Figure \ref{fig:EnzymaticAssay}, reprinted from Sigma-Aldrich Co., shows the enzymatic assay of the above three enzymes, which break down SAH eventually into uric acid inside human body. Table \ref{tab:TanimotoCoefficients} indicates that TDF is structurally similar to the inhibitors of SAHH, ADA, and PNP, hence TDF is likely to inhibit them in addition to HIV RT. For HIV-infected or HBV-infected patients who take TDF as the primary drug, it is unfortunate that these three essential enzymes are simultaneously inhibited by TDF.
 
 \begin{figure}
 \centering
@@ -141,7 +141,7 @@ HIV RT inhibitor & 1.00 & 1.00 \\
    PNP inhibitor & 0.51 & 0.76 \\
 \bottomrule
 \end{tabular}
-\caption{Tanimoto coefficients between TDF and the inhibitors of HIV RT, SAHH, ADA, and PNP using the Scitegic ECFP4 and Daylight fingerprints through the SEA database \cite{380-2007}.}
+\caption{Tanimoto coefficients between TDF and the inhibitors of HIV RT, SAHH, ADA, and PNP using the Scitegic ECFP4 and Daylight fingerprints through the SEA database \cite{380}.}
 \label{tab:TanimotoCoefficients}
 \end{table}
 
@@ -226,18 +226,6 @@ e'_k = \frac{e_k - e_{intra,1}}{1 + 0.05846 * (N_{ActTors} + 0.5 * N_{InactTors}
 The value of $e_{ij}$ is basically a function of three variables, namely $t_i$, $t_j$, and $r_{ij}$. These three variables have both a known lower bound and a known upper bound, so it is possible to precalculate the scoring function. Since there are 17 atom types implemented in idock, the pair of $t_i$ and $t_j$ can have 153 (=17*18/2) different combinations. Since $r_{ij}$ is cut off at 8 \AA, idock uniformly samples 16,384 points in range [0, 8] to turn the continuous domain into a concrete domain, resulting in an average absolute error of merely 0.002 kcal/mol. During program initialization, idock precalculates $e_{ij}$ from equation \eqref{eqn:eij} for 153*16384 possible combinations of $t_i$, $t_j$, and $r_{ij}$. During optimization, idock approximates the true value of $e_{ij}$ by direct assignment rather than linear interpolation for faster evaluation of $e_{ij}$ at the cost of a little bit longer precalculation time and a bit more memory storage.
 
 In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of atom type \textit{t} is constructed by placing virtual probe atoms of atom type \textit{t} along the X, Y, Z dimensions of the search box at a certain granularity (Figure \ref{fig:GridMap}). The $e_{inter}$ value of these probe atoms are precalculated, so the $e_{inter}$ value of a ligand heavy atom can be approximated in some way. In Vina, the grid map granularity is hard coded to be 0.375 \AA, and the approximation is done by linear interpolation of the 8 corner probe atoms of the residing subbox. This kind of interpolation involves reading of 8 $e_{inter}$ values, computation of 3 $\alpha$ values, 12 floating-point subtractions, 24 floating-point multiplications, and 8 floating-point additions, which turned out to be a performance bottleneck when we profiled Vina. In contrast, idock exposes grid map granularity as an optional program argument with a tuned default value of 0.15625 \AA. Likewise, due to a higher density of probe atoms, idock substitutes direct assignment for linear interpolation for much faster evaluation of $e_{inter}$ at the cost of longer precalculation time and larger memory storage. Therefore, the creation of grid maps is carried out on the fly only when necessary and abstracted into parallel tasks, which are then distributed to the thread pool for concurrent execution.
-% as detailed in equation \eqref{eqn:grid_e}
-%\begin{eqnarray}
-%\label{eqn:grid_e}
-%e_{inter} &=& e_{inter,000} * (1-\alpha_x) * (1-\alpha_y) * (1-\alpha_z) \nonumber \\
-%          &+& e_{inter,100} *    \alpha_x  * (1-\alpha_y) * (1-\alpha_z) \nonumber \\
-%          &+& e_{inter,010} * (1-\alpha_x) *    \alpha_y  * (1-\alpha_z) \nonumber \\
-%          &+& e_{inter,110} *    \alpha_x  *    \alpha_y  * (1-\alpha_z) \nonumber \\
-%          &+& e_{inter,001} * (1-\alpha_x) * (1-\alpha_y) *    \alpha_z  \nonumber \\
-%          &+& e_{inter,101} *    \alpha_x  * (1-\alpha_y) *    \alpha_z  \nonumber \\
-%          &+& e_{inter,011} * (1-\alpha_x) *    \alpha_y  *    \alpha_z  \nonumber \\
-%          &+& e_{inter,111} *    \alpha_x  *    \alpha_y  *    \alpha_z
-%\end{eqnarray}
 
 \begin{figure}
 \centering
@@ -248,12 +236,12 @@ In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of 
 
 \subsection{Optimization Algorithm}
 
-Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786-2006} Quasi-Newton method for local optimization. A succession of steps consisting of a mutation and a BFGS local optimization are taken, with each step being accepted according to the Metropolis criterion (Figure \ref{fig:DockingByMonteCarlo}, reprinted from \cite{493-2008}). These steps are repeated over \textit{N} iterations, where \textit{N} correlates to the complexity of the ligand regarding number of heavy atoms and number of torsions. BFGS approximates the inverse Hessian matrix of the scoring function. It uses not only the value of the scoring function but also its gradient, which are the derivatives of the scoring function with respect to the position and orientation of the ligand, and the torsions for the active rotatable bonds in the ligand. A BFGS iteration derives a descent direction from the approximate inverse Hessian matrix, derives a step length along the descent direction by line search, and updates the approximation of inverse Hessian matrix. Both programs achieve multithreading by concurrently running multiple independent Monte Carlo tasks starting from random initial conformations.
+Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786} Quasi-Newton method for local optimization. A succession of steps consisting of a mutation and a BFGS local optimization are taken, with each step being accepted according to the Metropolis criterion (Figure \ref{fig:DockingByMonteCarlo}, reprinted from \cite{493}). These steps are repeated over \textit{N} iterations, where \textit{N} correlates to the complexity of the ligand regarding number of heavy atoms and number of torsions. BFGS approximates the inverse Hessian matrix of the scoring function. It uses not only the value of the scoring function but also its gradient, which are the derivatives of the scoring function with respect to the position and orientation of the ligand, and the torsions for the active rotatable bonds in the ligand. A BFGS iteration derives a descent direction from the approximate inverse Hessian matrix, derives a step length along the descent direction by line search, and updates the approximation of inverse Hessian matrix. Both programs achieve multithreading by concurrently running multiple independent Monte Carlo tasks starting from random initial conformations.
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Figures/MonteCarlo.png}
-\caption{Monte Carlo algorithm for docking. Figure modified from \cite{493-2008}.}
+\caption{Monte Carlo algorithm for docking. Figure modified from \cite{493}.}
 \label{fig:DockingByMonteCarlo}
 \end{figure}
 
@@ -261,7 +249,7 @@ Though both programs share similar optimization algorithms, their implementation
 
 \subsection{Inactive Torsions}
 
-idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{fig:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785-1999,596-2009}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the dimension of variables to optimize in the local optimization step, leading to easier finding of local minimums.
+idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{fig:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the dimension of variables to optimize in the local optimization step, leading to easier finding of local minimums.
 
 \begin{figure}
 \centering
@@ -278,7 +266,7 @@ idock remarkably revises the fundamental C++ implementation. idock invents its o
 
 \subsection{Proteins}
 
-The crystal structures of HIV RT, SAHH, ADA, and PNP were collected from the Protein Data Bank (PDB) database \cite{539-2000,537-2003}. Protein-ligand complexes with PDB IDs of 2ZD1, 1LI4, 3IAR, and 3BGS were selected because they were crystallized at high resolutions (Table \ref{tab:SelectedPDBEntries}). Search spaces were then manually defined in cuboid shape to be large enough for ligands to freely translate and rotate inside.
+The crystal structures of HIV RT, SAHH, ADA, and PNP were collected from the Protein Data Bank (PDB) database \cite{539,537}. Protein-ligand complexes with PDB IDs of 2ZD1, 1LI4, 3IAR, and 3BGS were selected because they were crystallized at high resolutions (Table \ref{tab:SelectedPDBEntries}). Search spaces were then manually defined in cuboid shape to be large enough for ligands to freely translate and rotate inside.
 
 \begin{table}
 \centering
@@ -300,7 +288,7 @@ PDB ID & Protein & Ligand & Resolution & Box size (\AA\textsuperscript{3})\\
 
 \subsection{Ligands}
 
-10,928 ligands were collected from the clean drug like subset of the ZINC database \cite{532-2005}. These ligands satisfy Lipinski's \textit{Rule of Five} \cite{169-1997} with the xLogP value of at most 5, the molecular weight between 150 Da and 500 Da, the number of hydrogen bond donors of at most 5, and the number of hydrogen bonds acceptors of at most 10.
+10,928 ligands were collected from the clean drug like subset of the ZINC database \cite{532}. These ligands satisfy Lipinski's \textit{Rule of Five} \cite{169} with the xLogP value of at most 5, the molecular weight between 150 Da and 500 Da, the number of hydrogen bond donors of at most 5, and the number of hydrogen bonds acceptors of at most 10.
 
 \section{Experiments and Results}
 
@@ -420,7 +408,7 @@ PNP    & 0.31 & 2.966 & 53\%\\
 \label{tab:RMSEAndRMSD}
 \end{table}
 
-In order to shortlist a few promising ligands that bind to HIV RT with a high affinity but bind to SAHH, ADA, and PNP with a low affinity, filtering criteria were set. Ligands whose predicted free energies against HIV RT are below or equal to -11.0 kcal/mol and whose predicted free energies against the other three proteins are above or equal to -8.5 kcal/mol were shortlisted in Table \ref{tab:ShortlistedLigands}. The ZINC19888543 predicted by Vina and the ZINC44392991 predicted by idock were further investigated. Table \ref{tab:ZINC19888543-ZINC44392991} cites their predicted xLogP, number of hydrogen bond donors (HBD), number of hydrogen bond acceptors (HBA), molecular weight (MW), and number of rotatable bonds (NRB) from the ZINC database \cite{532-2005}. Figures \ref{fig:Vina-ZINC19888543} and \ref{fig:idock-ZINC44392991}, rendered by PoseView 1.0.0 \cite{748-2010}, show their predicted binding conformations in complex with the four proteins. Hydrogen bonds, salt bridges and metal interactions are highlighted as black dashed lines. Hydrophobic interactions are highlighted as green solid lines. Pi-Pi and Pi-cation interactions are highlighted as green dashed lines. It can be seen that ZINC19888543 interacts with HIV RT mainly through hydrophobic effects and Pi-Pi interactions, while ZINC44392991 interacts with HIV RT mainly through Pi-Pi interactions and hydrogen bonding.
+In order to shortlist a few promising ligands that bind to HIV RT with a high affinity but bind to SAHH, ADA, and PNP with a low affinity, filtering criteria were set. Ligands whose predicted free energies against HIV RT are below or equal to -11.0 kcal/mol and whose predicted free energies against the other three proteins are above or equal to -8.5 kcal/mol were shortlisted in Table \ref{tab:ShortlistedLigands}. The ZINC19888543 predicted by Vina and the ZINC44392991 predicted by idock were further investigated. Table \ref{tab:ZINC19888543-ZINC44392991} cites their predicted xLogP, number of hydrogen bond donors (HBD), number of hydrogen bond acceptors (HBA), molecular weight (MW), and number of rotatable bonds (NRB) from the ZINC database \cite{532}. Figures \ref{fig:Vina-ZINC19888543} and \ref{fig:idock-ZINC44392991}, rendered by PoseView 1.0.0 \cite{748}, show their predicted binding conformations in complex with the four proteins. Hydrogen bonds, salt bridges and metal interactions are highlighted as black dashed lines. Hydrophobic interactions are highlighted as green solid lines. Pi-Pi and Pi-cation interactions are highlighted as green dashed lines. It can be seen that ZINC19888543 interacts with HIV RT mainly through hydrophobic effects and Pi-Pi interactions, while ZINC44392991 interacts with HIV RT mainly through Pi-Pi interactions and hydrogen bonding.
 
 \begin{table}
 \centering
@@ -533,6 +521,6 @@ idock is open source under Apache License 2.0 and is freely available at https:/
 We have developed idock, a multithreaded structure-based virtual screening tool for flexible ligand docking. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with Vina, idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. But even so, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired. Porting idock to GPU using CUDA is one of our future directions.
 
 \bibliographystyle{IEEEtran}
-\bibliography{idock}
+\bibliography{../refworks}
 
 \end{document}
