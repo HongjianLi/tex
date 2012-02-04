@@ -62,12 +62,10 @@
 
 \documentclass[10pt, conference, compsocconf]{IEEEtran}
 \usepackage{xltxtra}
-\usepackage{subfigure}
+\usepackage{subfig}
 \usepackage{booktabs}
-\usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{flushend}
-\usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
 
 \begin{document}
@@ -299,31 +297,31 @@ Vina x86 version 1.1.2 and idock x86\_64 version 1.0, the most recent versions o
 
 The four crystal ligands extracted from the four PDB complexes were conformationally randomized and redocked against their proteins by Vina and idock. Figure \ref{fig:Redocking} shows the four proteins in complex with their corresponding crystal and docked ligands. The ligands rendered in green are the crystal ones, the ligands rendered in red are the ones docked by Vina, and the ligands rendered in blue are the ones docked by idock. Table \ref{tab:RMSD} shows the root mean square deviations (RMSDs) between the crystal and docked conformations. The RMSDs are all below 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, indicating both programs are suitable for docking ligands against the four proteins. The RMSDs obtained by Vina are slightly better than those obtained by idock, especially for the case of PNP. This is probably due to the coarse estimation of $e_{intra}$ in idock, which does not form covalent bonds internally but simply relies on rotatable bonds to detect atom pair mobility.
 
-\begin{figure}
+\begin{figure*}
 \centering
-\subfigure[HIV RT in complex with crystal and docked T27.]
+\subfloat[HIV RT in complex with crystal and docked T27.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/2ZD1-T27.png}
   \label{subfig:2ZD1-T27}
+  \includegraphics[width=0.236\linewidth]{Figures/2ZD1-T27.png}
 }
-\subfigure[SAHH in complex with crystal and docked NAD.]
+\subfloat[SAHH in complex with crystal and docked NAD.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/1LI4-NAD.png}
   \label{subfig:1LI4-NAD}
+  \includegraphics[width=0.236\linewidth]{Figures/1LI4-NAD.png}
 }
-\subfigure[ADA in complex with crystal and docked 3D1.]
+\subfloat[ADA in complex with crystal and docked 3D1.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3IAR-3D1.png}
   \label{subfig:3IAR-3D1}
+  \includegraphics[width=0.236\linewidth]{Figures/3IAR-3D1.png}
 }
-\subfigure[PNP in complex with crystal and docked DIH.]
+\subfloat[PNP in complex with crystal and docked DIH.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3BGS-DIH.png}
   \label{subfig:3BGS-DIH}
+  \includegraphics[width=0.236\linewidth]{Figures/3BGS-DIH.png}
 }
 \caption{HIV RT, SAHH, ADA, and PNP respectively in complex with crystal and docked conformations of T27, NAD, 3D1, and DIH predicted by Vina and idock.}
 \label{fig:Redocking}
-\end{figure}
+\end{figure*}
 
 \begin{table}
 \centering
@@ -453,57 +451,57 @@ ZINC44392991 & 4.24 & 1 & 6 & 391 & 6\\
 \label{tab:ZINC19888543-ZINC44392991}
 \end{table}
 
-\begin{figure}
+\begin{figure*}
 \centering
-\subfigure[HIV RT in complex with ZINC19888543.]
+\subfloat[HIV RT in complex with ZINC19888543.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/2ZD1-ZINC19888543.png}
   \label{subfig:2ZD1-ZINC19888543}
+  \includegraphics[width=0.236\linewidth]{Figures/2ZD1-ZINC19888543.png}
 }
-\subfigure[SAHH in complex with ZINC19888543.]
+\subfloat[SAHH in complex with ZINC19888543.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/1LI4-ZINC19888543.png}
   \label{subfig:1LI4-ZINC19888543}
+  \includegraphics[width=0.236\linewidth]{Figures/1LI4-ZINC19888543.png}
 }
-\subfigure[ADA in complex with ZINC19888543.]
+\subfloat[ADA in complex with ZINC19888543.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3IAR-ZINC19888543.png}
   \label{subfig:3IAR-ZINC19888543}
+  \includegraphics[width=0.236\linewidth]{Figures/3IAR-ZINC19888543.png}
 }
-\subfigure[PNP in complex with ZINC19888543.]
+\subfloat[PNP in complex with ZINC19888543.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3BGS-ZINC19888543.png}
   \label{subfig:3BGS-ZINC19888543}
+  \includegraphics[width=0.236\linewidth]{Figures/3BGS-ZINC19888543.png}
 }
 \caption{HIV RT, SAHH, ADA, and PNP in complex with ZINC19888543 docked by Vina.}
 \label{fig:Vina-ZINC19888543}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 \centering
-\subfigure[HIV RT in complex with ZINC44392991.]
+\subfloat[HIV RT in complex with ZINC44392991.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/2ZD1-ZINC44392991.png}
   \label{subfig:2ZD1-ZINC44392991}
+  \includegraphics[width=0.236\linewidth]{Figures/2ZD1-ZINC44392991.png}
 }
-\subfigure[SAHH in complex with ZINC44392991.]
+\subfloat[SAHH in complex with ZINC44392991.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/1LI4-ZINC44392991.png}
   \label{subfig:1LI4-ZINC44392991}
+  \includegraphics[width=0.236\linewidth]{Figures/1LI4-ZINC44392991.png}
 }
-\subfigure[ADA in complex with ZINC44392991.]
+\subfloat[ADA in complex with ZINC44392991.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3IAR-ZINC44392991.png}
   \label{subfig:3IAR-ZINC44392991}
+  \includegraphics[width=0.236\linewidth]{Figures/3IAR-ZINC44392991.png}
 }
-\subfigure[PNP in complex with ZINC44392991.]
+\subfloat[PNP in complex with ZINC44392991.]
 {
-  \includegraphics[width=0.46\linewidth]{Figures/3BGS-ZINC44392991.png}
   \label{subfig:3BGS-ZINC44392991}
+  \includegraphics[width=0.236\linewidth]{Figures/3BGS-ZINC44392991.png}
 }
 \caption{HIV RT, SAHH, ADA, and PNP in complex with ZINC44392991 docked by idock.}
 \label{fig:idock-ZINC44392991}
-\end{figure}
+\end{figure*}
 
 \section{Discussion}
 
