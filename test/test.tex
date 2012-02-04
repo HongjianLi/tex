@@ -1,6 +1,7 @@
 \documentclass[10pt,conference,compsocconf]{IEEEtran}
 
 \usepackage{xltxtra}
+\usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage[caption=false]{subfig}
 \usepackage[numbers,sort&compress]{natbib}
@@ -61,41 +62,43 @@ set 2 & 261,248 & 130,624 & 130,624\\
 \label{fig:set1}
 \end{figure*}
 
-\begin{figure*}
+\begin{figure}
 \centering
+\begin{tabular}{cc}
 \subfloat[active.]
 {
   \label{subfig:l1_f50_set1_active}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/active.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/active.eps}
+} &
 \subfloat[gauss 1.]
 {
   \label{subfig:l1_f50_set1_gauss1}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/gauss1.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/gauss1.eps}
+} \\
 \subfloat[gauss 2.]
 {
   \label{subfig:l1_f50_set1_gauss2}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/gauss2.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/gauss2.eps}
+} &
 \subfloat[repulsion.]
 {
   \label{subfig:l1_f50_set1_repulsion}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/repulsion.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/repulsion.eps}
+} \\
 \subfloat[hydrophobic interaction.]
 {
   \label{subfig:l1_f50_set1_hydrophobic}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/hydrophobic.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/hydrophobic.eps}
+} &
 \subfloat[hydrogen bonding.]
 {
   \label{subfig:l1_f50_set1_hydrogenbonding}
-  \includegraphics[width=0.14\linewidth]{Figures/l1_f50/set1/hydrogenbonding.pdf}
-}
+  \includegraphics[width=0.46\linewidth]{Figures/l1_f50/set1/hydrogenbonding.eps}
+} \\
+\end{tabular}
 \caption{Distributions of the 5 feature attributes and the binary class attribute of set 1 in case study 1. Class 1 is rendered in blue and class 0 is render in red.}
 \label{fig:l1_f50_set1_dists}
-\end{figure*}
+\end{figure}
 
 
 
