@@ -1,0 +1,303 @@
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.7 or later) with an IEEE conference paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% and
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE!
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_kernel_comp soc.TeX
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the test flow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The test flow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the test flow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draft cls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+
+\documentclass[10pt, conference, compsocconf]{IEEEtran}
+\usepackage{xltxtra}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{flushend}
+\usepackage[numbers,sort&compress]{natbib}
+\setmainfont{Times New Roman}
+
+\begin{document}
+
+\title{idock: A Multithreaded Virtual Screening Tool for Flexible Ligand Docking\\and\\igrow: A Multithreaded Ligand Synthesis Tool for Structure-Based Molecular Design} % can use linebreaks \\ within to get better formatting as desired
+\author
+{
+\IEEEauthorblockN
+{
+Hongjian Li
+\IEEEauthorblockA
+{
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong, P.R. China\\
+hjli@cse.cuhk.edu.hk
+}
+}
+}
+\maketitle
+
+\begin{abstract}
+
+We have developed idock and igrow for computational drug discovery. idock is a multithreaded structure-based virtual screening tool for flexible ligand docking. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with AutoDock Vina, idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. igrow is a multithreaded ligand synthesis tool for structure-based molecular design. Compared with AutoGrow, igrow achieves a speedup of x.x in terms of CPU time and a speedup of x.x in terms of elapsed time on average. Both idock and igrow are free and open source under Apache License 2.0. idock is available at https://GitHub.com/HongjianLi/idock and igrow is available at https://GitHub.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X and FreeBSD are provided. Examples and API documentations are also provided.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+
+bioinformatics, chemoinformatics, drug discovery, molecular docking, virtual screening, ligand synthesis, molecular design, multithreading
+
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+As the X-ray crystallography technology evolves, more and more structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository Protein Data Bank (PDB) \cite{539,537}. This rapid evolution catalyzes the development of various protein-ligand docking tools for structure-based drug discovery.
+
+Protein-ligand docking is a method which predicts the preferred conformation of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved. The lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover. Structure-based virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a target, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+
+Among the many docking programs, AutoDock Vina \cite{595} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596} by an order of magnitude \cite{556}. First released in 2010, Vina has been cited by over 200 publications according to Google Scholar and adopted by quite many researchers \cite{609}, demonstrating its popularity.
+
+\section{Motivations}
+
+Vina is a competitive tool well known for its fast execution and high accuracy. Nevertheless, for virtual screening, the parsed receptor and the created grid maps cannot be reused. There are enormous requests for modifying and recompiling Vina, making it support virtual screening in a superfast manner. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock. We also aimed to utilized idock to address a real life drug discovery problem as described below.
+
+AutoGrow
+
+\section{Problem Definition}
+
+
+
+\section{Method}
+
+Vina is a popular protein-ligand docking tool. Based on Vina, we developed a fast virtual screening tool called idock, and used it for the discovery of compounds that inhibit HIV RT without affecting SAHH, ADA, or PNP. idock borrows many great ideas from Vina, and meanwhile introduces its own innovations. Its input includes a rigid receptor, a flexible ligand, and a box used to restrict the conformational space to a particular binding site. Its output includes predicted conformations and their predicted free energies in kcal/mol. idock consists of two basic components, a scoring function to predict the binding affinity, and an optimization algorithm to explore the conformational space.
+
+Figure \ref{fig:idockFlowchart} shows the overall flowchart of idock. During initialization, idock precalculates the scoring function for all possible combinations of atom type pairs and interatomic distances. It parses the receptor and determines the atom types with the aid of residue sequence, and creates a thread pool to hold reusable threads. Then it enters a loop and fetches a ligand from a user-specified input folder to perform docking. It parses the ligand and determines the atom types with the aid of branch information, and meanwhile automatically detects and deactivates inactive torsions. It builds grid maps of granularity 0.15625 \AA\ by default on the fly by multithreading, and distributes multiple independent Monte Carlo tasks to the thread pool for concurrent execution. Then it merges the conformations from separate threads and clusters them with RMSD 2.0 \AA, and dumps them to the user-specified output folder and displays the predicted free energy on screen. It proceeds with the next ligand automatically until all are docked. Finally it destroys the thread pool and releases memory resources.
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=\linewidth]{Figures/Flowchart.pdf}
+%\caption{Flowchart of idock.}
+%\label{fig:idockFlowchart}
+%\end{figure}
+
+\subsection{Scoring Function}
+
+Both idock and Vina share exactly the same scoring function, which is made up of a conformation-dependent part and a conformation-independent part. The conformation-dependent part is a weighted sum of five terms over all the pairs of atom $i$ and atom $j$ that can move relative to each other. It is calculated from equations \eqref{eqn:e} and \eqref{eqn:eij} where $t_i$ and $t_j$ are the atom types of $i$ and $j$ respectively, and $r_{ij}$ is their interatomic distance. The five terms are calculated from equations \eqref{eqn:Gauss1} to \eqref{eqn:HBonding} where $d_{ij}$ is the surface distance calculated from equation \eqref{eqn:dij} where $R_{t_i}$ and $R_{t_j}$ are the Van der Waals radii of $t_i$ and $t_j$ respectively. All the units are in \AA. The weighting coefficients and the cut off at $r_{ij}$ = 8 \AA\ of the five terms are borrowed from Vina. The optimization algorithm attempts to find the global minimum of $e$ and other low-scoring conformations, which it then ranks.
+\begin{equation}
+\label{eqn:e}
+e = \sum_{i < j} e_{ij}
+\end{equation}
+\begin{eqnarray}
+\label{eqn:eij}
+e_{ij} &=& (-0.035579) * Gauss_1(t_i, t_j, r_{ij}) \nonumber \\
+       &+& (-0.005156) * Gauss_2(t_i, t_j, r_{ij}) \nonumber \\
+       &+& (+0.840245) * Repulsion(t_i, t_j, r_{ij}) \nonumber \\
+       &+& (-0.035069) * Hydrophobic(t_i, t_j, r_{ij}) \nonumber \\
+       &+& (-0.587439) * HBonding(t_i, t_j, r_{ij})
+\end{eqnarray}
+\begin{equation}
+\label{eqn:Gauss1}
+Gauss_1(t_i, t_j, r_{ij}) = e^{-(d_{ij} / 0.5)^2}
+\end{equation}
+\begin{equation}
+\label{eqn:Gauss2}
+Gauss_2(t_i, t_j, r_{ij}) = e^{-((d_{ij} - 3) / 2)^2}
+\end{equation}
+\begin{equation}
+\label{eqn:Repulsion}
+Repulsion(t_i, t_j, r_{ij}) =
+\begin{cases}
+d_{ij}^2 & \text{if } d_{ij} < 0\\
+0 &\text{if } d_{ij} \geq 0
+\end{cases}
+\end{equation}
+\begin{equation}
+\label{eqn:Hydrophobic}
+Hydrophobic(t_i, t_j, r_{ij}) =
+\begin{cases}
+1 & \text{if } d_{ij} \leq 0.5\\
+1.5 - d_{ij} & \text{if } 0.5 < d_{ij} < 1.5\\
+0 & \text{if } d_{ij} \geq 1.5\\
+\end{cases}
+\end{equation}
+\begin{equation}
+\label{eqn:HBonding}
+HBonding(t_i, t_j, r_{ij}) =
+\begin{cases}
+1 & \text{if } d_{ij} \leq -0.7\\
+d_{ij} / (-0.7) & \text{if } -0.7 < d_{ij} < 0\\
+0 & \text{if } d_{ij} \geq 0\\
+\end{cases}
+\end{equation}
+\begin{equation}
+\label{eqn:dij}
+d_{ij} = r_{ij} - (R_{t_i} + R_{t_j})
+\end{equation}
+The conformation-dependent part can be seen as the sum of intermolecular and intramolecular contributions. Hence equation \eqref{eqn:e} can be rewritten into equation \eqref{eqn:inter-intra} where $e_{inter}$ is the summation over all the heavy atoms between receptor and ligand, and $e_{intra}$ is the summation over all the 1-4 ligand heavy atoms that are separated by three consecutive covalent bonds and can move relative to each other.
+\begin{equation}
+\label{eqn:inter-intra}
+e = e_{inter} + e_{intra}
+\end{equation}
+The conformation-independent part penalizes $e_{inter}$ for ligand flexibility. The predicted free energy of the $k$th conformation for output, denoted as $e'_k$, is calculated from equation \eqref{eqn:FlexibilityPenalty} where $k$ is the subscript for conformation, $e_k$ is the conformation-dependent score of the $k$th conformation calculated from equation \eqref{eqn:e}, $e_{intra,1}$ is the $e_{intra}$ of the first, i.e. lowest-scoring conformation, $N_{ActTors}$ is the number of active torsions and $N_{InactTors}$ is the number of inactive torsions of the ligand. Note that $e_{intra,1}$, rather than $e_{intra,k}$, acts as subtrahend in order to preserve the ranking.
+\begin{equation}
+\label{eqn:FlexibilityPenalty}
+e'_k = \frac{e_k - e_{intra,1}}{1 + 0.05846 * (N_{ActTors} + 0.5 * N_{InactTors})}
+\end{equation}
+The value of $e_{ij}$ is basically a function of three variables, namely $t_i$, $t_j$, and $r_{ij}$. These three variables have both a known lower bound and a known upper bound, so it is possible to precalculate the scoring function. Since there are 17 atom types implemented in idock, the pair of $t_i$ and $t_j$ can have 153 (=17*18/2) different combinations. Since $r_{ij}$ is cut off at 8 \AA, idock uniformly samples 16,384 points in range [0, 8] to turn the continuous domain into a concrete domain, resulting in an average absolute error of merely 0.002 kcal/mol. During program initialization, idock precalculates $e_{ij}$ from equation \eqref{eqn:eij} for 153*16384 possible combinations of $t_i$, $t_j$, and $r_{ij}$. During optimization, idock approximates the true value of $e_{ij}$ by direct assignment rather than linear interpolation for faster evaluation of $e_{ij}$ at the cost of a little bit longer precalculation time and a bit more memory storage.
+
+In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of atom type \textit{t} is constructed by placing virtual probe atoms of atom type \textit{t} along the X, Y, Z dimensions of the search box at a certain granularity (Figure \ref{fig:GridMap}). The $e_{inter}$ value of these probe atoms are precalculated, so the $e_{inter}$ value of a ligand heavy atom can be approximated in some way. In Vina, the grid map granularity is hard coded to be 0.375 \AA, and the approximation is done by linear interpolation of the 8 corner probe atoms of the residing subbox. This kind of interpolation involves reading of 8 $e_{inter}$ values, computation of 3 $\alpha$ values, 12 floating-point subtractions, 24 floating-point multiplications, and 8 floating-point additions, which turned out to be a performance bottleneck when we profiled Vina. In contrast, idock exposes grid map granularity as an optional program argument with a tuned default value of 0.15625 \AA. Likewise, due to a higher density of probe atoms, idock substitutes direct assignment for linear interpolation for much faster evaluation of $e_{inter}$ at the cost of longer precalculation time and larger memory storage. Therefore, the creation of grid maps is carried out on the fly only when necessary and abstracted into parallel tasks, which are then distributed to the thread pool for concurrent execution.
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.5\linewidth]{Figures/NakedGridMap.png}
+%\caption{Grid map for fast evaluation of $e_{inter}$. Probe atoms are shown in purple.}
+%\label{fig:GridMap}
+%\end{figure}
+
+\subsection{Optimization Algorithm}
+
+Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786} Quasi-Newton method for local optimization. A succession of steps consisting of a mutation and a BFGS local optimization are taken, with each step being accepted according to the Metropolis criterion (Figure \ref{fig:DockingByMonteCarlo}, reprinted from \cite{493}). These steps are repeated over \textit{N} iterations, where \textit{N} correlates to the complexity of the ligand regarding number of heavy atoms and number of torsions. BFGS approximates the inverse Hessian matrix of the scoring function. It uses not only the value of the scoring function but also its gradient, which are the derivatives of the scoring function with respect to the position and orientation of the ligand, and the torsions for the active rotatable bonds in the ligand. A BFGS iteration derives a descent direction from the approximate inverse Hessian matrix, derives a step length along the descent direction by line search, and updates the approximation of inverse Hessian matrix. Both programs achieve multithreading by concurrently running multiple independent Monte Carlo tasks starting from random initial conformations.
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=\linewidth]{Figures/MonteCarlo.png}
+%\caption{Monte Carlo algorithm for docking. Figure modified from \cite{493}.}
+%\label{fig:DockingByMonteCarlo}
+%\end{figure}
+
+Though both programs share similar optimization algorithms, their implementations differ. Compared with Vina, the Monte Carlo iterations in idock are far fewer and the BFGS iterations are more. On one hand, the fewer number of Monte Carlo iterations is compensated by a larger number of parallel Monte Carlo tasks, which is 64 by default in idock compared to 8 in Vina, guaranteeing better conformational diversity and higher CPU utilization on multi-core computers. On the other hand, the stopping criterion of BFGS local optimization does not depend on an estimated number of iterations, which is the case in Vina, but depends on the outcome of line search. The BFGS local optimization stops if and only if no appropriate step length can be obtained by line search, thus increasing the probability of finding optimal local minimums.
+
+\subsection{Inactive Torsions}
+
+idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{fig:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the dimension of variables to optimize in the local optimization step, leading to easier finding of local minimums.
+
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.5\linewidth]{Figures/ZINC00572984.png}
+%\caption{Example of inactive torsions highlighted in yellow. Nonpolar hydrogens are not shown for clarity.}
+%\label{fig:InactiveTorsions}
+%\end{figure}
+
+\subsection{C++ Implementation Tricks}
+
+idock remarkably revises the fundamental C++ implementation. idock invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the creation of grid maps and the execution of Monte Carlo tasks. idock estimates the capacity of every vector structure and intensively utilizes Rvalue reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. idock flattens Vina's tree-like recursive data structure of ligand into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand, without explicitly detecting covalent bonds among atoms.
+
+\section{Data}
+
+\subsection{Proteins}
+
+The crystal structures of HIV RT, SAHH, ADA, and PNP were collected from the Protein Data Bank (PDB) database \cite{539,537}. Protein-ligand complexes with PDB IDs of 2ZD1, 1LI4, 3IAR, and 3BGS were selected because they were crystallized at high resolutions (Table \ref{tab:SelectedPDBEntries}). Search spaces were then manually defined in cuboid shape to be large enough for ligands to freely translate and rotate inside.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}ccccc}
+\toprule
+PDB ID & Protein & Ligand & Resolution & Box size (\AA\textsuperscript{3})\\
+\midrule
+2ZD1 & HIV RT & T27 & 1.80 \AA & 18 x 18 x 20\\
+1LI4 & SAHH   & NAD & 2.01 \AA & 26 x 24 x 18\\
+3IAR & ADA    & 3D1 & 1.52 \AA & 22 x 16 x 16\\
+3BGS & PNP    & DIH & 2.10 \AA & 18 x 18 x 20\\
+\bottomrule
+\end{tabular*}
+\caption{Selected PDB entries for HIV RT, SAHH, ADA, and PNP.}
+\label{tab:SelectedPDBEntries}
+\end{table}
+
+\subsection{Ligands}
+
+10,928 ligands were collected from the clean drug like subset of the ZINC database \cite{532}. These ligands satisfy Lipinski's \textit{Rule of Five} \cite{169} with the xLogP value of at most 5, the molecular weight between 150 Da and 500 Da, the number of hydrogen bond donors of at most 5, and the number of hydrogen bonds acceptors of at most 10.
+
+\section{Experiments and Results}
+
+The experiments include 1) validation of Vina and idock to ensure they are suitable for docking ligands against the four proteins, and 2) comparison of their virtual screening performance in terms of execution time, memory usage, predicted free energy, and predicted conformations.
+
+Vina x86 version 1.1.2 and idock x86\_64 version 1.2, the most recent versions of both programs at the moment this paper was composed, were used for experiments. Both programs were run on desktop computers with Intel Xeon Dual Quad Core 2.4GHz and 32GB RAM under Debian 10.04.1 x86\_64. The CPUs support Intel's Hyper-Threading technology, so each computer consisting of 8 physical cores can execute up to 16 logical threads simultaneously.
+
+\subsection{Program Validation}
+
+The four crystal ligands extracted from the four PDB complexes were conformationally randomized and redocked against their proteins by Vina and idock. Figure \ref{fig:Redocking} shows the four proteins in complex with their corresponding crystal and docked ligands. The ligands rendered in green are the crystal ones, the ligands rendered in red are the ones docked by Vina, and the ligands rendered in blue are the ones docked by idock. Table \ref{tab:RMSD} shows the root mean square deviations (RMSDs) between the crystal and docked conformations. The RMSDs are all below 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, indicating both programs are suitable for docking ligands against the four proteins. The RMSDs obtained by Vina are slightly better than those obtained by idock, especially for the case of PNP. This is probably due to the coarse estimation of $e_{intra}$ in idock, which does not form covalent bonds internally but simply relies on rotatable bonds to detect atom pair mobility.
+
+
+\subsection{Virtual Screening}
+
+Virtual screening was then carried out. 10,928 drug-like ligands were docked against the four proteins by Vina and idock. Since Vina can dock only one ligand in each run, a script containing 10,928 lines was generated and run instead, with each line being an execution of Vina to dock one individual ligand. Arguments to both programs were left as default. The GNU Time utility was used as profiler.
+
+Table \ref{tab:ExecutionTimeAndMemoryUsage} compares the execution time and memory usage of both programs. Vina required 428 to 504 CPU hours for one protein case, while idock required merely 88 to 184 CPU hours, resulting in a speedup of 2.5 to 4.8 and a screening performance of 1.3 drug-like ligands per CPU minute on average. In terms of elapsed time, the speedup was increased to as high as 6.3 to 10.4 because idock better utilized the CPU cores thanks to its efficient thread pool. idock also better utilized available memory to build grid maps at a high resolution and retained them along the way. Even though idock consumed more memory than Vina, its maximum resident set size did not exceed 1.5 GB, hence idock can run be on mainstream desktop computers.
+
+
+\section{Discussions}
+
+Both Vina and idock adopt the same scoring function. They differ in their C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++11 techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
+
+In Vina's official forum, there are tremendous requests for the support for virtual screening. The development of idock perfectly complements Vina. idock has built-in support for virtual screening. It searches for ligands in a user-specified folder and docks them one by one. It reuses threads and grid maps across multiple ligands. idock has very similar input and output arguments as Vina, so it should be quite easy for existing Vina users to transit to idock. Vina supports flexible receptor docking by rotating flexible side-chains. However, we have not yet implemented flexible receptor docking into idock at the moment, so users who need this kind of docking should refer to Vina.
+
+\section{Availability}
+
+Both idock and igrow are free and open source under Apache License 2.0. idock is available at https://GitHub.com/HongjianLi/idock and igrow is available at https://GitHub.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X and FreeBSD are provided. Examples and API documentations are also provided.
+
+\section{Conclusions}
+
+We have developed idock and igrow for computational drug discovery. idock is a multithreaded structure-based virtual screening tool for flexible ligand docking. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with Vina, idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. But even so, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired. 
+
+igrow is a multithreaded ligand synthesis tool for structure-based molecular design.
+
+\section{Future Directions}
+
+We have been keeping four future plans in mind: 1) porting idock to CUDA to utilize the huge computational power of NVIDIA's GPUs, 2) porting idock to OpenCL to utilize the huge computational power of AMD's GPUs, 3) integrating idock and igrow into one single program to realize grid map caching and partial docking, and 4) establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
+
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
