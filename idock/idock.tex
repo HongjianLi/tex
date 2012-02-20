@@ -76,14 +76,11 @@
 {
 \IEEEauthorblockN
 {
-Hongjian Li\IEEEauthorrefmark{1}, Kwong-Sak Leung\IEEEauthorrefmark{1} and Man-Hon Wong\IEEEauthorrefmark{1}
+Hongjian Li, Kwong-Sak Leung and Man-Hon Wong
 \IEEEauthorblockA
 {
-\IEEEauthorrefmark{1}
-Department of Computer Science and Engineering\\
-Chinese University of Hong Kong\\
-Shatin, New Territories, Hong Kong, P.R. China\\
-Email: hjli@cse.cuhk.edu.hk
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong, P.R. China\\
+\{hjli, ksleung, mhwong\}@cse.cuhk.edu.hk
 }
 }
 }
@@ -91,13 +88,13 @@ Email: hjli@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-AutoDock Vina is a competitive protein-ligand docking tool well known for its fast execution and high accuracy. Nevertheless, when docking a massive number of ligands, Vina has to be run multiple times, repeating receptor parsing and grid maps building over and over again. There are tremendous requests for revising Vina to reuse precalculated data and incorporate built-in support for virtual screening. Hence we developed idock, inheriting from AutoDock Vina the accurate scoring function and the efficient optimization algorithm, and significantly improving the fundamental implementation and numerical model for even faster execution. idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. idock is free and open source, available at https://github.com/HongjianLi/idock.
+AutoDock Vina is a competitive protein-ligand docking tool well known for its fast execution and high accuracy. Nevertheless, when docking a massive number of ligands, Vina has to be run multiple times, repeating receptor parsing and grid maps building over and over again. There are tremendous requests for revising Vina to reuse precalculated data and incorporate built-in support for virtual screening. Hence we developed idock, inheriting from AutoDock Vina the accurate scoring function and the efficient optimization algorithm, and significantly improving the fundamental implementation and numerical model for even faster execution. idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. idock is free and open source, available at https://GitHub.com/HongjianLi/idock.
 
 \end{abstract}
 
 \begin{IEEEkeywords}
 
-bioinformatics, chemoinformatics, drug discovery, molecular docking, virtual screening, multithreading
+bioinformatics, chemoinformatics, drug discovery, protein-ligand docking, virtual screening, multithreading
 
 \end{IEEEkeywords}
 
@@ -105,13 +102,13 @@ bioinformatics, chemoinformatics, drug discovery, molecular docking, virtual scr
 
 As the X-ray crystallography technology evolves, more and more structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository Protein Data Bank (PDB) \cite{539,537}. This rapid evolution catalyzes the development of various protein-ligand docking tools for structure-based drug discovery.
 
-Protein-ligand docking is a method which predicts the preferred conformation of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved. The lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover. Structure-based virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a target, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+Protein-ligand docking is a method which predicts the preferred conformation of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy. The lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover. Structure-based virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a target, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
 
-Among the many docking programs, AutoDock Vina \cite{595} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596} by an order of magnitude \cite{556}. First released in 2010, Vina has been cited by over 200 publications according to Google Scholar and adopted by quite many researchers \cite{609}, demonstrating its popularity.
+Among the many protein-ligand docking programs, AutoDock Vina \cite{595} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596} by an order of magnitude \cite{556}. First released in 2010, Vina has been cited by over 260 publications according to Google Scholar and adopted by quite many researchers \cite{609}, demonstrating its popularity.
 
 \section{Motivation}
 
-Vina is a competitive tool well known for its fast execution and high accuracy. Nevertheless, for virtual screening, the parsed receptor and the created grid maps cannot be reused. There are enormous requests for modifying and recompiling Vina, making it support virtual screening in a superfast manner. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock. We also aimed to utilized idock to address a real life drug discovery problem as described below.
+Vina is a popular and competitive protein-ligand docking tool well known for its fast execution and high accuracy. Nevertheless, Vina is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatly parsing the same receptor and creating the same grid maps, and thus degrading performance. There are enormous requests from community for modifying and recompiling Vina to make it support virtual screening in a superfast manner by reusing receptor and grid maps. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock. Moreover, we incorporated many implementation tricks to further speedup idock and utilized idock to address a real life drug discovery problem.
 
 \section{Problem Definition}
 
@@ -258,7 +255,7 @@ idock automatically detects and deactivates inactive torsions, which are present
 
 \subsection{C++ Implementation Tricks}
 
-idock remarkably revises the fundamental C++ implementation. idock invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the creation of grid maps and the execution of Monte Carlo tasks. idock estimates the capacity of every vector structure and intensively utilizes Rvalue reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. idock flattens Vina's tree-like recursive data structure of ligand into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand, without explicitly detecting covalent bonds among atoms.
+idock remarkably revises the fundamental C++ implementation. idock invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the creation of grid maps and the execution of Monte Carlo tasks. idock estimates the capacity of every vector structure and intensively utilizes Rvalue reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. idock flattens Vina's tree-like recursive data structure of ligand into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand.
 
 \section{Data}
 
@@ -292,7 +289,7 @@ PDB ID & Protein & Ligand & Resolution & Box size (\AA\textsuperscript{3})\\
 
 The experiments include 1) validation of Vina and idock to ensure they are suitable for docking ligands against the four proteins, and 2) comparison of their virtual screening performance in terms of execution time, memory usage, predicted free energy, and predicted conformations.
 
-Vina x86 version 1.1.2 and idock x86\_64 version 1.0, the most recent versions of both programs at the moment this paper was composed, were used for experiments. Both programs were run on desktop computers with Intel Xeon Dual Quad Core 2.4GHz and 32GB RAM under Ubuntu 10.04.1 x86\_64. The CPUs support Intel's Hyper-Threading technology, so each computer consisting of 8 physical cores can execute up to 16 logical threads simultaneously.
+Vina x86 version 1.1.2 and idock x86\_64 version 1.0, the most recent versions of both programs at the moment these experiments were carried out, were used for experiments. Both programs were run on desktop computers with Intel Xeon Dual Quad Core 2.4GHz and 32GB RAM under Ubuntu 10.04.1 x86\_64. The CPUs support Intel's Hyper-Threading technology, so each computer consisting of 8 physical cores can execute up to 16 logical threads simultaneously.
 
 \subsection{Program Validation}
 
@@ -506,13 +503,13 @@ ZINC44392991 & 4.24 & 1 & 6 & 391 & 6\\
 
 \section{Discussion}
 
-Both Vina and idock adopt the same scoring function. They differ in their C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++0x techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
+Both Vina and idock adopt the same scoring function. They differ in their C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++11 techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
 
 In Vina's official forum, there are tremendous requests for the support for virtual screening. The development of idock perfectly complements Vina. idock has built-in support for virtual screening. It searches for ligands in a user-specified folder and docks them one by one. It reuses threads and grid maps across multiple ligands. idock has very similar input and output arguments as Vina, so it should be quite easy for existing Vina users to transit to idock. Vina supports flexible receptor docking by rotating flexible side-chains. However, we have not yet implemented flexible receptor docking into idock at the moment, so users who need this kind of docking should refer to Vina.
 
 \section{Availability}
 
-idock is open source under Apache License 2.0 and is freely available at https://github.com/HongjianLi/idock. idock is cross platform and has been tested against various operating systems and compilers. Docking examples and API documentations are also provided.
+idock is open source under Apache License 2.0 and is freely available at https://GitHub.com/HongjianLi/idock. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X and FreeBSD are provided. Docking examples and API documentations are also provided.
 
 \section{Conclusion}
 
