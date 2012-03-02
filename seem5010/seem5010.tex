@@ -70,7 +70,7 @@
 
 \begin{document}
 
-\title{Modern Website for queries on DBLP and Bio4j data with Neo4j and node.js} % can use linebreaks \\ within to get better formatting as desired
+\title{Modern Website for Fast Queries on DBLP and Bio4j Data with Neo4j and Node.js} % can use linebreaks \\ within to get better formatting as desired
 \author
 {
 \IEEEauthorblockN
@@ -86,70 +86,93 @@ hiji@cse.cuhk.edu.hk
 }
 \maketitle
 
-\begin{abstract}
+%\begin{abstract}
 
 
 
-\end{abstract}
+%\end{abstract}
 
-\begin{IEEEkeywords}
+%\begin{IEEEkeywords}
 
-Web, HTML5, CSS3, NoSQL, Graph Database, Neo4j, node.js
+%Web, HTML5, CSS3, NoSQL, Graph Database, Neo4j, node.js
 
-\end{IEEEkeywords}
+%\end{IEEEkeywords}
 
 \section{Introduction}
 
-NoSQL refers to a new class of database management systems (DBMS) that greatly differ from the traditional relational database management systems (RDBMS). NoSQL is special in the sense that it no longer embraces SQL as its primary query language. NoSQL neither requires fixed table schemas, nor supports join operations. NoSQL is well known for its high performance and horizontal scalability in certain data-intensive applications such as large-scale indexing, real time web, and multimedia streaming. In the recent decade, NoSQL has evolved from an experimental toy into a stable and highly productive DBMS for a wide variety of modern applications.
+NoSQL refers to a new class of database management systems (DBMS) that greatly differ from the traditional relational database management systems (RDBMS). NoSQL is special in the sense that it no longer embraces SQL as its primary query language. NoSQL neither requires fixed table schemas, nor supports join operations. NoSQL is well known for its high performance and horizontal scalability in certain data-intensive applications such as large-scale indexing, real time web, and multimedia streaming. In the recent decade, NoSQL has evolved from an experimental toy into a stable and highly productive DBMS for a wide spectrum of modern applications.
 
 Depending on the way how the data is stored and organized, NoSQL falls into categories such as key-value stores, column stores, document stores, and graph databases. Among the many NoSQL graph databases, Neo4j \citep{eifrem2009neo4j} is the most widely deployed one. In this graph-related project, we heavily utilize Neo4j as our backend store engine.
 
-Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on two orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3, therefore we are free to make use of it.
+Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3, therefore we are free to make use of it.
 
 Meanwhile, node.js, a platform built on top of Google Chrome's JavaScript runtime, has been gaining more and more popularity these days. Node.js is special that its I/O model is event-driven and non-blocking, making it particularly suitable for easily building data-intensive real-time applications in a lightweight and efficient manner. 
 
-
+There are two Neo4j drivers for node.js. One is developed by the official Neo4j team, and the other is developed by Aseem Kishore et al from the Thingdom company. Both drivers basically act as a wrapper for Neo4j's REST API.
 
 \section{Problem Definition}
 
+In this project, I plan to design a modern websites frontend as well as a graph database backend for fast and efficient queries on two large datasets, namely the computer science bibliography DBLP \citep{ley2006maintaining,Ley:2009:DLL:1687553.1687577} and the Bio4j database which is a fusion of various bioinformatics sources, using state-of-the-art technologies such as Neo4j NoSQL graph database, event-driven node.js, and the Neo4j driver for node.js from Thingdom.
 
+The challenge is how to appropriately utilize modern techniques in order to organize and query graph data in a fast manner in terms of response time and I/O throughput.
 
 \section{Motivation}
 
-
+This project serves as a very good prerequisite for constructing modern website and maintaining backend NoSQL stores for my future research. Our reserach team has developed several bioinformatics tools for computer-aided drug discovery, and we would like to host a web server to provide online drug discovery services, saving the biologists and medicinal chemists from tedious requirements of downloading, installing and configuring various software.
 
 \section{Datasets}
 
-Two databases will be explored. They are DBLP \citep{ley2006maintaining,Ley:2009:DLL:1687553.1687577} and Bio4j. These two databases are chosen because they are relatively large, appropriate for evaluating the performance of Neo4j in a large-scale manner.
+Two databases will be explored. They are DBLP and Bio4j. These two databases are chosen because they are relatively large, appropriate for evaluating the performance of Neo4j and node.js in a high-traffic environment.
 
 DBLP is a computer science bibliography. The entire DBLP collection consists of more than 1.9 million publications as of 1 Mar 2012. DBLP is organized in XML format and there is an associated DTD file describing the XML structure. Each entry of DBLP is a publication record with attributes and fields such as date and authors.
 
-Bio4j is, as described by its official website, "a bioinformatics graph based DB including most data available in UniProt KB(SwissProt + Trembl), Gene Ontology (GO), UniRef (50,90,100), RefSeq, NCBI taxonomy, and Expasy Enzyme DB." Constructing a complete copy of Bio4j database from scratch can cost several days and end up with 75 ~ 80 GB disk storage.
+Bio4j is, as described by its official website, "a bioinformatics graph based DB including most data available in UniProt KB (SwissProt + Trembl), Gene Ontology (GO), UniRef (50,90,100), RefSeq, NCBI taxonomy, and Expasy Enzyme DB." Constructing a complete copy of Bio4j database from scratch can cost several days and end up with about 80 GB disk storage.
 
 \section{Tasks}
 
 The entire project can be split into a few tasks.
 
-\subsection{Setting up Neo4j, its REST API, and node.js Environment}
+\subsection{Setting up Neo4j, its REST API, and node.js Binding}
 
-The first thing to do is of course to download and install all the necessary software, including the community edition of Neo4j, node.js, 
+The first thing to do is of course to download, install, and configure all the necessary software, including the community edition of Neo4j, node.js, Neo4j driver for node.js, and relevent node modules as the backend support, and Twitter's bootstrap HTML5 template and jQuery JavaScript library as the frontend support.
+
 \subsection{Initializing and Populating Neo4j databases}
 
- initialize an empty Neo4j database for each of the datasets. Then we shall write a parser in node.js in order to parse the 1.0 GB DBLP xml file line by line, and persist the publication records into the Neo4j database. For Bio4j, its authors provide instructions for importing Bio4j in its Wiki pages. After configuring an xml file for importing selected subsets of Bio4j data, a Java program can then be called to create the desired Bio4j database.
+An empty Neo4j database is then initialized for each of the two datasets. A parser is then written in node.js in order to parse the 1.0 GB DBLP XML file line by line, and persist the publication records into the newly created Neo4j database. For Bio4j, its authors provide instructions in its Wiki pages for importing Bio4j. After configuring an XML file for importing selected subsets of Bio4j data sources, a Java program can then be called to populate the Bio4j database with the desired data.
 
-\subsection{Hosting Code on GitHub and
+\subsection{Exploiting Neo4j's Traversal and Built-in Graph Algorithms}
+
+Neo4j has a very powerful traversal yet to be further exploited. It also implements several well-known graph algorithms, e.g. shortest paths, Dijkstra, A*, to name a few. Making use of these amazing features for complex queries remains a difficult task.
+
+\subsection{Exploiting Neo4j's Fulltext Search Engine Lucene}
+
+Neo4j inherits most of its indexing capabilities from the famous Lucene project funded by the Apache Software Foundation. An Neo4j index in a graph database maps a key-value pair to a node or to a relationship between two nodes. The mapping can be either exact or approximate, with the latter being known as fulltext search.
+
+\subsection{Building a Website Frontend}
+
+The last task is to encapsulate the above functionalities into a modern website. Twitter's bootstrap will serve as the template for HTML5 and CSS3, and jQuery will serve as the JavaScript client for getting and postting HTTP reqeusts, and receiving and processing HTTP responses.
 
 \section{Working Plan}
 
-So far I have installed Neo4j v1.6.1, node.js v0.6.11, and bootstrap v2.0.1, and properly configured the REST web server of Neo4j. I will finish writing the DBLP parser in node.js by Mar 8, and finish populating the Neo4j database of DBLP by Mar 10. Then I will compose a few simple scritps
+So far I have installed Neo4j v1.6.1, node.js v0.6.11, Neo4j driver for node.js v0.2.4, and bootstrap v2.0.1 on an Arch Linux machine with kernel v3.2.8, and properly configured the REST web server of Neo4j. Here is the tentative plan:
 
-Adding citations.
+\begin{itemize}
+\item By Mar 8, finish writing the DBLP parser in node.js.
+\item By Mar 10, finish populating the Neo4j database of DBLP.
+\item By Mar 17, finish mapping useful and common queries into appropriate forms of traversal.
+\item By Mar 24, finish learning and applying Lucene fulltext indexing.
+\item By Mar 31, partially finish building the frontend website, and finish writing mid-way report.
+\end{itemize}
 
 \section{Availability}
 
+Upon project completion, all relevent code files and documentations will be made available under an open source license.
 
+\section{Additional Notes}
 
-\section{Conclusion}
+This project is rather technical. From the academic viewpoint, there is no innovation, and the final report will not be submittable to any international conference. However, I still decide to do it because I view it as solid premise for my future research. All the techniques involved in this project will become extremely useful when it comes to building websites and database layers for our own research tools. Moreover, I believe both NoSQL and Node.js will thrive in the foreseeable future. I'm just a bit afraid that I might not have enough time to fullfill all the tasks mentioned above because all the techniques are so new to me that they will definitely cost some time from learrning to mastering.
+
+%\section{Conclusion}
 
 
 
