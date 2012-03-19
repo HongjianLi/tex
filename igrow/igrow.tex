@@ -63,24 +63,16 @@ Figure \ref{fig:Flowchart} shows the overall flowchart of igrow.
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{Figures/Methods/Flowchart.pdf}
+\includegraphics[width=\linewidth]{Figures/Flowchart.pdf}
 \caption{Flowchart of igrow.}
 \label{fig:Flowchart}
 \end{figure}
 
+igrow remarkably revises the fundamental C++ implementation. igrow invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the execution of mutation and crossover operators. igrow estimates the capacity of every vector structure and intensively utilizes Rvalue reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. igrow accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand, without explicitly detecting covalent bonds among atoms.
+
 \subsection{Genetic Operators}
 
 
-
-\subsection{idock}
-
-Grid map reuse.
-
-Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786} Quasi-Newton method for local optimization. Both programs achieve multithreading by concurrently running multiple independent Monte Carlo tasks starting from random initial conformations.
-
-\subsection{C++ Implementation Tricks}
-
-igrow remarkably revises the fundamental C++ implementation. idock invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the creation of grid maps and the execution of Monte Carlo tasks. idock estimates the capacity of every vector structure and intensively utilizes Rvalue reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. idock flattens Vina's tree-like recursive data structure of ligand into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand, without explicitly detecting covalent bonds among atoms.
 
 \section{Data}
 
@@ -121,69 +113,13 @@ Grid box size & 22 x 18 x 20 \AA$^3$ & 16 x 16 x 18 \AA$^3$ & 22 x 26 x 22 \AA$^
 
 We aimed to select initial ligands that spread across wide ranges of free energies and molecular weights. The 3 ligands of PDB heterogeneous molecule IDs TRS, T27 and 4DX are respectively native ligands of GSK3$\beta$, HIV RT and HIV PR, hence they were included.
 
-Additionally, we retrieved 5 more ligands from ZINC \cite{55}, namely ZINC01019824, ZINC08442219, ZINC09365179, ZINC18153302, and ZINC20030231. The free energies and molecular weights of these 5 ligands spread across a wide range.
-
-Totally 8 unique initial ligands were chosen, as shown in figure \ref{fig:UniqueInitialLigands}. The 5 ZINC ligands were repeatedly used as initial ligands for each of the 3 receptors, resulting in a total of 18 initial ligands under the context of the 3 receptors. Note that even for the same ZINC initial ligand, its predicted free energy varies when docking to different receptors.
-
-\begin{figure*}
-\centering
-\subfloat[TRS]
-{
-  \label{subfig:Ligands-TRS}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/TRS.eps}
-}
-\subfloat[T27]
-{
-  \label{subfig:Ligands-T27}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/T27.eps}
-}
-\subfloat[4DX]
-{
-  \label{subfig:Ligands-4DX}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/4DX.eps}
-}
-\subfloat[ZINC01019824]
-{
-  \label{subfig:Ligands-ZINC01019824}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/ZINC01019824.eps}
-}
-\subfloat[ZINC08442219]
-{
-  \label{subfig:Ligands-ZINC08442219}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/ZINC08442219.eps}
-}
-\subfloat[ZINC09365179]
-{
-  \label{subfig:Ligands-ZINC09365179}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/ZINC09365179.eps}
-}
-\subfloat[ZINC18153302]
-{
-  \label{subfig:Ligands-ZINC18153302}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/ZINC18153302.eps}
-}
-\subfloat[ZINC20030231]
-{
-  \label{subfig:Ligands-ZINC20030231}
-  \includegraphics[width=0.11\linewidth]{Figures/Ligands/ZINC20030231.eps}
-}
-\caption{Stick representations and molecular weights of the 8 unique initial ligands.}
-\label{fig:UniqueInitialLigands}
-\end{figure*}
-
-Phosphorus is a very common chemical element found in drugs. However, AutoGrow does not natively support phosphorus. Its bond length library does not include phosphorus, so it must rely on PDB CONECT records to detect covalent bonds. In contrast, igrow has built-in support for phosphorus. Its source code incorporates bond lengths for phosphorus, so it can recover covalent bonds from PDB ATOM/HETATM records. To test such capability, we picked an additional phosphorus-containing ligand named TFO from PDB, and generated ligands from TFO docking to HIV reverse transcriptase. The input ligand file consists of ATOM records only.
-
 \subsection{Fragment Library}
 
-Ligands are mutated by appending new fragments from a fragment library. There are two fragment libraries that accompanied with the release of AutoGrow, namely the small-fragment and the large-fragment libraries. We tested both libraries internally, and noticed early convergence when using the large-fragment library, which was quite problematic for testing purposes. So we focused on the small-fragment library, which is made up of 46 fragments. They are small in size, having 3 to 15 atoms and an average of 9.6 atoms with a standard deviation of 2.8 \cite{114}.
+ZINC clean shards
 
 \section{Results}
 
-We tested igrow v1.14 and compared it with AutoGrow 2.0.4, the most recent versions of both programs at the moment this paper was composed. The parameter settings for AutoGrow and igrow are listed in table \ref{tab:ParameterSettings}. The default values for AutoGrow were retained, i.e. 10, 20, 20, and 8 for the number of elitists, children, mutants, and generations, respectively.
-
-The maximum number of atoms was set to 80 because we noticed from initial trials that the generated ligands of final generation consisted of around 70 atoms but their molecular weight already exceeded 500 Da.
-
-To make a fair comparison, the settings for igrow were set to be identical to AutoGrow.
+We tested igrow v1.0 and compared it with AutoGrow 2.0.4, the most recent versions of both programs at the moment this paper was composed. The parameter settings for AutoGrow and igrow are listed in table \ref{tab:ParameterSettings}. The default values for AutoGrow were retained, i.e. 10, 20, 20, and 8 for the number of elitists, children, mutants, and generations, respectively.
 
 \begin{table}
 \centering
@@ -198,7 +134,6 @@ Number of elitists & 10 & 10\\
 Number of children & 20 & 20\\
 Number of mutants & 20 & 20\\
 Number of generations & 8 & 24\\
-Docking frequency & 1 & 3\\
 Max number of atoms & 80 & 80\\
 \bottomrule
 \end{tabular*}
@@ -213,47 +148,6 @@ So far we have collected 3 receptors, each of which is associated with 6 initial
 In order to validate the correctness of ligands generated by igrow, we picked out the best ligand from each test case and visualized it in complex of its corresponding receptor. Here, the best ligand refers to the one that have the lowest free energy.
 Figure \ref{fig:BestLigands} demonstrates one particular test case.
 
-\begin{figure*}[p]
-\centering
-\includegraphics[width=1\linewidth]{Figures/Results/Best5.eps}
-\caption{Average free energies and molecular weights of the best 5 ligands generated by AutoGrow and igrow of each generation. Generation 0 refers to the initial ligand. Blue circles: average free energies of the best 5 ligands generated by AutoGrow. Green diamonds: average free energies of the best 5 ligands generated by igrow. Red squares: average molecular weights of the best 5 ligands generated by AutoGrow. Purple triangles: average molecular weights of the best 5 ligands generated by igrow. First 6 initial ligands dock to glycogen synthase kinase 3 beta. Middle 6 initial ligands dock to HIV reverse transcriptase. Last 6 initial ligands dock to HIV protease.}
-\label{fig:Best5}
-\end{figure*}
-
-\begin{figure*}
-\centering
-\subfloat[Initial ligand.]
-{
-  \label{subfig:1J1B-ZINC01019824}
-  \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824.eps}
-}
-\subfloat[The best ligand generated by AutoGrow.]
-{
-  \label{subfig:1J1B-ZINC01019824-AutoGrow}
-  \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-AutoGrow.eps}
-}
-\subfloat[The best ligand generated by igrow.]
-{
-  \label{subfig:1J1B-ZINC01019824-igrow}
-  \includegraphics[width=0.31\linewidth]{Figures/Results/1J1B-ZINC01019824-igrow.eps}
-}
-\caption{The initial ligand and the best ligands generated by AutoGrow and igrow, in the test case of ZINC01019824 docking to GSK3$\beta$. Hydrogen bonds are represented as dotted green lines.}
-\label{fig:BestLigands}
-\end{figure*}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=1\linewidth]{Figures/Results/Exeution_time_with_legend.eps}
-\caption{Average execution times of AutoGrow and igrow, categorized by 3 receptors.}
-\label{fig:ExecutionTime}
-\end{figure*}
-
-Figure \ref{subfig:1J1B-ZINC01019824} shows that the initial ligand ZINC01019824 does not form any hydrogen bond with GSK3$\beta$. It contains carbon and hydrogens atoms only, which are neither hydrogen bond donor nor acceptor. Its predicted free energy is -6.9 kcal/mol and its molecular weight is 194 Da.
-
-Figure \ref{subfig:1J1B-ZINC01019824-AutoGrow} shows that the best ligand generated by AutoGrow is predicted to form 4 hydrogens bonds, interacting with Tyr134, Pro136, Gln185, and Asn186 of GSK3$\beta$. Its predicted free energy is -11.9 kcal/mol and its molecular weight is 572 Da, 72\% lower in free energy and 195\% larger in molecular weight than the initial ligand.
-
-Figure \ref{subfig:1J1B-ZINC01019824-igrow} shows that the best ligand generated by igrow is predicted to form 9 hydrogens bonds, interacting with Asp133, Tyr134, Pro184, Gln185 and Asn186 of GSK3$\beta$. Its predicted free energy is -11.2 kcal/mol and its molecular weight is 505 Da, 62\% lower in free energy and 160\% larger in molecular weight than the initial ligand.
-
 \subsection{Free Energy and Molecular Weight}
 
 The goal of fragment-based growing strategy is not to generate one single best ligand, but a population of drug-like ligands to be shortlisted for further verifications by wet lab experiments. Therefore it is more meaningful to dig into the average performance of the best several ligands. Hence the predicted free energies and molecular weights of the best 5 ligands were plotted against generation number in figure \ref{fig:Best5}.
@@ -261,10 +155,6 @@ The goal of fragment-based growing strategy is not to generate one single best l
 \subsection{Execution Time}
 
 We also measured the execution times of AutoGrow and igrow. Since all the test cases were run for 9 times, their average execution times are shown in figure \ref{fig:ExecutionTime}.
-
-\subsection{Handling Phosphorus}
-
-igrow has built-in support for phosphorus. To examine such capability, from PDB we picked TFO, a phosphorus-containing initial ligand, as an additional test case. The input ligand file contained no PDB CONECT records. The result is shown in the supplementary materials, showing both the best generated ligand and the curves of predicted free energy and molecular weight. In contrast, AutoGrow failed to grow TFO.
 
 \section{Discussions}
 
@@ -280,16 +170,11 @@ Averaging all the 18 test cases, in general igrow executes about 30\% faster tha
 
 \section{Availability}
 
-igrow is free and open source under Apache License 2.0. It is written in C++ and available at http://GitHub.com/HongjianLi/igrow.
+igrow is free and open source under Apache License 2.0. It is written in C++ and available at http://GitHub.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Docking examples and API documentations are also provided.
 
 \section{Conclusions}
 
 We have developed igrow, an efficient tool for computational synthesis of potent ligands.
-igrow has inherited the existing mutation and crossover operators from AutoGrow and we have invented two new genetic operators, namely split and merging.
-The split operator ensures that ligands will not exceed upper bound.
-The merging operator is basically a reversed operator of split which accelerates ligand growing.
-igrow implements Lipinski's rule of five to ensure druggability.
-The comprehensive results show that igrow outperforms AutoGrow in terms of free energy, molecular weight and execution time.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
