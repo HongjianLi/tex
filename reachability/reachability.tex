@@ -1,7 +1,5 @@
-\documentclass[12pt, conference, compsocconf]{../IEEEtran}
+\documentclass[12pt,conference,compsocconf]{../IEEEtran}
 \usepackage{xltxtra}
-\usepackage{subfig}
-\usepackage{booktabs}
 \usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
@@ -26,10 +24,7 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Background
-Main focus
-Discussion
-Future
+Reachability query is to answer whether a node is reachable from another node in a graph. It has been widely applied in road networks, social networks, biological networks and so on. The major challenge is to answer reachability queries in very large graphs with high efficiency in terms of both space and time. In this paper, we briefly review the latest algorithms and data structures for reachability queries since \citeyear{1063}. Finally we discuss the current breakthroughs, the bottleneck in the whole picture, and possible future directions.
 
 \end{abstract}
 
@@ -41,81 +36,51 @@ Future
 
 \section{Introduction}
 
-Given two vertices $u$ and $v$ in a directed graph $G = (V, E)$, reachability queries ask whether there is a path from $u$ to $v$ in G?
+Given two vertices $u$ and $v$ in a directed graph $G = (V, E)$, reachability queries ask whether there is a path from $u$ to $v$?
 
-Where the problem comes from?
+The applications of reachability queries can be found in road networks, route planning, social networks, web ontologies, XML databases, model checking, program analysis, RDF graph management, virtual marketing, and the like. Particularly, bioinformatics is regarded as the major driving force of the development of reachability requeries. A wide variety of biological networks, such as, ranging from molecular level to cellular level to inter-species level, gene regulatory networks, coexpression networks, protein-protein interaction networks, genetic interaction networks, metabolic networks, gene-drug interaction networks, signaling networks, neural networks, disease transmission networks, phylogenetic networks, and food web, have been constantly inspiring researchers to develop novel algorithms and data structures for effective and efficient reachability queries.
 
-Why it is important?
-Reachability in massive graphs has always been a challenging question partly because neither online query processing nor index pre-computation offer a pragmatic solution for this well researched problem. But its applicability in many diverse areas, especially in biological domain (such as metabolic pathways, protein protein interaction networks), has elevated the need for an efficient reachability answering method that not only supports fast query response, but also requires moderate amount of indexing.
+Given a directed graph $G = (V, E)$ where $n = |V|$ and $m = |E|$, the two straightforward and classical methods for reachability queries are DFS/BFS and transitive closure, representing two extremes. On one hand, DFS/BFS requires no index at all but directly traverses the graph online. It has $O(n + m)$ index size and zero construction time, but can take up to $O(n + m)$ query time. On the other hand, transitive closure precomputes the reachability between every pair of vertices and is thus an offline approach. It features $O(1)$ query time but suffers from $O(n^2)$ index size and $O(nm)$ construction time.
 
-analysis of social networks, model
-checking and route planning
-program analysis [15, 14], for
-the purpose of compiler optimisations or to find bugs
-
+In real world applications, neither DFS/BFS nor transitive closure offer a pragmatic solution. A middle ground among the two approaches has
+recently gained popularity. It relies on constructing complicated indexes to precompute part of the reachability information in order to answer reachability queries in a fast manner. Most contemporary solutions favor a reasonable combination of index size, construction time and query time for a class of applications. They attempt to find optimal balance in between, but this is hard, especially for massive graphs. Therefore, reachability queries in massive graphs have always been a challenge.
 
 \section{Existing Methods}
 
-Comparison
-Have your own evaluation
-Use others results and give reasons
+A state-of-the-art review published in \citeyear{1063} \citep{1063} summaries various kinds of graph-based coding schemes for reachability queries. They are traversal approaches such as Tree+SSPI and GRIPP, dual-labeling, tree cover, chain cover, path-tree cover \citep{1066}, 2-hop cover, 3-hop cover \citep{1067}, and distance-aware 2-hop cover. In order to avoid overlapping, this paper only reviews those new techniques that emerged afterwards. % except path-tree cover \citep{1066} and 3-hop cover \citep{1067}
 
-The cost of reachability query computation using traditional
-algorithms such as depth first search or transitive closure has
-been found to be prohibitive and unacceptable in massive
-graphs such as biological interaction networks, or pathways.
-Contemporary solutions mainly take two distinct approaches
-- precompute reachability in the form of transitive closure
-(trade space for time) or use state space search (trade time
-for space). A middle ground among the two approaches has
-recently gained popularity. It precomputes part of the reach-
-ability information as a complex index so that most queries
-can be answered within a reasonable time. In this approach,
-the main cost now is creation of the index, and response gen-
-eration using it as well as the space needed to materialize the
-structure. Most contemporary solutions favor a combination
-of these costs to be efficient for a class of applications.
+Nowadays, the following situations in graph are increasingly common:
 
+\begin{itemize}
+\item Edges bear different types to represent different relationships.
+\item Compression schemes help result in a compact data structure.
+\item Graphs are as large as having millions of nodes and edges.
+\item Only partial index rebuilding is necessary for graph updates.
+\item Edges are associated with a probability to appear.
+\item Automatic selection of optimal ad-hoc index for a graph database.
+\end{itemize}
 
-\citep{1066} path tree
+\Citeauthor{1052} propose a class of reachability queries in which an edge comes along with a regular expression of a certain form \citep{1052}. They develop an algorithm for answering reachability queries in quadratic time. In order to satisfy label constraints, \Citeauthor{1055} propose several techniques to minimize the search space in path-label transitive closure computation \citep{1055}, and \Citeauthor{1057} maximally compress the generalized transitive closure for labeled graphs with a tree-based index framework utilizing the directed maximal weighted spanning tree algorithm and sampling techniques \citep{1057}.
 
-\citep{1067} 3-HOP
+\Citeauthor{1054} propose a new variant of bit vector compression scheme termed Partitioned Word-Aligned Hybrid (PWAH) by introducing word partitions, resulting in a more compact data structure than interval lists \citep{1054}. They observe that when computing transitive closure, reachable vertices tend to cluster together. \Citeauthor{1058} present a simple heuristics to achieve a linear time tree decomposition algorithm, and correlate the query time and the index size \citep{1058}. \Citeauthor{1060} propose Path-Hop, a new indexing scheme more space-efficient than those schemes based on 2-Hop cover and yet has query processing speed comparable to those chain/tree covers \citep{1060}.
 
-\citep{1063} is state-of-the-art review in 2010.
-
-In more and more graphs, edges may bear different types, representing different kinds of relationships. \Citeauthor{1052} propose a class of reachability queries in which an edge comes along with a regular expression of a certain form \citep{1052}. They develop an algorithm for answering reachability queries in quadratic time.
+\Citeauthor{1059} present GRAIL, a very simple but scalable reachability index on the basis of randomized interval labeling \citep{1059}. They claim GRAIL to be the only index that can scale to millions of nodes and edges.
 
 \Citeauthor{1053} make use of graph segmentation and propose a hierarchical index to reduce index size, while at the same time retain query efficiency \citep{1053}. They show that index rebuilding is not required for a large class of updates, distinguishing the index itself from all other contemporary methods.
 
-\Citeauthor{1054} propose a new variant of bit vector compression scheme termed Partitioned Word-Aligned Hybrid (PWAH) by introducing word partitions, resulting in a more compact data structure than interval lists \citep{1054}. They observe that when computing transitive closure, reachable vertices tend to cluster together.
+\Citeauthor{1056} propose effective bounding techniques to obtain the upper bound of reachability probability between the source and destination, and determine if a source vertex could reach a destination vertex with probabilty larger than a user specified threshold $t$ \citep{1056}.
 
-\citep{1055} given a label set S and two vertices u1 and u2 in a large directed graph G, we verify whether there exists a path from u1 to u2 under label constraint S. Several techniques are proposed in this paper to minimize the search space in computing path-label transitive closure.
-
-\citep{1057} introduce a novel tree-based index framework which utilizes the directed maximal weighted spanning tree algorithm and sampling techniques to maximally compress the generalized transitive closure for the labeled graphs.
-
-\citep{1056} each edge in a graph could be associated with a probability to appear. to determine if a source vertex could reach a destination vertex with probabilty larger than a user specified probability value t.
-
-\citep{1058} present a novel indexing method based on the concept of tree decomposition. 
-
-\citep{1059} GRAIL, that is based on the idea of randomized interval labeling. GRAIL is the only index that can scale to millions of nodes and edges.
-
-\citep{1060} propose a new indexing scheme, called Path-Hop, which is even more space-efficient than those schemes based on 2-Hop cover and yet has query processing speed comparable to those chain/tree covers. 
-
-\citep{1061} propose a hierarchical prediction framework, based on neural networks and a set of graph features and a knowledge base on past predictions, to select the optimal index for a graph database.
+\Citeauthor{1061} propose a hierarchical prediction framework in order to automatically select the optimal index for a graph database \citep{1061}. The framework is trained by neural networks with a set of graph features and a knowledge base on past predictions.
 
 \section{Discussion}
 
-Summary on current works
-  Avoid overlapping with existing reviews
+New and specific algorithms and data structures are being actively developed for reachability queries and their variants. The motivations are several fold: to adapt to labeled edges that are more expressive, to maximally compress index size, to apply to very large graphs of millions of nodes and edges, to avoid full index rebuilding for graph updates, to deal with probabilistic reachability queries, and to automatically select optimal ad-hoc index. There is no universal algorithm or data structure for all the above problems. Researchers invest their effort not only into finding optimal balance between index size, construction time and query time, but also into handling new types of reachability queries with slight modifications.
 
 \section{Prospectives}
 
-What will be done in the future? (Further emphasis on large graph)
-  Consequences of current breakthroughs
-  Bottleneck in the whole picture
-    No universal algorithm and structure
+At the moment, there is neither a single technique that can well solve all kinds of reachability queries, nor a comprehensive toolsuite that integrates all the available methods. The new algorithms and data structures aim to solve merely a specific kind of reachability queries.
 
-Data structures that are more compact and more efficient for reachability queries.
+In the future, research on reachability queries will continue to emphasize on very large graphs. As a result, highly memory efficient algorithms and data structures will play the major role. In addition to software improvement, it is likely that GPU hardware will also give a hand due to its very huge computational power.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
