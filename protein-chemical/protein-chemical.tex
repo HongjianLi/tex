@@ -64,19 +64,19 @@ The STRING and STITCH databases are explored. The latest version of STRING is 9,
 
 \section{Progress So Far}
 
-So far I have installed Neo4j v1.6.1, node.js v0.6.11, Neo4j driver for node.js v0.2.4, and bootstrap v2.0.1 on an Arch Linux machine with kernel v3.2.8, and properly configured the REST web server of Neo4j. Here is the tentative plan:
+I have installed neo4j v1.6.1, node.js v0.6.14, neo4j driver for node.js v0.2.4, and Twitter's bootstrap v2.0.2, and properly configured the REST web server of neo4j.
 
-I have downloaded, installed, and configured all the necessary software, including the community edition of Neo4j, node.js, Neo4j driver for node.js, and relevent node modules as the backend support, and Twitter's bootstrap HTML5 template and jQuery JavaScript library as the frontend support.
+I have done a survey on graph visualization packages based on HTML5 and javascript.
 
 \section{Plan for the Rest}
 
 \subsection{Initializing and Populating Neo4j databases}
 
-An empty Neo4j database is then initialized for each of the two datasets. A parser is then written in node.js in order to parse the 1.0 GB DBLP XML file line by line, and persist the publication records into the newly created Neo4j database. For Bio4j, its authors provide instructions in its Wiki pages for importing Bio4j. After configuring an XML file for importing selected subsets of Bio4j data sources, a Java program can then be called to populate the Bio4j database with the desired data.
+
 
 \subsection{Exploiting Neo4j's Traversal and Built-in Graph Algorithms}
 
-Neo4j has a very powerful traversal yet to be further exploited. It also implements several well-known graph algorithms, e.g. shortest paths, Dijkstra, A*, to name a few. Making use of these amazing features for complex queries remains a difficult task.
+Neo4j has a very powerful traversal yet to be further exploited. It also implements several well-known graph algorithms, e.g. shortest paths, Dijkstra, A*, to name a few.
 
 \subsection{Exploiting Neo4j's Fulltext Search Engine Lucene}
 
