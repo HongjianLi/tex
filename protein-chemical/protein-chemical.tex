@@ -8,7 +8,7 @@
 
 \begin{document}
 
-\title{Modern Website for Fast Queries on DBLP and Bio4j Data with Neo4j and Node.js} % can use linebreaks \\ within to get better formatting as desired
+\title{Integrating Protein-Protein and Protein-Chemical Interactions with Neo4j and Node.js} % can use linebreaks \\ within to get better formatting as desired
 \author
 {
 \IEEEauthorblockN
@@ -24,11 +24,11 @@ hiji@cse.cuhk.edu.hk
 }
 \maketitle
 
-%\begin{abstract}
+\begin{abstract}
 
+Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. 
 
-
-%\end{abstract}
+\end{abstract}
 
 %\begin{IEEEkeywords}
 
@@ -38,33 +38,37 @@ hiji@cse.cuhk.edu.hk
 
 \section{Introduction}
 
-NoSQL refers to a new class of database management systems (DBMS) that greatly differ from the traditional relational database management systems (RDBMS). NoSQL is special in the sense that it no longer embraces SQL as its primary query language. NoSQL neither requires fixed table schemas, nor supports join operations. NoSQL is well known for its high performance and horizontal scalability in certain data-intensive applications such as large-scale indexing, real time web, and multimedia streaming. In the recent decade, NoSQL has evolved from an experimental toy into a stable and highly productive DBMS for a wide spectrum of modern applications.
+NoSQL is referred to as a new class of database management systems (DBMS) that greatly differ from the traditional relational database management systems (RDBMS). NoSQL is special in the sense that it no longer embraces SQL as its primary query language. NoSQL neither requires fixed table schemas, nor supports join operations. NoSQL is well known for its high performance and horizontal scalability in certain data-intensive applications such as large-scale indexing, real time web, and multimedia streaming. In the recent decade, NoSQL has evolved from an experimental toy into a stable and highly productive DBMS for a wide spectrum of modern applications.
 
-Depending on the way how the data is stored and organized, NoSQL falls into categories such as key-value stores, column stores, document stores, and graph databases. Among the many NoSQL graph databases, Neo4j \citep{eifrem2009neo4j} is the most widely deployed one. In this graph-related project, we heavily utilize Neo4j as our backend store engine.
+Depending on the way how the data is stored and organized, NoSQL falls into categories such as key-value stores, column stores, document stores, and graph databases. Among the many NoSQL graph databases, Neo4j \citep{1076} is the most highly recognized and widely deployed one, and is therefore used as a backend store engine in this graph-related project.
 
-Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3, therefore we are free to make use of it.
+Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3 license, therefore we are free to make use of it.
 
-Meanwhile, node.js, a platform built on top of Google Chrome's JavaScript runtime, has been gaining more and more popularity these days. Node.js is special that its I/O model is event-driven and non-blocking, making it particularly suitable for easily building data-intensive real-time applications in a lightweight and efficient manner. 
+Meanwhile, node.js, a platform built on top of Google Chrome's V8 JavaScript runtime, has been gaining more and more popularity these years. Node.js is special that its I/O model is event-driven and non-blocking, making it particularly suitable for easily building data-intensive real-time applications in a lightweight and efficient manner. 
 
-There are two Neo4j drivers for node.js. One is developed by the official Neo4j team, and the other is developed by Aseem Kishore et al from the Thingdom company. Both drivers basically act as a wrapper for Neo4j's REST API.
+There are two Neo4j drivers for node.js. One is developed by the official Neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for Neo4j's REST API.
 
 \section{Problem Definition}
 
-In this project, I plan to design a modern websites frontend as well as a graph database backend for fast and efficient queries on two large datasets, namely the computer science bibliography DBLP \citep{ley2006maintaining,Ley:2009:DLL:1687553.1687577} and the Bio4j database which is a fusion of various bioinformatics sources, using state-of-the-art technologies such as Neo4j NoSQL graph database, event-driven node.js, and the Neo4j driver for node.js from Thingdom.
+STRING (Search Tool for the Retrieval of Interacting Genes/Proteins) \citep{1070,1071,1072,1073,1074,1075} is a database of known and predicted protein-protein interactions. The interactions include direct (physical) and indirect (functional) associations, which are derived from four sources, namely genomic context, high-throughput experiments, conserved coexpression and previous knowledge. STRING quantitatively integrates interaction data from these sources for a large number of organisms, and transfers information between these organisms where applicable.
 
-The challenge is how to appropriately utilize modern techniques in order to organize and query graph data in a fast manner in terms of response time and I/O throughput.
+STTICH (Search Tool for Interactions of Chemicals) \citep{1068,1069} is a resource to explore known and predicted interactions of chemicals and proteins. Chemicals are linked to other chemicals and proteins by evidence derived from experiments, databases and the literature.
+
+STRING and STITCH are separately hosted and maintained. Updates to one are not automatically reflected in the other. In addition, they both use PostgreSQL, a traditional relational database management system (RDBMS), to store primary data and precomputed predictions. This could result in a large amount of join operations, which are the bottleneck of query performance. Furthermore, the graph visualization in their websites relies on Adobe Flash, which is a commercial product and is believed to be replace by the open standard HTML5.
+
+I am motivated by the desire to overcome the limitations mentioned above and thus propose to reorganize from scratch their protein-protein and protein-chemical interaction data for fast and efficient queries using state-of-the-art technologies such as Neo4j NoSQL graph database, event-driven node.js, the Neo4j driver for node.js from Thingdom, and modern website client scripts.
 
 \section{Motivation}
 
-This project serves as a very good prerequisite for constructing modern website and maintaining backend NoSQL stores for my future research. Our reserach team has developed several bioinformatics tools for computer-aided drug discovery, and we would like to host a web server to provide online drug discovery services, saving the biologists and medicinal chemists from tedious requirements of downloading, installing and configuring various software.
+This project serves as a very good prerequisite for constructing modern website and maintaining backend NoSQL stores for my future research. Our reserach team has developed several bioinformatics tools for computer-aided drug discovery, and I would like to host a web server to provide online drug discovery services, saving the biologists and medicinal chemists from tedious requirements of downloading, installing and configuring various software.
 
 \section{Datasets}
 
-Two databases will be explored. They are DBLP and Bio4j. These two databases are chosen because they are relatively large, appropriate for evaluating the performance of Neo4j and node.js in a high-traffic environment.
+Two databases will be explored. They are STITCH 3 and STRING 9. These two databases are chosen because they are relatively large, appropriate for evaluating the performance of Neo4j and node.js in a high-traffic environment.
 
-DBLP is a computer science bibliography. The entire DBLP collection consists of more than 1.9 million publications as of 1 Mar 2012. DBLP is organized in XML format and there is an associated DTD file describing the XML structure. Each entry of DBLP is a publication record with attributes and fields such as date and authors.
+The latest version of STRING database is 9, covering 5,214,234 proteins from 1133 organisms.
 
-Bio4j is, as described by its official website, "a bioinformatics graph based DB including most data available in UniProt KB (SwissProt + Trembl), Gene Ontology (GO), UniRef (50,90,100), RefSeq, NCBI taxonomy, and Expasy Enzyme DB." Constructing a complete copy of Bio4j database from scratch can cost several days and end up with about 80 GB disk storage.
+The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms.
 
 \section{Tasks}
 
@@ -105,10 +109,6 @@ So far I have installed Neo4j v1.6.1, node.js v0.6.11, Neo4j driver for node.js 
 \section{Availability}
 
 Upon project completion, all relevent code files and documentations will be made available under an open source license.
-
-\section{Additional Notes}
-
-This project is rather technical. From the academic viewpoint, there is no innovation, and the final report will not be submittable to any international conference. However, I still decide to do it because I view it as solid premise for my future research. All the techniques involved in this project will become extremely useful when it comes to building websites and database layers for our own research tools. Moreover, I believe both NoSQL and Node.js will thrive in the foreseeable future. I'm just a bit afraid that I might not have enough time to fullfill all the tasks mentioned above because all the techniques are so new to me that they will definitely cost some time from learrning to mastering.
 
 %\section{Conclusion}
 
