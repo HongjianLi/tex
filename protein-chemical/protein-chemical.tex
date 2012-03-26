@@ -1,7 +1,7 @@
-\documentclass[10pt, conference, compsocconf]{../IEEEtran}
+\documentclass[10pt,conference,compsocconf]{../IEEEtran}
 \usepackage{xltxtra}
-\usepackage{subfig}
-\usepackage{booktabs}
+%\usepackage{subfig}
+%\usepackage{booktabs}
 \usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
@@ -26,13 +26,13 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. 
+Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. In this project, I intend to utilize neo4j and node.js to integrate both protein-protein and protein-chemical interaction data, and establish a modern website for fast query and vivid visualization.
 
 \end{abstract}
 
 %\begin{IEEEkeywords}
 
-%Web, HTML5, CSS3, NoSQL, Graph Database, Neo4j, node.js
+%Web, HTML5, CSS3, NoSQL, Graph Database, neo4j, node.js
 
 %\end{IEEEkeywords}
 
@@ -42,41 +42,33 @@ NoSQL is referred to as a new class of database management systems (DBMS) that g
 
 Depending on the way how the data is stored and organized, NoSQL falls into categories such as key-value stores, column stores, document stores, and graph databases. Among the many NoSQL graph databases, Neo4j \citep{1076} is the most highly recognized and widely deployed one, and is therefore used as a backend store engine in this graph-related project.
 
-Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3 license, therefore we are free to make use of it.
+Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3 license, which allows free usage.
 
 Meanwhile, node.js, a platform built on top of Google Chrome's V8 JavaScript runtime, has been gaining more and more popularity these years. Node.js is special that its I/O model is event-driven and non-blocking, making it particularly suitable for easily building data-intensive real-time applications in a lightweight and efficient manner. 
 
-There are two Neo4j drivers for node.js. One is developed by the official Neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for Neo4j's REST API.
-
-\section{Problem Definition}
-
-STRING (Search Tool for the Retrieval of Interacting Genes/Proteins) \citep{1070,1071,1072,1073,1074,1075} is a database of known and predicted protein-protein interactions. The interactions include direct (physical) and indirect (functional) associations, which are derived from four sources, namely genomic context, high-throughput experiments, conserved coexpression and previous knowledge. STRING quantitatively integrates interaction data from these sources for a large number of organisms, and transfers information between these organisms where applicable.
-
-STTICH (Search Tool for Interactions of Chemicals) \citep{1068,1069} is a resource to explore known and predicted interactions of chemicals and proteins. Chemicals are linked to other chemicals and proteins by evidence derived from experiments, databases and the literature.
-
-STRING and STITCH are separately hosted and maintained. Updates to one are not automatically reflected in the other. In addition, they both use PostgreSQL, a traditional relational database management system (RDBMS), to store primary data and precomputed predictions. This could result in a large amount of join operations, which are the bottleneck of query performance. Furthermore, the graph visualization in their websites relies on Adobe Flash, which is a commercial product and is believed to be replace by the open standard HTML5.
-
-I am motivated by the desire to overcome the limitations mentioned above and thus propose to reorganize from scratch their protein-protein and protein-chemical interaction data for fast and efficient queries using state-of-the-art technologies such as Neo4j NoSQL graph database, event-driven node.js, the Neo4j driver for node.js from Thingdom, and modern website client scripts.
+To the best of my knowledge, there are two neo4j drivers for node.js. One is developed by the official neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for neo4j's REST API.
 
 \section{Motivation}
 
-This project serves as a very good prerequisite for constructing modern website and maintaining backend NoSQL stores for my future research. Our reserach team has developed several bioinformatics tools for computer-aided drug discovery, and I would like to host a web server to provide online drug discovery services, saving the biologists and medicinal chemists from tedious requirements of downloading, installing and configuring various software.
+STRING (Search Tool for the Retrieval of Interacting Genes/Proteins) \citep{1070,1071,1072,1073,1074,1075} is a database of known and predicted protein-protein interactions, including direct (physical) and indirect (functional) associations derived from four sources, namely genomic context, high-throughput experiments, conserved coexpression and previous knowledge. STRING quantitatively integrates interaction data from these sources for a large number of organisms, and transfers information between these organisms where applicable.
+
+STTICH (Search Tool for Interactions of Chemicals) \citep{1068,1069} is a resource to explore known and predicted protein-chemical interactions. Chemicals are linked to other chemicals and proteins by evidence derived from experiments, databases and the literature.
+
+STRING and STITCH are separately hosted and maintained. Updates to one are not automatically reflected in the other. In addition, they both use PostgreSQL, a traditional relational database management system (RDBMS), to store primary data and precomputed predictions. This could result in a large amount of join operations, the bottleneck of query performance. Furthermore, the graph visualization in their websites relies on Adobe Flash, a commercial product believed to be replaced by the open standard HTML5.
+
+I am motivated by the desire to overcome the limitations mentioned above and thus propose to reorganize from scratch their protein-protein and protein-chemical interaction data for fast and efficient queries using state-of-the-art technologies such as neo4j NoSQL graph database, event-driven node.js, neo4j driver for node.js from Thingdom, and modern website built on top of Twitter's bootstrap template in HTML5.
 
 \section{Datasets}
 
-Two databases will be explored. They are STITCH 3 and STRING 9. These two databases are chosen because they are relatively large, appropriate for evaluating the performance of Neo4j and node.js in a high-traffic environment.
+The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms.
 
-The latest version of STRING database is 9, covering 5,214,234 proteins from 1133 organisms.
+\section{Progress So Far}
 
-The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms.
+So far I have installed Neo4j v1.6.1, node.js v0.6.11, Neo4j driver for node.js v0.2.4, and bootstrap v2.0.1 on an Arch Linux machine with kernel v3.2.8, and properly configured the REST web server of Neo4j. Here is the tentative plan:
 
-\section{Tasks}
+I have downloaded, installed, and configured all the necessary software, including the community edition of Neo4j, node.js, Neo4j driver for node.js, and relevent node modules as the backend support, and Twitter's bootstrap HTML5 template and jQuery JavaScript library as the frontend support.
 
-The entire project can be split into a few tasks.
-
-\subsection{Setting up Neo4j, its REST API, and node.js Binding}
-
-The first thing to do is of course to download, install, and configure all the necessary software, including the community edition of Neo4j, node.js, Neo4j driver for node.js, and relevent node modules as the backend support, and Twitter's bootstrap HTML5 template and jQuery JavaScript library as the frontend support.
+\section{Plan for the Rest}
 
 \subsection{Initializing and Populating Neo4j databases}
 
@@ -94,21 +86,9 @@ Neo4j inherits most of its indexing capabilities from the famous Lucene project 
 
 The last task is to encapsulate the above functionalities into a modern website. Twitter's bootstrap will serve as the template for HTML5 and CSS3, and jQuery will serve as the JavaScript client for getting and postting HTTP reqeusts, and receiving and processing HTTP responses.
 
-\section{Working Plan}
-
-So far I have installed Neo4j v1.6.1, node.js v0.6.11, Neo4j driver for node.js v0.2.4, and bootstrap v2.0.1 on an Arch Linux machine with kernel v3.2.8, and properly configured the REST web server of Neo4j. Here is the tentative plan:
-
-\begin{itemize}
-\item By Mar 8, finish writing the DBLP parser in node.js.
-\item By Mar 10, finish populating the Neo4j database of DBLP.
-\item By Mar 17, finish mapping useful and common queries into appropriate forms of traversal.
-\item By Mar 24, finish learning and applying Lucene fulltext indexing.
-\item By Mar 31, partially finish building the frontend website, and finish writing mid-way report.
-\end{itemize}
-
 \section{Availability}
 
-Upon project completion, all relevent code files and documentations will be made available under an open source license.
+Upon project completion, all relevent code files and documentations will be made available under Apache License 2.0.
 
 %\section{Conclusion}
 
