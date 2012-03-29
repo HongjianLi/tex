@@ -1,5 +1,6 @@
 \documentclass[12pt,conference,compsocconf]{../IEEEtran}
 \usepackage{xltxtra}
+\usepackage{booktabs}
 \usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
@@ -24,7 +25,7 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Reachability query is to answer whether a node is reachable from another node in a graph. It has been widely applied in road networks, social networks, biological networks and so on. The major challenge is to answer reachability queries in very large graphs with high efficiency in terms of both space and time. In this paper, we briefly review the latest algorithms and data structures for reachability queries since \citeyear{1063}. Finally we discuss the current breakthroughs, the bottleneck in the whole picture, and possible future directions.
+Reachability query is to answer whether a node is reachable from another node in a graph. It has been widely applied in road networks, social networks, biological networks and so on. The major challenge is to answer reachability queries in very large graphs with high efficiency in terms of both space and time. In this paper, I briefly review the latest algorithms and data structures for reachability queries. Finally I discuss the current breakthroughs, the bottleneck in the whole picture, and possible future directions.
 
 \end{abstract}
 
@@ -36,20 +37,51 @@ Reachability query is to answer whether a node is reachable from another node in
 
 \section{Introduction}
 
-Given two vertices $u$ and $v$ in a directed graph $G = (V, E)$, reachability queries ask whether there is a path from $u$ to $v$?
+Given two vertices $u$ and $v$ in a directed acyclic graph $G = (V, E)$, reachability queries ask whether there is a path from $u$ to $v$?
 
-The applications of reachability queries can be found in road networks, route planning, social networks, web ontologies, XML databases, model checking, program analysis, RDF graph management, virtual marketing, and the like. Particularly, bioinformatics is regarded as the major driving force of the development of reachability requeries. A wide variety of biological networks, such as, ranging from molecular level to cellular level to inter-species level, gene regulatory networks, coexpression networks, protein-protein interaction networks, genetic interaction networks, metabolic networks, gene-drug interaction networks, signaling networks, neural networks, disease transmission networks, phylogenetic networks, and food web, have been constantly inspiring researchers to develop novel algorithms and data structures for effective and efficient reachability queries.
+This mini survey merely reviews reachability queries in a directed acyclic graph (DAG) because reachability queries in an undirected graph degenerate into a trivial problem, and a directed graph can be easily transformed into a directed acyclic graph by coalescing strongly connected components into vertices.
 
-Given a directed graph $G = (V, E)$ where $n = |V|$ and $m = |E|$, the two straightforward and classical methods for reachability queries are DFS/BFS and transitive closure, representing two extremes. On one hand, DFS/BFS requires no index at all but directly traverses the graph online. It has $O(n + m)$ index size and zero construction time, but can take up to $O(n + m)$ query time. On the other hand, transitive closure precomputes the reachability between every pair of vertices and is thus an offline approach. It features $O(1)$ query time but suffers from $O(n^2)$ index size and $O(nm)$ construction time.
+The applications of reachability queries can be found in road networks, route planning, social networks, web ontologies, XML databases, model checking, program analysis, RDF graph management, virtual marketing, and the like. Particularly, bioinformatics is regarded as the major driving force of the development of reachability queries. A wide variety of biological networks, such as, ranging from molecular level to cellular level to inter-species level, gene regulatory networks, coexpression networks, protein-protein interaction networks, genetic interaction networks, metabolic networks, gene-drug interaction networks, signaling networks, neural networks, disease transmission networks, phylogenetic networks, and food web, have been constantly inspiring researchers to develop novel algorithms and data structures for effective and efficient reachability queries.
 
-In real world applications, neither DFS/BFS nor transitive closure offer a pragmatic solution. A middle ground among the two approaches has
-recently gained popularity. It relies on constructing complicated indexes to precompute part of the reachability information in order to answer reachability queries in a fast manner. Most contemporary solutions favor a reasonable combination of index size, construction time and query time for a class of applications. They attempt to find optimal balance in between, but this is hard, especially for massive graphs. Therefore, reachability queries in massive graphs have always been a challenge.
+Given a directed acyclic graph $G = (V, E)$ where $n = |V|$ and $m = |E|$, two straightforward and classical methods for reachability queries are DFS/BFS and transitive closure, representing two extremes. On one hand, DFS/BFS requires no index at all but directly traverses the graph online. It has $O(n + m)$ index size and zero construction time, but can take up to $O(n + m)$ query time. On the other hand, transitive closure precomputes the reachability between every pair of vertices and is thus an offline approach. It features $O(1)$ query time but suffers from $O(n^2)$ index size and $O(nm)$ construction time.
+
+In real world applications, neither DFS/BFS nor transitive closure offer a pragmatic solution. A middle ground among the two approaches has recently gained popularity. It relies on constructing complicated indexes to precompute part of the reachability information in order to answer reachability queries in a fast manner. Most contemporary solutions favor a reasonable combination of index size, construction time and query time (Table \ref{tab:complexity}) for a class of applications. They attempt to find optimal balance in between, but this is hard, especially for massive graphs. Therefore, reachability queries in massive graphs have always been a challenge.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}l@{}l@{}l@{}l}
+\toprule
+Method & Index size & Construction time & Query time\\
+\midrule
+DFS/BFS & $O(n + m)$ & $0$ & $O(n + m)$\\
+Transitive Closure & $O(n^2)$ & $O(nm)$ & $O(1)$\\
+Opt. Chain Cover & $O(nk_c)$ & $O(n^2 + k_cn\sqrt{k_c})$ & $O(\log k_c)$\\
+Opt. Tree Cover & $O(n^2)$ & $O(nm)$ & $O(\log n)$\\
+Dual Labeling & $O(n + t^2)$ & $O(n + m + t^3)$ & $O(1)$\\
+Labeling+SSPI & $O(n + m)$ & $O(n + m)$ & $O(m - n)$\\
+GRIPP & $O(n + m)$ & $O(n + m)$ & $O(m - n)$\\
+Path-Tree & $O(nk_p)$ & $O(mk_p)/O(mn)$ & $O(\log ^2 k_p)$\\
+2-Hop Cover & $O(nm^{1/2})$ & $O(n^3|Tc|)$ & $O(m^{1/2})$\\
+3-Hop Cover & $O(\log n + k_p)$ & $O(k_pn^2 * |Con(G)|)$ & $O(nk_p)$\\
+\bottomrule
+\end{tabular*}
+\caption{Complexity comparison among contemporary methods for reachability queries. $n$ is the number of vertices ($n = |V|$). $m$ is the number of edges ($m = |E|$). $k_c$ is the width of the chain decomposition. $k_p$ is the width of the path decomposition. $t$ is the number of non-tree edges left after removing all the edges of a spanning tree. $Con(G)$ is transitive closure contour of $G$.}
+\label{tab:complexity}
+\end{table}
 
 \section{Existing Methods}
 
-A state-of-the-art review published in \citeyear{1063} \citep{1063} summaries various kinds of graph-based coding schemes for reachability queries. They are traversal approaches such as Tree+SSPI and GRIPP, dual-labeling, tree cover, chain cover, path-tree cover \citep{1066}, 2-hop cover, 3-hop cover \citep{1067}, and distance-aware 2-hop cover. In order to avoid overlapping, this paper only reviews those new techniques that emerged afterwards. % except path-tree cover \citep{1066} and 3-hop cover \citep{1067}
+The existing methods roughly fall into two categories. One category attempts to decompose the original graph into simple graph structures, such as chains and trees, to compute and compress the transitive closure and help with reachability answering. Methods belonging to this category include optimal chain cover, optimal tree cover, path-tree cover, etc. The other category attempts to make use of a subset of vertices as intermediaries in which each vertex saves a list of intermediate vertices it can reach and a list of intermediate vertices that can reach it. Methods belonging to this category include 2-hop cover, 3-hop cover, HOPI, etc.
 
-Nowadays, the following situations in graph are increasingly common:
+In \citeyear{1066}, \Citeauthor{1066} proposed path-tree cover \citep{1066}, which is classified into the first category. The development of path-tree cover was motivated by a list of challenging issues which tree-based approaches do not sufficiently address, including but not limited to expensive computational cost of finding a good tree cover and failure to represent some common types of DAGs like the Grid type. The path-tree cover is a spanning subgraph of $G$ in a tree shape where each node in the tree represents a path in the original graph and each edge in the tree represents the edges between two paths in the original graph. Reachability queries can be answered in $O(1)$ time when each vertex is labeled with a 3-tuple. The path-tree cover was theoretically proved to always perform the compression of transitive closure better than or equal to the optimal tree cover approaches and chain decomposition approaches. Experiments on both very sparse real and synthetic datasets showed that path-tree cover achieved an average of 3 to 10 times better compression rate than the optimal tree cover approach, and 2 to 3 times better query time than the optimal tree cover approach.
+
+In \citeyear{1067}, the same authors proposed 3-hop cover \citep{1067}, which is classified into the second category. The development of 3-hop cover was motivated by the large size of compressed transitive closure of simple graph covering approaches when graphs are dense, which is the case for citation networks, semantic web, and biological networks. The 3-hop indexing is analogous to the highway system of transportation network. To reach a destination from a starting point, one needs to get on an appropriate highway and get off at the right exit to reach the destination. The basic idea in 3-hop indexing is to utilize a simple graph structure like a chain/tree, rather than a sole vertex, as an intermediate hop as if it were a highway. The goal is to assign all vertices with a minimal total number of entry and exit points so that they can maximally compress the transitive closure. An efficient algorithm was derived to generate an index which approximates the minimal 3-hop indexing by a logarithmic factor. The 3-hop labeling was theoretically shown to always have a better minimal compression ratio than 2-hop labeling, and its construction time is much faster than 2-hop. Experiments on both real and synthetic datasets of various densities ($|E|/|V|$) ranging from 2 to 25 showed that the 3-hop index size was on average 2.0 to 6.0 times better than the path-tree approach, and 1.1 to 1.5 times better than 2-hop. In terms of index construction time, 3-hop was several orders of magnitude faster than 2-hop.
+
+A state-of-the-art review published in \citeyear{1063} \citep{1063} summaries various kinds of graph-based coding schemes for reachability queries. They are traversal approaches such as Tree+SSPI and GRIPP, dual-labeling, tree cover, chain cover, path-tree cover, 2-hop cover, 3-hop cover, and distance-aware 2-hop cover. In order to avoid overlapping, this paper only reviews those new techniques that emerged afterwards, i.e. in late 2010 or 2011.
+
+Nowadays, the following phenomena in graph are increasingly common:
 
 \begin{itemize}
 \item Edges bear different types to represent different relationships.
@@ -60,17 +92,17 @@ Nowadays, the following situations in graph are increasingly common:
 \item Automatic selection of optimal ad-hoc index for a graph database.
 \end{itemize}
 
-\Citeauthor{1052} propose a class of reachability queries in which an edge comes along with a regular expression of a certain form \citep{1052}. They develop an algorithm for answering reachability queries in quadratic time. In order to satisfy label constraints, \Citeauthor{1055} propose several techniques to minimize the search space in path-label transitive closure computation \citep{1055}, and \Citeauthor{1057} maximally compress the generalized transitive closure for labeled graphs with a tree-based index framework utilizing the directed maximal weighted spanning tree algorithm and sampling techniques \citep{1057}.
+\Citeauthor{1052} proposed a class of reachability queries in which an edge comes along with a regular expression of a certain form \citep{1052}. They developed an algorithm for answering reachability queries in quadratic time. In order to satisfy label constraints, \Citeauthor{1055} proposed several techniques to minimize the search space in path-label transitive closure computation \citep{1055}, and \Citeauthor{1057} proposed a tree-based index framework utilizing the directed maximal weighted spanning tree algorithm and sampling techniques to maximally compress the generalized transitive closure for labeled graph \citep{1057}.
 
-\Citeauthor{1054} propose a new variant of bit vector compression scheme termed Partitioned Word-Aligned Hybrid (PWAH) by introducing word partitions, resulting in a more compact data structure than interval lists \citep{1054}. They observe that when computing transitive closure, reachable vertices tend to cluster together. \Citeauthor{1058} present a simple heuristics to achieve a linear time tree decomposition algorithm, and correlate the query time and the index size \citep{1058}. \Citeauthor{1060} propose Path-Hop, a new indexing scheme more space-efficient than those schemes based on 2-Hop cover and yet has query processing speed comparable to those chain/tree covers \citep{1060}.
+\Citeauthor{1054} proposed a new variant of bit vector compression scheme termed Partitioned Word-Aligned Hybrid (PWAH) by introducing word partitions, resulting in a more compact data structure than interval lists \citep{1054}. They observed that when computing transitive closure, reachable vertices tend to cluster together. \Citeauthor{1058} presented a simple heuristics to achieve a linear time tree decomposition algorithm, and correlated the query time and the index size \citep{1058}. \Citeauthor{1060} proposed Path-Hop, a new indexing scheme more space-efficient than those schemes based on 2-Hop cover yet having query processing speed comparable to those chain/tree covers \citep{1060}.
 
-\Citeauthor{1059} present GRAIL, a very simple but scalable reachability index on the basis of randomized interval labeling \citep{1059}. They claim GRAIL to be the only index that can scale to millions of nodes and edges.
+\Citeauthor{1059} presented GRAIL, a very simple but scalable reachability index on the basis of randomized interval labeling \citep{1059}. They claimed GRAIL to be the only index that can scale to millions of nodes and edges.
 
-\Citeauthor{1053} make use of graph segmentation and propose a hierarchical index to reduce index size, while at the same time retain query efficiency \citep{1053}. They show that index rebuilding is not required for a large class of updates, distinguishing the index itself from all other contemporary methods.
+\Citeauthor{1053} made use of graph segmentation and proposed a hierarchical index to reduce index size, while at the same time retained query efficiency \citep{1053}. They showed that index rebuilding is not required for a large class of updates, distinguishing the index itself from all other contemporary methods.
 
-\Citeauthor{1056} propose effective bounding techniques to obtain the upper bound of reachability probability between the source and destination, and determine if a source vertex could reach a destination vertex with probabilty larger than a user specified threshold $t$ \citep{1056}.
+\Citeauthor{1056} proposed effective bounding techniques to obtain the upper bound of reachability probability between the source and destination, and determined if a source vertex could reach a destination vertex with probability larger than a user specified threshold $t$ \citep{1056}.
 
-\Citeauthor{1061} propose a hierarchical prediction framework in order to automatically select the optimal index for a graph database \citep{1061}. The framework is trained by neural networks with a set of graph features and a knowledge base on past predictions.
+\Citeauthor{1061} proposed a hierarchical prediction framework in order to automatically select the optimal index for a graph database \citep{1061}. The framework was trained by neural networks with a set of graph features and a knowledge base on past predictions.
 
 \section{Discussion}
 
@@ -78,7 +110,7 @@ New and specific algorithms and data structures are being actively developed for
 
 \section{Prospectives}
 
-At the moment, there is neither a single technique that can well solve all kinds of reachability queries, nor a comprehensive toolsuite that integrates all the available methods. The new algorithms and data structures aim to solve merely a specific kind of reachability queries.
+At the moment, there is neither a single technique that can well solve all kinds of reachability queries, nor a comprehensive tool suite that integrates all the available methods. The new algorithms and data structures aim to solve merely a specific kind of reachability queries.
 
 In the future, research on reachability queries will continue to emphasize on very large graphs. As a result, highly memory efficient algorithms and data structures will play the major role. In addition to software improvement, it is likely that GPU hardware will also give a hand due to its very huge computational power.
 
