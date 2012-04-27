@@ -76,7 +76,7 @@ In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic
 
 Having obtained the quantative gene-drug interaction values, they then applied both a hierarchical clustering and a PSMF method, which allows a gene or compound to be associated with more than one group. Eventually they managed to find tamoxifen, a breast cancer therapeutic, to disrupt calcium homeostasis, and find phosphatidylserine as a target for papuamide B, a cytotoxic lipopeptide with anti-HIV activity.
 
-Figure \ref{fig:1078-1} shows the results of 2D clustering. 3,418 genes are plotted on the horizontal axis and 82 conditions are plotted on the vertical axis. Red lines indicate chemical-genetic interactions. They revealed that compounds with similar cellular effects showed similar chemical-genetic profiles and thereby cluster together on the vertical axis. They listed 11 clusters (i.e. clusters i to xi) for explanation. For instance, in cluster i, latrunculin B and cytochalasin A are both actin binding agents, and in cluster ii, both staurosporine and caspofungin are cell wall synthesis inhibitors. These examples demonstrate the power of 2D clustering for grouping compounds known to inhibit the same pathway or target. Likewise, on the horizontal axis, deletion mutants with similar chemical sensitivities also cluster together, grouping functionally related genes.
+Figure \ref{fig:1078-1} shows the results of 2D hierarchical clustering. 3,418 genes are plotted on the horizontal axis and 82 conditions are plotted on the vertical axis. Red lines indicate chemical-genetic interactions. They revealed that compounds with similar cellular effects showed similar chemical-genetic profiles and thereby cluster together on the vertical axis. They listed 11 clusters (i.e. clusters i to xi) for explanation. In cluster i, both latrunculin B and cytochalasin A are actin binding agents. In cluster ii, both staurosporine and caspofungin are cell wall synthesis inhibitors. In cluster iii, both nystatin and amphotericin act by increasing the permeability of the fungal cell membrane. These 11 examples demonstrated the power of 2D hierarchical clustering for grouping compounds known to inhibit the same pathway or target. Likewise, on the horizontal axis, deletion mutants with similar chemical sensitivities also cluster together, grouping functionally related genes.
 
 \begin{figure}
 \centering
@@ -87,7 +87,7 @@ Figure \ref{fig:1078-1} shows the results of 2D clustering. 3,418 genes are plot
 
 One particular example is cluster ix, which groups tamoxifen and amiodarone together. Tamoxifen is a competitive inhibitor of estradiol binding to the estrogen receptor and a common breast cancer drug, while amiodarone is an antianginal and antiarrhythmic drug. This cluster suggested that tamoxifen may also produce antifungal activity, which was subsequently verified and confirmed by a series of biological assays \citep{1078}.
 
-One major limitation of 2D clustering is its inability to associate a gene or compound with more than one group. To address this issue, the authors applied PSMF, allowing each cluster to be defined by an arbitrary set of genes and compounds (Figure \ref{fig:1078-2}). They identified 30 factors, which were referred to as subsets of compounds detected by the algorithm.
+One major limitation of 2D hierarchical clustering is its inability to associate a gene or compound with more than one group. To address this issue, the authors applied PSMF, allowing each cluster to be defined by an arbitrary set of genes and compounds (Figure \ref{fig:1078-2}). They identified 30 factors, which were referred to as subsets of compounds detected by the algorithm.
 
 Factors 5, 6, 21 and 29 were picked out for in-depth analysis. In factor 5, papuamide B and alamethicin are the compounds that are most important in factor number 5, and this is driven by the common sensitivity of the deletion mutants listed on the y axis, with the most significant mutants at the top. Following spot dilution assays, they succeeded in linking Papuamide B, a high-molecular-weight cycliclipopeptide originally isolated from a marine sponge, to its cellular target, phosphatidylserine.
 
@@ -111,7 +111,7 @@ Inspired by the previous study \citep{1078}, in \citeyear{1079}, \Citeauthor{107
 \label{fig:1079-1}
 \end{figure}
 
-Figure \ref{fig:1079-2} depicts the inference procedures. The bipartite network of protein complexes and strains (Figure \ref{fig:10792-2}a) were abstracted into a binary association matrix (i.e. Z matrix). Both the Z matrix and the chemical-genetic profiles (i.e. E matrix) (Figure \ref{fig:10792-2}b) were input to Protein Complex-based Bayesian factor Analysis (PCBA), which yielded as output both the relative protein complex activities under chemicals and relative growth fitness of strains under chemicals (Figure \ref{fig:10792-2}c).
+Figure \ref{fig:1079-2} depicts the Bayesian inference procedures. The bipartite network of 488 protein complexes and 4,111 strains (Figure \ref{fig:1079-2}a) was abstracted into a binary association matrix (i.e. Z matrix). Both the Z matrix and the chemical-genetic profiles (i.e. E matrix) (Figure \ref{fig:1079-2}b) were input to Protein Complex-based Bayesian factor Analysis (PCBA), which yielded as output both the relative protein complex activities under chemicals and relative growth fitness of strains under chemicals (Figure \ref{fig:1079-2}c).
 
 \begin{figure}
 \centering
@@ -120,7 +120,30 @@ Figure \ref{fig:1079-2} depicts the inference procedures. The bipartite network 
 \label{fig:1079-2}
 \end{figure}
 
-Highlight the target-protein, TOR1, of rapamycin
+Similarly, the authors performed 2D hierarchical clustering (Figure \ref{fig:1079-3}). However, instead of plotting genes on the X axis and chemicals on the Y axis, in this PC-based case they plotted 82 drugs on the X axis and 488 proteins on the Y axis, claiming that such integration of prior knowledge helped to reduce the large dimension of chemical-genetic profiles (4111 by 82) into relatively small dimension of chemical-PC profiles (488 by 82) in a biologically meaningful way.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1079-3.png}
+\caption{Clustering analysis of protein complex activities. (A) Bird eyes of 2D hierarchical clustering. (B) The PC-based hierarchical dendrogram of 82 drugs using relative activities of all of 488 protein complexes as performed in \citep{1079}. (C) The strain-based hierarchical dendrogram of 82 drugs using the growth fitness of 3,418 strains as performed in \citep{1078}. Figure reprinted from \citep{1079}.}
+\label{fig:1079-3}
+\end{figure}
+
+From the chemical-PC hierarhical clustering results, the authors argued that their complex-based clusters showed more physiologically meaningful grouping of drugs compared with strain-based clusters in yeast \citep{1078}. They gave sulfometuron methyl and FK506 as a demonstration \citep{1079}. Moreover, they were able to highlight TOR1 as the target protein of rapamycin from cluster I and topoisomerase I as the target protein of camptothecin from cluster III (Figure \ref{fig:1079-4}). Even further, they could predict the MOAs of rapamycin (Figure \ref{1079-5}) and camptothecin.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1079-4.png}
+\caption{Significantly sensitive protein complexes to drugs known for their target pathway. Figure reprinted from \citep{1079}.}
+\label{fig:1079-4}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1079-5.png}
+\caption{Target pathway of rapamycin. Figure reprinted from \citep{1079}.}
+\label{fig:1079-5}
+\end{figure}
 
 \section{Discussion}
 
@@ -128,13 +151,16 @@ Have your own evaluation
 
 Summary on current works
   Avoid overlapping with existing reviews
+  
+\citep{1080}
 
 \section{Prospectives}
 
-PDB \citep{105} and ZINC \citep{532}
-What will be done in the future?
-  Consequences of current breakthroughs
-  Bottleneck in the whole picture
+In the future, two achievements can be possibly expected. They are a central repository for chemical-genetic data and advanced statistical methods for integrating more biological knowledge.
+
+The need of establishment of a universal warehouse for effectively and efficiently storing and accessing the huge amount of emerging chemical-genomic data is aroused recently given the hundreds of sequenced organisms including mammals. Since the chemical-genetic profiling experiments were done by different research groups worldwide under different environmental conditions, it would be challenging to appropriately remove the bias and absord them into a single central repository for public access. One successful example is the Protein Data Bank (PDB) \citep{105}, which collects very diverse macromolecular structures resolved by X-ray crystallography and nuclear magnetic resonance. Another successful example is the ZINC database \citep{532}, which integrates drug-like, lead-like and fragment-like ligands from various academic and commercial sources.
+
+Higher-level drug discovery application, e.g. drug synergy
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
