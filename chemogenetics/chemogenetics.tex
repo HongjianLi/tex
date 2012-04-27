@@ -87,7 +87,11 @@ Figure \ref{fig:1078-1} shows the results of 2D clustering. 3,418 genes are plot
 
 One particular example is cluster ix, which groups tamoxifen and amiodarone together. Tamoxifen is a competitive inhibitor of estradiol binding to the estrogen receptor and a common breast cancer drug, while amiodarone is an antianginal and antiarrhythmic drug. This cluster suggested that tamoxifen may also produce antifungal activity, which was subsequently verified and confirmed by a series of biological assays \citep{1078}.
 
-One major limitation of 2D clustering is its inability to associate a gene or compound with more than one group. To address this issue, the authors applied PSMF, allowing each cluster to be defined by an arbitrary set of genes and compounds (Figure \ref{fig:1078-2}). They identified 30 factors, which were referred to as subsets of compounds detected by the algorithm. They picked out factors 5, 6, 21, 29 for in-depth analysis. For example, in factor 5, papuamide B and alamethicin are the compounds that are most important in factor number 5, and this is driven by the common sensitivity of the deletion mutants listed on the y axis, with the most significant mutants at the top. Following spot dilution assays, they succeeded in linking Papuamide B, a high-molecular-weight cycliclipopeptide originally isolated from a marine sponge, to its cellular target, phosphatidylserine. For another example, in factor 29, extract 00-192, from a sea cucumber from the Commonwealth of Dominica and extract 00-132, derived from an Indonesian marine sponge, showed highly similar chemical-genetic profiles. From the two crude extracts, antifungal compounds were purified. The two compounds do not share structural features and thus chemical-genetic profiling appears to have linked molecules with disparate chemistry to the same biological activity.
+One major limitation of 2D clustering is its inability to associate a gene or compound with more than one group. To address this issue, the authors applied PSMF, allowing each cluster to be defined by an arbitrary set of genes and compounds (Figure \ref{fig:1078-2}). They identified 30 factors, which were referred to as subsets of compounds detected by the algorithm.
+
+Factors 5, 6, 21 and 29 were picked out for in-depth analysis. In factor 5, papuamide B and alamethicin are the compounds that are most important in factor number 5, and this is driven by the common sensitivity of the deletion mutants listed on the y axis, with the most significant mutants at the top. Following spot dilution assays, they succeeded in linking Papuamide B, a high-molecular-weight cycliclipopeptide originally isolated from a marine sponge, to its cellular target, phosphatidylserine.
+
+In factor 29, extract 00-192, from a sea cucumber from the Commonwealth of Dominica and extract 00-132, derived from an Indonesian marine sponge, showed highly similar chemical-genetic profiles. From the two crude extracts, antifungal compounds were purified. The two compounds do not share structural features and thus chemical-genetic profiling appears to have linked molecules with disparate chemistry to the same biological activity.
 
 \begin{figure}
 \centering
@@ -96,20 +100,31 @@ One major limitation of 2D clustering is its inability to associate a gene or co
 \label{fig:1078-2}
 \end{figure}
 
-
 \section{Protein Complex-Based Bayesian Factor Model}
 
-In \citeyear{1079}, \Citeauthor{1079} \citep{1079}.
-\citep{1080}
-\citep{1103} tutorial
-\citep{1081} is state-of-the-art review.
-\citep{1082} is state-of-the-art review.
+Inspired by the previous study \citep{1078}, in \citeyear{1079}, \Citeauthor{1079} exploited the same compendium of chemical-genetic interaction but incorporated protein-protein and genetic interactions as additional valuable biological information \citep{1079}. They assumed protein complexes (PCs) were functional units for yeast cell growth and regarded them as hidden factors and developed the PC-based Bayesian factor model that relates the chemical-genetic profile at the level of organism phenotypes to the hidden activities of PCs at the molecular level (Figure \ref{fig:1079-1}). They organized a comprehensive collection of 488 protein complexes of yeast for model-based prediction of target proteins of a drug and similar drugs.
 
-Comparison
-Have your own evaluation
-Use others results and give reasons
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1079-1.png}
+\caption{Model assumption on protein complexes as hidden factors underlying fitness of strain. Figure reprinted from \citep{1079}.}
+\label{fig:1079-1}
+\end{figure}
+
+Figure \ref{fig:1079-2} depicts the inference procedures. The bipartite network of protein complexes and strains (Figure \ref{fig:10792-2}a) were abstracted into a binary association matrix (i.e. Z matrix). Both the Z matrix and the chemical-genetic profiles (i.e. E matrix) (Figure \ref{fig:10792-2}b) were input to Protein Complex-based Bayesian factor Analysis (PCBA), which yielded as output both the relative protein complex activities under chemicals and relative growth fitness of strains under chemicals (Figure \ref{fig:10792-2}c).
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1079-2.png}
+\caption{Procedures for inferring the hidden activities of a collection of protein complexes in a cell. Figure reprinted from \citep{1079}.}
+\label{fig:1079-2}
+\end{figure}
+
+Highlight the target-protein, TOR1, of rapamycin
 
 \section{Discussion}
+
+Have your own evaluation
 
 Summary on current works
   Avoid overlapping with existing reviews
