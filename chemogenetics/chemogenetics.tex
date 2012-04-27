@@ -46,7 +46,7 @@ Chemical-genetic profiling is nowadays gaining more and more importance and popu
 
 Partly due to the massive failure of antimicrobial target-based \textit{in vitro} screening strategies over the past 20 years, chemical-genetic profiling is preferred over high-throughput screening in certain applications thanks to its ability to rapidly characterize compounds in an unbiased fashion and provide rich, functional information to elucidate their MOAs and targets.
 
-High-throughput screening is mainly limited by two factors. The pharmaceutical targets are usually limited to a small subset of specific proteins, and it could be very difficult to conduct a comprehensive screening given the facts that the small molecule chemical space consists of as many as 10\textsuperscript{60} chemical compounds and the rate of compound synthesis via combinational chemistry is constantly increasing. In contrast, chemical-genetic profiling can be genome-wide and even interspecies.
+High-throughput screening is mainly limited by two factors. The pharmaceutical targets are usually limited to a small subset of specific proteins, and it could be very difficult to conduct a comprehensive screening given the facts that the small molecule chemical space consists of as many as 10\textsuperscript{60} chemical compounds \citep{1104} and the rate of compound synthesis via combinational chemistry is constantly increasing. In contrast, chemical-genetic profiling can be genome-wide and even interspecies.
 
 \section{Background}
 
@@ -68,11 +68,34 @@ Figure \ref{fig:1082-1} compares genetic, chemical-genetic, and chemical-chemica
 \label{fig:1082-1}
 \end{figure}
 
-With the available data produced by chemical-genetic profiling, computational methods are then applied for in-depth analysis. Popular approaches include 2D hierarchical clustering, probabilistic sparse matrix factorization (PSMF) and bayesian factor model. 
+With the quantative interaction values produced by chemical-genetic profiling, computational methods are then applied for in-depth analysis. Popular approaches include 2D hierarchical clustering \citep{1078,1079,1080}, probabilistic sparse matrix factorization (PSMF) \citep{1078} and bayesian factor model \citep{1079}. Such algorithmic approaches could provide potentially important insight into drug-target pathway \citep{1078,1079} or address the debate concerning the purpose of nonessential genes \citep{1080}.
 
 \section{Compendium of Chemical-Genetic Interaction}
 
-In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic interaction profiles by testing the collection of viable yeast haploid deletion mutants for hypersensitivity to 82 compounds and natural product extracts. They then applied both a hierarchical clustering and a PSMF method, which allows a gene or compound to be associated with more than one group. Eventually they managed to  tamoxifen, a breast cancer therapeutic, was found to disrupt calcium homeostasis and phosphatidylserine (PS) was recognized as a target for papuamide B, a cytotoxic lipopeptide with anti-HIV activity. \citep{1078}
+In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic interaction profiles by testing the collection of viable yeast haploid deletion mutants for hypersensitivity to 82 compounds and natural product extracts using parallel fitness tests of large numbers of pooled deletion strains in a minimal amount of medium thanks to the unique molecular barcodes that tag and identify each deletion strain \citep{1078}. The 82 chemical perturbations contain 75 synthetic compounds and natural products, of which 23 are FDA approved, plus 7 crude antifungal extracts, derived from different marine sponges and microorganisms. The full list and the inhibitory concentrations can be found in the original publication \citep{1078}.
+
+Having obtained the quantative gene-drug interaction values, they then applied both a hierarchical clustering and a PSMF method, which allows a gene or compound to be associated with more than one group. Eventually they managed to find tamoxifen, a breast cancer therapeutic, to disrupt calcium homeostasis, and find phosphatidylserine as a target for papuamide B, a cytotoxic lipopeptide with anti-HIV activity.
+
+Figure \ref{fig:1078-1} shows the results of 2D clustering. 3,418 genes are plotted on the horizontal axis and 82 conditions are plotted on the vertical axis. Red lines indicate chemical-genetic interactions. They revealed that compounds with similar cellular effects showed similar chemical-genetic profiles and thereby cluster together on the vertical axis. They listed 11 clusters (i.e. clusters i to xi) for explanation. For instance, in cluster i, latrunculin B and cytochalasin A are both actin binding agents, and in cluster ii, both staurosporine and caspofungin are cell wall synthesis inhibitors. These examples demonstrate the power of 2D clustering for grouping compounds known to inhibit the same pathway or target. Likewise, on the horizontal axis, deletion mutants with similar chemical sensitivities also cluster together, grouping functionally related genes.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1078-1.png}
+\caption{Two-dimensional hierarchical clustering analysis of chemical-genetic profiles. Figure reprinted from \citep{1078}.}
+\label{fig:1078-1}
+\end{figure}
+
+One particular example is cluster ix, which groups tamoxifen and amiodarone together. Tamoxifen is a competitive inhibitor of estradiol binding to the estrogen receptor and a common breast cancer drug, while amiodarone is an antianginal and antiarrhythmic drug. This cluster suggested that tamoxifen may also produce antifungal activity, which was subsequently verified and confirmed by a series of biological assays \citep{1078}.
+
+One major limitation of 2D clustering is its inability to associate a gene or compound with more than one group. To address this issue, the authors applied PSMF, allowing each cluster to be defined by an arbitrary set of genes and compounds (Figure \ref{fig:1078-2}). They identified 30 factors, which were referred to as subsets of compounds detected by the algorithm. They picked out factors 5, 6, 21, 29 for in-depth analysis. For example, in factor 5, papuamide B and alamethicin are the compounds that are most important in factor number 5, and this is driven by the common sensitivity of the deletion mutants listed on the y axis, with the most significant mutants at the top. Following spot dilution assays, they succeeded in linking Papuamide B, a high-molecular-weight cycliclipopeptide originally isolated from a marine sponge, to its cellular target, phosphatidylserine. For another example, in factor 29, extract 00-192, from a sea cucumber from the Commonwealth of Dominica and extract 00-132, derived from an Indonesian marine sponge, showed highly similar chemical-genetic profiles. From the two crude extracts, antifungal compounds were purified. The two compounds do not share structural features and thus chemical-genetic profiling appears to have linked molecules with disparate chemistry to the same biological activity.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{1078-2.png}
+\caption{Visualization of results from PSMF. Figure reprinted from \citep{1078}.}
+\label{fig:1078-2}
+\end{figure}
+
 
 \section{Protein Complex-Based Bayesian Factor Model}
 
@@ -93,6 +116,7 @@ Summary on current works
 
 \section{Prospectives}
 
+PDB \citep{105} and ZINC \citep{532}
 What will be done in the future?
   Consequences of current breakthroughs
   Bottleneck in the whole picture
