@@ -8,6 +8,12 @@
 
 \begin{document}
 
+% Add page numbers
+\makeatletter
+\g@addto@macro\maketitle{\thispagestyle{plain}}
+\def\@oddfoot{\hfil \thepage \hfil}
+\makeatother
+
 \title{Chemical-Genetic Profiling and Its Applications}
 \author
 {
@@ -125,11 +131,11 @@ Similarly, the authors performed 2D hierarchical clustering (Figure \ref{fig:107
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{1079-3.png}
-\caption{Clustering analysis of protein complex activities. (A) Bird eyes of 2D hierarchical clustering. (B) The PC-based hierarchical dendrogram of 82 drugs using relative activities of all of 488 protein complexes as performed in \citep{1079}. (C) The strain-based hierarchical dendrogram of 82 drugs using the growth fitness of 3,418 strains as performed in \citep{1078}. Figure reprinted from \citep{1079}.}
+\caption{Clustering analysis of protein complex activities. (A) Bird eyes of 2D hierarchical clustering. (B) The PC-based hierarchical dendrogram of 82 drugs using relative activities of all of 488 protein complexes as performed in \citep{1079}. (C) The strain-based hierarchical dendrogram of 82 drugs using the growth fitness of 3,418 strains as performed in \citep{1078}. Figure modified from \citep{1079}.}
 \label{fig:1079-3}
 \end{figure}
 
-From the chemical-PC hierarhical clustering results, the authors argued that their complex-based clusters showed more physiologically meaningful grouping of drugs compared with strain-based clusters in yeast \citep{1078}. They gave sulfometuron methyl and FK506 as a demonstration \citep{1079}. Moreover, they were able to highlight TOR1 as the target protein of rapamycin from cluster I and topoisomerase I as the target protein of camptothecin from cluster III (Figure \ref{fig:1079-4}). Even further, they could predict the MOAs of rapamycin (Figure \ref{1079-5}) and camptothecin.
+From the chemical-PC hierarhical clustering results, the authors argued that their complex-based clusters showed more physiologically meaningful grouping of drugs compared with strain-based clusters in yeast \citep{1078}. They gave sulfometuron methyl and FK506 as a demonstration \citep{1079}. Moreover, they were able to highlight TOR1 as the target protein of rapamycin from cluster I and topoisomerase I as the target protein of camptothecin from cluster III (Figure \ref{fig:1079-4}). Even further, they could predict the MOAs of rapamycin (Figure \ref{fig:1079-5}) and camptothecin.
 
 \begin{figure}
 \centering
@@ -154,13 +160,17 @@ Summary on current works
   
 \citep{1080}
 
+bottleneck
+
 \section{Prospectives}
 
-In the future, two achievements can be possibly expected. They are a central repository for chemical-genetic data and advanced statistical methods for integrating more biological knowledge.
+In the future, two achievements can be possibly expected. They are a central repository for chemical-genetic data and high-level applications with advanced statistical methods and diverse biological knowledge.
 
-The need of establishment of a universal warehouse for effectively and efficiently storing and accessing the huge amount of emerging chemical-genomic data is aroused recently given the hundreds of sequenced organisms including mammals. Since the chemical-genetic profiling experiments were done by different research groups worldwide under different environmental conditions, it would be challenging to appropriately remove the bias and absord them into a single central repository for public access. One successful example is the Protein Data Bank (PDB) \citep{105}, which collects very diverse macromolecular structures resolved by X-ray crystallography and nuclear magnetic resonance. Another successful example is the ZINC database \citep{532}, which integrates drug-like, lead-like and fragment-like ligands from various academic and commercial sources.
+The need to establish a universal repository for effectively and efficiently warehousing and accessing the huge amount of emerging chemical-genomic data is aroused recently given the hundreds of sequenced organisms including mammals. Since the chemical-genetic profiling experiments were done by different research groups worldwide using different biological assays under different environmental conditions, it would be challenging to appropriately remove the bias and absord them into a single central database for public access. One successful example is the Protein Data Bank (PDB) \citep{105}, which collects very diverse macromolecular structures resolved by X-ray crystallography, nuclear magnetic resonance or other technologies. Another successful example is the ZINC database \citep{532}, which integrates drug-like, lead-like and fragment-like ligands from various academic and commercial sources.
 
-Higher-level drug discovery application, e.g. drug synergy
+Another trend is to apply sophisticated statistical models and computer algorithms and utilize more types of available biological data in order to really solve high-level drug discovery problems, like drug synergy, in high-level organisms, like mammals. The previous study \citep{1078}  generated a compendium of chemical-genetic interaction and made use of it for MOA prediction. They subsequent study \citep{1079} combined the compendium together with the bipartite network of protein complexes and strains and utilized the more robust PCBA approach for drug-target pathway prediction. Following this trend, it is straightforward to see such diverse biological knowledge as drug ADME profiles, protein-protein interactions, protein-chemical interactions, transcriptional regulatory network and so on being incorporated into a universal high-dimensional computational method for high-level predictions.
+
+In conclusion, as both the number of bioactive compounds and the number of sequenced genes increase, how to construct an universal database to accommodate diverse output from various research groups, and how to correctly and properly utilize such ressources for better drug discovery are likely to become challenging issues in the foreseeable future.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
