@@ -1,14 +1,11 @@
-\documentclass[12pt,conference,compsocconf]{../IEEEtran}
+\documentclass[12pt,conference,compsocconf]{article}
 \usepackage{xltxtra}
-%\usepackage{subfig}
-%\usepackage{booktabs}
 \usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
 
 \begin{document}
 
-% Add page numbers
 \makeatletter
 \g@addto@macro\maketitle{\thispagestyle{plain}}
 \def\@oddfoot{\hfil \thepage \hfil}
@@ -32,7 +29,7 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Chemical-genetic profiling of bioactive compounds has been repeatedly proved to be a powerful tool for identifying novel drugs, mode of actions of drugs and drug targets, and for better understanding the relation between genotype and phenotype. In the past two decades, research mainly concentrated on applying chemical-genetic profiling to the yeast genome, but seldom investigated into higher organisms like mammals, or higher level of practical applications like drug synergy. This survey briefly reviews the popular experimental techniques and computational methods for constructing and analyzing chemical-genetic profiles and discusses their pros and cons. In the foreseeable future, as both the number of bioactive compounds and the number of sequenced genes increase, more and more chemical-genetic profiles will emerge. How to establish an universal database to accommodate diverse output from various research groups, and how to correctly and properly utilize such ressources for better drug discovery will become challenging issues.
+Chemical-genetic profiling of bioactive compounds has been repeatedly proved to be a powerful tool for identifying novel drugs, mode of actions of drugs and drug targets, and for better understanding the relation between genotype and phenotype. In the past two decades, research mainly concentrated on applying chemical-genetic profiling to the yeast genome, but seldom investigated into higher organisms like mammals, or higher level of practical applications like drug synergy. This survey briefly reviews the popular experimental techniques and computational methods for constructing and analyzing chemical-genetic profiles and discusses their pros and cons. In the foreseeable future, as both the number of bioactive compounds and the number of sequenced genes increase, more and more chemical-genetic profiles will emerge. How to establish an universal database to accommodate diverse chemical-genetic output from various research groups, and how to correctly and properly utilize such ressources for better drug discovery will become challenging issues.
 
 \end{abstract}
 
@@ -44,7 +41,7 @@ Chemical-genetic profiling of bioactive compounds has been repeatedly proved to 
 
 \section{Introduction}
 
-Chemical genetics refers to the study of genetic responses to chemical compounds. In genome-wide level, it is called chemical genomics or chemogenomics. It embraces multiple early phase drug discovery technologies ranging from target identification and validation, through compound design and chemical synthesis, to biological testing and ADME profiling.
+Chemical genetics refers to the study of genetic responses to chemical compounds. On a genome-wide scale, it is called chemical genomics or chemogenomics. It embraces multiple early phase drug discovery technologies ranging from target identification and validation, through compound design and chemical synthesis, to biological testing and ADME profiling.
 
 Chemical-genetic profiling is nowadays gaining more and more importance and popularity as it provides a valuable tool for a wide variety of biological applications, including but not limited to rapid identifications of novel drugs, mode of actions (MOAs) of drugs and drug targets, and understanding biological systems to a better extend by relating genotype and phenotype.
 
@@ -153,14 +150,11 @@ From the chemical-PC hierarhical clustering results, the authors argued that the
 
 \section{Discussion}
 
-Have your own evaluation
+The completion of the 12.5-megabase yeast genome sequencing in the 1980s laid the foundation of chemical-genetic profiling. Ever since, chemical-genetic profiling began to gradually capture the attention of molecular biologists, thanks to its power for rapid identifications of novel drugs, MOAs and drug targets in a comprehensive manner. In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic interaction. Two years later, \Citeauthor{1079} proposed a protein complexed-based Bayesian factor model, integrating the compendium as well as biological interaction network as additional information. Both groups managed to shed light on MOAs of certain drugs. In the same year, \Citeauthor{1080} performed 1,144 chemical genomic assays on the yeast whole-genome deletion collections and quantified the growth fitness of each deletion strain in the presence of chemical or environmental stress conditions \citep{1080}. They claimed to find 97\% of gene deletions exhibite a measurable growth phenotype, suggesting nearly all genes are essential for optimal growth in at least one condition, addresses the debate concerning the purpose of nonessential genes. \Citeauthor{1103} composed a tutorial on chemical genetics \citep{1103}, explaining relevant concepts and illustrating four case studies including small molecule modulation of protein-protein interactions (PPIs), \textit{plasmodium falciparum}, hepatitis C virus and RNA interference pathways.
 
-Summary on current works
-  Avoid overlapping with existing reviews
-  
-\citep{1080}
+In my opinion, the complicated and bias experimental chemical-genetic profiling procedures constitute the bottleneck in the whole picture. 
 
-bottleneck
+pros and cons
 
 \section{Prospectives}
 
