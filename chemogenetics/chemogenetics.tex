@@ -44,7 +44,7 @@ High-throughput screening is mainly limited by two factors. The pharmaceutical t
 
 \section{Background}
 
-Chemical-genetic profiling basically measures the quantitative values of growth defects of deletion strains under exposure to chemicals. The foundation of chemical-geneitic approach was laid with the idea to sequence the 12.5-megabase yeast \textit{Saccharomyces cerevisiae} genome in the 1980s. Figure \ref{fig:1081-1} shows the six major steps for yeast fitness profiling of pooled deletion strains. Experimental detail can be found in the original publicaton \citep{1081}. Because a deletion mutant provides a model for the effect of a compound that inhibits the gene product, genetic interaction information obtained from genome-wide synthetic lethal screens of haploid deletion mutants provides a key for interpreting chemical-genetic profiles and thereby links compounds to their target pathways based on chemical-genetic interaction data alone.
+Chemical-genetic profiling measures the quantitative values of growth defects of deletion strains under exposure to chemicals. The foundation of chemical-geneitic approach was laid with the idea to sequence the 12.5-megabase yeast \textit{Saccharomyces cerevisiae} genome in the 1980s. Figure \ref{fig:1081-1} shows the six major steps for yeast fitness profiling of pooled deletion strains. Experimental detail can be found in the original publicaton \citep{1081}. Because a deletion mutant provides a model for the effect of a compound that inhibits the gene product, genetic interaction information obtained from genome-wide synthetic lethal screens of haploid deletion mutants provides a key for interpreting chemical-genetic profiles and thus links compounds to their target pathways based on chemical-genetic interaction data alone.
 
 \begin{figure}
 \centering
@@ -53,7 +53,7 @@ Chemical-genetic profiling basically measures the quantitative values of growth 
 \label{fig:1081-1}
 \end{figure}
 
-Figure \ref{fig:1082-1} compares genetic, chemical-genetic, and chemical-chemical profiling. In the case of chemical-genetic profiling, one gene product is inactivated via gene deletion and the other is inactivated by chemical inhibition (Figure \ref{fig:1082-1}a). Red indicates a significant drug-gene interaction (Figure \ref{fig:1082-1}b). Such quantative values can be used to predict the target process of unknown agents. In the case of chemical-genetic profiling, known compounds on the X-axis are clustered based on known mode of action or function, and the Y-axis shows clustering of other unknown genes with similar profiles.
+Figure \ref{fig:1082-1} compares genetic, chemical-genetic, and chemical-chemical profiling. In the case of chemical-genetic profiling, one gene product is inactivated via gene deletion and the other is inactivated by chemical inhibition (Figure \ref{fig:1082-1}a). Red indicates a significant drug-gene interaction (Figure \ref{fig:1082-1}b). Such quantative values can be used to predict the target process of unknown agents. In the case of chemical-genetic profiling, known compounds on the X axis are clustered based on known mode of action or function, and the Y axis shows clustering of other unknown genes with similar profiles.
 
 \begin{figure}
 \centering
@@ -105,7 +105,7 @@ The profiles in the previous study \citep{1078} have not been yet modeled at the
 \label{fig:1079-1}
 \end{figure}
 
-Figure \ref{fig:1079-2} depicts the Bayesian inference procedures. The bipartite network of 488 protein complexes and 4,111 strains (Figure \ref{fig:1079-2}a) was abstracted into a binary association matrix (i.e. Z matrix). Both the Z matrix and the chemical-genetic profiles (i.e. E matrix) (Figure \ref{fig:1079-2}b) were input to Protein Complex-based Bayesian factor Analysis (PCBA), which yielded as output both the relative protein complex activities under chemicals and relative growth fitness of strains under chemicals (Figure \ref{fig:1079-2}c).
+Figure \ref{fig:1079-2} depicts the Bayesian inference procedures. The bipartite network of 488 protein complexes and 4,111 strains (Figure \ref{fig:1079-2}a) was abstracted into a binary association matrix. Both the binary association matrix (i.e. Z matrix) and the chemical-genetic profiles (i.e. E matrix) (Figure \ref{fig:1079-2}b) were input to Protein Complex-based Bayesian factor Analysis (PCBA), which yielded as output both the relative protein complex activities under chemicals and relative growth fitness of strains under chemicals (Figure \ref{fig:1079-2}c).
 
 \begin{figure}
 \centering
@@ -141,44 +141,25 @@ From the chemical-PC hierarhical clustering results, the authors argued that the
 
 \section{Discussion}
 
-The completion of the 12.5-megabase yeast genome sequencing in the 1980s laid the foundation of chemical-genetic profiling. Ever since, chemical-genetic profiling began to gradually capture the attention of molecular biologists, thanks to its power for rapid identifications of novel drugs, MOAs and drug targets in a comprehensive manner. In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic interaction. Two years later, \Citeauthor{1079} proposed a protein complexed-based Bayesian factor model, integrating the compendium as well as biological interaction network as additional information. Both groups managed to shed light on MOAs of certain drugs. In the same year, \Citeauthor{1080} performed 1,144 heterozygous deletion experiments and 418 homozygous deletion experiments on the yeast whole-genome deletion collections and quantified the growth fitness of each deletion strain in the presence of chemical or environmental stress conditions \citep{1080}. They claimed to find 97\% of gene deletions exhibite a measurable growth phenotype, suggesting nearly all genes are essential for optimal growth in at least one condition, addresses the debate concerning the purpose of nonessential genes. \Citeauthor{1103} composed a tutorial on chemical genetics \citep{1103}, explaining relevant concepts and highlighting recent developments in four areas of biology, including small molecule modulation of protein-protein interactions (PPIs), \textit{plasmodium falciparum}, hepatitis C virus and RNA interference pathways.
+The completion of the 12.5-megabase yeast genome sequencing in the 1980s laid the foundation of chemical-genetic profiling. Ever since, chemical-genetic profiling began to gradually capture the attention of molecular biologists, thanks to its power for rapid identifications of novel drugs, MOAs and drug targets in a comprehensive manner.
 
-1081 review key discoveries that gave rise to the field of chemical genetics, with particular attention to chemical-genetic strategies developed for bakers’ yeast, their extension to clinically relevant microbial pathogens, and the potential of these approaches to affect antimicrobial drug discovery.
+In \citeyear{1078}, \Citeauthor{1078} generated a compendium of chemical-genetic interaction and highlighted the fact that some cellular processes are particularly sensitive to compound perturbation and that clustering of sensitivity profiles can aid in assigning MOA to previously uncharacterized compounds \citep{1078}. Nevertheless, they only cataloged 2\% to 4\% of all genetic interactions, limiting their ability to integrate chemical-genetic and genetic interaction data.
 
-1082 review CG profiling, focusing on emerging cross-species technologies and novel drug-synergy applications, as well as outlining needs within the field.
+Two years later, \Citeauthor{1079} proposed a protein complexed-based Bayesian factor model, integrating the compendium as well as biological interaction network as additional information, managing to shed light on MOAs of certain drugs \citep{1079}. In the same year, \Citeauthor{1080} performed 1,144 heterozygous deletion experiments and 418 homozygous deletion experiments on the yeast whole-genome deletion collections, one of the largest chemogenomic screening efforts to date \citep{1080}. They quantified the growth fitness of each deletion strain in the presence of chemical or environmental stress conditions, and claimed to find 97\% of gene deletions exhibite a measurable growth phenotype, suggesting nearly all genes are essential for optimal growth in at least one condition, addresses the debate concerning the purpose of nonessential genes. The study also showed that more than 500 genes (12\% of the genome) behave as multidrug-resistance (MDR) genes.
 
-1080 it suggests that virtually the entire genome is conditionally essential and therefore accessible to inhibition with small molecules. The study also showed that more than 500 genes (12\% of the genome) behave as multidrug-resistance (MDR) genes
+In \citeyear{1103}, \Citeauthor{1103} composed a tutorial on chemical genetics \citep{1103}, explaining relevant broad concepts and highlighting recent developments in four areas of biology, including small molecule modulation of protein-protein interactions (PPIs), \textit{plasmodium falciparum}, hepatitis C virus and RNA interference pathways.
 
+Recently in \citeyear{1081}, on one hand, \Citeauthor{1081} reviewed key discoveries that gave rise to the field of chemical genetics, with particular attention to chemical-genetic strategies developed for yeast, their extension to clinically relevant microbial pathogens, and the potential of these approaches to affect antimicrobial drug discovery \citep{1081}. On the other hand, \Citeauthor{1082} reviewed chemical-genomic profiling, focusing on emerging cross-species technologies and novel drug-synergy applications, as well as outlining needs within the field \citep{1082}.
 
-1078 This study also highlighted the fact that some cellular processes are particularly sensitive to compound perturbation and that clustering of sensitivity profiles can aid in assigning MOA to previously uncharacterized compounds.
+In my opinion, there are both pros and cons when comparing the PC-based approach \citep{1079} with the previous strain-based approach \citep{1078}. On one hand, the pros are obvious. The inferred results are biologically interpretable, allowing us to develop an effective way to predict target pathway of drugs. The estimation of protein complex activities by Bayesian factor model is more robust and stable because estimands are obtained by tens of thousands of samplings. The introduction of binary association matrix (i.e. Z matrix) not only allows robust computation of the equation, but also provids a window through which relevant biological information such as protein-protein interactions and genetic interactions can be integrated with experimental data.
 
-Key component of the model is Z matrix (binary association matrix), which not only allowed us to robustly compute the equation, but also provided a window through which relevant biological information such as protein-protein interactions and genetic interactions can be integrated with experimental data.
+On the other hand, the cons are also apparent. The Z matrix is just a simple and coarse binary association matrix abstracted from the bipartite network of protein complexes and strains, with a lot of valuable information lost such as interaction strength. Inherently, the incorporation of Z matrix requires prior biological knowledge, whereas PSMF analysis performed in \citep{1078} is suitable in case of no prior knowledge. The PC-based approach would not properly work if too many numbers of insufficient and incorrect components of protein complexes are used as hidden factors because some true positives of drug-target genes would be lost. In terms of data usage, only chemical-genetic profiles of about 5,000 viable yeast haploid mutants were used as observed data, discarding the effect of any of the about 1,000 essential genes to a bioactive compound. Moreover, a set of 121 genes whose corresponding deletion mutant displayed statistically significant multidrug sensitivity was removed, making the study fail to account for multidrug sensitivity, which is supposed to play a role \citep{1080}.
 
-the estimation of protein complex activities by Bayesian factor model is more robust and stable because estimands are obtained by tens of thousands of samplings.
+In summary, despite the advantages of the chemical-genetic strategies, substantial time and effort are required to construct such resources. Considering the experimental cost, researchers must choose the most appropriate method to maximize resource-to-result ratio.
 
-Z matrix too coarse. PSMF is suitable in case of no prior knowledge.
+As the state-of-the-art, the \textit{Saccharomyces} genome deletion project led by Stanford \citep{1107} aims to generate as complete a set as possible of yeast deletion strains. Four different mutant collections were generated: haploids of both mating types, homozygous diploids for non-essential genes, and heterozygous diploids. So far, the consortium has disrupted 90\% of the yeast genome. By ORF class: 92\% verified, 88\% uncharacterized and 65\% dubious ORFs have been deleted. At least 10\% of the yeast genome is redundant. More than 20,000 strains are currently available.
 
-the inferred results are biologically interpretable, which allowed us to develop an effective way to predict drug’s target pathway.
-
-
-Our PC-based approach would not properly work if too many numbers of insufficient and incorrect components of protein complexes are used as hidden factors to represent whole dynamic cellular events and also insufficient and incorrect biological interactions are integrated for the associations between PC and strains in our model. In that case, some true positives of drug-target genes would be lost.
-
-In current study, we used only chemical-genetic profiles of about 5,000 viable yeast haploid mutants as observed data for our modeling. It means that the effect of any of the about 1,000 essential genes to a bioactive compound was not able to be included as observations.
-
-
-Prior to clustering, we processed the data by removing a set of 121 genes whose corresponding deletion mutant displayed statistically significant multidrug sensitivity. investigated in \citep{1080}
-
-have only cataloged 2\%-4\% of all genetic interactions and so our ability to integrate chemical-genetic and genetic interaction data is limited
-
-In my opinion, the complicated and biased barcode-based chemical-genetic profiling procedures constitute the bottleneck in the whole picture. Many compounds are in limited supply, and thus a major challenge is to screen the collection of yeast deletion mutants efficiently. Parallel fitness tests were employed in \citep{1078}.
-
-State-of-the-art genome deletion project \citep{1107}
-
-Despite the advantages of the reverse chemical-genetic strategies described here, substantial time and effort are required to construct such resources. 
-
-the mouse conditional KO collection a predicted 3 years from completion,43 mammalian CG profiling will likely become a more straightforward assay \citep{1082}.
-
-experimental cost, researchers must choose the most appropriate method to maximize resource-to-result ratio.
+The mouse conditional KO collection a predicted 3 years from completion,43 mammalian CG profiling will likely become a more straightforward assay \citep{1082}.
 
 \section{Prospectives}
 
