@@ -1,6 +1,5 @@
 \documentclass[10pt,conference,compsocconf]{../IEEEtran}
 \usepackage{xltxtra}
-%\usepackage{subfig}
 \usepackage{booktabs}
 \usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
@@ -8,7 +7,7 @@
 
 \begin{document}
 
-\title{ichem: An Integrated Platform for Protein-Protein and Protein-Chemical Interaction Query with Neo4j and Node.js} % can use linebreaks \\ within to get better formatting as desired
+\title{ichem: An Integrated Platform for Protein-Protein and Protein-Chemical Interaction Query with Neo4j and Node.js}
 \author
 {
 \IEEEauthorblockN
@@ -30,12 +29,6 @@ Neo4j is a high-performance NoSQL graph database particularly suitable for stori
 
 \end{abstract}
 
-\begin{IEEEkeywords}
-
-NoSQL, Graph Database, neo4j, node.js, Web, HTML5, CSS3
-
-\end{IEEEkeywords}
-
 \section{Introduction}
 
 NoSQL is referred to as a new class of database management systems (DBMS) that greatly differ from the traditional relational database management systems (RDBMS). NoSQL is special in the sense that it no longer embraces SQL as its primary query language. NoSQL neither requires fixed table schemas, nor supports join operations. NoSQL is well known for its high performance and horizontal scalability in certain data-intensive applications such as large-scale indexing, real time web, and multimedia streaming. In the recent decade, NoSQL has evolved from an experimental toy into a stable and highly productive DBMS for a wide spectrum of modern applications.
@@ -44,11 +37,9 @@ Depending on the way how the data is stored and organized, NoSQL falls into cate
 
 Neo4j is, as described by its official website, "a high-performance, NOSQL graph database with all the features of a mature and robust database." It is implemented in Java yet offers remarkable performance improvement on up to three orders of magnitude for lots of graph-related applications. It is widely adopted probably because of its high performance, open source design philosophy, complete and helpful documentation, support for various programming language bindings, and large user base. Its community edition is released under GPLv3 license, which allows free usage.
 
-%An Neo4j index in a graph database maps a key-value pair to a node or to a relationship between two nodes. The mapping can be either exact or approximate, with the latter being known as fulltext search.
-
 Meanwhile, node.js, a platform built on top of Google Chrome's V8 JavaScript runtime, has been gaining more and more popularity these years. Node.js is special that its I/O model is event-driven and non-blocking, making it particularly suitable for easily building data-intensive real-time applications in a lightweight and efficient manner. 
 
-To the best of my knowledge, there are two neo4j drivers for node.js. One is developed by the official neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for neo4j's REST API.
+There are two neo4j drivers for node.js. One is developed by the official neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for neo4j's REST API. The former driver seems deprecated, therefore the latter driver is employed. Aseem Kishore also provides a template application of sosical network manager showing the use of neo4j from node.js.
 
 \section{Motivation}
 
@@ -62,7 +53,7 @@ I am motivated by the desire to overcome the limitations mentioned above and thu
 
 \section{Datasets}
 
-The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 20 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 21 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License.
+The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 20 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 21 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License (CC BY 3.0).
 
 \begin{table*}
 \centering
@@ -74,30 +65,30 @@ File & Size & Format\\
 \midrule
 \multicolumn{3}{l}{\textbf{STRING 9}}\\
 protein.sequences.v9.0.fa &  2.2 GB & FASTA with protein ID\\
+protein.aliases.v9.0.txt  &  3.9 GB & species\_ncbi\_taxon\_id\ \ \ \ protein\_id\ \ \ \ alias\ \ \ \ source\\
 protein.links.v9.0.txt    & 17.4 GB & protein1\ \ \ \ protein2\ \ \ \ score\\
 protein.actions.v9.0.txt  &  0.5 GB & item\_id\_a\ \ \ \ item\_id\_b\ \ \ \ mode\ \ \ \ action\ \ \ \ a\_is\_acting\ \ \ \ score\\
 \noalign{\smallskip\smallskip}
 \multicolumn{3}{l}{\textbf{STITCH 3}}\\
-chemicals.v3.0.tsv               & 6.2 GB & chemical\ \ \ \ name\ \ \ \ molecular\_weight\ \ \ \ SMILES\_string\\
-chemical.aliases.v3.0.tsv        & 2.0 GB & chemical\ \ \ \ alias\ \ \ \ source\\
-chemical.sources.v3.0.tsv        & 4.1 GB & flat\_chemical\ \ \ \ stereo\_chemical\ \ \ \ source\_name\ \ \ \ source\_id\\
-protein\_chemical.links.v3.0.tsv & 7.3 GB & chemical\ \ \ \ protein\ \ \ \ score\\
-actions.v2.0.tsv                 & 1.2 GB & item\_id\_a\ \ \ \ item\_id\_b\ \ \ \ mode\ \ \ \ action\ \ \ \ a\_is\_acting\ \ \ \ score\\
+chemicals.v3.0.tsv                & 6.2 GB & chemical\ \ \ \ name\ \ \ \ molecular\_weight\ \ \ \ SMILES\_string\\
+chemical.aliases.v3.0.tsv         & 2.0 GB & chemical\ \ \ \ alias\ \ \ \ source\\
+chemical.sources.v3.0.tsv         & 4.1 GB & flat\_chemical\ \ \ \ stereo\_chemical\ \ \ \ source\_name\ \ \ \ source\_id\\
+chemicals.inchikeys.v3.0.tsv      & 1.9 GB & flat\_chemical\_id\ \ \ \ stereo\_chemical\_id\ \ \ \ source\_cid\ \ \ \ inchikey\\
+chemical\_chemical.links.v3.0.tsv & 0.2 GB & chemical1\ \ \ \ chemical2\ \ \ \ textmining\\
+protein\_chemical.links.v3.0.tsv  & 7.3 GB & chemical\ \ \ \ protein\ \ \ \ score\\
 \bottomrule
 \end{tabular*}
 \caption{Flat files provided by STRING 9 and STITCH 3.}
 \label{tab:datasets}
 \end{table*}
 
-\section{Current Progress}
+\section{Implementation}
 
-On the web server side, I have installed neo4j v1.6.1, node.js v0.6.14, neo4j driver for node.js v0.2.4, and configured the REST API web server of neo4j. I have composed a simple node.js script to read flat files line by line using the carrier node module. I have collected and extracted 41 GB flat files from STRING 9 and STITCH 3, and inspected their formats for proper parsing.
+On the web server side, I have installed neo4j v1.8.M01, node.js v0.6.17, neo4j driver for node.js v0.2.9, and configured the REST API web server of neo4j. I have composed a simple node.js script to read flat files line by line using the carrier node module. I have collected and extracted 41 GB flat files from STRING 9 and STITCH 3, and inspected their formats for proper parsing.
 
 On the web client side, I have installed Twitter's bootstrap v2.0.2 and jQuery v1.7.2. I have done a mini survey on about 20 graph visualization toolsuites, and eventually decided to use JIT (JavaScript InfoVis Toolkit) for interactive data visualizations.
 
-In addition, I have set up a GitHub repository available at https://GitHub.com/HongjianLi/ichem for versioning, distribution, discussion and issue tracking.
-
-\section{Future Plan}
+%An Neo4j index in a graph database maps a key-value pair to a node or to a relationship between two nodes. The mapping can be either exact or approximate, with the latter being known as fulltext search.
 
 On the web server side, I will write a parser to parse the 41 GB flat files and populate them into neo4j. I will enable fulltext indexing on protein sequences and chemical names and aliases using the famous Apache Lucene engine. I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
 
@@ -105,11 +96,11 @@ On the web client side, I will establish a web site with Twitter's bootstrap ser
 
 \section{Availability}
 
-ichem is open source under Apache License 2.0 and is freely available at https://GitHub.com/HongjianLi/ichem.
+ichem is free and open source under Apache License 2.0. It is available at https://GitHub.com/HongjianLi/ichem.
 
-%\section{Conclusion}
+\section{Conclusion}
 
-
+I have integrated both protein-protein and protein-chemical interaction data utilizing neo4j and node.js, and established a modern website for fast query and vivid visualization.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
