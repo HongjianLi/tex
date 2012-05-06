@@ -25,7 +25,7 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. In this project, I intend to utilize neo4j and node.js to integrate both protein-protein and protein-chemical interaction data, and establish a modern website for fast query and vivid visualization.
+Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. In this project, I utilize neo4j and node.js to integrate both protein-protein and protein-chemical interaction data, and establish a modern website for fast query and vivid visualization.
 
 \end{abstract}
 
@@ -86,9 +86,7 @@ protein\_chemical.links.v3.0.tsv  & 7.3 GB & 209,270,363 & chemical\ \ \ \ prote
 
 \subsection{Server Side}
 
-On the server side, several packages are utilized (Table \ref{tab:serverpackages}).
-
-Too large, composed a script, homo sapiens (human), 22,524 proteins.
+On the server side, several packages were utilized (Table \ref{tab:serverpackages}). They all were the latest versions at the moment the experiments were carried out.
 
 \begin{table}
 \centering
@@ -108,13 +106,15 @@ carrier & 0.1.7\\
 \label{tab:serverpackages}
 \end{table}
 
-%An Neo4j index in a graph database maps a key-value pair to a node or to a relationship between two nodes. The mapping can be either exact or approximate, with the latter being known as fulltext search.
+When I attempted to populate the entire 5,214,234 protein sequences into neo4j using node.js, an out-of-memory exception was thrown. Therefore, I wrote a script to extract 6,548 proteins that are from Homo sapiens (i.e. human). Likewise, I wrote a second script to extract 35,965 protein actions that link up any two of the 6,548 human proteins. The above filtering philosophy was also applied to the chemical side. I wrote a third script to extract 21,997 human protein-chemical links, a fourth script to extract 937 chemicals, and a fifth script to extract 16,204 chemical-chemical links.
+
+However, the order to populate the above 5 kinds of data was apparently different from the order to extract them from the large files (Table \ref{tab:datasets}) because nodes must be created before relationships could be created. Therefore, I first populated 6,548 human proteins, followed by 35,965 human protein actions, followed by 937 chemicals, followed by 16,204 chemical-chemical links, followed by 21,997 human protein-chemical links. Finally I ended up with a neo4j graph of 7,486 nodes (including the root node) and 74,165 relationships of 5 relationship types (i.e. binding, ptmod, expression and activation for the 35,965 human protein actions, and interaction for the 16,204 chemical-chemical links and the 21,997 human protein-chemical links) with 2 node exact indexes, one for proteins and one for chemicals.
 
 I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
 
 \subsection{Client Side}
 
-On the client side, several packages are utilized (Table \ref{tab:clientpackages}). I have done a mini survey on about 20 graph visualization toolsuites, and eventually decided to use JIT (JavaScript InfoVis Toolkit) for interactive data visualizations.
+On the client side, several packages were utilized (Table \ref{tab:clientpackages}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
 
 \begin{table}
 \centering
@@ -141,13 +141,13 @@ ichem is free and open source under Apache License 2.0. It is available at https
 
 \section{Future Directions}
 
-Incorporate the complete 45GB STRING 9 and STITCH 3 databases.
-Include all data
-fulltext indexing on protein sequences and chemical names and aliases using the famous Apache Lucene engine
+Incorporating the complete 23 GB STRING 9 and 22 GB STITCH 3 flat files into a neo4j graph database is definitely the first priority. Due to the huge data size, inserting records one by one no longer works. Instead, a bulk inserter in node.js should be implemented in advance in order to boost up the population procedure as well as to avoid out of memory exceptions.
+
+Another possible way is to make use of fulltext indexing in neo4j. Generally speaking, a neo4j node index maps a key-value pair to a node. The mapping can be either exact or approximate, with the latter being known as fulltext indexing, implemented by the well-known Apache Lucene engine. It would be good to apply fulltext indexing to protein sequences and chemical names and aliases so that the input to search would no longer be limited to hard-to-memorize identities of proteins and chemicals.
 
 \section{Conclusion}
 
-I have integrated both protein-protein and protein-chemical interaction data utilizing neo4j and node.js, and established a modern website for fast query and vivid visualization.
+I have integrated both protein-protein and protein-chemical interaction data utilizing neo4j and node.js, and established a modern website for fast query and vivid visualization. This project is novel in the sense that it is the first project to integrate both protein-protein and protein-chemical interaction data in a graphical way.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
