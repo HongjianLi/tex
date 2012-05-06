@@ -53,29 +53,29 @@ I am motivated by the desire to overcome the limitations mentioned above and thu
 
 \section{Datasets}
 
-The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 20 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 21 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License (CC BY 3.0).
+The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 23 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 22 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License (CC BY 3.0).
 
 \begin{table*}
 \centering
 \begin{tabular*}
 {\linewidth}
-{@{\extracolsep{\fill}}lrl}
+{@{\extracolsep{\fill}}lrrl}
 \toprule
-File & Size & Format\\
+File & Size & Records & Schema\\
 \midrule
-\multicolumn{3}{l}{\textbf{STRING 9}}\\
-protein.sequences.v9.0.fa &  2.2 GB & FASTA with protein ID\\
-protein.aliases.v9.0.txt  &  3.9 GB & species\_ncbi\_taxon\_id\ \ \ \ protein\_id\ \ \ \ alias\ \ \ \ source\\
-protein.links.v9.0.txt    & 17.4 GB & protein1\ \ \ \ protein2\ \ \ \ score\\
-protein.actions.v9.0.txt  &  0.5 GB & item\_id\_a\ \ \ \ item\_id\_b\ \ \ \ mode\ \ \ \ action\ \ \ \ a\_is\_acting\ \ \ \ score\\
+\multicolumn{4}{l}{\textbf{STRING 9}}\\
+protein.sequences.v9.0.fa &  2.2 GB &   5,214,234 & FASTA with protein ID\\
+protein.aliases.v9.0.txt  &  3.9 GB &  71,223,225 & species\_ncbi\_taxon\_id\ \ \ \ protein\_id\ \ \ \ alias\ \ \ \ source\\
+protein.links.v9.0.txt    & 17.4 GB & 448,692,034 & protein1\ \ \ \ protein2\ \ \ \ score\\
+protein.actions.v9.0.txt  &  0.5 GB &   9,718,246 & item\_id\_a\ \ \ \ item\_id\_b\ \ \ \ mode\ \ \ \ action\ \ \ \ a\_is\_acting\ \ \ \ score\\
 \noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{STITCH 3}}\\
-chemicals.v3.0.tsv                & 6.2 GB & chemical\ \ \ \ name\ \ \ \ molecular\_weight\ \ \ \ SMILES\_string\\
-chemical.aliases.v3.0.tsv         & 2.0 GB & chemical\ \ \ \ alias\ \ \ \ source\\
-chemical.sources.v3.0.tsv         & 4.1 GB & flat\_chemical\ \ \ \ stereo\_chemical\ \ \ \ source\_name\ \ \ \ source\_id\\
-chemicals.inchikeys.v3.0.tsv      & 1.9 GB & flat\_chemical\_id\ \ \ \ stereo\_chemical\_id\ \ \ \ source\_cid\ \ \ \ inchikey\\
-chemical\_chemical.links.v3.0.tsv & 0.2 GB & chemical1\ \ \ \ chemical2\ \ \ \ textmining\\
-protein\_chemical.links.v3.0.tsv  & 7.3 GB & chemical\ \ \ \ protein\ \ \ \ score\\
+\multicolumn{4}{l}{\textbf{STITCH 3}}\\
+chemicals.v3.0.tsv                & 6.2 GB &  52,576,278 & chemical\ \ \ \ name\ \ \ \ molecular\_weight\ \ \ \ SMILES\_string\\
+chemical.aliases.v3.0.tsv         & 2.0 GB &  49,632,809 & chemical\ \ \ \ alias\ \ \ \ source\\
+chemical.sources.v3.0.tsv         & 4.1 GB & 106,878,852 & flat\_chemical\ \ \ \ stereo\_chemical\ \ \ \ source\_name\ \ \ \ source\_id\\
+chemicals.inchikeys.v3.0.tsv      & 1.9 GB &  31,451,648 & flat\_chemical\_id\ \ \ \ stereo\_chemical\_id\ \ \ \ source\_cid\ \ \ \ inchikey\\
+chemical\_chemical.links.v3.0.tsv & 0.2 GB &   6,191,622 & chemical1\ \ \ \ chemical2\ \ \ \ textmining\\
+protein\_chemical.links.v3.0.tsv  & 7.3 GB & 209,270,363 & chemical\ \ \ \ protein\ \ \ \ score\\
 \bottomrule
 \end{tabular*}
 \caption{Flat files provided by STRING 9 and STITCH 3.}
@@ -84,19 +84,66 @@ protein\_chemical.links.v3.0.tsv  & 7.3 GB & chemical\ \ \ \ protein\ \ \ \ scor
 
 \section{Implementation}
 
-On the web server side, I have installed neo4j v1.8.M01, node.js v0.6.17, neo4j driver for node.js v0.2.9, and configured the REST API web server of neo4j. I have composed a simple node.js script to read flat files line by line using the carrier node module. I have collected and extracted 41 GB flat files from STRING 9 and STITCH 3, and inspected their formats for proper parsing.
+\subsection{Server Side}
 
-On the web client side, I have installed Twitter's bootstrap v2.0.2 and jQuery v1.7.2. I have done a mini survey on about 20 graph visualization toolsuites, and eventually decided to use JIT (JavaScript InfoVis Toolkit) for interactive data visualizations.
+On the server side, several packages are utilized (Table \ref{tab:serverpackages}).
+
+Too large, composed a script, homo sapiens (human), 22,524 proteins.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}cc}
+\toprule
+Package & Version\\
+\midrule
+neo4j & 1.8.M01\\
+node.js & 0.6.17\\
+neo4j driver for node.js & 0.2.9\\
+carrier & 0.1.7\\
+\bottomrule
+\end{tabular*}
+\caption{Server-side packages used in the project and their versions.}
+\label{tab:serverpackages}
+\end{table}
 
 %An Neo4j index in a graph database maps a key-value pair to a node or to a relationship between two nodes. The mapping can be either exact or approximate, with the latter being known as fulltext search.
 
-On the web server side, I will write a parser to parse the 41 GB flat files and populate them into neo4j. I will enable fulltext indexing on protein sequences and chemical names and aliases using the famous Apache Lucene engine. I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
+I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
+
+\subsection{Client Side}
+
+On the client side, several packages are utilized (Table \ref{tab:clientpackages}). I have done a mini survey on about 20 graph visualization toolsuites, and eventually decided to use JIT (JavaScript InfoVis Toolkit) for interactive data visualizations.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}cc}
+\toprule
+Package & Version\\
+\midrule
+Twitter's bootstrap & 2.0.2\\
+jQuery & 1.7.2\\
+JavaScript InfoVis Toolkit & 2.0.1\\
+\bottomrule
+\end{tabular*}
+\caption{Client-side packages used in the project and their versions.}
+\label{tab:clientpackages}
+\end{table}
 
 On the web client side, I will establish a web site with Twitter's bootstrap serving as a HTML5 and CSS3 template and jQuery serving as a javascript client for HTTP reqeusts and responses and graph visualization.
 
 \section{Availability}
 
 ichem is free and open source under Apache License 2.0. It is available at https://GitHub.com/HongjianLi/ichem.
+
+\section{Future Directions}
+
+Incorporate the complete 45GB STRING 9 and STITCH 3 databases.
+Include all data
+fulltext indexing on protein sequences and chemical names and aliases using the famous Apache Lucene engine
 
 \section{Conclusion}
 
