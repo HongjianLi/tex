@@ -84,56 +84,51 @@ protein\_chemical.links.v3.0.tsv  & 7.3 GB & 209,270,363 & chemical\ \ \ \ prote
 
 \section{Implementation}
 
+Figure \ref{fig:BlockDiagram} shows the block diagram of ichem.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{BlockDiagram.png}
+\caption{ichem block diagram.}
+\label{fig:BlockDiagram}
+\end{figure*}
+
 \subsection{Server Side}
 
-On the server side, several packages were utilized (Table \ref{tab:serverpackages}). They all were the latest versions at the moment the experiments were carried out.
-
-\begin{table}
-\centering
-\begin{tabular*}
-{\linewidth}
-{@{\extracolsep{\fill}}cc}
-\toprule
-Package & Version\\
-\midrule
-neo4j & 1.8.M01\\
-node.js & 0.6.17\\
-neo4j driver for node.js & 0.2.9\\
-carrier & 0.1.7\\
-\bottomrule
-\end{tabular*}
-\caption{Server-side packages used in the project and their versions.}
-\label{tab:serverpackages}
-\end{table}
+On the server side, several packages were utilized (Figure \ref{fig:blockdiagram}). They all were the latest versions at the moment the experiments were carried out.
 
 When I attempted to populate the entire 5,214,234 protein sequences into neo4j using node.js, an out-of-memory exception was thrown. Therefore, I wrote a script to extract 6,548 proteins that are from Homo sapiens (i.e. human). Likewise, I wrote a second script to extract 35,965 protein actions that link up any two of the 6,548 human proteins. The above filtering philosophy was also applied to the chemical side. I wrote a third script to extract 21,997 human protein-chemical links, a fourth script to extract 937 chemicals, and a fifth script to extract 16,204 chemical-chemical links.
 
-However, the order to populate the above 5 kinds of data was apparently different from the order to extract them from the large files (Table \ref{tab:datasets}) because nodes must be created before relationships could be created. Therefore, I first populated 6,548 human proteins, followed by 35,965 human protein actions, followed by 937 chemicals, followed by 16,204 chemical-chemical links, followed by 21,997 human protein-chemical links. Finally I ended up with a neo4j graph of 7,486 nodes (including the root node) and 74,165 relationships of 5 relationship types (i.e. binding, ptmod, expression and activation for the 35,965 human protein actions, and interaction for the 16,204 chemical-chemical links and the 21,997 human protein-chemical links) with 2 node exact indexes, one for proteins and one for chemicals.
+However, the order to populate the above 5 kinds of data was apparently different from the order to extract them from the large files (Table \ref{tab:datasets}) because nodes must be created before relationships could be created. Therefore, I first populated 6,548 human proteins, followed by 35,965 human protein actions, followed by 937 chemicals, followed by 16,204 chemical-chemical links, followed by 21,997 human protein-chemical links. Finally I ended up with a neo4j graph of 7,486 nodes (including the root node) and 74,165 relationships of 5 relationship types (i.e. binding, ptmod, expression and activation for the 35,965 human protein actions, and interaction for the 16,204 chemical-chemical links and the 21,997 human protein-chemical links) with 2 node exact indexes, one for proteins and one for chemicals (Figure \ref{fig:BlockDiagram}). Figure \ref{fig:DataBrowser} shows the final graph in neo4j web administration.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{Dashboard.png}
+\caption{Neo4j dashboard.}
+\label{fig:Dashboard}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{DataBrowser.png}
+\caption{Neo4j data browser.}
+\label{fig:DataBrowser}
+\end{figure*}
 
 I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
 
 \subsection{Client Side}
 
-On the client side, several packages were utilized (Table \ref{tab:clientpackages}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
-
-\begin{table}
-\centering
-\begin{tabular*}
-{\linewidth}
-{@{\extracolsep{\fill}}cc}
-\toprule
-Package & Version\\
-\midrule
-Twitter's bootstrap & 2.0.2\\
-jQuery & 1.7.2\\
-JavaScript InfoVis Toolkit & 2.0.1\\
-\bottomrule
-\end{tabular*}
-\caption{Client-side packages used in the project and their versions.}
-\label{tab:clientpackages}
-\end{table}
+On the client side, several packages were utilized (Figure \ref{fig:blockdiagram}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
 
 On the web client side, I will establish a web site with Twitter's bootstrap serving as a HTML5 and CSS3 template and jQuery serving as a javascript client for HTTP reqeusts and responses and graph visualization.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\linewidth]{ichem.png}
+\caption{ichem website.}
+\label{fig:ichem}
+\end{figure*}
 
 \section{Availability}
 
