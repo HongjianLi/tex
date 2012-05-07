@@ -2,7 +2,7 @@
 \usepackage{xltxtra}
 \usepackage{booktabs}
 \usepackage{hyperref}
-%\usepackage{flushend}
+\usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
 
@@ -26,7 +26,7 @@ hiji@cse.cuhk.edu.hk
 
 \begin{abstract}
 
-Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and edges. Node.js is an event-driven server side javascript platform particularly suitable for building real-time web applications. In this project, I utilize neo4j and node.js to integrate both protein-protein and protein-chemical interaction data, and establish a modern website for fast query and vivid visualization.
+Neo4j is a high-performance NoSQL graph database particularly suitable for storing and managing nodes and relationships. Node.js is an event-driven I/O server side javascript platform particularly suitable for building real-time web applications. In this project ichem, I utilize neo4j and node.js to integrate both protein-protein and protein-chemical interaction data from the STRING 9 and STITCH 3 databases, and establish a modern website with Twitter's Bootstrap template for fast query and vivid visualization with JavaScript InfoVis Toolkit. The project novelty is 3-fold. It combines both protein-protein and protein-chemical interactions into one single uniform database. Its server side uses neo4j as backend store engine to avoid expensive join operations. Its client side uses the open standard HTML5 rather than Adobe Flash for graph visualization. The project provides insights into drug-target pathway, drug synergy and other fundamental biological problems. The entire ichem project is free and open source, available at \url{https://GitHub.com/HongjianLi/ichem}.
 
 \end{abstract}
 
@@ -42,19 +42,13 @@ Meanwhile, node.js, a platform built on top of Google Chrome's V8 JavaScript run
 
 There are two neo4j drivers for node.js. One is developed by the official neo4j team, and the other is developed by Aseem Kishore et al. from the Thingdom company. Both drivers basically act as a wrapper for neo4j's REST API. The former driver seems deprecated, therefore the latter driver is employed. Aseem Kishore also provides a template application of sosical network manager showing the use of neo4j from node.js.
 
-\section{Motivation}
+\section{Datasets}
 
 STRING (Search Tool for the Retrieval of Interacting Genes/Proteins) \citep{1070,1071,1072,1073,1074,1075} is a database of known and predicted protein-protein interactions, including direct (physical) and indirect (functional) associations derived from four sources, namely genomic context, high-throughput experiments, conserved coexpression and previous knowledge. STRING quantitatively integrates interaction data from these sources for a large number of organisms, and transfers information between these organisms where applicable.
 
 STTICH (Search Tool for Interactions of Chemicals) \citep{1068,1069,1101} is a resource to explore known and predicted protein-chemical interactions. Chemicals are linked to other chemicals and proteins by evidence derived from experiments, databases and the literature.
 
-STRING and STITCH are separately hosted and maintained. Updates to one are not automatically reflected to the other. In addition, they both use PostgreSQL, a traditional relational database management system (RDBMS), to store primary data and precomputed predictions. This could result in a large amount of join operations, the bottleneck of query performance. Furthermore, the graph visualization in their websites relies on Adobe Flash, a commercial product believed to be soon replaced by the open standard HTML5.
-
-I am motivated by the desire to overcome the limitations mentioned above and thus propose to reorganize from scratch their protein-protein and protein-chemical interaction data for fast and efficient queries using state-of-the-art technologies such as neo4j NoSQL graph database, event-driven node.js, neo4j driver for node.js from Thingdom, and modern website built on top of Twitter's bootstrap template in HTML5. The entire platform is called ichem.
-
-\section{Datasets}
-
-The STRING and STITCH databases are explored. The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 23 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 22 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License (CC BY 3.0).
+The latest version of STRING is 9, covering 5,214,234 proteins from 1133 organisms with a data size of 23 GB. The latest version of STITCH database is 3, containing interactions for between 300,000 small molecules and 2.6 million proteins from 1133 organisms with a data size of 22 GB. Both databases provide flat files (Table \ref{tab:datasets}) in TSV (Tab-Separated Values) format for download under a Creative Commons Attribution 3.0 License (CC BY 3.0).
 
 \begin{table*}
 \centering
@@ -83,9 +77,15 @@ protein\_chemical.links.v3.0.tsv  & 7.3 GB & 209,270,363 & chemical\ \ \ \ prote
 \label{tab:datasets}
 \end{table*}
 
+\section{Motivation}
+
+STRING and STITCH are separately hosted and maintained. Updates to one are not automatically reflected to the other. In addition, they both use PostgreSQL, a traditional relational database management system (RDBMS), to store primary data and precomputed predictions. This could result in a large amount of join operations, the bottleneck of query performance. Furthermore, the graph visualization in their websites relies on Adobe Flash, a commercial product believed to be soon replaced by the open standard HTML5.
+
+I am motivated by the desire to overcome the limitations mentioned above and thus propose to reorganize from scratch their protein-protein and protein-chemical interaction data for fast and efficient queries using state-of-the-art technologies such as neo4j NoSQL graph database, event-driven node.js, neo4j driver for node.js from Thingdom, and modern website built on top of Twitter's Bootstrap template in HTML5 and the popular JavaScript InfoVis Toolkit for graph visualization. The entire platform is called ichem.
+
 \section{Implementation}
 
-Figure \ref{fig:BlockDiagram} shows the block diagram of ichem.
+Figure \ref{fig:BlockDiagram} shows the block diagram of ichem. On the client side, a user opens a browser, browses the ichem website, enters the name of a protein or a chemical, and clicks a button to submit the query. On the server side, the web server run by node.js receives the query, calls the REST API of neo4j to retrieve a graph with the help of node indexes, and returns the graph in JSON format. On the client side, the javascript code parses the graph and displays it as nodes and edges, which can be customized.
 
 \begin{figure*}
 \centering
@@ -96,11 +96,13 @@ Figure \ref{fig:BlockDiagram} shows the block diagram of ichem.
 
 \subsection{Server Side}
 
-On the server side, several packages were utilized (Figure \ref{fig:BlockDiagram}). They all were the latest versions at the moment the experiments were carried out.
+On the server side, neo4j v1.8.M01, node.js v0.6.17 and node-neo4j driver v0.2.9 were utilized. They all were the latest versions at the moment the experiments were carried out.
 
-When I attempted to populate the entire 5,214,234 protein sequences into neo4j using node.js, an out-of-memory exception was thrown. Therefore, I wrote a script to extract 6,548 proteins that are from Homo sapiens (i.e. human). Likewise, I wrote a second script to extract 35,965 protein actions that link up any two of the 6,548 human proteins. The above filtering philosophy was also applied to the chemical side. I wrote a third script to extract 21,997 human protein-chemical links, a fourth script to extract 937 chemicals, and a fifth script to extract 16,204 chemical-chemical links.
+When I attempted to populate the entire 5,214,234 protein sequences into neo4j using node.js, out-of-memory exceptions were thrown from time to time. In order to shrink the data size, I only considered proteins from human (i.e. Homo sapiens) rather than from other organisms. Therefore, I wrote a script to extract 6,548 human proteins. Likewise, I wrote a second script to extract 35,965 protein actions that link up any two of the 6,548 human proteins. The above filtering strategy was also applied to the chemical side. I wrote a third script to extract 21,997 human protein-chemical links, a fourth script to extract 937 chemicals, and a fifth script to extract 16,204 chemical-chemical links.
 
-However, the order to populate the above 5 kinds of data was apparently different from the order to extract them from the large files (Table \ref{tab:datasets}) because nodes must be created before relationships could be created. Therefore, I first populated 6,548 human proteins, followed by 35,965 human protein actions, followed by 937 chemicals, followed by 16,204 chemical-chemical links, followed by 21,997 human protein-chemical links. Finally I ended up with a neo4j graph of 7,486 nodes (including the root node) and 74,165 relationships of 5 relationship types (i.e. binding, ptmod, expression and activation for the 35,965 human protein actions, and interaction for the 16,204 chemical-chemical links and the 21,997 human protein-chemical links) with 2 node exact indexes, one for proteins and one for chemicals (Figure \ref{fig:BlockDiagram}). Figure \ref{fig:DataBrowser} shows the final graph in neo4j web administration.
+However, the order to populate the above 5 kinds of data into neo4j was apparently different from the order they were extracted from the large files (Table \ref{tab:datasets}) because nodes must be created before relationships could be possibly created. Therefore, I first populated 6,548 human proteins into neo4j, followed by 35,965 human protein actions, followed by 937 chemicals, followed by 16,204 chemical-chemical links, followed by 21,997 human protein-chemical links.
+
+Finally I ended up with a neo4j graph of 7,486 nodes (including the root node) and 74,165 relationships of 5 relationship types (i.e. "binding", "ptmod", "expression" and "activation" for the 35,965 human protein actions, and "interaction" for the 16,204 chemical-chemical links and the 21,997 human protein-chemical links) with 2 node exact indexes, one for the 35,965 proteins and one for the 937 chemicals. Figure \ref{fig:DataBrowser} shows the final graph.
 
 \begin{figure*}
 \centering
@@ -116,13 +118,9 @@ However, the order to populate the above 5 kinds of data was apparently differen
 \label{fig:DataBrowser}
 \end{figure*}
 
-I will provide several kinds of interaction queries, including but not limited to finding other chemicals which interact with the same protein given a chemical and finding other proteins which interact with the same chemical given a protein. These queries can easily be done in neo4j by graph traversal.
-
 \subsection{Client Side}
 
-On the client side, several packages were utilized (Figure \ref{fig:BlockDiagram}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
-
-On the web client side, I will establish a web site with Twitter's bootstrap serving as a HTML5 and CSS3 template and jQuery serving as a javascript client for HTTP reqeusts and responses and graph visualization.
+On the client side, Twitter's Bootstrap v2.0.3, jQuery v1.7.2 and JavaScript InfoVis Toolkit v2.0.1 were utilized. They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization javascript toolsuites, and eventually decided to choose JavaScript InfoVis Toolkit because it is free, open source, fully documented, and most importantly, powerful and easily customizable.
 
 \begin{figure*}
 \centering
@@ -141,9 +139,11 @@ Incorporating the complete 23 GB STRING 9 and 22 GB STITCH 3 flat files into a n
 
 Another possible way is to make use of fulltext indexing in neo4j. Generally speaking, a neo4j node index maps a key-value pair to a node. The mapping can be either exact or approximate, with the latter being known as fulltext indexing, implemented by the well-known Apache Lucene engine. It would be good to apply fulltext indexing to protein sequences and chemical names and aliases so that the input to search would no longer be limited to hard-to-memorize identities of proteins and chemicals.
 
+Populating the protein-protein and protein-chemical interaction data into neo4j is the first step. Visualizing the graph data is the second step. The next step is to do data mining, and aim for practical applications such as drug-target pathway and drug synergy prediction.
+
 \section{Conclusion}
 
-I have integrated both protein-protein and protein-chemical interaction data utilizing neo4j and node.js, and established a modern website for fast query and vivid visualization. This project is novel in the sense that it is the first project to integrate both protein-protein and protein-chemical interaction data in a graphical way.
+I have developed ichem and integrated both protein-protein and protein-chemical interaction data from the STRING 9 and STITCH 3 databases utilizing neo4j and node.js, and established a modern website for fast query and vivid visualization. My contributions originate from three aspects. ichem unifies both protein-protein and protein-chemical interactions. ichem avoids fixed-schema tables and heavy join operations. ichem discards Flash and adopts HTML5 for better browser compatibility. ichem can be potentially used for fundamental biological research in real life.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
