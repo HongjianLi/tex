@@ -1,7 +1,8 @@
 \documentclass[10pt,conference,compsocconf]{../IEEEtran}
 \usepackage{xltxtra}
 \usepackage{booktabs}
-\usepackage{flushend}
+\usepackage{hyperref}
+%\usepackage{flushend}
 \usepackage[numbers,sort&compress]{natbib}
 \setmainfont{Times New Roman}
 
@@ -95,7 +96,7 @@ Figure \ref{fig:BlockDiagram} shows the block diagram of ichem.
 
 \subsection{Server Side}
 
-On the server side, several packages were utilized (Figure \ref{fig:blockdiagram}). They all were the latest versions at the moment the experiments were carried out.
+On the server side, several packages were utilized (Figure \ref{fig:BlockDiagram}). They all were the latest versions at the moment the experiments were carried out.
 
 When I attempted to populate the entire 5,214,234 protein sequences into neo4j using node.js, an out-of-memory exception was thrown. Therefore, I wrote a script to extract 6,548 proteins that are from Homo sapiens (i.e. human). Likewise, I wrote a second script to extract 35,965 protein actions that link up any two of the 6,548 human proteins. The above filtering philosophy was also applied to the chemical side. I wrote a third script to extract 21,997 human protein-chemical links, a fourth script to extract 937 chemicals, and a fifth script to extract 16,204 chemical-chemical links.
 
@@ -119,7 +120,7 @@ I will provide several kinds of interaction queries, including but not limited t
 
 \subsection{Client Side}
 
-On the client side, several packages were utilized (Figure \ref{fig:blockdiagram}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
+On the client side, several packages were utilized (Figure \ref{fig:BlockDiagram}). They all were the latest versions at the moment the experiments were carried out. I did a mini survey on about 20 graph visualization toolsuites, and eventually decided to settle down on JIT (JavaScript InfoVis Toolkit) for interactive data visualizations because it is free, open source, fully documented, and most importantly, powerful.
 
 On the web client side, I will establish a web site with Twitter's bootstrap serving as a HTML5 and CSS3 template and jQuery serving as a javascript client for HTTP reqeusts and responses and graph visualization.
 
@@ -132,7 +133,7 @@ On the web client side, I will establish a web site with Twitter's bootstrap ser
 
 \section{Availability}
 
-ichem is free and open source under Apache License 2.0. It is available at https://GitHub.com/HongjianLi/ichem.
+ichem is free and open source under Apache License 2.0. Its HTML5, javascript and CSS source code is available at \url{https://GitHub.com/HongjianLi/ichem}. A live demo is hosted at \url{http://appsrv.cse.cuhk.edu.hk/~hjli/ichem}.
 
 \section{Future Directions}
 
