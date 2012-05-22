@@ -6,5 +6,5 @@
 *.lof
 *.lot
 *.toc
-match
+*.out
 nlcc
