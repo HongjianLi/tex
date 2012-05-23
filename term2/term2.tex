@@ -212,7 +212,6 @@ Virtual screening was then carried out. 10,928 drug-like ligands were docked aga
 
 Table \ref{tab:ExecutionTimeAndMemoryUsage} compares the execution time and memory usage of both programs. Vina required 428 to 504 CPU hours for one protein case, while idock required merely 88 to 184 CPU hours, resulting in a speedup of 2.5 to 4.8 and a screening performance of 1.3 drug-like ligands per CPU minute on average. In terms of elapsed time, the speedup was increased to as high as 6.3 to 10.4 because idock better utilized the CPU cores thanks to its efficient thread pool. idock also better utilized available memory to build grid maps at a high resolution and retained them along the way. Even though idock consumed more memory than Vina, its maximum resident set size did not exceed 1.5 GB, hence idock can run be on mainstream desktop computers.
 
-
 \section{Discussions}
 
 Both Vina and idock adopt the same scoring function. They differ in their C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++11 techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
@@ -221,17 +220,70 @@ In Vina's official forum, there are tremendous requests for the support for virt
 
 \section{Availability}
 
-Both idock and igrow are free and open source under Apache License 2.0. idock is available at https://GitHub.com/HongjianLi/idock and igrow is available at https://GitHub.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X and FreeBSD are provided. Examples and API documentations are also provided.
+Both idock and igrow are free and open source under Apache License 2.0. idock is available at https://GitHub.com/HongjianLi/idock. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X and FreeBSD are provided. Examples and API documentations are also provided.
 
 \section{Conclusions}
 
-We have developed idock and igrow for computational drug discovery. idock is a multithreaded structure-based virtual screening tool for flexible ligand docking. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with Vina, idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. But even so, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired. 
+We have developed idock for computational drug discovery. idock is a multithreaded structure-based virtual screening tool for flexible ligand docking. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with Vina, idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. But even so, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired. 
 
-igrow is a multithreaded ligand synthesis tool for structure-based molecular design.
+\section{Thesis Proposal}
 
-\section{Future Directions}
+go deep in drug discovery
+goal: universal, fast, comprehensive.
 
-We have been keeping four future plans in mind: 1) porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs, 2) applying idock and igrow for practical drug discovery applications, 3) integrating idock and igrow into one single program to realize grid map caching and partial docking, and 4) establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
+\subsection{SaaS Platform for idock}
+
+istar establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
+
+\subsection{GPU Acceleration}
+
+porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs.
+Kepler GK110
+GCN.
+
+\subsection{Pharmaceutial Applications}
+
+applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
+
+\subsection{Click Chemistry}
+
+integrating idock and igrow into one single program to realize grid map caching and partial docking, click chemistry
+
+\subsection{Drug Property Prediction}
+
+PKKB (PharmacoKinetics Knowledge Base) citep{} is the most extensive freely available database for collecting ADME (Absorption, Distribution, Metabolism, and Excretion) and Toxic properties. PKKB integrates high quality data for about 1685 drug and drug-like molecules with available experimental ADMET properties, including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. We expect that PKKB can afford reliable data for pharmacokinetic studies and in silico ADMET modeling.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}rr}
+\toprule
+Property & Measurements \\
+\midrule
+logP (experiment) & 1019 \\
+Pka & 638 \\
+Solubility (experiment) & 800 \\
+Intestinal absorption & 679 \\
+Absorption (description) & 699 \\
+Caco-2 & 64 \\
+Human bioavailability & 992 \\
+Plasma protein binding & 1058 \\
+Volume of distribution (Vd) & 646 \\
+Toxicity & 873 \\
+D-blood & 66 \\
+Metabolism & 1111 \\
+Half-time & 1116 \\
+Urinary excretion & 281 \\
+Clearance & 410 \\
+Toxicity & 873 \\
+LD50 (rat) & 219 \\
+LD50 (mouse) & 243 \\
+\bottomrule
+\end{tabular*}
+\caption{Selected PDB entries for HIV RT, SAHH, ADA, and PNP.}
+\label{tab:SelectedPDBEntries}
+\end{table}
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
