@@ -59,10 +59,23 @@ idock accelerates the assignment of atom types by making use of residue informat
 
 \section{Change Log}
 
-bug fixes
+Added program option config to allow users to specify a configuration file.
+Added program option csv for dumping docking summary sorted in the ascending of predicted free energy.
+
 intra-ligand free energy
-Automatic failover
+Output predicted total free energy, predicted inter-ligand free energy and predicted intra-ligand free energy to docked PDBQT files. Output predicted free energy for each heavy atom to docked PDBQT files.
+
+Added thread-safe progress bar
+Added move constructors for several classes to boost performance.
+Parallelized the precalculation of scoring function.
+Automatic failover. Skipped already docked ligands.
+
+12 docking examples
 5 mainstream operating systems
+
+Fixed a numerical bug when docking a ligand of only one single heavy atom.
+Prevented dead loop by limiting the number of initial conformation trials.
+Fixed a segmentation fault bug when the number of heavy atoms exceeds 100.
 
 \section{Benchmarks and Results}
 
