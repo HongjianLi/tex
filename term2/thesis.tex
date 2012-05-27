@@ -1,0 +1,50 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage{xltxtra}
+\usepackage{setspace}
+\usepackage{thesis}
+\usepackage{latexsym}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xeCJK}
+\topmargin 0.0cm
+\textheight 21cm
+
+\begin{document}
+
+\thesistitle{Protein-Ligand Docking and Drug Design with GPU Acceleration, Modern Websites, and Case Study}
+\authorname{LI, Hongjian}
+\submitdate{June 2012}
+\coverpage
+
+\pagenumbering{roman}
+\abstractpage
+\tableofcontents
+\listoffigures
+\listoftables
+
+\newpage
+\setcounter{page}{0}
+\pagenumbering{arabic}
+\pagestyle{headings}
+\onehalfspacing
+
+\input introduction.tex
+\input background.tex
+\input idock.tex
+\input proposal.tex
+\input conclusion.tex
+
+\appendix
+\input publications.tex
+
+\newpage
+\singlespacing
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
+

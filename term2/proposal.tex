@@ -1,0 +1,68 @@
+\chapter{Thesis Proposal}
+
+go deep in drug discovery
+goal: universal, fast, comprehensive.
+
+A comprehensive computational framework for drug discovery should incorporate capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, drug properties prediction, interactive visualization, and so on. The development of our three new tools is just the start. There is still a long way to go to fully implement all the capabilities.
+
+For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
+
+For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
+
+For practical uses of our tools, we also plan to build a web server based on HTML5 technology to provide online drug discovery functionalities so that potential users, especially biologists and chemists, can easily utilize our tools without tedious software installation and configuration \citep{677}.
+
+\section{SaaS Platform for idock}
+
+istar establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
+
+\section{GPU Acceleration}
+
+porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs.
+Kepler GK110
+GCN.
+
+\section{Pharmaceutial Applications}
+
+applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
+
+\section{Click Chemistry}
+
+integrating idock and igrow into one single program to realize grid map caching and partial docking, click chemistry
+
+\section{Drug Property Prediction}
+
+PKKB (PharmacoKinetics Knowledge Base) citep{} is the most extensive freely available database for collecting ADME (Absorption, Distribution, Metabolism, and Excretion) and Toxic properties. PKKB integrates high quality data for about 1685 drug and drug-like molecules with available experimental ADMET properties, including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. We expect that PKKB can afford reliable data for pharmacokinetic studies and in silico ADMET modeling.
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}rr}
+\toprule
+Property & Measurements \\
+\midrule
+logP (experiment) & 1019 \\
+Pka & 638 \\
+Solubility (experiment) & 800 \\
+Intestinal absorption & 679 \\
+Absorption (description) & 699 \\
+Caco-2 & 64 \\
+Human bioavailability & 992 \\
+Plasma protein binding & 1058 \\
+Volume of distribution (Vd) & 646 \\
+Toxicity & 873 \\
+D-blood & 66 \\
+Metabolism & 1111 \\
+Half-time & 1116 \\
+Urinary excretion & 281 \\
+Clearance & 410 \\
+Toxicity & 873 \\
+LD50 (rat) & 219 \\
+LD50 (mouse) & 243 \\
+\bottomrule
+\end{tabular*}
+\caption{Selected PDB entries for HIV RT, SAHH, ADA, and PNP.}
+\label{tab:SelectedPDBEntries}
+\end{table}
+
+\chapterend
