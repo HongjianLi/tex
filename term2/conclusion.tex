@@ -1,7 +1,5 @@
 \chapter{Conclusion}
 
-\section{Conclusion}
-
 Drug discovery is an expensive and long-term business. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}. Drug discovery via merely biological and chemical means are both cost-inefficient and time-inefficient. Therefore we aim to develop a computational framework for structure-based drug discovery with GPU acceleration, simulating the early phases of modern drug discovery process in order to save money and time.
 
 So far, we have developed two tools for this simulation purpose. The first tool, idock, is used for fast predictions of both binding conformations of small compounds against given proteins and their binding affinities. idock can shortlist a few promising compounds out of millions for further clinical investigations. It is capable of screening 1.3 drug-like ligands per CPU minute on average, making it a competitive tool. Compared with Vina, idock achieved a speedup of 2.5x to 4.8x in terms of CPU time and a speedup of 6.3x to 10.4x in terms of elapsed time. We have also utilized idock to identify compounds for potential replacement of TDF, trying to retaining the efficacy and meanwhile minimizing the toxicity.

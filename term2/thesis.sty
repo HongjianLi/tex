@@ -1,6 +1,5 @@
 \def\degree#1{\def\degree{#1}}
 \def\programme#1{\def\programme{#1}}
-\def\supervisor#1{\def\supervisor{#1}}
 \def\thesistitle#1{\def\thesistitle{#1}}
 \def\authorname#1{\def\authorname{#1}}
 \def\submitdate#1{\def\submitdate{#1}}
@@ -20,6 +19,7 @@
 	\vskip 1cm
 	\large
 	% both Fulfilment and Fulfillment are correct
+	A Thesis Proposal\\
 	In Submission for Qualification of Ph.D. Candidacy
 
 	\vskip 4cm
@@ -36,7 +36,6 @@
 \def\primarysupervisor#1{\def\primarysupervisor{#1~}}
 \def\secondarysupervisor#1{\def\secondarysupervisor{#1~}}
 \def\committeemember#1{\def\committeemember{#1~}}
-\def\externalexaminer#1{\def\externalexaminer{#1~}}
 
 \def\committeepage{
 	\thispagestyle{empty}
@@ -54,8 +53,6 @@
 	\secondarysupervisor (Thesis Supervisor)\\
 	\vskip 0.2cm
 	\committeemember (Committee Member)\\
-	\vskip 0.2cm
-	\externalexaminer (External Examiner)\\
 	\end{center}
 	\newpage
 }
@@ -67,11 +64,9 @@
 
 	\vspace*{2cm}
 	\large \noindent
-	Abstract of thesis entitled: \\
-	\indent \thesistitle \\
-	Submitted by \authorname \\
-	for the degree of \degree \\
-	at \institution~in \submitdate
+	\begin{center}
+	Abstract
+	\end{center}
 
 	\vskip 1cm \noindent
 	\input{abstract.tex}

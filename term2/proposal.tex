@@ -1,68 +1,152 @@
-\chapter{Thesis Proposal}
+\chapter{Our Proposals}
 
-go deep in drug discovery
-goal: universal, fast, comprehensive.
+Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
-A comprehensive computational framework for drug discovery should incorporate capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, drug properties prediction, interactive visualization, and so on. The development of our three new tools is just the start. There is still a long way to go to fully implement all the capabilities.
+\section{istar: A SaaS Platform for idock}
+
+We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails.
+
+Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we build the web site frontend with cutting-edge technologies. We seamlessly combine both the HTML5 Boilerplate and the Twitter Bootstrap into a HTML5- and CSS3-powered user interface. We use the Moderizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions.
+
+On the server side, we build the web server in event-driven node.js on top of the well known express server, forking multiple processes to accept simultaneous connections. We expose the functionalities of job submission and job query as RESTful API for others to program against. We also set up a gmail account and develop a mail crawler on top of Context.IO, a RESTful API for manipulating mailboxes, messages and attachments, to retrieve new jobs directly from emails. We employ the forever utility for both the web server and the mail crawler to ensure failover and high availability.
+
+On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes and values, like istar. MongoDB is written in C++, making it easy to manipualte database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/Architecture.png}
+\caption{istar architecture.}
+\label{istar:Architecture}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/Website.png}
+\caption{istar web site.}
+\label{istar:Website}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Job-level parallelism.]
+{
+  \label{istar:JobLevelParallelism}
+  \includegraphics[width=1.0\linewidth]{istar/JobLevelParallelism.png}
+}
+\\
+\subfloat[Slice-level parallelism.]
+{
+  \label{istar:SliceLevelParallelism}
+  \includegraphics[width=1.0\linewidth]{istar/SliceLevelParallelism.png}
+}
+\caption{istar 2-level parallelism.}
+\label{istar:2LevelParallelism}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/2PhaseDocking.png}
+\caption{istar 2-phase docking.}
+\label{istar:2PhaseDocking}
+\end{figure}
+
+istar serves as our foundation for SaaS. With istar, basically we can expose any of our software as a service. Once we manage to host idock at istar, we also plan to host our tool igrow for computational synthesis of potent ligands on the fly.
+
+\section{GPU Acceleration with CUDA and OpenCL}
 
 For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
-
-For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
-
-For practical uses of our tools, we also plan to build a web server based on HTML5 technology to provide online drug discovery functionalities so that potential users, especially biologists and chemists, can easily utilize our tools without tedious software installation and configuration \citep{677}.
-
-\section{SaaS Platform for idock}
-
-istar establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
-
-\section{GPU Acceleration}
 
 porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs.
 Kepler GK110
 GCN.
 
-\section{Pharmaceutial Applications}
+\section{Real-Life Drug Discovery Case Studies}
 
 applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
 
 \section{Click Chemistry}
 
+For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
+
 integrating idock and igrow into one single program to realize grid map caching and partial docking, click chemistry
 
-\section{Drug Property Prediction}
+\section{ADMET Property Prediction}
 
-PKKB (PharmacoKinetics Knowledge Base) citep{} is the most extensive freely available database for collecting ADME (Absorption, Distribution, Metabolism, and Excretion) and Toxic properties. PKKB integrates high quality data for about 1685 drug and drug-like molecules with available experimental ADMET properties, including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. We expect that PKKB can afford reliable data for pharmacokinetic studies and in silico ADMET modeling.
+It was estimated that 40\% to 60\% of new chemical entity (NCE) failures can be attributed to poor ADMET (absorption, distribution, metabolism, excretion, and toxicity) profiles.
+
+PKKB (PharmacoKinetics Knowledge Base) \citep{1133} provides the most extensive collection of freely available data for ADMET properties up to date. PKKB integrates 31,412 experimental or predicted values for 1,685 drug and drug-like molecules from published literature with available experimental ADMET properties including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. (Table \ref{PKKB:Properties})
 
 \begin{table}
 \centering
 \begin{tabular*}
 {\linewidth}
-{@{\extracolsep{\fill}}rr}
+{@{\extracolsep{\fill}}rlr}
 \toprule
-Property & Measurements \\
+No. & Property & Measurements \\
 \midrule
-logP (experiment) & 1019 \\
-Pka & 638 \\
-Solubility (experiment) & 800 \\
-Intestinal absorption & 679 \\
-Absorption (description) & 699 \\
-Caco-2 & 64 \\
-Human bioavailability & 992 \\
-Plasma protein binding & 1058 \\
-Volume of distribution (Vd) & 646 \\
-Toxicity & 873 \\
-D-blood & 66 \\
-Metabolism & 1111 \\
-Half-time & 1116 \\
-Urinary excretion & 281 \\
-Clearance & 410 \\
-Toxicity & 873 \\
-LD50 (rat) & 219 \\
-LD50 (mouse) & 243 \\
+\multicolumn{3}{l}{\textbf{Molecular properties}}\\
+1 & Molecular weight & 1,684 \\
+2 & logP (experiment) & 1,019 \\
+3 & logP (predicted, AB/logP v2.0) & 1,625 \\
+4 & Pka & 638 \\
+5 & logD (pH=7,predicted) & 1,625 \\
+6 & Solubility (experiment) & 800 \\
+7 & logS (predicted, ACD/Labs)(pH=7) & 1,614 \\
+8 & logSw (predicted, AB/LogSw 2.0) & 1,625 \\
+9 & Sw (mg/ml) (predicted, ACD/Labs) & 1,613 \\
+10 & Sw (predicted) & 1,625 \\
+11 & No. of hbond donors & 1,625 \\
+12 & No. of hbond acceptors & 1,625 \\
+13 & No. of rotatable bonds & 1,625 \\
+14 & TPSA & 1,625 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Pharmacology}}\\
+15 & Status & 1,372 \\
+16 & Administration & 501 \\
+17 & Pharmacology & 1,543 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Absorption}}\\
+18 & Intestinal absorption & 679 \\
+19 & Absorption (description) & 699 \\
+20 & Caco-2 & 64 \\
+21 & Human bioavailability & 992 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Distribution}}\\
+22 & Plasma protein binding & 1058 \\
+23 & Volume of distribution(Vd) & 646 \\
+24 & D-blood & 66 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Metabolism}}\\
+25 & Metabolism & 1,111 \\
+26 & Half-time & 1,116 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Excretion}}\\
+27 & Excretion & 855 \\
+28 & Urinary excretion & 281 \\
+29 & Clearance & 410 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Toxicity}}\\
+30 & Toxicity & 873 \\
+31 & LD50 (rat) & 219 \\
+32 & LD50 (mouse) & 243 \\
 \bottomrule
 \end{tabular*}
-\caption{Selected PDB entries for HIV RT, SAHH, ADA, and PNP.}
-\label{tab:SelectedPDBEntries}
+\caption{PKKB property measurements.}
+\label{PKKB:Properties}
 \end{table}
+
+Figure \ref{PKKB:Schema} shows the PKKB schema. Raw data from literature was first converted into proper formats and then integrated into a central ADMET database. A web site is provided for interactive search of ADMET properties given either structure or descriptive text of compounds of interest.
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{PKKB/Schema.jpg}
+\caption{PKKB schema.}
+\label{PKKB:Schema}
+\end{figure}
+
+Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
+
+We propose to make use of advanced machine learning techniques to train a prediction model (Figure \ref{PKKB:Schema}). Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading us to higher drug discovery success rate.
 
 \chapterend
