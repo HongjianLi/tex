@@ -1,21 +1,58 @@
 \chapter{Thesis Proposal}
 
-go deep in drug discovery
-goal: universal, fast, comprehensive.
-
-A comprehensive computational framework for drug discovery should incorporate capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, drug properties prediction, interactive visualization, and so on. The development of our three new tools is just the start. There is still a long way to go to fully implement all the capabilities.
-
-For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
-
-For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
-
-For practical uses of our tools, we also plan to build a web server based on HTML5 technology to provide online drug discovery functionalities so that potential users, especially biologists and chemists, can easily utilize our tools without tedious software installation and configuration \citep{677}.
+Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
 \section{SaaS Platform for idock}
 
+We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails.
+
+Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, 
+
+
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/Architecture.png}
+\caption{istar architecture.}
+\label{istar:Architecture}
+\end{figure}
+
 istar establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
 
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/Website.png}
+\caption{istar web site.}
+\label{istar:Website}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Job-level parallelism.]
+{
+  \label{istar:JobLevelParallelism}
+  \includegraphics[width=1.0\linewidth]{istar/JobLevelParallelism.png}
+}
+\\
+\subfloat[Slice-level parallelism.]
+{
+  \label{istar:SliceLevelParallelism}
+  \includegraphics[width=1.0\linewidth]{istar/SliceLevelParallelism.png}
+}
+\caption{istar 2-level parallelism.}
+\label{istar:2LevelParallelism}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=1.0\linewidth]{istar/2PhaseDocking.png}
+\caption{istar 2-phase docking.}
+\label{istar:2PhaseDocking}
+\end{figure}
+
 \section{GPU Acceleration}
+
+For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
 
 porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs.
 Kepler GK110
@@ -27,13 +64,15 @@ applying idock and igrow for practical drug discovery applications, CCRK, Wnt, I
 
 \section{Click Chemistry}
 
+For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
+
 integrating idock and igrow into one single program to realize grid map caching and partial docking, click chemistry
 
 \section{ADMET Property Prediction}
 
 It was estimated that 40\% to 60\% of new chemical entity (NCE) failures can be attributed to poor ADMET (absorption, distribution, metabolism, excretion, and toxicity) profiles.
 
-PKKB (PharmacoKinetics Knowledge Base) \citep{1133} provides the most extensive collection of freely available data for ADMET properties up to date. PKKB integrates 31,412 experimental or predicted values for 1,685 drug and drug-like molecules from published literature with available experimental ADMET properties including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. (Table \ref{tab:pkkb})
+PKKB (PharmacoKinetics Knowledge Base) \citep{1133} provides the most extensive collection of freely available data for ADMET properties up to date. PKKB integrates 31,412 experimental or predicted values for 1,685 drug and drug-like molecules from published literature with available experimental ADMET properties including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. (Table \ref{PKKB:Properties})
 
 \begin{table}
 \centering
@@ -91,20 +130,20 @@ No. & Property & Measurements \\
 \bottomrule
 \end{tabular*}
 \caption{PKKB property measurements.}
-\label{tab:pkkb}
+\label{PKKB:Properties}
 \end{table}
 
-Figure \ref{fig:pkkb} shows the PKKB schema. Raw data from literature was first converted into proper formats and then integrated into a central ADMET database. A web site is provided for interactive search of ADMET properties given either structure or descriptive text of compounds of interest.
+Figure \ref{PKKB:Schema} shows the PKKB schema. Raw data from literature was first converted into proper formats and then integrated into a central ADMET database. A web site is provided for interactive search of ADMET properties given either structure or descriptive text of compounds of interest.
 
 \begin{figure}
 \centering
 \includegraphics[width=1.0\linewidth]{PKKB/Schema.jpg}
 \caption{PKKB schema.}
-\label{fig:pkkb}
+\label{PKKB:Schema}
 \end{figure}
 
 Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
 
-We propose to make use of advanced machine learning techniques to train a prediction model (Figure \ref{fig:pkkb}). Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading us to higher drug discovery success rate.
+We propose to make use of advanced machine learning techniques to train a prediction model (Figure \ref{PKKB:Schema}). Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading us to higher drug discovery success rate.
 
 \chapterend
