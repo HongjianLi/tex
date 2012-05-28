@@ -1,14 +1,16 @@
-\chapter{Thesis Proposal}
+\chapter{Our Proposals}
 
 Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
-\section{SaaS Platform for idock}
+\section{istar: A SaaS Platform for idock}
 
 We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails.
 
-Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, 
+Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we build the web site frontend with cutting-edge technologies. We seamlessly combine both the HTML5 Boilerplate and the Twitter Bootstrap into a HTML5- and CSS3-powered user interface. We use the Moderizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions.
 
+On the server side, we build the web server in event-driven node.js on top of the well known express server, forking multiple processes to accept simultaneous connections. We expose the functionalities of job submission and job query as RESTful API for others to program against. We also set up a gmail account and develop a mail crawler on top of Context.IO, a RESTful API for manipulating mailboxes, messages and attachments, to retrieve new jobs directly from emails. We employ the forever utility for both the web server and the mail crawler to ensure failover and high availability.
 
+On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes and values, like istar. MongoDB is written in C++, making it easy to manipualte database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler.
 
 \begin{figure}
 \centering
@@ -17,7 +19,6 @@ Figure \ref{istar:Architecture} shows the architecture of istar. On the client s
 \label{istar:Architecture}
 \end{figure}
 
-istar establishing web sites for online virtual screening and drug synthesis, using HTML5 and CSS3 as front end presentation technologies, and node.js and NoSQL databases as back end management implementations.
 
 \begin{figure}
 \centering
@@ -50,7 +51,9 @@ istar establishing web sites for online virtual screening and drug synthesis, us
 \label{istar:2PhaseDocking}
 \end{figure}
 
-\section{GPU Acceleration}
+istar serves as our foundation for SaaS. With istar, basically we can expose any of our software as a service. Once we manage to host idock at istar, we also plan to host our tool igrow for computational synthesis of potent ligands on the fly.
+
+\section{GPU Acceleration with CUDA and OpenCL}
 
 For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
 
@@ -58,7 +61,7 @@ porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/A
 Kepler GK110
 GCN.
 
-\section{Pharmaceutial Applications}
+\section{Real-Life Drug Discovery Case Studies}
 
 applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
 
