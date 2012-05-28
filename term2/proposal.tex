@@ -4,13 +4,17 @@ Our ultimate goal is to build a comprehensive and universal framework for comput
 
 \section{istar: A SaaS Platform for idock}
 
-We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails.
+We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails conforming to our specifications.
 
-Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we build the web site frontend with cutting-edge technologies. We seamlessly combine both the HTML5 Boilerplate and the Twitter Bootstrap into a HTML5- and CSS3-powered user interface. We use the Moderizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions.
+Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19, Mozilla Firefox 12, Microsoft Internet Explorer 9 and Apple Safari 5.
 
-On the server side, we build the web server in event-driven node.js on top of the well known express server, forking multiple processes to accept simultaneous connections. We expose the functionalities of job submission and job query as RESTful API for others to program against. We also set up a gmail account and develop a mail crawler on top of Context.IO, a RESTful API for manipulating mailboxes, messages and attachments, to retrieve new jobs directly from emails. We employ the forever utility for both the web server and the mail crawler to ensure failover and high availability.
+On the server side, we build the web server in event-driven node.js on top of the well known express server, forking multiple processes to accept simultaneous HTTP connections. We expose the functionalities of job submission and job query as RESTful API for others to program against. We also set up a gmail account and develop a mail crawler on top of Context.IO, a RESTful API for manipulating mailboxes, messages and attachments, to retrieve new jobs directly from emails. We employ the forever utility for both the web server and the mail crawler to ensure failover and high availability.
 
-On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes and values, like istar. MongoDB is written in C++, making it easy to manipualte database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler.
+On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes like istar. MongoDB is written in C++, making it easy to manipualte database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler. In addition to holding jobs, the MongoDB database also maintains ligand chemical properties such as molecular weight and partition coefficient clogP. With indexes built on these properties, we are able to instantly reply to users the number of ligands shortlisted given any filtering conditions.
+
+On the network file system side, we collect 12,171,291 clean ligands from the ZINC database in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into a total of 128 slices, with each slice containing approximately 95,000 clean ligands. The entire network file system is shared by all the backend workstations.
+
+On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a Mac workstation, on average it takes a week to screen one single slice. To boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips.
 
 \begin{figure}
 \centering
@@ -19,6 +23,7 @@ On the database side, we adopt MongoDB, a scalable, high-performance, open sourc
 \label{istar:Architecture}
 \end{figure}
 
+Figure \ref{istar:Website} shows istar web site. Job progress will be displayed in the upper section, while new jobs can be submitted in the lower section. A new job typically consists of several compulsory fields as well as several optional fields. Compulsory fields include a receptor in PDBQT format, a search space defined by a cubic box, a short job description, and an email to receive completion notification. Optional fields include 8 ligand filtering conditions, like molecular weight, partition coefficient clogP, number of hydrogen bond donors, number of hydrogen bond acceptors, number of rotatable bonds, polar surface area tPSA, apolar desolvation and polar desolvation. We set up default values for optional fields, and only the ZINC ligands satisfying all the 8 filtering conditions will be screened.
 
 \begin{figure}
 \centering
@@ -26,6 +31,8 @@ On the database side, we adopt MongoDB, a scalable, high-performance, open sourc
 \caption{istar web site.}
 \label{istar:Website}
 \end{figure}
+
+Machines compete for jobs. Machines compete for slices.
 
 \begin{figure}
 \centering
@@ -52,6 +59,8 @@ On the database side, we adopt MongoDB, a scalable, high-performance, open sourc
 \end{figure}
 
 istar serves as our foundation for SaaS. With istar, basically we can expose any of our software as a service. Once we manage to host idock at istar, we also plan to host our tool igrow for computational synthesis of potent ligands on the fly.
+
+As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk.
 
 \section{GPU Acceleration with CUDA and OpenCL}
 
