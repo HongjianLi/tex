@@ -12,13 +12,13 @@ On the server side, we build the web server in event-driven node.js on top of th
 
 On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes like istar. MongoDB is written in C++, making it easy to manipualte database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler. In addition to holding jobs, the MongoDB database also maintains ligand chemical properties such as molecular weight and partition coefficient clogP. With indexes built on these properties, we are able to instantly reply to users the number of ligands shortlisted given any filtering conditions.
 
-On the network file system side, we collect 12,171,291 clean ligands from the ZINC database in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into a total of 128 slices, with each slice containing approximately 95,000 clean ligands. The entire network file system is shared by all the backend workstations.
+On the network file system side, we collect 12,171,291 clean ligands from the ZINC database \citep{532} in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into a total of 128 slices, with each slice containing approximately 95,000 clean ligands. Among the 128 slices, 98 are at pH 7, 12 at pH 6-8, 9 at pH 8.5-9, and 9 at pH 4.5-6. The entire network file system is shared by all the backend workstations.
 
-On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a Mac workstation, on average it takes a week to screen one single slice. To boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips.
+On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations for one single job, it can take up to 32 weeks, i.e. 7 months, to complete. To boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips.
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\linewidth]{istar/Architecture.png}
+\includegraphics[width=\linewidth]{istar/Architecture.png}
 \caption{istar architecture.}
 \label{istar:Architecture}
 \end{figure}
@@ -27,42 +27,44 @@ Figure \ref{istar:Website} shows istar web site. Job progress will be displayed 
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\linewidth]{istar/Website.png}
+\includegraphics[width=\linewidth]{istar/Website.png}
 \caption{istar web site.}
 \label{istar:Website}
 \end{figure}
 
-Machines compete for jobs. Machines compete for slices.
+istar features slice-level parallelism. Generally speaking, workstations can compete for jobs or slices, with the former known as job-level parallelism and the latter as slice-level parallelism (Figure \ref{istar:2LevelParallelism}). Job-level parallelism is very straightforward to implement and can ensure 100\% utilization of computational power when the number of jobs exceeds the number of workstations. Nevertheless, when the number of workstations exceeds the number of jobs, which is usually the case in practice during the initial stage of istar, slice-level parallelism can better utilize computational power by subdividing a job into 128 slices which are then distributed to workstations. Slice-level parallelism is, in contrast, difficult to implement. The technical hurdle becomes even more apparent when progress must be reported to MongoDB from time to time, and progresses from multiple slices must be combined to compute an overall progress.
 
 \begin{figure}
 \centering
 \subfloat[Job-level parallelism.]
 {
   \label{istar:JobLevelParallelism}
-  \includegraphics[width=1.0\linewidth]{istar/JobLevelParallelism.png}
+  \includegraphics[width=\linewidth]{istar/JobLevelParallelism.png}
 }
 \\
 \subfloat[Slice-level parallelism.]
 {
   \label{istar:SliceLevelParallelism}
-  \includegraphics[width=1.0\linewidth]{istar/SliceLevelParallelism.png}
+  \includegraphics[width=\linewidth]{istar/SliceLevelParallelism.png}
 }
 \caption{istar 2-level parallelism.}
 \label{istar:2LevelParallelism}
 \end{figure}
 
+istar features 2-phase docking, considering as many as 12 millions ligands to screen. In phase 1, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In phase 2, idock performs fine and slow virtual screening, writing as many conformations to file as possible, aiming to refine the predicted free energy of candidate compounds. Such a 2-phase docking methodology can significantly reduce job execution time while avoiding the risk of filtering out promising compounds.
+
 \begin{figure}
 \centering
-\includegraphics[width=1.0\linewidth]{istar/2PhaseDocking.png}
+\includegraphics[width=\linewidth]{istar/2PhaseDocking.png}
 \caption{istar 2-phase docking.}
 \label{istar:2PhaseDocking}
 \end{figure}
 
-istar serves as our foundation for SaaS. With istar, basically we can expose any of our software as a service. Once we manage to host idock at istar, we also plan to host our tool igrow for computational synthesis of potent ligands on the fly.
+istar serves as our foundation for SaaS. With istar at hand, basically we can expose any of our software as a service. Once we manage to host idock at istar, it will be quite easy for us to host our tool igrow for computational synthesis of potent ligands.
 
 As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk.
 
-\section{GPU Acceleration with CUDA and OpenCL}
+\section{GPU Acceleration with CUDA/OpenCL}
 
 For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
 
@@ -149,7 +151,7 @@ Figure \ref{PKKB:Schema} shows the PKKB schema. Raw data from literature was fir
 
 \begin{figure}
 \centering
-\includegraphics[width=1.0\linewidth]{PKKB/Schema.jpg}
+\includegraphics[width=\linewidth]{PKKB/Schema.jpg}
 \caption{PKKB schema.}
 \label{PKKB:Schema}
 \end{figure}
