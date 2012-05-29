@@ -81,21 +81,40 @@ NVIDIA’s latest GPU architecture, codenamed “Kepler,” create an extremely 
 The first GPU based on our new Kepler architecture, codenamed “GK104,” every internal unit was designed for the best perf/watt possible
 Kepler GPUs are composed of different configurations of Graphics Processing Clusters (GPCs), Streaming Multiprocessors (SMs), and memory controllers. The GeForce GTX 680 GPU consists of four GPCs, eight next-generation Streaming Multiprocessors (SMX), and four memory controllers. In GeForce GTX 680, each GPC has a dedicated raster engine and two SMX units. With a total of eight SMX units, the GeForce GTX 680 implementation has 1536 CUDA Cores. The SM is the heart of NVIDIA’s unified GPU architecture. Most of the key hardware units for graphics processing reside in the SM. Special Function Units (SFUs) handle transcendental and graphics interpolation instructions. To feed the execution resources of SMX, each unit contains four warp schedulers, and each warp scheduler is capable of dispatching two instructions per warp every clock.
 
-Figure \ref{Background:GeForceGTX680BlockDiagram}
-Figure \ref{Background:GeForceGTX680SMX}
+Each of the Kepler GK110 SMX units feature 192 single‐precision CUDA cores, and each core has fully pipelined floating‐point and integer arithmetic logic units. Kepler retains the full IEEE 754‐2008 compliant single‐ and double‐precision arithmetic introduced in Fermi, including the fused multiply‐add (FMA) operation.
+
+The SMX schedules threads in groups of 32 parallel threads called warps. Each SMX features four warp schedulers and eight instruction dispatch units, allowing four warps to be issued and executed concurrently. Kepler’s quad warp scheduler selects four warps, and two independent instructions per warp can be dispatched each cycle.
+
+special function units (SFUs) for fast approximate transcendental operations
+
+Figure \ref{GPU:GeForceGTX680BlockDiagram}
+Figure \ref{GPU:GeForceGTX680SMX}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{Background/GeForceGTX680BlockDiagram.png}
+\includegraphics[width=\textwidth]{GPU/GeForceGTX680BlockDiagram.png}
 \caption{NVIDIA GeForce GTX680 Block Diagram.}
-\label{Background:GeForceGTX680BlockDiagram}
+\label{GPU:GeForceGTX680BlockDiagram}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{Background/GeForceGTX680SMX.png}
+\includegraphics[width=\textwidth]{GPU/GeForceGTX680SMX.png}
 \caption{NVIDIA GeForce GTX680 SMX.}
-\label{Background:GeForceGTX680SMX}
+\label{GPU:GeForceGTX680SMX}
+\end{figure}
+
+CUDA is a combination hardware/software platform that enables NVIDIA GPUs to execute programs written in C, C++, Fortran, and other languages. A CUDA program invokes parallel functions called kernels that execute across many parallel threads. The programmer or compiler organizes these threads into thread blocks and grids of thread blocks, as shown in Figure \ref{GPU:CUDAHierarchyOfThreads}. Each thread within a thread block executes an instance of the kernel. Each thread also has thread and block IDs within its thread block and grid, a program counter, registers, per-thread private memory, inputs, and output results.
+
+A thread block is a set of concurrently executing threads that can cooperate among themselves through barrier synchronization and shared memory. A thread block has a block ID within its grid. A grid is an array of thread blocks that execute the same kernel, read inputs from global memory, write results to global memory, and synchronize between dependent kernel calls. In the CUDA parallel programming model, each thread has a per-thread private memory space used for register spills, function calls, and C automatic array variables. Each thread block has a per-block shared memory space used for inter-thread communication, data sharing, and result sharing in parallel algorithms. Grids of thread blocks share results in Global Memory space after kernel-wide global synchronization.
+
+CUDA's hierarchy of threads maps to a hierarchy of processors on the GPU; a GPU executes one or more kernel grids; a streaming multiprocessor (SMX) executes one or more thread blocks; and CUDA cores and other execution units in the SMX execute thread instructions. The SMX executes threads in groups of 32 threads called warps. While programmers can generally ignore warp execution for functional correctness and focus on programming individual scalar threads, they can greatly improve performance by having threads in a warp execute the same code path and access memory with nearby addresses.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{GPU/CUDAHierarchyOfThreads.png}
+\caption{CUDA hierarchy of threads, blocks, and grids, with corresponding per-thread private, per-block shared, and per-application global memory spaces.}
+\label{GPU:CUDAMemoryHierarchy}
 \end{figure}
 
 \section{Software as a Service}
