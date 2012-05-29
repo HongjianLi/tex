@@ -104,7 +104,7 @@ Figure \ref{GPU:GeForceGTX680SMX}
 \label{GPU:GeForceGTX680SMX}
 \end{figure}
 
-CUDA is a combination hardware/software platform that enables NVIDIA GPUs to execute programs written in C, C++, Fortran, and other languages. A CUDA program invokes parallel functions called kernels that execute across many parallel threads. The programmer or compiler organizes these threads into thread blocks and grids of thread blocks, as shown in Figure \ref{GPU:CUDAHierarchyOfThreads}. Each thread within a thread block executes an instance of the kernel. Each thread also has thread and block IDs within its thread block and grid, a program counter, registers, per-thread private memory, inputs, and output results.
+CUDA is a combination hardware/software platform that enables NVIDIA GPUs to execute programs written in C, C++, Fortran, and other languages. A CUDA program invokes parallel functions called kernels that execute across many parallel threads. The programmer or compiler organizes these threads into thread blocks and grids of thread blocks, as shown in Figure \ref{GPU:CUDAMemoryHierarchy}. Each thread within a thread block executes an instance of the kernel. Each thread also has thread and block IDs within its thread block and grid, a program counter, registers, per-thread private memory, inputs, and output results.
 
 A thread block is a set of concurrently executing threads that can cooperate among themselves through barrier synchronization and shared memory. A thread block has a block ID within its grid. A grid is an array of thread blocks that execute the same kernel, read inputs from global memory, write results to global memory, and synchronize between dependent kernel calls. In the CUDA parallel programming model, each thread has a per-thread private memory space used for register spills, function calls, and C automatic array variables. Each thread block has a per-block shared memory space used for inter-thread communication, data sharing, and result sharing in parallel algorithms. Grids of thread blocks share results in Global Memory space after kernel-wide global synchronization.
 
@@ -112,7 +112,7 @@ CUDA's hierarchy of threads maps to a hierarchy of processors on the GPU; a GPU 
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{GPU/CUDAHierarchyOfThreads.png}
+\includegraphics[width=\textwidth]{GPU/CUDAMemoryHierarchy.png}
 \caption{CUDA hierarchy of threads, blocks, and grids, with corresponding per-thread private, per-block shared, and per-application global memory spaces.}
 \label{GPU:CUDAMemoryHierarchy}
 \end{figure}
