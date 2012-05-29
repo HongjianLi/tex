@@ -1,8 +1,10 @@
-\chapter{Our Proposals}
+\chapter{Our Proposal}
 
 Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
 \section{istar: A SaaS Platform for idock}
+
+Having developed and advertised idock, we kept receiving constant docking requirements from our colleges and collaborators. They are mostly biochemists and pharmacists, outsourcing the docking research to us after discovering potential biological targets for certain diseases of interest. All of a sudden, we had to grab the protein structure, do format conversion, define search space, set up docking parameters, and run idock for a long period of time. Sometimes we also had to restart virtual screening in case the idock process got killed by others or by exceptions. Tedious enough, all the above work was done manually, resulting in a very low research productivity.
 
 We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails conforming to our specifications.
 
@@ -14,7 +16,7 @@ On the database side, we adopt MongoDB, a scalable, high-performance, open sourc
 
 On the network file system side, we collect 12,171,291 clean ligands from the ZINC database \citep{532} in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into a total of 128 slices, with each slice containing approximately 95,000 clean ligands. Among the 128 slices, 98 are at pH 7, 12 at pH 6-8, 9 at pH 8.5-9, and 9 at pH 4.5-6. The entire network file system is shared by all the backend workstations.
 
-On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations for one single job, it can take up to 32 weeks, i.e. 7 months, to complete. To boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips.
+On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 32 weeks, i.e. 7 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
 
 \begin{figure}
 \centering
@@ -51,7 +53,7 @@ istar features slice-level parallelism. Generally speaking, workstations can com
 \label{istar:2LevelParallelism}
 \end{figure}
 
-istar features 2-phase docking, considering as many as 12 millions ligands to screen. In phase 1, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In phase 2, idock performs fine and slow virtual screening, writing as many conformations to file as possible, aiming to refine the predicted free energy of candidate compounds. Such a 2-phase docking methodology can significantly reduce job execution time while avoiding the risk of filtering out promising compounds.
+istar features 2-phase docking, due to as many as 12 millions ligands to screen. In phase 1, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In phase 2, idock performs fine and slow virtual screening, writing as many conformations to file as possible, aiming to refine the predicted free energy of candidate compounds. Such a 2-phase docking methodology can significantly reduce job execution time while avoiding the risk of filtering out promising compounds, resulting in a low false negative rate.
 
 \begin{figure}
 \centering
@@ -60,17 +62,19 @@ istar features 2-phase docking, considering as many as 12 millions ligands to sc
 \label{istar:2PhaseDocking}
 \end{figure}
 
-istar serves as our foundation for SaaS. With istar at hand, basically we can expose any of our software as a service. Once we manage to host idock at istar, it will be quite easy for us to host our tool igrow for computational synthesis of potent ligands.
+istar serves as our foundation for SaaS. With istar at hand, basically we can expose any of our software as a service. Once we manage to host idock at istar, it will be quite easy for us to host our other tools, such as igrow for computational synthesis of potent ligands.
 
-As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk.
+As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk when we finish implementing istar.
 
 \section{GPU Acceleration with CUDA/OpenCL}
 
-For structure-based virtual screening, the most time consuming part is docking. Hence we plan to port idock to GPU, hoping to gain further speedup. This idea is feasible because there are GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming.
+Even though idock outperforms AutoDock Vina by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired.
 
-porting idock to CUDA/OpenCL to utilize the huge computational power of NVIDIA/AMD's GPUs.
-Kepler GK110
-GCN.
+GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming \citep{1138}.
+
+We propose to develop both CUDA and OpenCL versions of idock, harvesting the trenemdous computational power offered by modern GPUs nowadays.
+
+float vs double
 
 \section{Real-Life Drug Discovery Case Studies}
 
