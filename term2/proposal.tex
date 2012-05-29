@@ -162,6 +162,13 @@ Figure \ref{PKKB:Schema} shows the PKKB schema. Raw data from literature was fir
 
 Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
 
-We propose to make use of advanced machine learning techniques to train a prediction model (Figure \ref{PKKB:Schema}). Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading us to higher drug discovery success rate.
+We propose to make use of advanced machine learning techniques to train a regression model (Figure \ref{PKKB:Regression}), be it linear or non-linear. Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading to a higher drug discovery success rate.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{PKKB/Regression.png}
+\caption{Our proposed regression model for PKKB.}
+\label{PKKB:Regression}
+\end{figure}
 
 \chapterend
