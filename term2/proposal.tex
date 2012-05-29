@@ -66,7 +66,7 @@ istar serves as our foundation for SaaS. With istar at hand, basically we can ex
 
 As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk when we finish implementing istar.
 
-\section{GPU Acceleration with CUDA/OpenCL}
+\section{GPU Acceleration of idock with CUDA/OpenCL}
 
 Even though idock outperforms AutoDock Vina by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired.
 
@@ -77,7 +77,7 @@ GPU implementations of some other docking programs \citep{723,652,779}, and we a
 We propose to develop both CUDA and OpenCL versions of idock, harvesting the trenemdous computational power offered by modern GPUs nowadays.
 
 float vs double
-no shared memory communication, allocate to L1. each SMX has 64 KB of on©\chip memory that can be configured as 48 KB of Shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache.
+no shared memory communication, allocate to L1. each SMX has 64 KB of on-chip memory that can be configured as 48 KB of Shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache.
 
 Figure F-1 shows an example of aligned and sequential global memory access and corresponding memory transactions based on compute capability. the k-th thread accesses the k-th word in a cache line. For example, if the threads of a warp access adjacent 4-byte words (e.g., adjacent float values), a single 128B L1 cache line and therefore a single coalesced transaction will service that memory access. Such a pattern is shown in Figure \ref{GPU:AlignedSequentialGlobalMemoryAccess}.
 
