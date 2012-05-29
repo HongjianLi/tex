@@ -69,31 +69,38 @@ Among the many ligand synthesis programs, AutoGrow \citep{466} is a representati
 
 Nowadays the explosively growing size of biological data together with the high complexity of bioinformatics algorithms demand more powerful parallel machines. However, such high performance computers are only available in bioinformatics centers due to their sky-high price. Hence, cloud and heterogeneous computing are emerging as solutions for tackling large-scale and high dimensional data sets \citep{269,267,268}. In particular, the modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price, enabling researchers to study bioinformatics in more details within less time.
 
-In November 2006, NVIDIA announced Compute United Device Architecture (CUDA). In December 2008, the Khronos Group released the first specification of Open Computing Language (OpenCL). Both techniques greatly reduce the GPU programming complexity and saves programmers from learning traditional graphics pipelines. More and more computationally intensive problems, ranging from computational biology to computational chemistry, have been successfully ported to the GPU and gained speedups from 10x to 1000x compared to single threaded CPU counterparts.
-
 There are quite a few successful GPU applications in drug discovery, including binding site mapping \citep{722}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}, and compound selection \citep{750}.
 
 GPU applications in bioinformatics
   sequence alignment \citep{123,1064}
   protein database search \citep{189}
 
+In November 2006, NVIDIA announced Compute United Device Architecture (CUDA). In December 2008, the Khronos Group released the first specification of Open Computing Language (OpenCL). Both techniques greatly reduce the GPU programming complexity and saves programmers from learning traditional graphics pipelines. More and more computationally intensive problems, ranging from computational biology to computational chemistry, have been successfully ported to the GPU and gained speedups from 10x to 1000x compared to single threaded CPU counterparts.
+
+NVIDIA’s latest GPU architecture, codenamed “Kepler,” create an extremely power-efficient GPU
+The first GPU based on our new Kepler architecture, codenamed “GK104,” every internal unit was designed for the best perf/watt possible
+Kepler GPUs are composed of different configurations of Graphics Processing Clusters (GPCs), Streaming Multiprocessors (SMs), and memory controllers. The GeForce GTX 680 GPU consists of four GPCs, eight next-generation Streaming Multiprocessors (SMX), and four memory controllers. In GeForce GTX 680, each GPC has a dedicated raster engine and two SMX units. With a total of eight SMX units, the GeForce GTX 680 implementation has 1536 CUDA Cores. The SM is the heart of NVIDIA’s unified GPU architecture. Most of the key hardware units for graphics processing reside in the SM. Special Function Units (SFUs) handle transcendental and graphics interpolation instructions. To feed the execution resources of SMX, each unit contains four warp schedulers, and each warp scheduler is capable of dispatching two instructions per warp every clock.
+
+Figure \ref{Background:GeForceGTX680BlockDiagram}
+Figure \ref{Background:GeForceGTX680SMX}
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Background/GeForceGTX680BlockDiagram.png}
 \caption{NVIDIA GeForce GTX680 Block Diagram.}
-\label{gpu:GeForceGTX680BlockDiagram}
+\label{Background:GeForceGTX680BlockDiagram}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Background/GeForceGTX680SMX.png}
 \caption{NVIDIA GeForce GTX680 SMX.}
-\label{gpu:GeForceGTX680SMX}
+\label{Background:GeForceGTX680SMX}
 \end{figure}
 
 \section{Software as a Service}
 
-  Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software and website count \citep{260}
+Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software and website count \citep{260}
 % \citep{677}
 DOCK BLASTER
 wwLigCSRre
