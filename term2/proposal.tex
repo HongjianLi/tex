@@ -68,21 +68,19 @@ As for software availability, similar to idock, istar is also hosted at GitHub f
 
 \section{idock 2.0: GPU Acceleration of idock}
 
-Even though idock outperforms AutoDock Vina by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired.
+Even though idock outperforms AutoDock Vina by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
 
-We use AMD CodeAnalyst Performance Analyzer for hotspot detection. Figure ref{} shows thread profile.
+We used AMD CodeAnalyst Performance Analyzer v3.6 to detect hotspots. Figure ref{} shows the thread profile of idock 1.4. It can be seen that the four worker threads acquire most of the CPU computing resources.
 
-GPU implementations of some other docking programs \citep{723,652,779}, and we also have expertise in GPU programming \citep{1138}.
-
-We propose to develop both CUDA and OpenCL versions of idock, harvesting the trenemdous computational power offered by modern GPUs nowadays.
+We propose idock 2.0, incorporating GPU acceleration with both CUDA and OpenCL, harvesting the trenemdous computational power offered by modern GPUs nowadays. In 2010 we developed a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching \citep{1138}, demonstrating our expertise in CUDA programming.
 
 Performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
 
-Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2 GB along with a GeForce GTX680. This voids the precalculation of grid maps at a fine granularity like 0.8 \AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
+Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, map Monte Carlo tasks directly to CUDA threads, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2 GB along with a GeForce GTX680. This voids the precalculation of grid maps at a fine granularity like 0.8 \AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
 
-Maximizing memory bandwidth can be achieved by minimizing data transfers between the host and the device and optimizing the access patterns to global memory and shared memory on the device. Since host-to-device and device-to-host data transfers have much lower bandwidth than internal device data transfers, we plan to accommodate as much data as possible into the GPU. In idock, 
+Maximizing memory bandwidth can be achieved by minimizing data transfers between the host and the device and optimizing the access patterns to global memory and shared memory on the device. Since host-to-device and device-to-host data transfers have much lower bandwidth than internal device data transfers, we plan to accommodate as much data as possible into the GPU global memory. In idock 2.0, constant data such as structure of receptor, definition of search space, precalculation of scoring function, and some configurations for the BFGS Quasi-Newton optimizer will reside in constant cache, while grid maps, due to its huge size, will resize in global memory, and temporary variables will resize in per-thread registers.
 
-Figure \ref{GPU:AlignedSequentialGlobalMemoryAccess} shows an example of aligned and sequential global memory access and corresponding memory transactions based on compute capability. the k-th thread accesses the k-th word in a cache line. For example, if the threads of a warp access adjacent 4-byte words (e.g., adjacent float values), a single 128B L1 cache line and therefore a single coalesced transaction will service that memory access.
+Maximizing global memory bandwidth is of no.1 importance, and its bandwidth depends largely on its access pattern. Figure \ref{GPU:AlignedSequentialGlobalMemoryAccess} shows an example of aligned and sequential global memory access and corresponding memory transactions based on compute capability. In this case, threads of a warp access adjacent 4-byte words such as adjacent float values. In other words, the \textit{k}th thread accesses the \textit{k}th word in a 128B L1 cache line, a single coalesced transaction alone will service that memory access. In idock 2.0, we will adopt this kind of aligned and sequential access pattern and re-organize array of structures into structure of arrays, e.g.  [ { x1, y1, z1 }, { x2, y2, z2 } ] into { [ x1, x2 ], [ y1, y2 ], [ z1, z2 ] }. Such a restructing requires rewriting almost all the relevant mathematical data structures and functions in use in idock. So far we have stepped towards this direction a little bit, finishing rewriting the templated quaternion class from the BOOST C++ library into our own light-weight version to represent the orientation of a conformation.
 
 \begin{figure}
 \centering
@@ -91,24 +89,22 @@ Figure \ref{GPU:AlignedSequentialGlobalMemoryAccess} shows an example of aligned
 \label{GPU:AlignedSequentialGlobalMemoryAccess}
 \end{figure}
 
-Each SMX has 64 KB of on-chip memory that can be configured as 48 KB of shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache. Since threads within a thread block run their Monte Carlo tasks independently and rarely communicate with one another, we decide to allocate 48 KB of the 64 KB on-chip memory to L1 cache.
+Each SMX has 64 KB of on-chip memory that can be configured as 48 KB of shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache. Since threads within a thread block run their Monte Carlo tasks independently and seldom communicate with one another, we decide to allocate 48 KB of the 64 KB on-chip memory to L1 cache.
 
-Maximizing instruction throughput can be achieved by using single precision instead of double precision and using intrinsics instead of regular functions. This suggests trading precision for speed when it does not affect the end result.
-
-float vs double
+Maximizing instruction throughput can be achieved by using single precision instead of double precision and using intrinsics instead of regular functions. This suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock 1.4, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe enough to utilize single precision operations as well as intrinsics in idock 2.0.
 
 \section{Real-Life Drug Discovery Case Studies}
 
-Our colleges and collaborators at biochemistry and pharmacy departments 
-Having developed and advertised idock, we kept receiving constant docking requirements from 
+Our colleges and collaborators at biochemistry and pharmacy departments are working on several drug discovery projects. They have done lots of biological assays and succeeded in identifying pharmaceutical and druggable protein targets for certain diseases. They then outsource the docking tasks to us, hoping to discover potent inhibitors.
 
-applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
+Prof. P.C. Shaw at Influenza A H1N1 (2IQH, 2ZNL)
+Prof. Marie Lin at CCRK (1HCL)
+Dr. Hong Yao at cancer stem cell Wnt (1GTE), 
 
 \section{igrow: Click Chemistry for idock}
 
-For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
-
-integrating idock and igrow into one single program to realize grid map caching and partial docking, click chemistry
+click chemistry
+integrate igrow into idock to realize grid map caching and partial docking
 
 \section{ADMET Property Prediction}
 
@@ -186,7 +182,7 @@ Figure \ref{PKKB:Schema} shows the PKKB schema. Raw data from literature was fir
 
 Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
 
-We propose to make use of advanced machine learning techniques to train a regression model (Figure \ref{PKKB:Regression}), be it linear or non-linear. Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading to a higher drug discovery success rate.
+We propose to make use of advanced machine learning techniques to train a regression model (Figure \ref{PKKB:Regression}), be it linear or non-linear. Once the model is constructed, it is possible to predict ADMET properties of any given compounds. Coupled with conformations and free energy predicted by our tool idock, we can better evaluate a compound from a wide variety of perspectives, leading to a higher drug discovery success rate. Moreover, such a regression model can be integrated into igrow to guide ligand synthesis, which can then be further integrated into idock to guide ligand filtering and eventually into istar to compose a comprehensive framework for structure-based drug discovery.
 
 \begin{figure}
 \centering
