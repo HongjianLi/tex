@@ -66,7 +66,7 @@ istar serves as our foundation for SaaS. With istar at hand, basically we can ex
 
 As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at http://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0. A live demo will be available at http://istar.cse.cuhk.edu.hk when we finish implementing istar.
 
-\section{GPU Acceleration of idock with CUDA/OpenCL}
+\section{idock 2.0: GPU Acceleration of idock}
 
 Even though idock outperforms AutoDock Vina by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired.
 
@@ -78,7 +78,7 @@ We propose to develop both CUDA and OpenCL versions of idock, harvesting the tre
 
 Performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
 
-Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2 GB along with a GeForce GTX680. This voids the precalculation of grid maps at a fine granularity like 0.8 \Amgstrong, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
+Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2 GB along with a GeForce GTX680. This voids the precalculation of grid maps at a fine granularity like 0.8 \AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
 
 Maximizing memory bandwidth can be achieved by minimizing data transfers between the host and the device and optimizing the access patterns to global memory and shared memory on the device. Since host-to-device and device-to-host data transfers have much lower bandwidth than internal device data transfers, we plan to accommodate as much data as possible into the GPU. In idock, 
 
@@ -104,7 +104,7 @@ Having developed and advertised idock, we kept receiving constant docking requir
 
 applying idock and igrow for practical drug discovery applications, CCRK, Wnt, Influenza A H1N1
 
-\section{Click Chemistry}
+\section{igrow: Click Chemistry for idock}
 
 For computational synthesis of potent ligands, even though igrow implements Lipinski's \textit{Rule of Five}, it neglects selectivity, ADMET properties and other drug-like properties, possibly resulting in a high false positive rate. We plan to integrate igrow and ADMET prediction methods into idock to gain speedup and compose a uniform interface.
 
