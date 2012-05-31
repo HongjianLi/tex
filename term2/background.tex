@@ -51,25 +51,11 @@ Among the many ligand synthesis programs, AutoGrow \citep{466} is a representati
 
 \section{General-Purpose Computing on GPU}
 
-The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price.
+The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. In November 2006, NVIDIA announced CUDA (Compute United Device Architecture). In December 2008, the Khronos Group released the first specification of OpenCL (Open Computing Language). Both standards greatly reduce GPU programming complexity and save programmers from learning traditional graphics pipelines.
 
-Nowadays the explosively growing size of biological data together with the high complexity of bioinformatics algorithms demand more powerful parallel machines. However, such high performance computers are only available in bioinformatics centers due to their sky-high price. Hence, cloud and heterogeneous computing are emerging as solutions for tackling large-scale and high dimensional data sets \citep{269,267,268}.
+The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}.
 
-GPU programming enables researchers to study bioinformatics in more details within less time. There are quite a few successful GPU applications in drug discovery, including binding site mapping \citep{722}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}, and compound selection \citep{750}.
-sequence alignment \citep{123,1064}
-protein database search \citep{189}
-
-In November 2006, NVIDIA announced CUDA (Compute United Device Architecture). In December 2008, the Khronos Group released the first specification of OpenCL (Open Computing Language). Both techniques greatly reduce the GPU programming complexity and saves programmers from learning traditional graphics pipelines. More and more computationally intensive problems, ranging from computational biology to computational chemistry, have been successfully ported to the GPU and gained speedups from 10x to 1000x compared to single threaded CPU counterparts.
-
-Now in June 2012, NVIDIA’s latest GPU architecture, codenamed Kepler, create an extremely power-efficient GPU. The first GPU based on Kepler architecture, codenamed GK104, every internal unit was designed for the best perf/watt possible. Kepler GPUs are composed of different configurations of Graphics Processing Clusters (GPCs), Streaming Multiprocessors (SMs), and memory controllers.
-
-The GeForce GTX 680 GPU consists of four GPCs, eight next-generation Streaming Multiprocessors (SMX), and four memory controllers. In GeForce GTX 680, each GPC has a dedicated raster engine and two SMX units. With a total of eight SMX units, the GeForce GTX 680 implementation has 1536 CUDA Cores. The SM is the heart of NVIDIA’s unified GPU architecture. Most of the key hardware units for graphics processing reside in the SM. Special Function Units (SFUs) handle transcendental and graphics interpolation instructions. To feed the execution resources of SMX, each unit contains four warp schedulers, and each warp scheduler is capable of dispatching two instructions per warp every clock.
-
-Each of the GK104 SMX units feature 192 single‐precision CUDA cores, and each core has fully pipelined floating‐point and integer arithmetic logic units. Kepler retains the full IEEE 754‐2008 compliant single‐ and double‐precision arithmetic, including the fused multiply‐add (FMA) operation. Special function units (SFUs) for fast approximate transcendental operations
-
-The SMX schedules threads in groups of 32 parallel threads called warps. Each SMX features four warp schedulers and eight instruction dispatch units, allowing four warps to be issued and executed concurrently. Kepler’s quad warp scheduler selects four warps, and two independent instructions per warp can be dispatched each cycle.
-
-Figure \ref{GPU:GeForceGTX680BlockDiagram} and Figure \ref{GPU:GeForceGTX680SMX} depict the block diagram and the SMX unit of GeForce GTX680.
+Nowadays in June 2012, NVIDIA’s latest GPU architecture is codenamed Kepler GK104. The GK104-based GeForce GTX 680 GPU (Figure \ref{GPU:GeForceGTX680BlockDiagram}) consists of 4 GPCs (Graphics Processing Clusters), 8 next-generation Streaming Multiprocessors (SMX), and 4 memory controllers. Each GPC has a dedicated raster engine and 2 SMX units. With a total of 8 SMX units, the GeForce GTX 680 has 1536 CUDA Cores.
 
 \begin{figure}
 \centering
@@ -77,6 +63,10 @@ Figure \ref{GPU:GeForceGTX680BlockDiagram} and Figure \ref{GPU:GeForceGTX680SMX}
 \caption{NVIDIA GeForce GTX680 Block Diagram. Source: NVIDIA.}
 \label{GPU:GeForceGTX680BlockDiagram}
 \end{figure}
+
+Each GK104 SMX unit (Figure \ref{GPU:GeForceGTX680SMX}) features 192 IEEE 754‐2008 compliant single‐precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64 KB shared memory / L1 cache. Each CUDA core has fully pipelined floating‐point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
+
+The SMX schedules threads in groups of 32 parallel threads called warps. The 4 warp schedulers allow 4 warps to be issued and executed concurrently. Each warp scheduler is capable of dispatching 2 instructions per warp every clock in order to feed the execution resources of SMX.
 
 \begin{figure}
 \centering
@@ -101,10 +91,9 @@ CUDA's hierarchy of threads maps to a hierarchy of processors on the GPU; a GPU 
 \section{Software as a Service}
 
 Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software and website count \citep{260}
-% \citep{677}
+Ten Simple Rules for Providing a Scientific Web Resource \citep{677}
 DOCK BLASTER
 wwLigCSRre
 ZINCPharmer
-
 
 \chapterend
