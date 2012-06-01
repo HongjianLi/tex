@@ -79,11 +79,11 @@ We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and
 \label{idock:ThreadProfile}
 \end{figure}
 
-We propose idock 2.0, incorporating GPU acceleration with both CUDA and OpenCL, harvesting the tremendous computational power offered by modern GPUs nowadays. In \citeyear{1138} we developed a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching \citep{1138}, demonstrating our expertise in CUDA programming.
+We propose idock 2.0, incorporating GPU acceleration with both CUDA and OpenCL, harvesting the tremendous computational power offered by modern GPUs nowadays. In \citeyear{1138} we developed a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching \citep{1138}, demonstrating our expertise in CUDA programming. Meanwhile, we are eagerly learning OpenCL. We will first work on a CUDA version, followed by an OpenCL version.
 
 Performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
 
-Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, map Monte Carlo tasks directly to CUDA threads, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2 GB along with a GeForce GTX680. This voids the precalculation of grid maps at a fine granularity like 0.8 \AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
+Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, map Monte Carlo tasks directly to CUDA threads, and use the occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2GB along with a GeForce GTX 680. This voids the precalculation of grid maps at a fine granularity like 0.08\AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there is an official library for this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
 
 Maximizing memory bandwidth can be achieved by minimizing data transfers between the host and the device and optimizing the access patterns to global memory and shared memory on the device. Since host-to-device and device-to-host data transfers have much lower bandwidth than internal device data transfers, we plan to accommodate as much data as possible into the GPU global memory. In idock 2.0, constant data such as structure of receptor, definition of search space, precalculation of scoring function, and some configurations for the BFGS Quasi-Newton optimizer will reside in constant cache, while grid maps, due to its huge size, will reside in global memory, and temporary variables will reside in per-thread registers.
 
@@ -96,7 +96,7 @@ Maximizing global memory bandwidth is of no.1 importance, and its bandwidth depe
 \label{GPU:AlignedSequentialGlobalMemoryAccess}
 \end{figure}
 
-Each SMX has 64 KB of on-chip memory that can be configured as 48 KB of shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache. Since threads within a thread block run their Monte Carlo tasks independently and seldom communicate with one another, we decide to allocate 48 KB of the 64 KB on-chip memory to L1 cache.
+A GK104 SMX has 64 KB of on-chip memory that can be configured as 48 KB of shared memory with 16 KB of L1 cache, or as 16 KB of shared memory with 48 KB of L1 cache. Since threads within a thread block run their Monte Carlo tasks independently and seldom communicate with one another, we decide to allocate 48 KB of the 64 KB on-chip memory to L1 cache.
 
 Maximizing instruction throughput can be achieved by using single precision instead of double precision and using intrinsics instead of regular functions. This suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock 1.4, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe enough to utilize single precision operations as well as intrinsics in idock 2.0.
 
@@ -226,9 +226,15 @@ We propose to make use of advanced machine learning techniques to train a regres
 
 Our colleges and collaborators as biochemists and pharmacists are working on several high-impact drug discovery projects. They have done lots of biological assays and succeeded in identifying pharmaceutical and druggable protein targets for certain diseases. They outsource the docking tasks to us, hoping to discover potent and selective inhibitors of certain proteins.
 
+\subsection{Influenza A H1N1}
+
 Prof. P.C. Shaw from Department of Biochemistry at Chinese University of Hong Kong and his team have studied Influenza A H1N1 for years.  (MP: 2IQH, PA: 2ZNL)
 
+\subsection{CCRK}
+
 Prof. Marie Chia-Mi Lin from Department of Surgery at Prince of Wales Hospital has studied CCRK for years. (1HCL)
+
+\subsection{Cancer Stem Cell}
 
 Dr. Hong Yao from School of Public Health \& Primary Care at Chinese University of Hong Kong, cancer stem cell Wnt (1GTE), 
 
