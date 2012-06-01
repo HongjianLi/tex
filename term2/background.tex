@@ -17,7 +17,7 @@ Protein-ligand docking is a method which predicts the preferred conformation (i.
 
 Docking programs typically consist of two basic components, a scoring function to predict the binding affinity, and an algorithm to explore the conformational space of the ligand and the protein \citep{493}. So far, dozens of scoring functions \citep{579,566,570,775,575,576,578,580,581,774} and dozens of algorithms \citep{595,564,594,602,603,604,605,606,607,781,614,615,617} have been developed. Some methods have been comprehensively evaluated and compared \citep{637,771,556}.
 
-Among the many docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It's free and open source. It runs faster than its predecessor AutoDock4 \citep{596} by an order of magnitude \citep{556}. Released in 2010, Vina has been cited by 117 other publications and adopted by many researchers \citep{609}. Indeed, it is intensively used in our research projects too.
+Among the many docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It's free and open source. It runs faster than its predecessor AutoDock 4 \citep{596} by an order of magnitude \citep{556}. Released in 2010, Vina has been cited by 117 other publications and adopted by many researchers \citep{609}. Indeed, it is intensively used in our research projects too.
 
 Virtual screening is simply a massive version of docking (Figure \ref{Background:VirtualScreening} \citep{470}). It docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation. Statistical frameworks and assessments have been established for evaluation and result selection \citep{489,491,769,583,582}. In reality, docking and virtual screening have successful applications for drug discovery \citep{495,498,751,503,752,757,506,738,761,763,766,736}.
 
@@ -66,7 +66,7 @@ Figure \ref{GPU:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GT
 \label{GPU:GeForceGTX680BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64 KB configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
+Figure \ref{GPU:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64KB configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
 
 The SMX schedules threads in groups of 32 parallel threads called warps. The 4 warp schedulers allow 4 warps to be issued and executed concurrently. Each warp scheduler is capable of dispatching 2 instructions per warp every clock in order to feed the execution resources of SMX.
 
