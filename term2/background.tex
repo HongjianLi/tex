@@ -1,8 +1,6 @@
 \chapter{Computer-Aided Drug Discovery}
 
-Drug discovery via merely biological and chemical means are both cost-inefficient and time-inefficient. A computational framework for fast and accurate drug discovery is thus highly appreciated. The thesis concentrates on building computer models to simulate the three early stages of modern drug discovery process, namely hit identification, lead identification and lead optimization. From the computational perspective, they typically involve binding site identification, structure-based virtual screening, computational synthesis of potent ligands, drug properties prediction, interactive visualization, and so on. The thesis addresses structure-based virtual screening and computational synthesis of potent ligands.
-
-Meanwhile, general-purpose computing on Graphics Processing Unit (GPU) is gaining more and more popularity in computationally intensive fields such as drug discovery.
+Two early stages of the modern drug discovery pipeline are lead identification and lead optimization. From the computational perspective, the former can be addressed by virtual screening while the latter can be addressed by computational ligand synthesis.
 
 \section{Structure-Based Virtual Screening}
 
@@ -32,9 +30,9 @@ Virtual screening is simply a massive version of docking (Figure \ref{Background
 
 There are quite a lot data sources and databases for virtual screening, such as PDB \citep{540,539,537,105,538}, ZINC \citep{532}, PDBbind \citep{529,530}, and PubChem \citep{526}. In addition to raw data, there are library analysis \citep{521}, benchmark datasets \citep{534,533,535,536}, and data manipulation tools \citep{542}. Some tools exploit massive parallelism in the form of either cluster computing or cloud computing \citep{557,773,560,782}.
 
-\section{Computational Synthesis of Potent Ligands}
+\section{Computational Ligand Synthesis}
 
-Virtual screening tries to discover promising ligands out of a database. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, if the database contains no promising ligands at all, virtual screening will not succeed.
+Virtual screening tries to discover promising ligands out of a database. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, if the database contains no promising ligands at all, virtual screening will fail.
 
 In contrast, computational synthesis produces novel molecular structures with desired pharmacological properties from scratch. Figure \ref{igrow:LigandDesign} \citep{363} illustrates three kinds of strategies for ligand design. A number of compounds that evolved from fragments have entered the clinic, and the approach is increasingly accepted as an additional route to identifying new hits in inhibitor design \citep{363,470}.
 
