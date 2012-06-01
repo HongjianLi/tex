@@ -51,9 +51,9 @@ Among the many ligand synthesis programs, AutoGrow \citep{466} is a representati
 
 \section{General-Purpose Computing on GPU}
 
-The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}.
+The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}.
 
-Nowadays in June 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
+As of June 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
 
 \subsection{NVIDIA GK104 and CUDA}
 
@@ -112,7 +112,7 @@ Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of a GCN core, which fe
 \label{GPU:RadeonHD7970GCN}
 \end{figure}
 
-Figure \ref{GPU:RadeonHD7970CacheHierarchy} shows the cache hierarchy of Radeon HD 7970. A group of 4 GCN cores shares a 16KB instruction cache and a 32KB scalar data cache. All the GCN cores communicate over a shared bus to 6 128KB L2 cache partitions, each associated with a 64-bit dual-channel memory controllers, for a total of 768KB of L2 cache. The L2 cache can transfer nearly 710GB/s at 925MHz.
+Figure \ref{GPU:RadeonHD7970CacheHierarchy} shows the cache hierarchy of Radeon HD 7970. A group of 4 GCN cores shares a 16KB instruction cache and a 32KB scalar data cache. The GDS (Global Data Share) enables L1 cache synchronization across all the GCN cores, which communicate over a shared bus to 6 128KB L2 cache partitions, each associated with a 64-bit dual-channel memory controllers, for a total of 768KB of L2 cache. The L2 cache can transfer nearly 710GB/s at 925MHz.
 
 \begin{figure}
 \centering
