@@ -1,6 +1,6 @@
 \chapter{Computer-Aided Drug Discovery}
 
-Two early stages of the modern drug discovery pipeline are lead identification and lead optimization. From the computational perspective, the former can be addressed by virtual screening while the latter can be addressed by computational ligand synthesis.
+In the modern drug discovery pipeline, two early stages are lead identification and lead optimization. From the computational perspective, lead identification can be addressed by virtual screening, while lead optimization can be addressed by computational ligand synthesis.
 
 \section{Structure-Based Virtual Screening}
 
@@ -28,11 +28,11 @@ Virtual screening is simply a massive version of docking (Figure \ref{Background
 \label{Background:VirtualScreening}
 \end{figure}
 
-There are quite a lot data sources and databases for virtual screening, such as PDB \citep{540,539,537,105,538}, ZINC \citep{532}, PDBbind \citep{529,530}, and PubChem \citep{526}. In addition to raw data, there are library analysis \citep{521}, benchmark datasets \citep{534,533,535,536}, and data manipulation tools \citep{542}. Some tools exploit massive parallelism in the form of either cluster computing or cloud computing \citep{557,773,560,782}.
+There are quite a lot data sources and databases for virtual screening, such as PDB \citep{540,537}, ZINC \citep{532}, PDBbind \citep{529,530}, and PubChem \citep{526}. In addition to raw data, there are library analysis \citep{521}, benchmark datasets \citep{534,533,535,536}, and data manipulation tools \citep{542}. Some tools exploit massive parallelism in the form of either cluster computing or cloud computing \citep{557,773,560,782}.
 
 \section{Computational Ligand Synthesis}
 
-Virtual screening tries to discover promising ligands out of a database. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, if the database contains no promising ligands at all, virtual screening will fail.
+Virtual screening tries to discover promising ligands out of existing databases. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, virtual screening will fail if the database contains no promising ligands at all.
 
 In contrast, computational synthesis produces novel molecular structures with desired pharmacological properties. It helps to explore a much larger chemical space for novel drugs. Figure \ref{igrow:LigandDesign} \citep{363} illustrates three kinds of strategies for ligand design. A number of compounds that evolved from fragments have entered the clinic, and the approach is increasingly accepted as an additional route to identifying new hits in inhibitor design \citep{363,470}.
 
@@ -66,7 +66,7 @@ Figure \ref{GPU:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GT
 \label{GPU:GeForceGTX680BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64KB configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
+Figure \ref{GPU:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64KB of configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
 
 The SMX schedules threads in groups of 32 parallel threads called warps. The 4 warp schedulers allow 4 warps to be issued and executed concurrently. Each warp scheduler is capable of dispatching 2 instructions per warp every clock in order to feed the execution resources of SMX.
 
@@ -101,7 +101,7 @@ Figure \ref{GPU:RadeonHD7970BlockDiagram} shows the block diagram of Radeon HD 7
 \label{GPU:RadeonHD7970BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of a GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB LDS (Local Data Share), and 16KB L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
+Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of a GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB of LDS (Local Data Share), and 16KB of L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
 
 \begin{figure}
 \centering
@@ -120,6 +120,8 @@ Figure \ref{GPU:RadeonHD7970CacheHierarchy} shows the cache hierarchy of Radeon 
 \end{figure}
 
 From the software perspective, the Radeon HD 7970 supports OpenCL (Open Computing Language) 1.2, and thus can execute programs written in C. There is a C++ wrapper for OpenCL 1.1. An OpenCL program invokes functions called kernels that execute across parallel work-items, which are organized into work-groups. The hierarchy of work-items maps to the hierarchy of stream processors on the GPU; a GPU executes one or more kernels; a GCN core executes one or more work-groups; and stream processors execute work-item instructions from kernel compilation.
+
+Portability is the distinct feature that distinguishes OpenCL from CUDA. Multiple conformant implementations from AMD, NVIDIA, Intel, IBM, and embedded device vendors are shipping, fulfilling the philosophy of ``write once, execute everywhere".
 
 \section{Software as a Service}
 
