@@ -1,0 +1,42 @@
+\chapter{Real-Life Drug Discovery Case Studies}
+
+Our colleges and collaborators as biochemists and pharmacists are working on several high-impact drug discovery projects. They have done lots of biological assays and succeeded in identifying pharmaceutical and druggable protein targets for certain diseases. They outsource the docking tasks to us, hoping to discover potent and selective inhibitors of certain proteins.
+
+\section{Influenza A Virus H1N1}
+
+Prof. P.C. Shaw from Department of Biochemistry at Chinese University of Hong Kong and his team have studied influenza A virus H1N1 (swine flu) for years. They select the influenza viral nucleoprotein and the influenza A RNA polymerase subunit PA as drug targets, and we assist with structure-based virtual screening.
+
+The influenza viral nucleoprotein forms the protein scaffold of the helical genomic ribonucleoprotein complexes, and interacts with the viral RNA
+polymerase to promote viral RNA replication. Oligomerization of the nucleoprotein is mediated by a flexible tail loop that is inserted into the body domain of a neighbouring molecule and makes extensive interactions through intermolecular $\beta$-sheets, hydrophobic interactions and salt bridges (Figure \ref{Case:InfluenzaNucleoprotein}, reprinted from \citep{1140}). The displacement of the tail loop from its binding pocket causes significant structural rearrangements in nucleoprotein. Chemical compounds which competitively displace the tail loop from its binding pocket would interfere with viral genome replication, and therefore serve as promising leads for anti-influenza drug development \citep{1140}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/InfluenzaNucleoprotein.png}
+\caption{Nucleoprotein trimer viewed along the NCS (Non-Crystallographic Symmetry) three-fold axis, with three subunits shown in different colours. The rotation angles that relate the three subunits are marked. Figure reprinted from \citep{1140}.}
+\label{Case:InfluenzaNucleoprotein}
+\end{figure}
+
+The three subunits of influenza A RNA polymerase, namely PA, PB1 and PB2, are required for both transcription and replication. PA is involved in assembly of the functional complex, cap binding and virion RNA (vRNA) promoter binding, while PB1 carries the polymerase active site. The carboxy-terminal domain of PA forms a novel fold, and forms a deep, highly hydrophobic groove into which the amino-terminal residues of PB1 can fit by forming a helix and interact through an array of hydrogen bonds and hydrophobic contacts (Figure \ref{Case:InfluenzaPAPB1}, reprinted from \citep{1141}). The loss of PA abolishes RNA polymerase activity and viral replication. PA and its interface with PB1 are therefore potential drug targets \citep{1141}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/InfluenzaPAPB1.png}
+\caption{Crystal structure of the C-terminal domain of PA bound to the N-terminal peptide of PB1, coloured dark blue. Figure reprinted from \citep{1141}.}
+\label{Case:InfluenzaPAPB1}
+\end{figure}
+
+We obtain the X-ray crystal structures of influenza viral nucleoprotein with PDB ID 2IQH and influenza A RNA polymerase subunits PA-PB1 complex with PDB ID 2ZNL. For the nucleoprotein, we remove protein chains B and C and only retain chain A. For the PA-PB1 complex, we remove PB1 and only retain PA. With idock 1.4, we start virtual screening 7,220,835 ZINC \citep{532} clean ligands whose molecular weight is above 350g/mol against the nucleoprotein chain A. The 7 million ligands are organized into 98 slices, with 30 slices currently done. Such a 31\% progress takes us over 2 months. The virtual screening against PA1 is yet to start.
+
+% Select several top ligands and plot them with poseview.
+
+\section{Glioblastoma Multiforme Tumorigenesis}
+
+Prof. Marie Chia-Mi Lin from Department of Surgery at Prince of Wales Hospital and her team investigated the involvement of CCRK (Cell Cycle-Related Kinase) in glioblastoma multiforme carcinogenesis. They analyzed the expression levels of CCRK in 26 glioma patient samples and normal brain, and observed that 1) knock down of CCRK by siRNA (small-interfering RNA) inhibits glioblastoma cell proliferation, 2) suppression of CCRK by shRNA (short hairpin RNA) inhibits glioblastoma tumor growth in nude mice, and 3) CCRK overexpression confers tumorigenicity to a non-tumorigenic U-138 cell line, and concluded CCRK to be a candidate oncogene in glioblastoma multiforme tumorigenesis \citep{1144}.
+
+1HCL, CDK2 (Cyclin-Dependent Kinase 2) \citep{1142}
+
+\section{Cancer Stem Cell}
+
+Dr. Hong Yao from School of Public Health \& Primary Care at Chinese University of Hong Kong, cancer stem cell Wnt (1GTE), 
+
+\chapterend
