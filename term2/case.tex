@@ -32,7 +32,13 @@ We obtain the X-ray crystal structures of influenza viral nucleoprotein with PDB
 
 Prof. Marie Chia-Mi Lin from Department of Surgery at Prince of Wales Hospital and her team investigated the involvement of CCRK (Cell Cycle-Related Kinase) in glioblastoma multiforme carcinogenesis. They analyzed the expression levels of CCRK in 26 glioma patient samples and normal brain, and observed that 1) knock down of CCRK by siRNA (small-interfering RNA) inhibits glioblastoma cell proliferation, 2) suppression of CCRK by shRNA (short hairpin RNA) inhibits glioblastoma tumor growth in nude mice, and 3) CCRK overexpression confers tumorigenicity to a non-tumorigenic U-138 cell line, and concluded CCRK to be a candidate oncogene in glioblastoma multiforme tumorigenesis \citep{1144}.
 
-1HCL, CDK2 (Cyclin-Dependent Kinase 2) \citep{1142}
+They also examined CCRK expression in a series of ovarian carcinoma tissues by immunohistochemistry, and detected overexpression of CCRK in 53\% of the ovarian carcinomas, and found it positively correlated with patients' clinicopathological characteristics \citep{1145}. They also investigated the role of CCRK in human colorectal cancer carcinogenesis, and found that CCRK protein levels were elevated by more than 1.5-fold in 70\% of colorectal cancer patient samples examined and CCRK was detectable in all seven colorectal cancer cell lines tested. Suppression of CCRK by siCCRK led to G1 phase cell cycle arrest and reduced cell growth. CCRK is required for the phosphorylation of Cdk2 (on Thr-160) and Rb (on Ser-795) and the expression of cyclin E \citep{1143}. 
+
+They also used used genome-wide location and functional analyses to identify CCRK as a direct androgen receptor-regulated gene that drives $\beta$-catenin/T cell factor-dependent hepatocarcinogenesis. Conversely, knockdown of CCRK decreased hepatocellular carcinoma cell growth. CCRK overexpression correlated with the tumor staging and poor overall survival of patients \citep{1146}.
+
+They therefore attempted to seek for CCRK inhibitors for the treatment of cancers and drug resistances. Since there is no CCRK structure in the PDB database \citep{540,537}, they utilized Chem3D from CambridgeSoft to build a homologous model from CDK2 (Cyclin-Dependent Kinase 2), which shares 35\% sequence identity with CCRK, and performed protein-ligand docking of TCMs (Traditional Chinese Medicines) with AutoDock 3.0.5 and Cerius2 LigandFit, and managed to identify 22-O-Angeloyl theasapogenol B that could fit into the deep and narrow active site of the homologous model of CCRK. Nevertheless, it was very difficult to purify the compound from puerh tea.
+
+We will collaborate with them on identifying CCRK inhibitors using our novel SaaS platform istar. We will use as receptor the CCRK homologous model they built based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We will launch the virtual screening when we finish implementing istar.
 
 \section{Cancer Stem Cell}
 
@@ -43,7 +49,7 @@ CSCs are cancer cells, found within tumors or hematological cancers, that posses
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Case/CancerStemCell.pdf}
-\caption{CSCs-specific and conventional cancer therapies. Source: Wikipedia.}
+\caption{CSCs-specific and conventional cancer therapies. Cells in blue are normal cancer cells. Cells in yellow are CSCs. Source: Wikipedia.}
 \label{Case:CancerStemCell}
 \end{figure}
 
