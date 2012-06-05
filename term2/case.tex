@@ -28,7 +28,7 @@ We obtain the X-ray crystal structures of influenza viral nucleoprotein with PDB
 
 % Select several top ligands and plot them with poseview.
 
-\section{Glioblastoma Multiforme Tumorigenesis}
+\section{Tumors and Carcinomas}
 
 Prof. Marie Chia-Mi Lin from Department of Surgery at Prince of Wales Hospital and her team investigated the involvement of CCRK (Cell Cycle-Related Kinase) in glioblastoma multiforme carcinogenesis. They analyzed the expression levels of CCRK in 26 glioma patient samples and normal brain, and observed that 1) knock down of CCRK by siRNA (small-interfering RNA) inhibits glioblastoma cell proliferation, 2) suppression of CCRK by shRNA (short hairpin RNA) inhibits glioblastoma tumor growth in nude mice, and 3) CCRK overexpression confers tumorigenicity to a non-tumorigenic U-138 cell line, and concluded CCRK to be a candidate oncogene in glioblastoma multiforme tumorigenesis \citep{1144}.
 
@@ -36,15 +36,22 @@ They also examined CCRK expression in a series of ovarian carcinoma tissues by i
 
 They also used used genome-wide location and functional analyses to identify CCRK as a direct androgen receptor-regulated gene that drives $\beta$-catenin/T cell factor-dependent hepatocarcinogenesis. Conversely, knockdown of CCRK decreased hepatocellular carcinoma cell growth. CCRK overexpression correlated with the tumor staging and poor overall survival of patients \citep{1146}.
 
-They therefore attempted to seek for CCRK inhibitors for the treatment of cancers and drug resistances. Since there is no CCRK structure in the PDB database \citep{540,537}, they utilized Chem3D from CambridgeSoft to build a homologous model from CDK2 (Cyclin-Dependent Kinase 2), which shares 35\% sequence identity with CCRK, and performed protein-ligand docking of TCMs (Traditional Chinese Medicines) with AutoDock 3.0.5 and Cerius2 LigandFit, and managed to identify 22-O-Angeloyl theasapogenol B that could fit into the deep and narrow active site of the homologous model of CCRK. Nevertheless, it was very difficult to purify the compound from puerh tea.
+They therefore attempted to seek for CCRK inhibitors for the treatment of cancers and drug resistances. Since there is no CCRK structure in the PDB database \citep{540,537}, they utilized Chem3D from CambridgeSoft to build a homologous model from CDK2 (Cyclin-Dependent Kinase 2), which shares 35\% sequence identity with CCRK, and performed protein-ligand docking of TCMs (Traditional Chinese Medicines) with AutoDock 3.0.5 and Cerius2 LigandFit, and identified 22-O-Angeloyl theasapogenol B as a potent inhibitor that could fit into the deep and narrow active site of the homologous model of CCRK. Nevertheless, it was very difficult to purify the compound from puerh tea.
 
-We will collaborate with them on identifying CCRK inhibitors using our novel SaaS platform istar. We will use as receptor the CCRK homologous model they built based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We will launch the virtual screening when we finish implementing istar.
+We will collaborate with them on identifying CCRK inhibitors using our novel SaaS platform istar. We will use as receptor the CCRK homologous model (Figure \ref{Case:CCRKHomologousModel}) they built based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We will launch the virtual screening as soon as we finish implementing istar.
 
-\section{Cancer Stem Cell}
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/CCRKHomologousModel.png}
+\caption{CCRK homologous model, built on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL.}
+\label{Case:CCRKHomologousModel}
+\end{figure}
+
+\section{Cancer Stem Cells}
 
 Prof. Hsiang-fu Kung and Dr. Hong Yao from Stanley Ho Centre for Emerging Infectious Diseases at Chinese University of Hong Kong are seeking specific therapies targeted at CSCs (Cancer Stem Cells) for improvement of survival and quality of life of cancer patients.
 
-CSCs are cancer cells, found within tumors or hematological cancers, that possess the ability to give rise to all cell types found in a particular cancer sample. CSCs as the highly malignant seeds of tumors, typically comprising 1-5\% of the tumor, give rise to 95-99\% of other tumor cells known as the tumor bulk, and are therefore tumorigenic. While standard therapies, including chemotherapy and radiation, may initially shrink tumors by killing tumor bulk, the failure of these therapies to eradicate CSCs may be a major contributor to treatment failure, tumor relapse and poor survival (Figure \ref{Case:CancerStemCell}). 
+CSCs are cancer cells, found within tumors or hematological cancers, that possess the ability to give rise to all cell types found in a particular cancer sample. CSCs as the highly malignant seeds of tumors, typically comprising 1-5\% of the tumor, give rise to 95-99\% of other tumor cells known as the tumor bulk, and are therefore tumorigenic. While standard therapies, including chemotherapy and radiation, may initially shrink tumors by killing tumor bulk, the failure of these therapies to eradicate CSCs may be a major contributor to treatment failure, tumor relapse and poor survival (Figure \ref{Case:CancerStemCell}).
 
 \begin{figure}
 \centering
@@ -53,7 +60,7 @@ CSCs are cancer cells, found within tumors or hematological cancers, that posses
 \label{Case:CancerStemCell}
 \end{figure}
 
-Salinomycin (Figure \ref{Case:SalinomycinEtoposideAbamectinNigericin}, reprinted from \citep{1147}), a monocarboxylic polyether antibiotic widely used as an anticoccidiosis agent in chicken, was discovered in a chemical screen to selectively kills breast CSCs and reduce the proportion of CSCs by >100-fold relative to paclitaxel, a commonly used breast cancer chemotherapeutic drug. Treatment of mice with salinomycin inhibits mammary tumor growth \textit{in vivo} and induces increased epithelial differentiation of tumor cells \citep{1147}.
+Salinomycin (Figure \ref{Case:SalinomycinEtoposideAbamectinNigericin}, reprinted from \citep{1147}), a monocarboxylic polyether antibiotic widely used as an anticoccidiosis agent in chicken, was discovered in a chemical screen to selectively kills breast CSCs and reduce the proportion of CSCs by >100-fold relative to paclitaxel, a commonly used breast cancer chemotherapeutic drug. Treatment of mice with salinomycin inhibits mammary tumor growth \textit{in vivo} and induces increased epithelial differentiation of tumor cells \citep{1147}. At the molecular mechanism level, salinomycin specifically inhibits the Wnt/$\beta$-catenin signaling pathway initiated by Wnt1 and selectively induces apoptosis in chronic lymphocytic leukemia cells \citep{1148}.
 
 \begin{figure}
 \centering
@@ -62,8 +69,13 @@ Salinomycin (Figure \ref{Case:SalinomycinEtoposideAbamectinNigericin}, reprinted
 \label{Case:SalinomycinEtoposideAbamectinNigericin}
 \end{figure}
 
-Salinomycin specifically inhibits the Wnt/$\beta$-catenin signaling pathway initiated by Wnt1 and selectively induces apoptosis in chronic lymphocytic leukemia cells \citep{1148}.
+We confirm the Wnt protein as a potential pharmaceutical target of therapeutic interest. The major obstacle right now is the lack of resolved or homologous structures of Wnt. We can neither find a Wnt structure from the PDB database \citep{540,537}, nor predict its structure from known templates (Figure \ref{Case:WntHomologyModeling}). Although the 1JLT template shares 42\% sequence identity with Wnt, it only covers amino acids from 319 to 360. In contrast, the 1GTE template covers amino acids 13 to 354, but the sequence identity is as low as 14\%, far from sufficient for an accurate homologous model. In fact, we try five online homology modeling servers, namely ModWeb, M4T, SWISS-MODEL, I-TASSER, and HHpred, and most of them simply refuse our job just because of the surprisingly low sequence identity percentage. Therefore, one possible way to go is to explore another signaling pathways associated with CSCs, such as Bmi-1, Shh, Notch, \textit{Hox} family, Pten, etc.
 
-1GTE
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/WntHomologyModeling.png}
+\caption{Proto-oncogene Wnt-1 of UniProt ID P04628 shares sequence identity with merely two templates, 1JLT chain A and 1GTE chain A. Source: The Protein Model Portal.}
+\label{Case:WntHomologyModeling}
+\end{figure}
 
 \chapterend
