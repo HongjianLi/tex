@@ -48,10 +48,16 @@ On the server side, we build the web server in event-driven node.js on top of th
 
 On the database side, we adopt MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes like istar. MongoDB is written in C++, making it easy to manipulate database operations from idock, which is also written in C++. By using a 10gen-supported MongoDB driver for node.js, we are able to save jobs from both the web server and the mail crawler. In addition to holding jobs, the MongoDB database also maintains ligand chemical properties such as molecular weight and partition coefficient xlogP. With indexes built on these properties, we are able to instantly reply to users the number of ligands shortlisted given any filtering conditions.
 
-On the network file system side, we collect 12,171,187 clean ligands at pH 7 from the ZINC database \citep{532} in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into 98 slices, with each slice containing approximately 125,000 clean ligands. The entire network file system is shared by all the backend workstations.
+On the network file system side, we collect 12,171,187 clean ligands at pH 7 from the ZINC database \citep{532} in mol2 format. We convert them all into PDBQT format in batch for subsequent docking. The yuck-compound-free ligands are organized into 98 slices, with each slice containing approximately 125,000 clean ligands, among which about 75,000 (60\%) have a molecular weight of at least 350g/mol (Figure \ref{istar:gt350}). The entire network file system is shared by all the backend workstations.
 
 % Property distributions of 12 million ligands.
-% Stacked plot of 98 slices, >350 and <=350.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/gt350.pdf}
+\caption{Distributions of ligands whose molecular weight is above 350g/mol of the 98 slices.}
+\label{istar:gt350}
+\end{figure}
 
 On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 25 weeks, i.e. 6 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
 
