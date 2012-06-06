@@ -40,7 +40,28 @@ Maximizing instruction throughput can be achieved by using single precision inst
 
 Having released and advertised idock, we kept receiving constant docking requirements from our colleges and collaborators. They are mostly biochemists and pharmacists, outsourcing the docking research to us after discovering potential biological targets for certain diseases of therapeutic interest. All of a sudden, we had to grab the protein structure, do format conversion, define search space, set up docking parameters, and keep running idock for months. Occasionally we also had to restart virtual screening in case the idock process got killed by others or by exceptions. Tedious enough, all the above work was done manually, resulting in very low research productivity.
 
-We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails conforming to our specifications.
+We propose istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate the virtual screening process. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site (Figure \ref{istar:Website}), 2) programming against our RESTful API (Figure \ref{istar:RESTfulAPI}), or 3) sending emails conforming to our specifications (Figure \ref{istar:Mail}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/Website.png}
+\caption{istar web site.}
+\label{istar:Website}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/RESTfulAPI.png}
+\caption{istar RESTful API.}
+\label{istar:RESTfulAPI}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/Mail.png}
+\caption{istar mail specification for job submission.}
+\label{istar:Mail}
+\end{figure}
 
 Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19, Mozilla Firefox 12, Microsoft Internet Explorer 9 and Apple Safari 5.
 
@@ -101,7 +122,7 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 \label{istar:gt350}
 \end{figure}
 
-On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 25 weeks, i.e. 6 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
+On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 20 weeks, i.e. 5 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
 
 \begin{figure}
 \centering
@@ -111,13 +132,6 @@ On the workstation side, we develop a customized version of idock 1.4, adding ne
 \end{figure}
 
 Figure \ref{istar:Website} shows istar web site. Job progress will be displayed in the upper section, while new jobs can be submitted in the lower section. A new job typically consists of several compulsory fields as well as several optional fields. Compulsory fields include a receptor in PDBQT format, a search space defined by a cubic box, a short job description, and an email to receive completion notification. Optional fields include 8 ligand filtering conditions, like molecular weight, partition coefficient xlogP, number of hydrogen bond donors, number of hydrogen bond acceptors, number of rotatable bonds, polar surface area tPSA, apolar desolvation and polar desolvation. We set up default values for optional fields, and only the ZINC ligands satisfying all the 8 filtering conditions will be screened.
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{istar/Website.png}
-\caption{istar web site.}
-\label{istar:Website}
-\end{figure}
 
 istar features slice-level parallelism. Generally speaking, workstations can compete for jobs or slices, with the former known as job-level parallelism and the latter as slice-level parallelism (Figure \ref{istar:2LevelParallelism}). Job-level parallelism is very straightforward to implement and can ensure high utilization of computational power when the number of jobs exceeds the number of workstations. Nevertheless, when the number of workstations exceeds the number of jobs, which is usually the case in practice during the initial stage of istar, slice-level parallelism can better utilize computational power by subdividing a job into 128 slices which are then distributed to workstations. Slice-level parallelism is, in contrast, difficult to implement. The technical hurdle becomes even more apparent when progress must be reported to MongoDB from time to time, and progresses from multiple slices must be combined to compute an overall progress.
 
