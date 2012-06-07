@@ -29,14 +29,14 @@ We obtain the X-ray crystal structures of influenza viral nucleoprotein with PDB
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Case/2IQH-ZINC20464531.png}
-\caption{Influenza viral nucleoprotein chain A in complex of ZINC20464531, which forms hydrogen bonds with VAL186, GLY268 and HIS272, Pi-Pi interactions with TRP330, and Pi-Cation interaction with HIS272 and ARG389.}
+\caption{Influenza viral nucleoprotein chain A in complex of ZINC20464531, which forms 4 hydrogen bonds with VAL186, GLY268 and HIS272, Pi-Pi interactions with TRP330, and Pi-Cation interaction with HIS272 and ARG389.}
 \label{Case:2IQH-ZINC20464531}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Case/2IQH-ZINC33733935.png}
-\caption{Influenza viral nucleoprotein chain A in complex with ZINC33733935, which forms hydrogen bonds with HIS272  and THR390, Pi-Pi interactions with PHE458, and Pi-Cation interaction with ARG267.}
+\caption{Influenza viral nucleoprotein chain A in complex with ZINC33733935, which forms 3 hydrogen bonds with HIS272 and THR390, Pi-Pi interactions with PHE458, and Pi-Cation interaction with ARG267.}
 \label{Case:2IQH-ZINC33733935}
 \end{figure}
 
@@ -50,13 +50,27 @@ They also used used genome-wide location and functional analyses to identify CCR
 
 They therefore attempted to seek for CCRK inhibitors for the treatment of cancers and drug resistances. Since there is no CCRK structure in the PDB database \citep{540,537}, they utilized Chem3D from CambridgeSoft to build a homologous model from CDK2, which shares 35\% sequence identity with CCRK, and performed protein-ligand docking of TCMs (Traditional Chinese Medicines) with AutoDock 3.0.5 and Cerius2 LigandFit, and identified 22-O-Angeloyl theasapogenol B as a potent inhibitor that could fit into the deep and narrow active site of their homologous model of CCRK. It was, nevertheless, very difficult to purify the compound from puerh tea.
 
-We will collaborate with them on identifying CCRK inhibitors using our novel SaaS platform istar. We will use as receptor the CCRK homologous model (Figure \ref{Case:CCRKHomologousModel}) they built based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We will launch the virtual screening as soon as we finish implementing istar.
+We collaborate with them on identifying CCRK inhibitors using idock 1.4. We use as receptor the CCRK homologous model (Figure \ref{Case:CCRKHomologousModel}) they built based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We screen 1,715 DrugBank-approved drugs, 3,176 FDA-approved drugs via DSSTOX, and 6,572 TCMs via the TCM Database @ Taiwan. Figures \ref{Case:1HCL-ZINC03830332} and \ref{Case:1HCL-ZINC03831625} depict the interactions between the CCRK homologous model and two high-rank ligands.
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Case/CCRKHomologousModel.png}
 \caption{CCRK homologous model, built on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL. The ligand denotes the Ser/Thr protein kinase active site.}
 \label{Case:CCRKHomologousModel}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/1HCL-ZINC03830332.png}
+\caption{CCRK homologous model in complex of ZINC03830332, which forms 4 hydrogen bonds with LYS33, LYS129 and TYR169, and Pi-Cation interactions with LYS33 and LYS129.}
+\label{Case:1HCL-ZINC03830332}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{Case/1HCL-ZINC03831625.png}
+\caption{CCRK homologous model in complex of ZINC03831625, which forms 7 hydrogen bonds with HIS15, LYS33, LYS129, ASN132 and ASP145.}
+\label{Case:1HCL-ZINC03831625}
 \end{figure}
 
 \section{Cancer Stem Cells}
