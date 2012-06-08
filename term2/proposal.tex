@@ -88,19 +88,6 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 \\
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_apolar.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_polar.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/tPSA.pdf}
-}
-\\
-\subfloat
-{
   \includegraphics[width=0.315\linewidth]{istar/HBD.pdf}
 }
 \subfloat
@@ -110,6 +97,19 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 \subfloat
 {
   \includegraphics[width=0.315\linewidth]{istar/Charge.pdf}
+}
+\\
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/Desolv_apolar.pdf}
+}
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/Desolv_polar.pdf}
+}
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/tPSA.pdf}
 }
 \caption{Distributions of molecular properties of the 12,171,187 clean ligands.}
 \label{istar:LigandProperties}
@@ -122,7 +122,7 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 \label{istar:gt350}
 \end{figure}
 
-On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 20 weeks, i.e. 5 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
+On the workstation side, we develop a customized version of idock 1.4, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps if possible, perform 2-phase virtual screening, report progress to MongoDB from time to time, and send email notification upon job completion. We exclusively reserve 4 workstations, equipped with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 SDRAM and running Mac OS X Lion 10.7.4 Build 11E53, to actually carry out jobs. Using a workstation, on average it takes a week to screen one single slice. Therefore, even though we thoroughly utilize all the 4 workstations, it can take up to 20 weeks, i.e. 5 months, to complete one single job. In order to boost job execution, we plan to port idock to GPU using both CUDA and OpenCL/WebCL in both C++ and JavaScript and deploy new workstations equipped with high-end GPU chips. A speed up of an order of magnitude is expected.
 
 \begin{figure}
 \centering
