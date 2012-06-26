@@ -63,7 +63,7 @@ We propose istar, a SaaS (Software as a Service) platform for idock. The goal of
 \label{istar:Mail}
 \end{figure}
 
-Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19, Mozilla Firefox 12, Microsoft Internet Explorer 9 and Apple Safari 5.
+Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19+, Mozilla Firefox 12+, Microsoft Internet Explorer 9+ and Apple Safari 5+.
 
 On the server side, we build the web server in event-driven node.js on top of the well-known express server, forking multiple processes to accept simultaneous HTTP connections. We expose the functionalities of job submission and job query as RESTful API for others to program against. We also set up a gmail account and develop a mail crawler on top of Context.IO, a RESTful API for manipulating mailboxes, messages and attachments, to retrieve new jobs directly from emails. We employ the forever utility for both the web server and the mail crawler to ensure failover and high availability.
 
@@ -83,9 +83,13 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 }
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/NRB.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/Desolv_apolar.pdf}
 }
 \\
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/Desolv_polar.pdf}
+}
 \subfloat
 {
   \includegraphics[width=0.315\linewidth]{istar/HBD.pdf}
@@ -94,22 +98,18 @@ On the network file system side, we collect 12,171,187 clean ligands (Figure \re
 {
   \includegraphics[width=0.315\linewidth]{istar/HBA.pdf}
 }
+\\
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/tPSA.pdf}
+}
 \subfloat
 {
   \includegraphics[width=0.315\linewidth]{istar/Charge.pdf}
 }
-\\
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_apolar.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_polar.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/tPSA.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/NRB.pdf}
 }
 \caption{Distributions of molecular properties of the 12,171,187 clean ligands.}
 \label{istar:LigandProperties}
