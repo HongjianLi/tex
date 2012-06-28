@@ -193,7 +193,7 @@ We propose igrow as a successor of SmartGrow. Instead of porting existing code f
 
 Compared with AutoGrow and SmartGrow, our igrow features a plenty of advantageous innovations.
 igrow supports more types of chemical synthesis such as halogen replacement and branch replacement in addition to hydrogen replacement.
-igrow digests ligands and fragments in pdbqt format, saving the effort of frequently calling the prepare_ligand4 python script.
+igrow digests ligands and fragments in pdbqt format, saving the effort of frequently calling external python script.
 igrow invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire synhsizing procedure. The thread pool parallelizes the creation of mutants and children in each generation.
 igrow utilizes flyweight pattern for caching fragments and dynamic pointer vector for caching and sorting ligands.
 igrow traces the sources of generated ligands and dumps the statistics in csv format so that users can easily get to know how the ligands are synthesized from the initial ligand and fragments.
