@@ -25,31 +25,21 @@ Department of Computer Science and Engineering, Chinese University of Hong Kong,
 
 \begin{abstract}
 
-In a previous study, we reported idock 1.0 for fast virtual screening and flexible ligand docking. In this study, we report idock 1.5, further improving the docking accuracy and docking speed. We carried out a comprehensive benchmark to better evaluate idock 1.5 and AutoDock Vina. Result showed that idock 1.5 outperformed AutoDock Vina by 10x in terms of docking speed. idock is free and open source, available at https://GitHub.com/HongjianLi/idock.
+In a previous study, we reported idock 1.0, a multithreaded virtual screening tool for flexible ligand docking. In this study, we report idock 1.5, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We carried out a comprehensive benchmark to better evaluate idock 1.5 and AutoDock Vina. Result showed that idock 1.5 outperformed AutoDock Vina by 10x in terms of docking speed. idock is free and open source, available at https://GitHub.com/HongjianLi/idock. For future research, we are constructing a web site to provide free real-time virtual screening online, and we will port idock to the GPU using CUDA and OpenCL for further speed up.
 
 \end{abstract}
 
 \section{Introduction}
 
-As the X-ray crystallography technology evolves, more and more structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository Protein Data Bank (PDB) \cite{539,537}. This rapid evolution catalyzes the development of various protein-ligand docking tools for structure-based drug discovery.
+Protein-ligand docking predicts the preferred conformation and binding affinity of a small ligand when it is non-covalently bound to a specific binding site of a macro protein. Up to date, there are hundreds of docking programs available. The AutoDock series is the most cited docking software in the research community. AutoDock has contributed to the discovery of several drugs, including the first clinically approved HIV integrase inhibitor \citep{1169}. Technically speaking, AutoDock is single threaded \textit{per se}. Following its initial release, several parallel implementations were developed \citep{115,560,782}, using either multithreading or computer cluster.
 
-Protein-ligand docking is a method which predicts the preferred conformation of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy. The lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover. Structure-based virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a target, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+In 2009, AutoDock Vina \citep{595} was released. As the successor of AutoDock 4, AutoDock Vina significantly improves the average accuracy of the binding mode predictions while running two orders of magnitude faster with multithreading \citep{595}. It was compared to AutoDock 4 on selecting active compounds against HIV protease, and was recommended for docking large molecules \citep{556}. Its functionality of semi-flexible protein docking by enabling flexibility of side-chain residues was evaluated on VEGFR-2 \citep{1084}. To further facilitate the usage of AutoDock Vina, auxiliary tools were subsequently developed, including a PyMOL plugin for program settings and visualization \citep{609}, and a bootable operating system for computer clusters \citep{773}. AutoDock Vina is free and open source under Apache License 2.0. So far it has been cited by over 357 publications according to Google Scholar, making it a very competitive docking program.
 
-Among the many protein-ligand docking programs, AutoDock Vina \cite{595} (hereafter Vina for short) is a competitive one. It is free and open source. It runs faster than its predecessor AutoDock4 \cite{596} by an order of magnitude \cite{556}. First released in 2010, Vina has been cited by over 300 publications according to Google Scholar and adopted by quite many researchers \cite{609}, demonstrating its popularity.
+In 2011, inspired by AutoDock Vina, we developed idock 1.0, a multithreaded virtual screening tool for flexible ligand docking \citep{1153}. idock inherits from AutoDock Vina the accurate scoring function and the efficient optimization algorithm, and meanwhile introduces a fruitful of innovations, such as receptor and grid map caching for large-scale virtual screening, revised numerical model for much faster approximation, capability of automatic detection and deactivation of inactive torsions, utilization of our novel thread pool to parallelize grid map creation and reuse threads, utilization of the new C++11 feature of rvalue references to avoid frequent memory reallocation, and accelerated parsers for both receptor and ligand. When benchmarked on docking 10,928 drug-like ligands against HIV reverse transcriptase, idock 1.0 achieved a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average compared to AutoDock Vina.
 
-\section{Motivation}
-
-We developed idock 1.0, a multithreaded structure-based virtual screening tool for flexible ligand docking. It was capable of screening 1.3 drug-like ligands per CPU minute on average, making it a very competitive tool. Compared with Vina, idock 1.0 achieved a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. But even so, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster algorithms and implementations are highly desired. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock. Moreover, we incorporated many implementation tricks to further speedup idock.
+Despite the amazing speedup, idock 1.0 still required about 10 hours on average to dock 10,928 drug-like ligands, not to mention massive docking of millions of ligands. Faster algorithms and implementations are highly desired. Following the release of idock 1.0 in July 2011, we then released idock 1.1 in December 2011, idock 1.2 in February 2012, idock 1.3 in March 2012, idock 1.4 in April 2012, and idock 1.5 in June 2012, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs.
 
 \section{Method}
-
-The overall flowchart of idock.
-
-Both idock and Vina share exactly the same scoring function, which is made up of a conformation-dependent part and a conformation-independent part. The conformation-dependent part is a weighted sum of five terms over all the pairs of atom $i$ and atom $j$ that can move relative to each other.
-
-Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786} Quasi-Newton method for local optimization. A succession of steps consisting of a mutation and a BFGS local optimization are taken, with each step being accepted according to the Metropolis criterion.
-
-idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens.
 
 idock invents its own thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the creation of grid maps and the execution of Monte Carlo tasks.
 
@@ -59,18 +49,22 @@ idock accelerates the assignment of atom types by making use of residue informat
 
 2-phase virtual screening
 
-\section{Change Log}
+\section{Our Contributions}
 
 Added program option config to allow users to specify a configuration file.
 Added program option csv for dumping docking summary sorted in the ascending of predicted free energy.
 
 intra-ligand free energy
 Output predicted total free energy, predicted inter-ligand free energy and predicted intra-ligand free energy to docked PDBQT files. Output predicted free energy for each heavy atom to docked PDBQT files.
+Output the number of hydrogen bonds for each conformation.
 
 Added thread-safe progress bar
 Added move constructors for several classes to boost performance.
 Parallelized the precalculation of scoring function.
 Automatic failover. Skipped already docked ligands.
+Supported file error detection in output folder.
+Supported reading and writing ligands in gzip and/or bzip2 format.
+Supported a new chemical element strontium (Sr).
 
 12 docking examples
 5 mainstream operating systems
@@ -79,15 +73,16 @@ Fixed a numerical bug when docking a ligand of only one single heavy atom.
 Prevented dead loop by limiting the number of initial conformation trials.
 Fixed a segmentation fault bug when the number of heavy atoms exceeds 100.
 
-\section{Benchmarks and Results}
+idock supports reading and writing compressed ligand files with gzip and bzip2.
+idock enables automatic recovery and restarts docking from the previous stopping point.
 
-The experiments include 1) comparison of their redocking performance in terms of predicted conformations, and 2) comparison of their virtual screening performance in terms of execution time, memory usage, predicted free energy, and predicted conformations.
+\section{Benchmarks, Results and Discussions}
 
-Vina x86 version 1.1.2 and idock x86\_64 version 1.5, the most recent versions of both programs at the moment these experiments were carried out, were used for experiments. Both programs were run on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.1 x86\_64.
+AutoDock Vina x86 v1.1.2 and idock x86\_64 v1.5 were evaluated on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. The benchmarks include comparison of their redocking performance in terms of predicted conformations, and comparison of their virtual screening performance in terms of execution time, memory usage, predicted free energy, and predicted conformations.
 
-\subsection{Benchmark of Conformation and Free Energy}
+\subsection{Benchmark of Redocking Performance}
 
-Two databases, PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010
+Redocking refers to randomizing the native ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its native conformation. We used two databases, PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010, for the redocking benchmark.
 
 RMSD (Root Mean Square Deviation) values
 Table \ref{tab:RMSD} shows the  between the crystal and docked conformations. 74\% RMSD values are below 2.0 \AA, a publicly accepted positive control for correct bound structure prediction.
@@ -112,23 +107,25 @@ PDB ID & Protein & Ligand & Vina (\AA) & idock (\AA)\\
 
 We picked several complexes and visualized their redocking results. Figure \ref{fig:Redocking} shows the four proteins in complex with their corresponding crystal and docked ligands. The ligands rendered in green are the crystal ones, the ligands rendered in red are the ones docked by Vina, and the ligands rendered in blue are the ones docked by idock.
 
-\begin{figure}
+\begin{figure*}
 \centering
-\includegraphics[width=\linewidth]{PDBbindFECorrelation.pdf}
-\caption{Free energy correlation on PDBbind v2011.}
-\label{PDBbindFECorrelation}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{CSARFECorrelation.pdf}
-\caption{Free energy correlation on CSAR NRC HiQ Set 24Sept2010.}
-\label{PDBbindFECorrelation}
-\end{figure}
+\subfloat[PDBbind v2011]
+{
+  \label{subfig:PDBbindFECorrelation}
+  \includegraphics[width=0.485\linewidth]{PDBbindFECorrelation.pdf}
+}
+\subfloat[CSAR NRC HiQ Set 24Sept2010]
+{
+  \label{subfig:CSARFECorrelation}
+  \includegraphics[width=0.485\linewidth]{CSARFECorrelation.pdf}
+}
+\caption{Free energy correlation on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010.}
+\label{fig:FECorrelation}
+\end{figure*}
 
 \subsection{Benchmark of Virtual Screening Performance}
 
-We collected 12 receptors from the PDB (Protein Data Bank) \cite{540,537}. They are 1HCL, 1J1B, 1LI4, 1V9U, 2IQH, 2XSK, 2ZD1, 2ZNL, 3BGS, 3H0W, 3IAR, and 3KFN.
+We collected 12 receptors from the PDB (Protein Data Bank) \cite{540,537}. Their PDB codes are 1HCL, 1J1B, 1LI4, 1V9U, 2IQH, 2XSK, 2ZD1, 2ZNL, 3BGS, 3H0W, 3IAR, and 3KFN.
 
 1, 10, 100, 1000 ligands
 [200, 300), [300, 400), [400, 500)
@@ -212,19 +209,15 @@ PNP    & 0.31 & 2.966 & 53\%\\
 \label{tab:RMSEAndRMSD}
 \end{table}
 
-\section{Discussion}
-
-Vina supports flexible receptor docking by rotating flexible side-chains. However, we have not yet implemented flexible receptor docking into idock 1.5, so users who need this kind of docking should refer to Vina.
-
 \section{Availability}
 
-Like idock 1.0, idock 1.5 is still free and open source under Apache License 2.0 and available at https://github.com/HongjianLi/idock. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. 12 docking examples and a doxygen file for generating API documentations are also provided.
+idock is free and open source under Apache License 2.0. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris, 12 docking examples, and a doxygen file for generating API documentations are available at https://github.com/HongjianLi/idock.
 
 \section{Future Directions}
 
-We are developing istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate virtual screening. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly in either of three ways: 1) browsing our web site, 2) programming against our RESTful API, or 3) sending emails conforming to our specifications.
+We are actively developing istar, a SaaS (Software as a Service) platform for idock. The goal of istar is to automate virtual screening. Without tedious software installation, users, especially computational chemists, can submit docking jobs on the fly in either of three ways: browsing our web site, programming against our RESTful API, or sending emails conforming to our specifications. Upon job completion, users can download top hits and seek for purchasing information.
 
-We will port idock to NVIDIA's GK104 GPU using CUDA and AMD's Tahiti GPU using OpenCL in order to harness their huge computational power and further speed up idock by at least an order of magnitude. We will also incorporate click chemistry into idock in order to computationally synthesize novel ligands.
+At the same time, we will port idock to the GPU using CUDA and OpenCL, aiming at further speeding up idock by at least an order of magnitude. We will also incorporate click chemistry into idock for \textit{in silico} synthesis of novel ligands.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
