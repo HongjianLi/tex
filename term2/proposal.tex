@@ -1,10 +1,10 @@
 \chapter{Our Proposal}
 
-Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, molecular docking, virtual screening, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
+Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, protein-ligand docking, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
 \section{idock 2.0: GPU Acceleration of idock}
 
-Even though idock 1.5 outperformed AutoDock Vina \citep{595} by 10x in terms of docking speed, it still required about 10 hours on average to dock 10,928 drug-like ligands against a certain protein, not to mention massive docking of millions of ligands. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
+Even though idock 1.5 outperformed AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed and was capable of docking 16 ligands per minute on a high performance machine, it is estimated to require about 312 days, i.e. nearly a year, to dock the complete 7,220,835 drug-like ligands from ZINC against a certain protein, not to mention multiple proteins. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
 
 We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and observe thread behaviors. Figure \ref{idock:ThreadProfile} shows the thread profile of idock. Thread 1060 was the main thread, while the other four were workers threads spawned by the main thread and maintained by our novel thread pool. During program startup, the main thread parsed command line arguments, initialized necessary variables, parsed receptor file, and created a thread pool to precalculate the scoring function in parallel. Afterwards, it entered a loop, docking ligands one by one. The four workers threads actually carried out the creation of grid maps as well as running Monte Carlo tasks in parallel, fully occupying all the four CPU cores. Upon completion of docking a ligand, program control was returned to the main thread to write conformations to file and read the next ligand from file. From the figure, it can be concluded that the worker threads acquire most of the CPU computing resources and the precalculation of grid maps and the execution of Monte Carlo tasks constitute the program hotspots, albeit the CPU-intensive Monte Carlo tasks and the I/O-intensive file reading/writing can be possibly pipelined according to our in-house trial.
 
@@ -17,9 +17,7 @@ We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and
 
 We propose idock 2.0, incorporating GPU acceleration with both CUDA and OpenCL, harnessing the tremendous computational power and memory bandwidth offered by modern GPUs nowadays. In \citeyear{1138} we developed a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching \citep{1138}, demonstrating our expertise in CUDA programming. Meanwhile, we are eagerly learning OpenCL. We will first work on a CUDA version, followed by an OpenCL version.
 
-On the hardware side, thanks to Mr. Frank Ng from ITSC (Information Technology Services Center) at Chinese University of Hong Kong, we are borrowing a GeForce GTX 680 for CUDA development and plan to purchase a Radeon HD 7970 for OpenCL development.
-
-On the software side, performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
+Performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
 
 Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. In dock, we have parallelized both the precalculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to thoroughly utilize multicore CPU. We plan to port these two most time-consuming parts to the GPU, map Monte Carlo tasks directly to CUDA threads, and use NVIDIA's occupancy calculator to carefully choose the execution configuration of each kernel launch in order to maintain a high GPU utilization. Several technical difficulties exist. One difficulty is the lack of sufficient capacity of GDDR5 memory, which is merely 2GB along with a GeForce GTX 680. This restriction voids the precalculation of grid maps at a fine granularity like 0.08\AA, leading to reduced approximation accuracy and possibly a high false negative rate. Another difficulty is the efficient generation of pseudo random numbers. Although there are official libraries and third-party libraries to facilitate this purpose, it is hard to determine the number of random numbers in need in advance because the Monte Carlo algorithm is stochastic \textit{per se}.
 
@@ -38,34 +36,41 @@ A GK104 SMX has 64KB of on-chip memory that can be configured as 48KB of shared 
 
 Maximizing instruction throughput can be achieved by using single precision floating point instead of double precision and using intrinsics instead of regular functions. This strategy suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe to utilize single precision operations as well as native intrinsics in idock 2.0.
 
-\section{istar: SaaS Platform for idock}
+\section{istar: Software-as-a-Service Platform}
 
 Having released and advertised idock, we kept receiving constant docking requirements from our colleges and collaborators. They are mostly biochemists and pharmacists, outsourcing the docking research to us after discovering potential biological targets for certain diseases of therapeutic interest. All of a sudden, we had to grab the protein structure, do format conversion, define search space, set up docking parameters, and keep running idock for months. Occasionally we also had to restart virtual screening in case the idock process got killed by others or by exceptions. Tedious enough, all the above work was done manually, resulting in very low research productivity.
 
-We propose istar, a SaaS (Software as a Service) platform for idock and other programs. The original goal of istar was to automate the virtual screening process. Now we are constructing istar as a general SaaS platform any programs including idock \citep{1153} and igrep \citep{1138}. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by browsing our web site (Figure \ref{istar:Website}) or by programming against our RESTful API (Figure \ref{istar:RESTfulAPI}).
+We propose istar, a SaaS (Software as a Service) platform. The original goal of istar was to automate the virtual screening process. Now we are constructing istar as a general SaaS platform for any programs including idock \citep{1153} and igrep \citep{1138}. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by browsing our web site (Figures \ref{istar:istar}, \ref{istar:idock} and \ref{istar:igrep}) or by programming against our RESTful API (Figure \ref{istar:RESTfulAPI}).
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{istar/Website.png}
-\caption{istar web site.}
-\label{istar:Website}
+\includegraphics[width=\linewidth]{istar/istar.png}
+\caption{http://istar.cse.cuhk.edu.hk}
+\label{istar:istar}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/idock.png}
+\caption{http://idock.cse.cuhk.edu.hk}
+\label{istar:idock}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/igrep.png}
+\caption{http://igrep.cse.cuhk.edu.hk}
+\label{istar:igrep}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{istar/RESTfulAPI.png}
-\caption{istar RESTful API.}
+\caption{RESTful API for idock and igrep.}
 \label{istar:RESTfulAPI}
 \end{figure}
 
-Figure \ref{istar:Architecture} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain backward compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19+, Mozilla Firefox 12+, Microsoft Internet Explorer 9+ and Apple Safari 5+.
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{istar/Architecture.png}
-\caption{istar architecture.}
-\label{istar:Architecture}
-\end{figure}
+Figure \ref{istar:istar} shows the architecture of istar. On the client side, we seamlessly combine both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site. We use the Modernizr JavaScript library to detect HTML5 and CSS3 features in order to maintain backward compatibility in older browsers. We adopt the \textit{de facto} jQuery JavaScript library to simplify HTML document traversing, event handling, animating, and Ajax interactions. We test the user interface on Google Chrome 19+, Mozilla Firefox 12+, Microsoft Internet Explorer 9+ and Apple Safari 5+.
 
 On the server side, we build the web server in the same JavaScript language using the well-known asynchronous event-driven node.js on top of the express server, forking multiple worker processes to accept simultaneous HTTP connections. During startup, the master process loads and parses 9 molecular properties of 12 million ligands (Figure \ref{istar:LigandProperties}), and awaits queries from worker processes through inter-process message passing. Upon receival of a query from a worker process, the master process performs an in-memory table scan and calculates the number of ligands satisfying a given combination of filtering conditions on those 9 molecular properties. The ligand count was signaled to the query-invoking worker process and then forwarded to the client side. The entire round trip costs approximately one second, rendering the feasibility of real-time ligand counting queries for users to estimate in advance how many ligands will be docked. We expose the functionalities of job submission, job query, and ligand counting as RESTful API for others to program against. We employ the forever utility for the web server to automatically restart processes in case of unhandled exceptions, ensuring failover and high availability. We are meanwhile considering prepending the scalable asynchronous event-driven nginx as a front-end HTTP server for a rich set of features, like bandwidth throttling, static file serving, reverse proxy for caching, load balancing, URL rewriting, gzip compression, TLS/SSL support, IP-based geolocation, etc.
 
