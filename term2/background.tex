@@ -40,6 +40,80 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %LogP \citep{341,342,343,344,345,346}
 %pKa \citep{347,348}
 
+It was estimated that 40\% to 60\% of new chemical entity (NCE) failures can be attributed to poor ADMET (absorption, distribution, metabolism, excretion, and toxicity) profiles. Accurately predicting ADMET properties is getting more and more attention nowadays.
+
+PKKB (PharmacoKinetics Knowledge Base) \citep{1133} provides the most extensive collection of freely available data for ADMET properties up to date. PKKB integrates 31,412 experimental or predicted values for 1,685 drug and drug-like molecules from published literature with available experimental ADMET properties including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. (Table \ref{PKKB:Properties})
+
+\begin{table}
+\centering
+\begin{tabular*}
+{\linewidth}
+{@{\extracolsep{\fill}}rlr}
+\toprule
+No. & Property & Measurements \\
+\midrule
+\multicolumn{3}{l}{\textbf{Molecular properties}}\\
+1 & Molecular weight & 1,684 \\
+2 & logP (experiment) & 1,019 \\
+3 & logP (predicted, AB/logP v2.0) & 1,625 \\
+4 & Pka & 638 \\
+5 & logD (pH=7,predicted) & 1,625 \\
+6 & Solubility (experiment) & 800 \\
+7 & logS (predicted, ACD/Labs)(pH=7) & 1,614 \\
+8 & logSw (predicted, AB/LogSw 2.0) & 1,625 \\
+9 & Sw (mg/ml) (predicted, ACD/Labs) & 1,613 \\
+10 & Sw (predicted) & 1,625 \\
+11 & No. of hbond donors & 1,625 \\
+12 & No. of hbond acceptors & 1,625 \\
+13 & No. of rotatable bonds & 1,625 \\
+14 & TPSA & 1,625 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Pharmacology}}\\
+15 & Status & 1,372 \\
+16 & Administration & 501 \\
+17 & Pharmacology & 1,543 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Absorption}}\\
+18 & Intestinal absorption & 679 \\
+19 & Absorption (description) & 699 \\
+20 & Caco-2 & 64 \\
+21 & Human bioavailability & 992 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Distribution}}\\
+22 & Plasma protein binding & 1058 \\
+23 & Volume of distribution(Vd) & 646 \\
+24 & D-blood & 66 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Metabolism}}\\
+25 & Metabolism & 1,111 \\
+26 & Half-time & 1,116 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Excretion}}\\
+27 & Excretion & 855 \\
+28 & Urinary excretion & 281 \\
+29 & Clearance & 410 \\
+\noalign{\smallskip\smallskip}
+\multicolumn{3}{l}{\textbf{Toxicity}}\\
+30 & Toxicity & 873 \\
+31 & LD50 (rat) & 219 \\
+32 & LD50 (mouse) & 243 \\
+\bottomrule
+\end{tabular*}
+\caption{PKKB property measurements. Data obtained from PKKB web site.}
+\label{PKKB:Properties}
+\end{table}
+
+Figure \ref{PKKB:Schema}, reprinted from \citep{1133}, shows the PKKB schema. Raw data from literature was first converted into proper formats and then integrated into a central ADMET database. A web site is provided for interactive search of ADMET properties given either structure or descriptive text of compounds of interest.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{PKKB/Schema.jpg}
+\caption{PKKB schema. Figure reprinted from \citep{1133}.}
+\label{PKKB:Schema}
+\end{figure}
+
+Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
+
 \section{Ligand Synthesis}
 
 Virtual screening tries to discover promising ligands out of existing databases. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, virtual screening will fail if the database contains no promising ligands at all.
