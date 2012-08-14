@@ -49,41 +49,41 @@ On the server side, during startup, the master process loads and parses 9 molecu
 \centering
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/MWT.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/mwt.pdf}
 }
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/LogP.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/logp.pdf}
 }
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_apolar.pdf}
-}
-\\
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/Desolv_polar.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/HBD.pdf}
-}
-\subfloat
-{
-  \includegraphics[width=0.315\linewidth]{istar/HBA.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/ad.pdf}
 }
 \\
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/tPSA.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/pd.pdf}
 }
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/Charge.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/hbd.pdf}
 }
 \subfloat
 {
-  \includegraphics[width=0.315\linewidth]{istar/NRB.pdf}
+  \includegraphics[width=0.315\linewidth]{istar/hba.pdf}
+}
+\\
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/tpsa.pdf}
+}
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/charge.pdf}
+}
+\subfloat
+{
+  \includegraphics[width=0.315\linewidth]{istar/nrb.pdf}
 }
 \caption{Distributions of 9 molecular properties of the 12,171,187 clean ligands.}
 \label{istar:LigandProperties}
@@ -132,7 +132,14 @@ Together with 2-phase docking as well as slice-level parallelism, using a Mac wo
 
 \section{igrep on istar}
 
-In the beginning, we constructed istar specifically as an online version of idock. We never realized it could become a general SaaS platform until the day we borrowed a GeForce GTX 680 from ITSC. With such a high-end graphics card at hand, we wanted to try something out. My own program igrep \citep{1138} escaped my mind. igrep was developed two years and is a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching. Then I spent three weeks rewriting the entire code, porting igrep to istar, and upgrading 26 genomes for instant search.
+In the beginning, we constructed istar specifically as an online version of idock. We never realized it could become a general SaaS platform until the day we borrowed a GeForce GTX 680 from ITSC. With such a high-end graphics card at hand, we wanted to try something out. My own program igrep \citep{1138} escaped my mind. igrep was developed two years and is a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching. Then I spent three weeks rewriting the entire code, porting igrep to istar, and upgrading 26 genomes (Figure \ref{istar:Genomes}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/Genomes.png}
+\caption{26 assembled genomes from ftp://ftp.ncbi.nih.gov/genomes. Their sizes vary from 3.50Gnt to 0.19Gnt, accounting for 44Gnt in total.}
+\label{istar:Genomes}
+\end{figure}
 
 Figure \ref{istar:igrep} shows the web site of igrep. The workflow is more or less identical to idock. New jobs are submitted via browsers and validated by our web server. They are stored into the database and subsequently distributed to the sole Linux workstation for execution. Figure \ref{istar:igrep-rest} the RESTful API, allowing job query and submission.
 
