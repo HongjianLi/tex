@@ -1,8 +1,8 @@
 \chapter{Our Proposal}
 
-Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, protein-ligand docking, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
+Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, protein-ligand docking, ligand synthesis, ADMET properties prediction, and so on, and utilize such framework to address practical drug discovery problems in real life. The development of idock and istar is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
 
-\section{idock 2.0: GPU Acceleration of idock}
+\section{idock 2.0: GPU Acceleration}
 
 Even though idock 1.5 outperformed AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed and was capable of docking 16 ligands per minute on a high performance machine, it is estimated to require about 312 days, i.e. nearly a year, to dock the complete 7,220,835 drug-like ligands from ZINC against a certain protein, not to mention multiple proteins. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
 
@@ -36,7 +36,7 @@ A GK104 SMX has 64KB of on-chip memory that can be configured as 48KB of shared 
 
 Maximizing instruction throughput can be achieved by using single precision floating point instead of double precision and using intrinsics instead of regular functions. This strategy suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe to utilize single precision operations as well as native intrinsics in idock 2.0.
 
-\section{idock 3.0: \textit{In Silico} Ligand Synthesis}
+\section{idock 3.0: Ligand Synthesis}
 
 Synthesis and docking are closely related. Figure \ref{igrow:SynthesisAndDocking} shows their recursive relationship. Tiny fragments are combined in accordance to chemistry rules to synthesize larger ligands, which are then docked to a receptor to evaluate their fitness. The best ligands enter the next iteration to synthesize other ligands, which are again evaluated by docking, until promising ligands are discovered. AutoGrow \citep{466}, released in \citeyear{466}, is a representative ligand synthesis tool that makes use of genetic algorithm and AutoDock Vina \citep{595} to automate this recursive synthesis/docking procedure.
 
