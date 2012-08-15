@@ -2,14 +2,14 @@
 
 Drug discovery is an expensive and long-term business. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}. Hence computer-aided drug discovery is not only timesaving, but economics tells us this is the way we should be going. We aim to develop a comprehensive computational framework for structure-based drug discovery, simulating the early phases of modern drug discovery pipeline.
 
-We have developed idock for fast prediction of both binding conformations of small compounds against given proteins and their binding affinities. idock can shortlist a few promising compounds out of millions for further clinical investigations. idock 1.5 is capable of docking 16 ligands per minute on a high performance machine, outperforming AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed. Nevertheless, when it comes to docking millions of ligands, it still costs several months. Even faster algorithms and implementations are of great need.
+We have developed idock for fast prediction of both binding conformations of small compounds against given proteins and their binding affinities. idock can shortlist a few promising compounds out of millions for further clinical investigations. idock 1.5 is capable of docking 16 ligands per minute on a high performance machine, outperforming AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed. Nevertheless, when it comes to docking millions of ligands, it still costs several months. Faster algorithms and implementations are of great need.
 
-We have also developed istar to facilitate automatic virtual screening. 
+We have also developed istar to facilitate automatic virtual screening. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by browsing our web site or by programming against our RESTful API. Our HTML5- and CSS3-powered web site enables real-time progress monitoring, a very useful functionality commonly lacked in other SaaS platforms like DOCK BLASTER \citep{557}.
 
-We propose idock 2.0 to incorporate GPU acceleration.
+We propose idock 2.0 to incorporate GPU acceleration with both CUDA and OpenCL, harnessing the tremendous computational power and memory bandwidth offered by modern GPUs nowadays. We explain our strategies on maximizing parallel execution, maximizing memory bandwidth, and maximizing instruction throughput.
 
-We propose idock 3.0 to incorporate click chemistry.
+We propose idock 3.0 to realize \textit{in silico} ligand synthesis. Inspired by AutoClickChem \citep{1051}, we plan to incorporate click chemistry into igrow to make sure every step of synthesis does follow some kind of well-known chemical reaction. In addition to receptor and grid map caching, we propose partial docking by cutting off the positional and orientational degrees of freedom, dramatically reduce search space dimensionality and therefore dramatically speed up the selection operator.
 
-We have applied idock to address drug discovery problems in practice. As case studies, we are collaborating with 
+We have applied idock to address drug discovery problems in practice. As case studies, on one hand, we are collaborating with Prof. Pang-Chui Shaw and his team from Department of Biochemistry on discovering inhibitors of influenza A virus H1N1 viral nucleoprotein and RNA polymerase. On the other hand, we are collaborating with Prof. Marie Chia-Mi Lin and her team from Department of Surgery on discovering inhibitors of CCRK (Cell Cycle-Related Kinase) in glioblastoma multiforme carcinogenesis, ovarian carcinomas and hepatocellular carcinomas. Several promising compounds have been shortlisted and their interaction charts are shown.
 
 \chapterend
