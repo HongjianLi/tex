@@ -34,13 +34,13 @@ Having released idock, we kept receiving docking requirements from our colleague
 Figure \ref{istar:architecture} shows the architecture of istar. Under typical circumstance, a user opens a browser and submits a job. The web server validates user input and saves it into database. Several workstations fetch jobs from the database and actually carry out the massive experiments. Upon completion, they send the user a completion notification email and write the result to a network file system, which is served as static content by the web server. The user again browses our web site to track progress and retrieve result.
 
 \begin{figure}
-\centerline{\includegraphics[width=\linewidth]{architecture.png}}
+\centerline{\includegraphics[width=\linewidth]{Architecture.png}}
 \caption{istar architecture.}\label{istar:architecture}
 \end{figure}
 
 On the client side, we seamlessly combined both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site, which was successfully checked as HTML5 by the W3C Markup Validator v1.3. We adopted the \textit{de facto} jQuery library to simplify HTML document traversing, event handling, animating, and Ajax interactions, and the jQuery UI library to provide themeable widgets. We tested the web site with Chrome 19+, Firefox 12+, Internet Explorer 9+, Safari 5+ and Opera 12+, and utilized the Modernizr library to detect HTML5 and CSS3 features in order to maintain backward compatibility in older browsers.
 
-On the server side, we built the web server in the same JavaScript language using the well-known asynchronous event-driven node.js on top of the express server, forking multiple worker processes to accept simultaneous HTTP/SPDY connections. We utilized the spdy node module to support SPDY protocol v3, the prototype of next generation HTTP 2.0. We employed the forever node module to restart worker processes automatically in case of unhandled exceptions, ensuring failover and high availability. We made use of regular expressions and developed a customized version of the validator node module to validate and sanitize user input upon job receival, ensuring data validity. We are considering prepending the scalable asynchronous event-driven nginx as a front-end HTTP server for a rich set of features, like bandwidth throttling, static file serving, reverse proxy for caching, load balancing, URL rewriting, gzip compression, TLS/SSL support, IP-based geolocation, etc.
+On the server side, we built the web server in the same JavaScript language using the well-known asynchronous event-driven node.js on top of the express server, forking multiple worker processes to accept simultaneous HTTP/SPDY connections. We utilized the spdy node module to support SPDY protocol v3, the prototype of next generation HTTP 2.0. We employed the forever node module to restart worker processes automatically in case of unhandled exceptions, ensuring failover and high availability. We made use of regular expressions and developed a customized version of the validator node module to validate and sanitize user input upon job receival, ensuring data validity.
 
 On the database side, we chose MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON style, making it particularly suitable for applications requiring flexible document attributes like our istar. MongoDB is written in C++, making it easy to manipulate the database from idock and igrep, which are also written in C++. By using a 10gen-supported native MongoDB driver for node.js, the web server is able to save user input as jobs into MongoDB.
 
@@ -62,7 +62,7 @@ On one hand, the idock on istar features 2-phase docking (Figure \ref{istar:2Pha
 
 \begin{figure}
 \centerline{\includegraphics[width=\linewidth]{2PhaseDocking.png}}
-\caption{istar 2-phase docking.}\label{istar:2PhaseDocking}
+\caption{Two-phase docking.}\label{istar:2PhaseDocking}
 \end{figure}
 
 On the other hand, the idock on istar features slice-level parallelism in phase 1. Generally speaking, multiple workstations can compete for either jobs or slices, with the former known as job-level parallelism and the latter as slice-level parallelism. Job-level parallelism is very straightforward to implement and can ensure high utilization of computational power when the number of jobs exceeds the number of workstations. Nevertheless, when the number of workstations exceeds the number of jobs, which is usually the case in practice during the initial stage of istar, slice-level parallelism can better utilize computational power by subdividing a job into slices which are then distributed to workstations. Slice-level parallelism is, in contrast, difficult to implement on both the database side and the workstation side. The technical hurdle becomes even more apparent when results from multiple workstations must be properly combined to produce a final result and progresses from multiple workstations must be properly combined too to compute an overall progress. Finally we succeeded in splitting a job into 100 slices and distributing them to idle workstations in phase 1 to achieve parallel docking.
@@ -75,7 +75,12 @@ In addition to idock, we also hosted our igrep \citep{1138} on istar. igrep is a
 
 \section*{Acknowledgement}
 
-We would like to thank Professor John J. Irwin, the developer and maintainer of ZINC, for granting us permission to use ZINC.
+We would like to thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{532,1178}, for granting us permission to use ZINC with three conditions:
+\begin{enumerate}
+\item We shall provide links to http://zinc.docking.org/substance/zincid for top hits so that users can seek for the most current purchasing information at ZINC's official web site.
+\item We shall limit the number of top hits for download to 1000 ligands from a single job.
+\item We shall update our ligands when ZINC data is updated so that users can benefit from the most current ligand data.
+\end{enumerate}
 
 \bibliographystyle{natbib}
 \bibliography{document}
