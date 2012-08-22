@@ -2,9 +2,11 @@
 \usepackage{fullpage}
 \usepackage{graphicx}
 \usepackage{booktabs}
-\title{Supplementary data for ``idock: Improving Docking Speed over AutoDock Vina and istar: Software-as-a-Service Platform for idock"}
+\title{Supplementary data and evaluation results for ``idock: Improving Docking Speed over AutoDock Vina and istar: Software-as-a-Service Platform for idock"}
+\pagestyle{empty}
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 
 \pagebreak
 \begin{table}
@@ -37,7 +39,7 @@ RMSDm \textless\ 1.5 \AA & 64\% & 65\% & 78\% & 84\%\\
 RMSDm \textless\ 2.0 \AA & 74\% & 78\% & 86\% & 92\%\\
 \bottomrule
 \end{tabular*}
-\caption{Success rates of idock and AutoDock Vina under various conditions on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010. RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation with the lowest RMSD value. The condition RMSD1 = RMSDm therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. Arguments to both programs were left as default. Both programs output 9 conformations per ligand.}
+\caption{Redocking benchmark results: redocking success rates of idock and AutoDock Vina on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010 under various conditions regarding the RMSD (Root Mean Square Deviation) values between the crystal and docked conformations. Arguments to both programs were left as default. Both programs output 9 conformations per ligand by default. RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation with the lowest RMSD value. The condition RMSD1 = RMSDm therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock were comparable to, albeit slightly lower than, AutoDock Vina. Using a RMSD value of 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation close enough to the crystal conformation as the first conformation for over half of the cases on both datasets.}
 \label{idock:SuccessRate}
 \end{table}
 
@@ -105,15 +107,15 @@ idock &  0.85 &  0.22 &  1.38 &  0.36 &  2.58 &  0.67\\
 Ratio & 12.48 & 13.02 & 13.32 & 13.66 & 16.76 & 16.89\\
 \bottomrule
 \end{tabular*}
-\caption{CPU time and elapsed time in hours of docking 3000 clean ligands of 3 molecular weight sets against 12 diverse receptors by AutoDock Vina and idock.}
+\caption{Virtual screening benchmark results: CPU time and elapsed time in hours of docking 3000 clean ligands of 3 molecular weight sets against 12 diverse receptors by AutoDock Vina and idock. Typically idock outperformed Vina by at least 8.69 times and at most 37.51 times in terms of docking speed.}
 \label{idock:ExecutionTime}
 \end{table}
 
 \pagebreak
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{idock.png}
-\caption{http://idock.cse.cuhk.edu.hk}
+\includegraphics[width=0.8\linewidth]{idock.png}
+\caption{The online version of idock is hosted by istar and available at http://istar.cse.cuhk.edu.hk/idock. We have seamlessly combined both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered web site, which has been successfully checked as HTML5 by the W3C Markup Validator v1.3. We have adopted the jQuery library to simplify HTML document traversing, event handling, animating, and Ajax interactions, and the jQuery UI library to provide themeable widgets. We have tested our web site with Chrome 19+, Firefox 12+, Internet Explorer 9+, Safari 5+ and Opera 12+. Our idock web page supports filtering and previewing ligands to dock, as well as monitoring job progress in real time, two very useful and unique features only available at istar. A new job consists of compulsory fields as well as optional fields. Compulsory fields include a receptor in PDBQT format, a search space defined by a cubic box, a short description of the job, and an email to receive completion notification. Optional fields include filtering conditions of ligands on 9 molecular properties, e.g. molecular weight and partition coefficient xlogP. We have set up default values for optional fields, and only the ligands satisfying all the 9 filtering conditions will be docked. We have also recorded a video tutorial for newbies to get started easily.}
 \label{istar:idock}
 \end{figure}
 
@@ -121,7 +123,7 @@ Ratio & 12.48 & 13.02 & 13.32 & 13.66 & 16.76 & 16.89\\
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{idock-rest.png}
-\caption{RESTful API of idock.}
+\caption{RESTful API of idock. We have exposed job submission, job query, and ligand counting as RESTful API for others to program against. Under Unix-like operating systems, one can use the ``curl" utility to trigger our RESTful API. Refer to the idock web site for more detail.}
 \label{istar:idock-rest}
 \end{figure}
 
