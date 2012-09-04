@@ -4,6 +4,20 @@ In the modern drug discovery pipeline, two early stages are lead identification 
 
 \section{Modern Drug Discovery Pipeline}
 
+%pocket identification, review \citep{384}
+%DoGSite \citep{382}
+%BSSF \citep{383}
+%Fpocket \citep{386}
+%Gaussian Network Model \citep{387}
+%BUMBLE \citep{391}
+%MSPocket \citep{392}
+%POOL \citep{393}
+%ProBiS \citep{394}
+%CLIPPERS \citep{395}
+%BDT \citep{396}
+%FunFOLD \citep{747}
+%Comprison \citep{390}
+
 Drug discovery is an industrial process. From 1950 to 2008, the US Food and Drug Administration (FDA) approved 1,222 new drugs \citep{717}. In 2008 and 2009, only 21 and 24 new drugs respectively were approved for marketing in the United States \citep{716}, well below the level required to secure the future of the pharmaceutical industry, which has been struggling with decreasing approval numbers for more than a decade. This is particularly remarkable because the level of investment in pharmaceutical research and development (R\&D) has dramatically increased by 12\% on average year-on-year since 1970 and at present to about US\$50 billion per year (Figure \ref{fig:NewDrugApprovals} \citep{686}).
 
 \begin{figure}
@@ -22,11 +36,11 @@ Drug discovery is an expensive and long-term business. A recent study in 2010 es
 \label{fig:DrugDiscoveryProcess}
 \end{figure}
 
+%DrugDiscoveryProcess.png \citep{349}
+
 Drug discovery is a high risk process and a wasteful game. It costs quite a lot to develop the ones that fail \citep{688}. It is estimated that for every 30,000 compounds synthesized, 2000 (6.7\%) enter preclinical development, 200 (0.67\%) enter phase 1 clinical trials, 40 (0.13\%) enter phase 2 clinical trials, 12 (0.04\%) enter phase 3 clinical trials, 8 (0.027\%) are approved, and 1 (0.003\%) makes a satisfactory Return On Investment (ROI) \citep{713}.
 
-How are drugs discovered and developed? This section paints a big picture for the state-of-the-art drug discovery process, and is organized according to the note entitled ``University of Survey'' by Dr. Steve Carney, the Managing Editor of Drug Discovery Today.
-
-Figure \ref{fig:DrugDiscoveryProcess} \citep{716} shows the common steps that underpin drug discovery, including target identification, hit identification, lead identification, lead optimization, preclinical development, and clinical trials phases 1, 2 and 3.
+How are drugs discovered and developed? This section paints a big picture for the state-of-the-art drug discovery process. Figure \ref{fig:DrugDiscoveryProcess} \citep{716} shows the common steps that underpin drug discovery, including target identification, hit identification, lead identification, lead optimization, preclinical development, and clinical trials phases 1, 2 and 3.
 
 \subsection{Development of an Innovative Idea}
 
@@ -79,6 +93,24 @@ Phase 4 clinical trials are often referred to as post-marketing studies and are 
 
 \section{Protein-Ligand Docking}
 
+%docking programs comparison \citep{452,637}, survey \citep{493}
+%survey \citep{454}
+%Fleksy \citep{591}
+%FITTED \citep{602}
+%EADock \citep{606}
+%FRED \citep{772}
+%Pymol plugin for AutoDock/Vina \citep{609}
+%Protein–ligand docking with multiple flexible side chains \citep{614}
+%675 Systematic Exploitation of Multiple Receptor Conformations for Virtual Ligand Screening \citep{675}
+%case studies,attractive therapeutic target in anticancer drug development，\citep{456}, Protein kinase B \citep{502}，carbonic anhydrase IX \citep{503}, GIIA secreted phospholipase A\textsubscript{2} \citep{506}, 
+
+%statistical framework
+%SLR \citep{489}
+%comparison \citep{490}
+
+%docking poses clustering
+%AuPosSOM \citep{598}
+
 As the X-ray crystallography and Nuclear Magnetic Resonance (NMR) technologies evolve, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. This rapid evolution catalyzes the development of various algorithms and tools for structure-based drug discovery via protein-ligand docking.
 
 Protein-ligand docking is a method which predicts the preferred conformation (i.e. position and orientation) of a small ligand when bound to a macro protein to form a stable complex (Figure \ref{Background:Docking}, reprinted from Wikipedia). It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, Pi-Pi interactions, and the like. Free energy measures the degree of freedom of the ligand to ``escape'' from the protein, so the lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover.
@@ -92,7 +124,7 @@ Protein-ligand docking is a method which predicts the preferred conformation (i.
 
 Docking programs typically consist of two basic components, a scoring function to predict the binding affinity, and an algorithm to explore the conformational space of the ligand and the protein \citep{493}. So far, dozens of scoring functions \citep{579,566,570,775,575,576,578,580,581,774} and dozens of algorithms \citep{595,564,594,602,603,604,605,606,607,781,614,615,617} have been developed. Some methods have been comprehensively evaluated and compared \citep{637,771,556}.
 
-Among the many docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It's free and open source. It runs faster than its predecessor AutoDock 4 \citep{596} by an order of magnitude \citep{556}. Released in 2010, Vina has been cited by 117 other publications and adopted by many researchers \citep{609}. Indeed, it is intensively used in our research projects too.
+Among the many docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It's free and open source. It runs faster than its predecessor AutoDock 4 \citep{596} by an order of magnitude when benchmarking on virtual screening for HIV protease inhibitors \citep{556}. Released in 2010, Vina has been cited by 117 other publications and adopted by many researchers \citep{609}. Indeed, it is intensively used in our research projects too.
 
 Virtual screening is simply a massive version of docking (Figure \ref{Background:VirtualScreening} \citep{470}). It docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation. Statistical frameworks and assessments have been established for evaluation and result selection \citep{489,491,769,583,582}. In reality, docking and virtual screening have successful applications for drug discovery \citep{495,498,751,503,752,757,506,738,761,763,766,736}.
 
@@ -107,12 +139,18 @@ There are quite a lot data sources and databases for virtual screening, such as 
 
 %Scoring function
 %Efficiency index \citep{335,336,337}
+%RF-Score \citep{564}, SFCscore \citep{581}
+%LISA \citep{775}
+
+%Local search optimizer
+%MiniMuDS \citep{776}
 
 %Drug properties
+%Solubility \citep{353}
 %ADMET \citep{325,326,327,328,329,330,331,332}
 %Others \citep{333,334}
 %Drug-Drug Interactions \citep{338}
-%LogP \citep{341,342,343,344,345,346}
+%LogP \citep{341,342,343,344,345,346,742}
 %pKa \citep{347,348}
 
 It was estimated that 40\% to 60\% of new chemical entity (NCE) failures can be attributed to poor ADMET (absorption, distribution, metabolism, excretion, and toxicity) profiles. Accurately predicting ADMET properties is getting more and more attention nowadays.
@@ -184,6 +222,13 @@ Thanks to the availability of reliable experimental data and basic structural in
 
 \section{Ligand Synthesis}
 
+%Ligand design programs, review \citep{367,472,474,}
+%MORPH \citep{365}
+%GANDI \citep{369}
+%GARLig \citep{471}
+%LigBuilder 2 \citep{749}
+%AutoT&T \citep{780}
+
 Virtual screening tries to discover promising ligands out of existing databases. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, virtual screening will fail if the database contains no promising ligands at all.
 
 In contrast, computational synthesis produces novel molecular structures with desired pharmacological properties. It helps to explore a much larger chemical space for novel drugs. Figure \ref{igrow:LigandDesign} \citep{363} illustrates three kinds of strategies for ligand design. A number of compounds that evolved from fragments have entered the clinic, and the approach is increasingly accepted as an additional route to identifying new hits in inhibitor design \citep{363,470}.
@@ -201,7 +246,7 @@ Among the many ligand synthesis programs, AutoGrow \citep{466} is a representati
 
 \section{General-Purpose Computing on GPU}
 
-The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}.
+The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726}, molecular dynamics \citep{373,374}, molecular shape comparison \citep{491}.
 
 As of June 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
 
@@ -280,7 +325,7 @@ Portability is the distinct feature that distinguishes OpenCL from CUDA. Multipl
 Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software and website count \citep{260}
 Ten Simple Rules for Providing a Scientific Web Resource \citep{677}
 DOCK BLASTER \citep{557}
-wwLigCSRre
-ZINCPharmer
+ViewDock TDW \citep{559}, ChemDoodle version
+%CPORT \citep{650}, requires certificate registration
 
 \chapterend
