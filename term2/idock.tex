@@ -64,6 +64,31 @@ RMSDm < 2.0 \AA & 74\% & 78\% & 86\% & 92\%\\
 \label{idock:SuccessRate}
 \end{table}
 
+Figure \ref{idock:Redocking} visualizes the redocking results of four cases.
+
+\begin{figure*}
+\centering
+\subfloat[PDB ID 1B8N. Vina RMSD1 = 0.139 \AA. idock RMSD1 = 0.127 \AA.]
+{
+  \includegraphics[width=0.485\linewidth]{idock/Redocking1B8N.png}
+}
+\subfloat[PDB ID 4TMN. Vina RMSD1 = 8.401 \AA. idock RMSD1 = 9.909 \AA.]
+{
+  \includegraphics[width=0.485\linewidth]{idock/Redocking4TMN.png}
+}
+\\
+\subfloat[PDB ID 1PKX. Vina RMSD1 = 7.059 \AA. idock RMSD1 = 0.214 \AA.]
+{
+  \includegraphics[width=0.485\linewidth]{idock/Redocking1PKX.png}
+}
+\subfloat[PDB ID 3HV8. Vina RMSD1 = 0.290 \AA. idock RMSD1 = 10.232 \AA.]
+{
+  \includegraphics[width=0.485\linewidth]{idock/Redocking3HV8.png}
+}
+\caption{Redocking results of four cases.}
+\label{idock:Redocking}
+\end{figure*}
+
 Figure \ref{idock:FECorrelation} shows the free energy correlation of idock and AutoDock Vina. On the CSAR NRC HiQ Set 24Sept2010 database, the Pearson correlations between experimental binding affinity and free energy predicted by AutoDock Vina, between experimental binding affinity and free energy predicted by idock, and between free energy predicted by AutoDock Vina and idock are -0.5998758, -0.5774972, and 0.9824049, respectively. The experimental binding affinity is positive while the predicted free energy is negative, hence the negative sign for the former two correlations. It can be seen that both programs fail to predict reliable free energy, a very common obstacle in the entire research community. As expected, the correlation between free energy predicted by both programs is very close to 1 because of their identical scoring function.
 
 \begin{figure*}
