@@ -1,8 +1,6 @@
 \chapter{Background}
 
-In the modern drug discovery pipeline, two early stages are lead identification and lead optimization. From the computational perspective, lead identification can be addressed by virtual screening, while lead optimization can be addressed by computational ligand synthesis.
-
-\section{Modern Drug Discovery Pipeline}
+\section{Modern Drug Discovery Overview}
 
 %pocket identification, review \citep{384}
 %DoGSite \citep{382}
@@ -18,7 +16,7 @@ In the modern drug discovery pipeline, two early stages are lead identification 
 %FunFOLD \citep{747}
 %Comprison \citep{390}
 
-Drug discovery is an industrial process. From 1950 to 2008, the US Food and Drug Administration (FDA) approved 1,222 new drugs \citep{717}. In 2008 and 2009, only 21 and 24 new drugs respectively were approved for marketing in the United States \citep{716}, well below the level required to secure the future of the pharmaceutical industry, which has been struggling with decreasing approval numbers for more than a decade. This is particularly remarkable because the level of investment in pharmaceutical research and development (R\&D) has dramatically increased by 12\% on average year-on-year since 1970 and at present to about US\$50 billion per year (Figure \ref{fig:NewDrugApprovals} \citep{686}).
+Drug discovery is an industrial process. In 2008 and 2009, only 21 and 24 new drugs respectively were approved for marketing in the United States \citep{716}, well below the level required to secure the future of the pharmaceutical industry, which has been struggling with decreasing approval numbers for more than a decade. This is particularly remarkable because the level of investment in pharmaceutical research and development (R\&D) has dramatically increased by 12\% on average year-on-year since 1970 and at present to about US\$50 billion per year (Figure \ref{fig:NewDrugApprovals} \citep{686}).
 
 \begin{figure}
 \centering
@@ -27,69 +25,9 @@ Drug discovery is an industrial process. From 1950 to 2008, the US Food and Drug
 \label{fig:NewDrugApprovals}
 \end{figure}
 
-Drug discovery is an expensive and long-term business. A recent study in 2010 estimated that it takes US\$1.778 billion over a period of 13.5 years to develop a new drug (Figure \ref{fig:DrugDiscoveryProcess} \citep{716}). Broken down, the cost and cycle time broadly work out at US\$94 million and 1 year in hit identification, US\$166 million and 1.5 years in lead identification, US\$414 million and 2 years in lead optimization, US\$150 million and 1 year in preclinical phase, US\$273 million and 1.5 years in phase 1 clinical trials, US\$319 million and 2.5 years in phase 2 clinical trials, US\$314 million and 2.5 years in phase 3 clinical trials, and US\$48 million and 1.5 years in submission to launch.
+Drug discovery is an expensive and long-term business. A recent study in 2010 estimated that it takes US\$1.778 billion over a period of 13.5 years to develop a new drug.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Background/DrugDiscoveryProcess.png}
-\caption{R\&D model yielding costs and cycle times to successfully discover and develop a single new molecular entity (NME). Figure reprinted from \citep{716}.}
-\label{fig:DrugDiscoveryProcess}
-\end{figure}
-
-%DrugDiscoveryProcess.png \citep{349}
-
-Drug discovery is a high risk process and a wasteful game. It costs quite a lot to develop the ones that fail \citep{688}. It is estimated that for every 30,000 compounds synthesized, 2000 (6.7\%) enter preclinical development, 200 (0.67\%) enter phase 1 clinical trials, 40 (0.13\%) enter phase 2 clinical trials, 12 (0.04\%) enter phase 3 clinical trials, 8 (0.027\%) are approved, and 1 (0.003\%) makes a satisfactory Return On Investment (ROI) \citep{713}.
-
-How are drugs discovered and developed? This section paints a big picture for the state-of-the-art drug discovery process. Figure \ref{fig:DrugDiscoveryProcess} \citep{716} shows the common steps that underpin drug discovery, including target identification, hit identification, lead identification, lead optimization, preclinical development, and clinical trials phases 1, 2 and 3.
-
-\subsection{Development of an Innovative Idea}
-
-All projects start with an idea, whose quality ultimately determines the value of a project. An idea is initiated from either an internal experiment, an external publication, or just the leisure moment in a bar. A drug discovery idea should link a process to a fundamental pathological pathway, altering which should be expected to be curative or antisymptomatic.
-
-\subsection{Establishment of a Project Team}
-
-In order to explore the potential of an innovative idea, one needs to populate a team. A team requires individuals with different expertise. Team members are typically made up of molecular biologists, \textit{in vitro} pharmacologists, automation specialists, medicinal chemists, process chemists, toxicology specialists, \textit{in vivo} pharmacologists, pathologists, bioinformaticians, chemoinformaticians, and the like. The importance of proper planning should never be underestimated.
-
-\subsection{Target Discovery}
-
-Once a team is established, the first task is to identify a biological target \citep{706,355,356,357,797}, which is any system that can potentially be modulated by a molecule to produce a beneficial effect.
-
-A target is generally a protein (Figure \ref{fig:USAcademicDrugDiscoveryResearchFocus} \citep{721}), although it could be from a broad spectrum of moieties, be it a molecular entity (protein, gene, miRNA, fatty acid, carbohydrate, or lipid), a disease biomarker, a biological pathway, or a crucial node on a regulatory network, as long as it is relevant to a specific disease and its progression \citep{711}.
-
-Pharmacology is essentially the science of the interaction of components foreign to the living body with components of the living body. Such foreign compounds interact with the human body through binding to a biological target molecule. As a result, the biological function of the target is altered such that a change in a pathway is induced. It is intended that this kind of modification of the pathway will produce a beneficial effect.
-
-\subsection{Hit Identification}
-
-Once a target is selected and validated, the next task is to identify hits, which are compounds that have activity at a predetermined level against a target, but little else is known at this early stage.
-
-Hits are usually discovered by high throughput screening \citep{795,504,736} (Figure \ref{fig:USAcademicDrugDiscoveryResearchFocus} \citep{721}), which screens hundreds of thousands or even millions of compounds against the target in a high throughput manner. For the purpose of validation, discovered hits are re-screened against an alternative assay to rule out false positives.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Background/USAcademicDrugDiscoveryResearchFocus.png}
-\caption{Research focus of US academic and non-profit small-molecule drug discovery centres. (a) Therapeutic area. (b) Target-class focus. (c) Degree of validation of target portfolios. (d) Sources of tractable hits by discovery strategy. Figure reprinted from \citep{721}.}
-\label{fig:USAcademicDrugDiscoveryResearchFocus}
-\end{figure}
-
-\subsection{Lead Identification}
-
-Apart from just activity against the target, the next task is to identify those validated hits having properties that would indicate they have potential for being developed as drugs. A lead is a validated hit with several necessary properties, such as selectivity versus a panel of other targets, physicochemical characteristics, drug-like properties, and absorption, distribution, metabolism, excretion and toxicity (ADMET) properties. Only those molecules with acceptable potency, physical and ADMET properties can be advanced through lead optimization.
-
-\subsection{Lead Optimization}
-
-At this stage, medicinal chemists conduct extensive Structure-Activity Relationships (SARs) \citep{328} or use other methods \citep{661,475} to improve potency and selectivity, as well as physicochemical and drug-like properties. The optimized molecules are advanced to animal models and preliminary toxicology. They are scrutinised for potency, selectivity, bioavailability, safety, and massive productivity at a low price.
-
-\subsection{Clinical Trials}
-
-Immediately after lead optimization, the data on the successful candidates will then be submitted to the appropriate health authorities to get permission to conduct clinical investigations.
-
-Compounds enter clinical trial at phase 1, which is focused on safety, tolerability and bioavailability rather than efficacy. The drug is administered to a small number of healthy volunteers.
-
-Phase 2 clinical trials are focused on determining the efficacy of the drug in several hundred patients. These trials may be performed globally and give information on efficacy and allow for a further estimation of safety in a larger population.
-
-Assuming satisfactory results from phase 2 studies, the drug will enter phase 3 clinical trials, which are in essence larger versions of the previous trials intended to answer specific questions with respect to efficacy. The trials would routinely involve several thousand patients and compare with drugs that are currently in use for the treatment of the disease. The results from these trials essentially form the basis of the risk/benefit analysis that will be submitted to the regulatory authorities.
-
-Phase 4 clinical trials are often referred to as post-marketing studies and are performed after the medicine has been approved. These trials give a greater idea of long-term risk and benefit. The trials may involve many thousands of patients and go on for many years. Such trials may assist in indicating other uses for the medicine.
+The first task is to identify a biological target, which is any system that can potentially be modulated by a molecule to produce a beneficial effect. A target is generally a protein.
 
 \section{Protein-Ligand Docking}
 
@@ -113,27 +51,15 @@ Phase 4 clinical trials are often referred to as post-marketing studies and are 
 
 As the X-ray crystallography and Nuclear Magnetic Resonance (NMR) technologies evolve, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. This rapid evolution catalyzes the development of various algorithms and tools for structure-based drug discovery via protein-ligand docking.
 
-Protein-ligand docking is a method which predicts the preferred conformation (i.e. position and orientation) of a small ligand when bound to a macro protein to form a stable complex (Figure \ref{Background:Docking}, reprinted from Wikipedia). It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, Pi-Pi interactions, and the like. Free energy measures the degree of freedom of the ligand to ``escape'' from the protein, so the lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover.
+Protein-ligand docking is a method which predicts the preferred conformation (i.e. position and orientation) of a small ligand when bound to a macro protein to form a stable complex. It also predicts the binding affinity in terms of free energy, which is basically the overall effect of various chemical forces involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, Pi-Pi interactions, and the like. Free energy measures the degree of freedom of the ligand to ``escape'' from the protein, so the lower the free energy, the higher the binding affinity. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover.
 
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Background/Docking.jpg}
-\caption{A ligand docked against a protein. Source: Wikipedia.}
-\label{Background:Docking}
-\end{figure}
-
-Docking programs typically consist of two basic components, a scoring function to predict the binding affinity, and an algorithm to explore the conformational space of the ligand and the protein \citep{493}. So far, dozens of scoring functions \citep{579,566,570,775,575,576,578,580,581,774} and dozens of algorithms \citep{595,564,594,602,603,604,605,606,607,781,614,615,617} have been developed. Some methods have been comprehensively evaluated and compared \citep{637,771,556}.
+Docking programs typically consist of two basic components, a scoring function to predict the binding affinity, and an algorithm to explore the conformational space of the ligand and the protein \citep{493}.
+% list examples
+Some methods have been comprehensively evaluated and compared \citep{637,771,556}.
 
 Among the many docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It's free and open source. It runs faster than its predecessor AutoDock 4 \citep{596} by an order of magnitude when benchmarking on virtual screening for HIV protease inhibitors \citep{556}. Released in 2010, Vina has been cited by 117 other publications and adopted by many researchers \citep{609}. Indeed, it is intensively used in our research projects too.
 
-Virtual screening is simply a massive version of docking (Figure \ref{Background:VirtualScreening} \citep{470}). It docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation. Statistical frameworks and assessments have been established for evaluation and result selection \citep{489,491,769,583,582}. In reality, docking and virtual screening have successful applications for drug discovery \citep{495,498,751,503,752,757,506,738,761,763,766,736}.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Background/VirtualScreening.png}
-\caption{Virtual screening to identify compounds that bind to the target. Figure reprinted from \citep{470}.}
-\label{Background:VirtualScreening}
-\end{figure}
+Virtual screening is simply a massive version of docking. It docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation. Statistical frameworks and assessments have been established for evaluation and result selection \citep{489,491,769,583,582}. In reality, docking and virtual screening have successful applications for drug discovery \citep{495,498,751,503,752,757,506,738,761,763,766,736}.
 
 There are quite a lot data sources and databases for virtual screening, such as PDB \citep{540,537}, ZINC \citep{532,1178}, PDBbind \citep{529,530}, and PubChem \citep{526}. In addition to raw data, there are library analysis \citep{521}, benchmark datasets \citep{534,533,535,536}, and data manipulation tools \citep{542}. Some tools exploit massive parallelism in the form of either cluster computing or cloud computing \citep{557,773,560,782}.
 
@@ -152,77 +78,11 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %Drug-Drug Interactions \citep{338}
 %LogP \citep{341,342,343,344,345,346,742}
 %pKa \citep{347,348}
-
-It was estimated that 40\% to 60\% of new chemical entity (NCE) failures can be attributed to poor ADMET (absorption, distribution, metabolism, excretion, and toxicity) profiles. Accurately predicting ADMET properties is getting more and more attention nowadays.
-
-PKKB (PharmacoKinetics Knowledge Base) \citep{1133} provides the most extensive collection of freely available data for ADMET properties up to date. PKKB integrates 31,412 experimental or predicted values for 1,685 drug and drug-like molecules from published literature with available experimental ADMET properties including partition coefficient (logP), solubility (logS), intestinal absorption, Caco-2 permeability, human bioavailability, plasma protein binding, volume of distribution, distribution of blood, half-time, excretion, urinary excretion, clearance, toxicity, etc. (Table \ref{PKKB:Properties})
-
-\begin{table}
-\centering
-\begin{tabular*}
-{\linewidth}
-{@{\extracolsep{\fill}}rlr}
-\toprule
-No. & Property & Measurements \\
-\midrule
-\multicolumn{3}{l}{\textbf{Molecular properties}}\\
-1 & Molecular weight & 1,684 \\
-2 & logP (experiment) & 1,019 \\
-3 & logP (predicted, AB/logP v2.0) & 1,625 \\
-4 & Pka & 638 \\
-5 & logD (pH=7,predicted) & 1,625 \\
-6 & Solubility (experiment) & 800 \\
-7 & logS (predicted, ACD/Labs)(pH=7) & 1,614 \\
-8 & logSw (predicted, AB/LogSw 2.0) & 1,625 \\
-9 & Sw (mg/ml) (predicted, ACD/Labs) & 1,613 \\
-10 & Sw (predicted) & 1,625 \\
-11 & No. of hbond donors & 1,625 \\
-12 & No. of hbond acceptors & 1,625 \\
-13 & No. of rotatable bonds & 1,625 \\
-14 & TPSA & 1,625 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Pharmacology}}\\
-15 & Status & 1,372 \\
-16 & Administration & 501 \\
-17 & Pharmacology & 1,543 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Absorption}}\\
-18 & Intestinal absorption & 679 \\
-19 & Absorption (description) & 699 \\
-20 & Caco-2 & 64 \\
-21 & Human bioavailability & 992 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Distribution}}\\
-22 & Plasma protein binding & 1058 \\
-23 & Volume of distribution(Vd) & 646 \\
-24 & D-blood & 66 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Metabolism}}\\
-25 & Metabolism & 1,111 \\
-26 & Half-time & 1,116 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Excretion}}\\
-27 & Excretion & 855 \\
-28 & Urinary excretion & 281 \\
-29 & Clearance & 410 \\
-\noalign{\smallskip\smallskip}
-\multicolumn{3}{l}{\textbf{Toxicity}}\\
-30 & Toxicity & 873 \\
-31 & LD50 (rat) & 219 \\
-32 & LD50 (mouse) & 243 \\
-\bottomrule
-\end{tabular*}
-\caption{PKKB property measurements. Data obtained from PKKB web site.}
-\label{PKKB:Properties}
-\end{table}
-
-Raw data from literature was first converted into proper formats and then integrated into a central ADMET database. A web site is provided for interactive search of ADMET properties given either structure or descriptive text of compounds of interest.
-
-Thanks to the availability of reliable experimental data and basic structural information from PKKB enables, \textit{in silico} ADMET modeling becomes viable. One can predict ADMET properties from chemical structures for a huge number of compounds without actually synthesizing or assaying them.
+%PKKB \citep{1133}
 
 \section{Ligand Synthesis}
 
-%Ligand design programs, review \citep{367,472,474,}
+%Ligand design programs, review \citep{367,472,474}
 %MORPH \citep{365}
 %GANDI \citep{369}
 %GARLig \citep{471}
