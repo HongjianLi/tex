@@ -69,7 +69,16 @@ Functionally speaking, ligands synthesized by our mutation and crossover operato
 Computationally speaking, igrow relies on idock as its external docking engine and thus has to invoke idock every generation after synthesizing new ligands, repeatedly reading identical receptor and creating identical grid maps. Such duplications prolong program execution time quite a bit as the number of generations increases in genetic algorithm.
 
 We propose idock 3.0 to address the above two problems. On one hand, inspired by AutoClickChem \citep{1051}, we plan to incorporate click chemistry into igrow to make sure every step of synthesis does follow some kind of well-known chemical reaction. On the other hand, we plan to integrate igrow into idock. In addition to receptor and grid map caching, another advantage of integration is the capability of partial docking, which refers to holding the main body of a ligand rigid while merely rotating newly added fragments. By cutting off the positional and orientational degrees of freedom, obviously partial docking can dramatically reduce search space dimensionality and therefore dramatically speed up the selection operator, which is the bottleneck of igrow.
+
+idock 3.0 will also feature dual ligand docking (Figure \ref{igrow:2IQHDualLigands}), which refers to docking two ligands simultaneously inside one single large binding site. This feature is especially handy when the binding site is so large that it can accommodate more than one ligand. The existing scoring function shall be revised, properly merging individual scores into an overall one. The existing search algorithm shall also be revised to avoid possible steric clashes.
  
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{igrow/2IQHDualLigands.png}
+\caption{Dual ligand docking.}
+\label{igrow:2IQHDualLigands}
+\end{figure}
+
 As for software availability, igrow is free and open source under Apache License 2.0. It is written in C++ and available at https://github.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Use cases and API documentations are also provided.
 
 \chapterend
