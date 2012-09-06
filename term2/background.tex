@@ -15,6 +15,8 @@
 %BDT \citep{396}
 %FunFOLD \citep{747}
 %MetaPocket 2.0 \citep{866}
+%FTSite \citep{998}
+%MDpocket \citep{1009}
 %Comprison \citep{390}
 
 Drug discovery is an industrial process. In 2008 and 2009, only 21 and 24 new drugs respectively were approved for marketing in the United States \citep{716}, well below the level required to secure the future of the pharmaceutical industry, which has been struggling with decreasing approval numbers for more than a decade. This is particularly remarkable because the level of investment in pharmaceutical research and development (R\&D) has dramatically increased by 12\% on average year-on-year since 1970 and at present to about US\$50 billion per year (Figure \ref{fig:NewDrugApprovals} \citep{686}).
@@ -34,6 +36,7 @@ The first task is to identify a biological target, which is any system that can 
 
 %docking programs comparison \citep{452,637}, survey \citep{493}
 %survey \citep{454}
+%Structure-based drug design review, w/ tools and databsaes \citep{922}
 %Fleksy \citep{591}
 %FITTED \citep{602}
 %EADock \citep{606}
@@ -68,6 +71,7 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %Efficiency index \citep{335,336,337}
 %RF-Score \citep{564}, SFCscore \citep{581}
 %LISA \citep{775}
+%NNScore 2.0 \citep{977}
 
 %Local search optimizer
 %MiniMuDS \citep{776}
@@ -84,14 +88,17 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %cases
 %HIV-1 Reverse Transcriptase \citep{843}
 
+%LigPlot+ \citep{951}
+
 \section{Ligand Synthesis}
 
-%Ligand design programs, review \citep{367,472,474}
+%Ligand design programs, review \citep{367,472,474,1006}
 %MORPH \citep{365}
 %GANDI \citep{369}
 %GARLig \citep{471}
 %LigBuilder 2 \citep{749}
 %AutoT&T \citep{780}
+%CrystalDock \citep{954}
 
 Virtual screening tries to discover promising ligands out of existing databases. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, virtual screening will fail if the database contains no promising ligands at all.
 
@@ -110,7 +117,7 @@ Among the many ligand synthesis programs, AutoGrow \citep{466} is a representati
 
 \section{General-Purpose Computing on GPU}
 
-The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779}, chemical similarity calculation \citep{726,881}, molecular dynamics \citep{373,374}, molecular shape comparison \citep{491}.
+The modern GPU has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. The past 5 years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include binding site mapping \citep{722}, protein database search \citep{189}, compound selection \citep{750}, molecular docking \citep{723,652,779,969}, chemical similarity calculation \citep{726,881}, molecular dynamics \citep{373,374}, molecular shape comparison \citep{491}, data clustering \citep{932}, visualization \citep{986}.
 
 As of June 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
 
@@ -189,7 +196,7 @@ Portability is the distinct feature that distinguishes OpenCL from CUDA. Multipl
 Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software and website count \citep{260}
 Ten Simple Rules for Providing a Scientific Web Resource \citep{677}
 DOCK Blaster \citep{557}
-iScreen \citep{899}
+iScreen \citep{899} compacted web server for TCM docking and followed by customized de novo drug design.
 ViewDock TDW \citep{559}, ChemDoodle version
 %CPORT \citep{650}, requires certificate registration
 
