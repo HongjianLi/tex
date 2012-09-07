@@ -17,6 +17,8 @@
 %MetaPocket 2.0 \citep{866}
 %FTSite \citep{998}
 %MDpocket \citep{1009}
+%FTMap \citep{1013}
+%LEAP-FS \citep{1027}
 %Comprison \citep{390}
 
 Drug discovery is an industrial process. In 2008 and 2009, only 21 and 24 new drugs respectively were approved for marketing in the United States \citep{716}, well below the level required to secure the future of the pharmaceutical industry, which has been struggling with decreasing approval numbers for more than a decade. This is particularly remarkable because the level of investment in pharmaceutical research and development (R\&D) has dramatically increased by 12\% on average year-on-year since 1970 and at present to about US\$50 billion per year (Figure \ref{fig:NewDrugApprovals} \citep{686}).
@@ -31,6 +33,7 @@ Drug discovery is an industrial process. In 2008 and 2009, only 21 and 24 new dr
 Drug discovery is an expensive and long-term business. A recent study in 2010 estimated that it takes US\$1.778 billion over a period of 13.5 years to develop a new drug.
 
 The first task is to identify a biological target, which is any system that can potentially be modulated by a molecule to produce a beneficial effect. A target is generally a protein.
+%What makes a good drug target \citep{1032}
 
 \section{Protein-Ligand Docking}
 
@@ -77,7 +80,7 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %MiniMuDS \citep{776}
 
 %Drug properties
-%Solubility \citep{353}
+%Solubility \citep{353,1040}
 %ADMET \citep{325,326,327,328,329,330,331,332}
 %Others \citep{333,334}
 %Drug-Drug Interactions \citep{338}
@@ -89,6 +92,7 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %HIV-1 Reverse Transcriptase \citep{843}
 
 %LigPlot+ \citep{951}
+%Selective Flexibility of Side-Chain Residues Improves VEGFR-2 Docking Score using AutoDock Vina \citep{1084}
 
 \section{Ligand Synthesis}
 
@@ -99,6 +103,8 @@ There are quite a lot data sources and databases for virtual screening, such as 
 %LigBuilder 2 \citep{749}
 %AutoT&T \citep{780}
 %CrystalDock \citep{954}
+%3D-QSAR \citep{1036}
+%AutoClickChem \citep{1051}
 
 Virtual screening tries to discover promising ligands out of existing databases. Apparently the diversity of its outcome is limited to the diversity of the database. In other words, virtual screening will fail if the database contains no promising ligands at all.
 
@@ -111,7 +117,7 @@ In contrast, computational synthesis produces novel molecular structures with de
 \label{igrow:LigandDesign}
 \end{figure}
 
-A computational synthesis program is confronted with a virtually infinite search space. The number of chemically feasible, drug-like molecules has been estimated to be in the order of 10\textsuperscript{60} to 10\textsuperscript{100} \citep{363}, from which the most promising candidates have to be selected and synthesized. Rather than the systematic construction and evaluation of each individual compound, computational synthesis programs rely on the principle of local optimization, which does not necessarily lead to the globally optimal solution. In fact, most software implementations \citep{466,749} are non-deterministic, and rely on some kind of stochastic structure optimization.
+A computational synthesis program is confronted with a virtually infinite search space. The number of chemically feasible, drug-like molecules has been estimated to be in the order of 10\textsuperscript{60} to 10\textsuperscript{100} \citep{1104}, from which the most promising candidates have to be selected and synthesized. Rather than the systematic construction and evaluation of each individual compound, computational synthesis programs rely on the principle of local optimization, which does not necessarily lead to the globally optimal solution. In fact, most software implementations \citep{466,749} are non-deterministic, and rely on some kind of stochastic structure optimization.
 
 Among the many ligand synthesis programs, AutoGrow \citep{466} is a representative one which implements genetic algorithm to create a population of ligands. It is the only ligand synthesis program that uses Vina \citep{595} as external docking engine for the selection operator. It is free and open source. However, it requires messy configurations and its performance is hardly considered to be amazing. Hence its user base is rather limited and has been cited by merely 8 other publications since it was born in 2009. It is used as a baseline tool in our research projects.
 
@@ -197,7 +203,10 @@ Ten Simple Rules for Getting Ahead as a Computational Biologist. Make software a
 Ten Simple Rules for Providing a Scientific Web Resource \citep{677}
 DOCK Blaster \citep{557}
 iScreen \citep{899} compacted web server for TCM docking and followed by customized de novo drug design.
+FORECASTER \citep{1012}
 ViewDock TDW \citep{559}, ChemDoodle version
 %CPORT \citep{650}, requires certificate registration
+%iCanPlot \citep{1028}
+%Performance evaluation of hybrid programming patterns for large CPU/GPU heterogeneous clusters \citep{1172}
 
 \chapterend
