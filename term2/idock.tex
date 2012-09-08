@@ -18,6 +18,8 @@ For functional improvements, idock evaluates intra-ligand free energy in additio
 
 For I/O improvements, idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size. This new functionality turns out to be extremely handy given an enormous amount of ligands to dock. idock implements our own lightweight thread-safe progress bar, reporting progress every 10\% Monte Carlo tasks per ligand. idock evaluates and outputs verbose information to docked PDBQT files (Figure \ref{idock:OutputPDBQT}), including total free energy, total inter-ligand free energy, total intra-ligand free energy, hydrogen bonds, and per-atom inter-ligand free energy, facilitating interaction hotspot determination and indirectly helping \textit{in silico} synthesis of potent ligands. idock writes docking summary, sorted in the ascending order of predicted free energy of docked ligands, in CSV (Comma-Separated Vector) format for subsequent analysis easily (Figure \ref{idock:OutputCSV}).
 
+%improve potency by altering certain chemical moieties of known ⁄ endogenous ligands while retaining those critical for binding
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{idock/OutputPDBQT.png}
