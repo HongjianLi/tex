@@ -42,7 +42,7 @@ For other miscellaneous but helpful improvements, idock allows users to specify 
 
 idock x86\_64 v1.5 and AutoDock Vina x86 v1.1.2 were evaluated on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand. The benchmarks include comparison of their redocking performance in terms of predicted conformations, and comparison of their virtual screening performance in terms of execution time, memory usage, predicted free energy, and predicted conformations.
 
-\subsection{Benchmark of Redocking Performance}
+\subsection{Benchmark of Redocking}
 
 Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used two databases, PDBbind v2011 \citep{529,530} and CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki).
 
@@ -121,7 +121,7 @@ Figure \ref{idock:FECorrelation} shows the free energy correlation of idock and 
 \label{idock:FECorrelation}
 \end{figure*}
 
-\subsection{Benchmark of Virtual Screening Performance}
+\subsection{Benchmark of Virtual Screening}
 
 We collected 12 receptors from the PDB (Protein Data Bank) database \cite{540,537}, and 1000 ligands with a molecular weight of 200-300g/mol2, 1000 ligands with a molecular weight of 300-400g/mol2, and 1000 ligands with a molecular weight of 400-500g/mol2 from the clean subset of the ZINC database \cite{532,1178}. The 3000 ligands (Figure \ref{idock:MWT-NRB}) were docked against the 12 receptors by Vina and idock. Since Vina can dock only one ligand in each run, a bash script containing 1000 lines was executed instead, with each line being an execution of Vina to dock one individual ligand. The GNU Time utility was used as profiler.
 
@@ -211,5 +211,8 @@ Ratio & 12.48 & 13.02 & 13.32 & 13.66 & 16.76 & 16.89\\
 \section{Availability}
 
 idock is free and open source under Apache License 2.0. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris, 12 docking examples, and a doxygen file for generating API documentations are available at https://github.com/HongjianLi/idock.
+
+%Selective Flexibility of Side-Chain Residues Improves VEGFR-2 Docking Score using AutoDock Vina \citep{1084}
+%Efficiency index \citep{335,336,337}
 
 \chapterend
