@@ -36,7 +36,14 @@ We aim to develop a novel and concise computational framework for modern drug di
 
 \section{Contributions}
 
-Table \ref{Introduction:Progress} summaries our major contributions and roughly estimates the current progress of our projects and case studies.
+Figure \ref{Introduction:Contributions} and table \ref{Introduction:Progress} summarize our major contributions and roughly estimate the current progress of our projects and case studies.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Introduction/Contributions.jpg}
+\caption{An overall picture of our contributions.}
+\label{Background:Contributions}
+\end{figure}
 
 \begin{table}
 \centering
@@ -51,7 +58,7 @@ We have implemented built-in support for massive docking, a novel thread pool fo
 \textbf{idock 1.6: Protein-Ligand Docking} (submitted to a journal). & 100\% \\
 We have implemented support for a total of 29 chemical elements, support for gzip/bzip2 compression, automatic docking recovery, detection of putative hydrogen bonds, per-atom binding affinity output, neat progress report, and many other great features. & \\
 \textbf{istar: SaaS Platform} (submitted to a journal) & 100\% \\
-We have developed istar as a SaaS (Software as a Service) platform for running programs online, and ported idock and igrep onto istar, feating ligand filtering and previewing, progress monitoring in real time, innovative two-phase docking, slice-level parallelism, supplier list output, and GPU acceleration. & \\
+We have developed istar as a SaaS (Software as a Service) platform for running programs online, and ported idock and igrep onto istar, featuring ligand filtering and previewing, progress monitoring in real time, innovative two-phase docking, slice-level parallelism, supplier list output, and GPU acceleration. & \\
 \textbf{idock 2.0: GPU Acceleration} & 5\% \\
 We have surveyed the latest GPU architectures codenamed GK104 and Tahiti, and observed thread behaviors and identified program hotspots of idock 1.x. We propose to support both CUDA and OpenCL in idock 2.0. & \\
 \textbf{idock 3.0: Ligand Synthesis} & 30\% \\
