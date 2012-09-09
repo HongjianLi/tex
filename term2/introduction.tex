@@ -2,7 +2,7 @@
 
 Drug (Figure \ref{Background:Drugs}) discovery is an expensive and long-term business. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Background/Drugs.jpg}
 \caption{Drugs.}
@@ -11,11 +11,28 @@ Drug (Figure \ref{Background:Drugs}) discovery is an expensive and long-term bus
 
 \section{Motivation}
 
-Drug discovery via biological and chemical means alone are both cost- and time-inefficient. It highlights the need for cheaper and faster method, and computer-aided drug discovery thus comes into the scene. Over recent decades, researchers have developed countless tools and utilities, and more are constantly emerging. We surveyed those tools and utilities, and summarized the major problems they suffer from. Generally speaking, they 1) are only commercially available, selling at a price that most small enterprises cannot afford, 2) are proprietary and closed source, making it difficult for others to learn inner implementation techniques and locate possible bugs, 3) conform to different standards and adopt different input/output formats because they are developed by separate teams, resulting in valuable information loss during format conversion, 4) require intensive and tedious configurations and lack fruitful documentations, an obstacle for others to set up the program properly, 5) run very slowly, using old-fashioned, blocking, single-threaded, low-performance programming style, or even worse, 6) are declared dead immediately upon their initial release due to zero maintenance afterward. Therefore, we are going to address these shortcomings.
+Drug discovery via biological and chemical means alone are both cost- and time-inefficient. It highlights the need for cheaper and faster method, and computer-aided drug discovery thus comes into the scene. Over recent decades, researchers have developed countless tools and utilities, and more are constantly emerging. We surveyed those tools and utilities, and summarized the major problems they suffer from. Generally speaking, they
+\begin{enumerate}
+\item are commercially available, selling at a price that most small enterprises and academic researchers cannot afford,
+\item are proprietary and closed source, making it difficult for others to learn inner implementation techniques and locate possible bugs,
+\item conform to different standards and adopt different input/output formats, resulting in loss of valuable information during format conversion,
+\item require intensive and tedious configurations and lack fruitful documentations, a great obstacle for others to set up the program properly,
+\item run very slowly, using old-fashioned, blocking, single-threaded, low-performance programming style,
+\item are declared dead immediately upon their initial release due to zero maintenance afterward.
+\end{enumerate}
+Therefore, we are going to address these shortcomings.
 
 \section{Objective}
 
-We aim to develop a computational framework for structure-based drug discovery, simulating the early phases of modern drug discovery pipeline. Our framework shall 1) be free to the general public so that everyone can obtain it, 2) be released under permissive open source licenses so that everyone can study it, 3) be designed in conformance to a uniform and well-accepted standard so that everyone can use it with ease, 4) provide a SaaS (Software as a Service) platform with a HTML5- and CSS3-powered responsive web site so that everyone can play with it, 5) utilize multithreading and GPU acceleration to boost program execution so that everyone can really benefit from it, 6) track bugs, absorb user feedback, and release new versions regularly so that everyone can keep using it.
+We aim to develop a novel and concise computational framework for modern drug discovery. Our framework shall
+\begin{enumerate}
+\item be free to the general public so that everyone can obtain it,
+\item be released under permissive open source licenses so that everyone can study it,
+\item be designed in conformance to a uniform and well-accepted standard so that everyone can use it with ease,
+\item provide a SaaS (Software as a Service) platform with a HTML5- and CSS3-powered responsive web site so that everyone can play with it,
+\item utilize multithreading and GPU acceleration to boost performance so that everyone can really benefit from it,
+\item track bugs, absorb user feedback, and release new versions regularly so that everyone can keep using it.
+\end{enumerate}
 
 \section{Progress}
 
