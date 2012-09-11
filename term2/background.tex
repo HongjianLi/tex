@@ -20,7 +20,25 @@ Protein-ligand docking is an essential ingredient of computer-aided drug discove
 \label{fig:HIV}
 \end{figure}
 
-Protein-ligand docking is a method which predicts the preferred conformation and binding affinity of a small ligand when bound to a macro protein to form a stable complex. A conformation refers to a vector of position, orientation, and torsions if any (Figure ). A binding affinity suggests how well the interactions formed between the ligand and the protein. Empirically speaking, it is the overall effect of various chemical interactions involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, stack interactions, and the like. Virtual screening can be regarded as a massive version of docking. Instead of docking one single ligand, it docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+Protein-ligand docking is a method which predicts the preferred conformation and binding affinity of a small ligand when bound to a macro protein to form a stable complex. A conformation refers to a vector of position, orientation, and torsions if any (Figure \ref{background:DegreeOfFreedom}). A binding affinity suggests how well the interactions formed between the ligand and the protein. Empirically speaking, it is the overall effect of various chemical interactions involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, stack interactions, and the like. Virtual screening can be regarded as a massive version of docking. Instead of docking one single ligand, it docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+
+\begin{figure*}
+\centering
+\subfloat[Positional degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{background/PositionalDOF.png}
+}
+\subfloat[Orientational degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{background/OrientationalDOF.png}
+}
+\subfloat[Torsional degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{background/TorsionalDOF.png}
+}
+\caption{Positional, orientational and torsional degree of freedom.}
+\label{background:DegreeOfFreedom}
+\end{figure*}
 
 Treating a docking program as a black box, its input includes the 3D structures of a protein and a ligand, while its output includes several predicted conformations and their predicted binding affinity. For the protein input, thanks to the rapid evolution of X-ray crystallography and NMR (Nuclear Magnetic Resonance) technologies, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. As of 4 Sep 2012, there are 84,381 structures in PDB. For the ligand input, the ZINC database \citep{532,1178} contains over 21 million purchasable compounds in ready-to-dock, 3D formats. The TCM@Taiwan database \citep{528} is the world's largest and most comprehensive free down small molecular database on traditional Chinese medicine. In addition, the PubChem database \citep{526} is a public repository for biological properties of small molecules, containing biological test results for more than 700,000 compounds. The PDBbind database \citep{529,530} and the CSAR NRC HiQ Set \citep{857,960} are collections of binding affinities for protein-ligand complexes with known 3D structures. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data. For the output, PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951} can be used to visualize docked conformations and plot putative interaction charts. AuPosSOM \citep{598} can be used to cluster docked conformations. BEDROC \citep{490} and SLR \citep{489} can be used as statistical metrics for docking method evaluation.
 
