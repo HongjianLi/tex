@@ -37,7 +37,7 @@ Figure \ref{idock:Flowchart} shows the overall flowchart of idock. During initia
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{idock/Flowchart.pdf}
+\includegraphics[width=\linewidth]{idock/Flowchart.png}
 \caption{Flowchart of idock.}
 \label{idock:Flowchart}
 \end{figure}
@@ -121,7 +121,7 @@ In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{idock/GridMap.png}
+\includegraphics[width=\linewidth]{idock/GridMap.png}
 \caption{Grid map for fast evaluation of $e_{inter}$. Probe atoms are shown in purple.}
 \label{idock:GridMap}
 \end{figure}
@@ -155,7 +155,7 @@ idock automatically detects and deactivates inactive torsions, which are present
 
 \begin{figure}
 \centering
-\includegraphics[width=0.5\linewidth]{idock/InactiveTorsions.png}
+\includegraphics[width=\linewidth]{idock/InactiveTorsions.png}
 \caption{Example of inactive torsions highlighted in yellow. Nonpolar hydrogens are not shown for clarity.}
 \label{idock:InactiveTorsions}
 \end{figure}
@@ -166,7 +166,14 @@ idock enables automatic recovery. In case the process gets killed accidentally a
 
 \subsection{Gzip/Bzip2 Compression}
 
-idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size. This new functionality turns out to be extremely handy given an enormous amount of ligands to dock.
+idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size (Figure \ref{idock:Compression}). This new functionality turns out to be extremely handy given an enormous amount of ligands to dock.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{idock/Compression.png}
+\caption{Gzip/Bzip2 compression/decompression support since idock 1.5.}
+\label{idock:Compression}
+\end{figure}
 
 \subsection{Verbose Output}
 
@@ -190,8 +197,14 @@ idock writes docking summary, sorted in the ascending order of predicted free en
 
 \subsection{Chemical Elements}
 
-It supports as many as 29 chemical elements including rare ones like As (arsenic) and Sr (strontium), covering the majority of ligand atom types.
-%Periodic Table of Elements
+Vina supports 16 chemical elements, while idock supports as many as 25 chemical elements including rare ones like As (arsenic) and Sr (strontium), covering the majority of ligand atom types (Figure \ref{idock:ChemicalElements}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{idock/ChemicalElements.png}
+\caption{Chemical elements supported by Vina (in red box) and idock (in red or blue box).}
+\label{idock:ChemicalElements}
+\end{figure}
 
 \subsection{Full Reproducibility}
 
