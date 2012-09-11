@@ -189,14 +189,15 @@ idock writes docking summary, sorted in the ascending order of predicted free en
 \subsection{Chemical Elements}
 
 It supports as many as 29 chemical elements including rare ones like As (arsenic) and Sr (strontium), covering the majority of ligand atom types.
+%Periodic Table of Elements
 
 \subsection{Full Reproducibility}
 
-We emphasize full reproducibility, which has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible \citep{965}. idock supports Linux, Windows, Mac OS X, FreeBSD and Solaris, making it instantly ready on the 5 mainstream operating systems. Accompanying with idock are 13 docking examples, a doxygen file for generating API documentations, and 2 graphical tutorials.
+We emphasize full reproducibility, which has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible \citep{965}. idock supports Linux, Windows, Mac OS X, FreeBSD and Solaris, making it instantly ready on the 5 mainstream operating systems. Accompanying with idock are 13 ready-to-use docking examples, a doxygen file for generating API documentations, and 2 graphical tutorials.
 
 \subsection{Miscellaneous Enhancements}
 
-idock implements our own lightweight thread-safe progress bar, reporting progress every 10\% Monte Carlo tasks per ligand. idock better supports rvalue references and move semantics in C++11 to boost performance. idock flattens the tree-like recursive data structure of ligand as used in AutoDock Vina into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand. Last the not the least, idock fixes several minor bugs. Refer to the change log for detail.
+idock implements our own lightweight thread-safe progress bar, reporting progress every 10\% Monte Carlo tasks per ligand. idock better supports rvalue references and move semantics in C++11 to boost performance. idock flattens the tree-like recursive data structure of ligand as used in AutoDock Vina into simple linear array structure to ensure a high data cache hit rate and easy coding. idock accelerates the assignment of atom types by making use of residue information for receptor and branch information for ligand.
 
 \section{Benchmarks and Results}
 
@@ -299,7 +300,7 @@ We collected 12 receptors from the PDB (Protein Data Bank) database \cite{540,53
 \label{idock:MWT-NRB}
 \end{figure*}
 
-Table \ref{idock:ExecutionTime} compares the CPU time and elapsed time of both programs. The execution time varies a lot from receptor to receptor and from molecular weight set to set, so does the ratio. Basically idock outperforms Vina by at least 8.69 and at most 37.51.
+Table \ref{idock:ExecutionTime} compares the CPU time and elapsed time of both programs. The execution time varies a lot from receptor to receptor and from molecular weight set to set, so does the ratio. Conclusively idock outperforms Vina by at least 8.69 and at most 37.51 times.
 
 \begin{table}
 \centering
@@ -357,12 +358,11 @@ idock &  0.85 &  0.22 &  1.38 &  0.36 &  2.58 &  0.67\\
 
 \section{Discussion and Conclusion}
 
-We have developed idock for protein-ligand docking. Both Vina and idock adopt the same scoring function. They differ in their C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++11 techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
+We have developed idock for protein-ligand docking, inheriting from Vina the accurate scoring function and the efficient optimization algorithm, and meanwhile introducing a fruitful of innovations in C++ implementations, data structures, numerical models, and Monte Carlo algorithms. idock implements its own thread pool to maintain a high CPU utilization throughout the entire screening procedure. It intensively utilizes modern C++11 techniques, particularly Rvalue references to avoid frequent reallocations of array data. It flattens Vina's tree-like recursive data structures into simple array structures to guarantee a high data cache hit rate. It automatically detects and deactivates inactive torsions and thus reduces the dimension of variables to optimize.
 
-In Vina's official forum, there are tremendous requests for the support for virtual screening. The development of idock perfectly complements Vina. idock has built-in support for virtual screening. It searches for ligands in a user-specified folder and docks them one by one. It reuses threads and grid maps across multiple ligands. idock has very similar input and output arguments as Vina, so it should be quite easy for existing Vina users to transit to idock. Vina supports flexible receptor docking by rotating flexible side-chains. However, we have not yet implemented flexible receptor docking into idock at the moment, so users who need this kind of docking should refer to Vina.
+In Vina's official forum, there are tremendous requests for the support for virtual screening. The development of idock perfectly complements Vina. idock has built-in support for virtual screening. It searches for ligands in a user-specified folder and docks them one by one. It reuses threads and grid maps across multiple ligands. idock has very similar input and output arguments as Vina, so it should be quite easy for existing Vina users to transit to idock. Vina supports flexible receptor docking by rotating flexible side-chains. However, at the moment we have not yet implemented flexible receptor docking, which has been proved helpful in some cases \citep{1084}, so users who need this kind of docking should refer to Vina.
 
-%Selective Flexibility of Side-Chain Residues Improves VEGFR-2 Docking Score using AutoDock Vina \citep{1084}
-%Efficiency index \citep{335,336,337}
+We performed large-scale protein-ligand docking with idock, and noticed that the high-rank ligands were usually those comparatively rigid ligands with few active torsions. Such phenomenon can be explained by equation \eqref{eqn:FlexibilityPenalty}. Fewer active torsions imply smaller denominator, or larger value in other words. We are considering replacing free energy by some ligand efficiency indexes \citep{335,336,337} for ranking.
 
 \section{Availability}
 
