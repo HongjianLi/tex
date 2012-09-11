@@ -1,5 +1,6 @@
 \chapter{Real-Life Drug Discovery Case Studies}
 
+%We are collaborating with biochemists and pharmacists on several high-impact drug discovery projects.
 Our colleagues and collaborators as biochemists and pharmacists are working on several high-impact drug discovery projects. They have done lots of biological assays and succeeded in identifying pharmaceutical and druggable protein targets for certain diseases. They outsource the docking tasks to us, hoping to discover potent and selective inhibitors of certain proteins.
 
 \section{Influenza A Virus H1N1}
@@ -73,10 +74,7 @@ Furthermore, together with Prof. Joseph Jao-Yiu Sung's team, they used genome-wi
 
 They therefore attempted to seek for CCRK inhibitors for the treatment of cancers and drug resistances. Due to the absence of CCRK structure in the PDB database \citep{540,537}, they utilized Chem3D from the then CambridgeSoft company, now acquired by PerkinElmer, Inc., to build a homologous model of CCRK from CDK2 based on the fact that they share 35\% sequence identity, and performed protein-ligand docking of TCMs (Traditional Chinese Medicines) with AutoDock 3.0.5 and Cerius2 LigandFit, and identified 22-O-Angeloyl theasapogenol B as a potential potent inhibitor that could fit into the deep and narrow active site of their homologous model of CCRK. It was, nevertheless, very difficult to purify the compound from puerh tea.
 
-We are collaborating with Prof. Lin's team on identifying inhibitors of CCRK. We used as receptor the CCRK homologous model (Figure \ref{Case:CCRKHomologousModel}) built by Dr. William Cheung based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We concentrated on repurposing approved drugs because they display preferable ADMET properties and thus save us from dispensable clinical trials. Using idock 1.5 with a fine grid map granularity of 0.08\AA\ and 512 Monte Carlo tasks, we screened 1,715 FDA-approved drugs via DrugBank and 3,176 FDA-approved drugs via DSSTOX. Figures \ref{Case:1HCL-ZINC03830332} and \ref{Case:1HCL-ZINC03831625} depict the interactions between the CCRK homologous model and two high-rank ligands.
-
-%Developing a drug de novo is a laborious and costly endeavor. Thus, the repositioning of already approved drugs for the treatment of new diseases is promising and valuable. \citep{944} we review computational methods to represent and align binding sites. We review available tools, present success stories and discuss limits of the approach.
-%\citep{1023}
+We are collaborating with Prof. Lin's team on identifying inhibitors of CCRK. We used as receptor the CCRK homologous model (Figure \ref{Case:CCRKHomologousModel}) built by Dr. William Cheung based on the CDK2 template with PDB ID 1HCL \citep{1142} using SWISS-MODEL, a fully automated protein structure homology-modeling server accessible via the ExPASy web server. We concentrated on repurposing approved drugs \citep{944,1023} because developing a drug \textit{de novo} is a laborious and costly endeavor. Using idock 1.5 with a fine grid map granularity of 0.08\AA\ and 512 Monte Carlo tasks, we screened 1,715 FDA-approved drugs via DrugBank and 3,176 FDA-approved drugs via DSSTOX. Figures \ref{Case:1HCL-ZINC03830332} and \ref{Case:1HCL-ZINC03831625} depict the interactions between the CCRK homologous model and two high-rank ligands.
 
 \begin{figure}
 \centering
