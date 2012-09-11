@@ -1,10 +1,10 @@
 \chapter{Our Proposal}
 
-Our ultimate goal is to build a comprehensive and universal framework for computer-aided drug discovery, incorporating capabilities of binding site identification, protein-ligand docking, ligand synthesis, ADMET properties prediction, and so on. We shall utilize such framework to address practical drug discovery problems in real life. The development of idock and istar is just the start. There is a long way to go to fully implement all the capabilities and apply them to case studies.
+We propose two major future versions of idock.
 
 \section{idock 2.0: GPU Acceleration}
 
-Even though idock 1.5 outperformed AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed and was capable of docking 16 ligands per minute on a high performance machine, it is estimated to require about 312 days, i.e. nearly a year, to dock the complete 7,220,835 drug-like ligands from ZINC against a certain protein, not to mention multiple proteins. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
+Even though idock 1.6 outperformed AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed and was capable of docking 16 ligands per minute on a high performance machine, it is estimated to require about 312 days, i.e. nearly a year, to dock the complete 7,220,835 drug-like ligands from ZINC against a certain protein, not to mention multiple proteins. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
 
 We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and observe thread behaviors. Figure \ref{idock:ThreadProfile} shows the thread profile of idock. Thread 1060 was the main thread, while the other four were workers threads spawned by the main thread and maintained by our novel thread pool. During program startup, the main thread parsed command line arguments, initialized necessary variables, parsed receptor file, and created a thread pool to precalculate the scoring function in parallel. Afterwards, it entered a loop, docking ligands one by one. The four workers threads actually carried out the creation of grid maps as well as running Monte Carlo tasks in parallel, fully occupying all the four CPU cores. Upon completion of docking a ligand, program control was returned to the main thread to write conformations to file and read the next ligand from file. From the figure, it can be concluded that the worker threads acquire most of the CPU computing resources and the precalculation of grid maps and the execution of Monte Carlo tasks constitute the program hotspots, albeit the CPU-intensive Monte Carlo tasks and the I/O-intensive file reading/writing can be possibly pipelined according to our in-house trial.
 
@@ -36,7 +36,7 @@ A GK104 SMX has 64KB of on-chip memory that can be configured as 48KB of shared 
 
 Maximizing instruction throughput can be achieved by using single precision floating point instead of double precision and using intrinsics instead of regular functions. This strategy suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe to utilize single precision operations as well as native intrinsics in idock 2.0.
 
-%Screen entire PDB wtih istar
+By then with idock 2.0 at hand, we shall be able to perform proteomic-scale docking for the entire solved proteins in PDB \citep{540,537} and warehouse the huge results into a public database. We believe the community will definitely benefit from such a database with pre-docked information instantly available.
 
 \section{idock 3.0: Ligand Synthesis}
 
