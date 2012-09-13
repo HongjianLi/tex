@@ -95,14 +95,12 @@ d_{ij} / (-0.7) & \text{if } -0.7 < d_{ij} < 0\\
 \label{eqn:dij}
 d_{ij} = r_{ij} - (R_{t_i} + R_{t_j})
 \end{equation}
-
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{idock/Distance.png}
 \caption{Relationship between surface distance $d_{ij}$ and interatomic distance $r_{ij}$.}
 \label{idock:Distance}
 \end{figure}
-
 The conformation-dependent part can be seen as the sum of intermolecular and intramolecular contributions. Hence equation \eqref{eqn:e} can be rewritten into equation \eqref{eqn:inter-intra} where $e_{inter}$ is the summation over all the heavy atoms between receptor and ligand, and $e_{intra}$ is the summation over all the 1-4 ligand heavy atoms that are separated by three consecutive covalent bonds and can move relative to each other.
 \begin{equation}
 \label{eqn:inter-intra}
@@ -141,17 +139,17 @@ Though both programs share similar optimization algorithms, their implementation
 
 \subsection{Native Support of Virtual Screening}
 
-Vina is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatly parsing the same receptor and creating the same grid maps, and thus degrading performance.
+Vina is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatly parsing the same receptor and creating the same grid maps, thus degrading performance.
 
-idock supports virtual screening in a native manner. It reuses receptor and grid maps. Given a very large amount of ligands to dock, idock indirectly supports 2-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
+idock supports virtual screening in a native manner. It docks a directory of ligands instead of a single ligand, and reuses receptor and grid maps (Note the loop in the flowchart). Given a very large amount of ligands to dock, idock indirectly supports two-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
 
 \subsection{Novel Thread Pool}
 
-idock implements our novel thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. The thread pool parallelizes the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
+idock implements our novel thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure (Figure ). During program initialization, idock creates a thread pool of $N$ threads, where $N$ is the number of CPU cores automatically detected, or can be specified by user via a command line argument. When idle, the threads will sleep. When tasks arrive, the threads compete for tasks. The thread that completes its current task will automatically fetch a pending one to execute until all are done. Synchronization is implemented to ensure full completeness of the tasks and availability of results. The task here is an abstract concept in programming sense and can be instantiated either as scoring function task, grid map task or Monte Carlo task. To be exact, the thread pool in fact parallelizes the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
 
 \subsection{Detection of Inactive Torsions}
 
-idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{idock:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the dimension of variables to optimize in the local optimization step, leading to easier finding of local minimums.
+idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{idock:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the torsional degrees of freedom to optimize in the local optimization step, leading to easier finding of local minimums.
 
 \begin{figure}
 \centering
@@ -162,22 +160,22 @@ idock automatically detects and deactivates inactive torsions, which are present
 
 \subsection{Automatic Recovery}
 
-idock enables automatic recovery. In case the process gets killed accidentally and restarted some time later, it not only resumes docking from the previous stopping point, skipping ligands that were already docked in a previous run, but also detects and reports possible file content errors, ensuring all the output ligands are well written.
+idock enables automatic recovery. While docking is in progress, in case the process gets killed accidentally and restarted some time later, idock not only resumes docking from the previous stopping point, skipping ligands that were already docked in a previous run, but also detects and reports possible file content errors, ensuring all the output ligands are well written.
 
 \subsection{Gzip/Bzip2 Compression}
 
-idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size (Figure \ref{idock:Compression}). This new functionality turns out to be extremely handy given an enormous amount of ligands to dock.
+idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size using gzip (Figure \ref{idock:Compression}). This new functionality turns out to be extremely handy given an enormous amount of ligands to dock.
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{idock/Compression.png}
-\caption{Gzip/Bzip2 compression/decompression support since idock 1.5.}
+\caption{Gzip/Bzip2 compression/decompression support.}
 \label{idock:Compression}
 \end{figure}
 
 \subsection{Verbose Output}
 
-idock evaluates and outputs verbose information to docked PDBQT files (Figure \ref{idock:OutputPDBQT}), including total free energy, total inter-ligand free energy, total intra-ligand free energy, hydrogen bonds, and per-atom inter-ligand free energy, facilitating interaction hotspot determination and indirectly helping \textit{in silico} synthesis of potent ligands, improving potency by altering certain chemical moieties of known ⁄ endogenous ligands while retaining those critical for binding.
+idock outputs verbose information to docked PDBQT files, including total free energy normalized by torsional degree of freedom (Equation \eqref{eqn:FlexibilityPenalty}), total free energy, inter-ligand free energy, intra-ligand free energy, putative hydrogen bonds, and per-atom inter-ligand free energy (Figure \ref{idock:OutputPDBQT}). The normalized total free energy is used in ligand ranking. The output of total free energy, inter-ligand free energy and intra-ligand free energy provides an alternative ranking option using derived efficiency indexes \citep{335,336,337}. The per-atom inter-ligand free energy facilitates interaction hotspot determination, and helps improving potency by altering certain chemical moieties while retaining those critical for binding.
 
 \begin{figure}
 \centering
@@ -186,7 +184,7 @@ idock evaluates and outputs verbose information to docked PDBQT files (Figure \r
 \label{idock:OutputPDBQT}
 \end{figure}
 
-idock writes docking summary, sorted in the ascending order of predicted free energy of docked ligands, in CSV (Comma-Separated Vector) format for subsequent analysis easily (Figure \ref{idock:OutputCSV}).
+idock extracts the above records from docked PDBQT files, sorts them in the ascending order of normalized total free energy, and writes them to a CSV (Comma-Separated Vector) file for subsequent analysis (Figure \ref{idock:OutputCSV}). Users can derive their own efficiency indexes \citep{335,336,337} and re-sort the records for their particular applications.
 
 \begin{figure}
 \centering
@@ -197,18 +195,18 @@ idock writes docking summary, sorted in the ascending order of predicted free en
 
 \subsection{Chemical Elements}
 
-Vina supports 16 chemical elements, while idock supports as many as 25 chemical elements including rare ones like As (arsenic) and Sr (strontium), covering the majority of ligand atom types (Figure \ref{idock:ChemicalElements}).
+Vina supports 16 chemical elements. idock adds 9 additional elements and thus supports as many as 25 chemical elements including rare ones like As (arsenic) and Sr (strontium), covering the majority of ligand atom types (Figure \ref{idock:ChemicalElements}).
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{idock/ChemicalElements.png}
-\caption{Chemical elements supported by Vina (in red box) and idock (in red or blue box).}
+\caption{Chemical elements in red box are supported by both Vina and idock. Chemical elements in blue box are additional chemical elements solely supported by idock.}
 \label{idock:ChemicalElements}
 \end{figure}
 
 \subsection{Full Reproducibility}
 
-We emphasize full reproducibility, which has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible \citep{965}. idock supports Linux, Windows, Mac OS X, FreeBSD and Solaris, making it instantly ready on the 5 mainstream operating systems. Accompanying with idock are 13 ready-to-use docking examples, a doxygen file for generating API documentations, and 2 graphical tutorials.
+We emphasize full reproducibility, which has the potential to serve as a minimum standard for judging scientific claims when full independent replication of a study is not possible \citep{965}. idock supports Linux, Windows, Mac OS X, FreeBSD and Solaris, making it instantly ready on the 5 mainstream operating systems. Accompanying with idock are 13 ready-to-use docking examples, a doxygen file for generating API documentations, and 2 graphical tutorials on how to prepare a receptor in PDBQT format with MGLTools \citep{596} and on how to define a binding site with MGLTools \citep{596}, Chimera \citep{1219} or PyMOL \citep{1221}.
 
 \subsection{Miscellaneous Enhancements}
 
