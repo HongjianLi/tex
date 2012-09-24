@@ -62,6 +62,22 @@ We then developed igrow as a successor of SmartGrow. Instead of porting existing
 \label{igrow:Flowchart}
 \end{figure}
 
+Figure \ref{igrow:Mutation} illustrates the mutation operator in igrow. In the first generation, an elite ligand and a fragment are randomly selected and merged by removing a hydrogen atom from both sides and forming a new rotatable bond to connect both sides, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The mutation operator may produce novel ligands that display a higher binding affinity but may also suffer from a excessive molecular weight. Figure \ref{igrow:ProteinElitistsComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the presence of additional fragments, the elite ligands may occupy significantly different binding conformations.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{igrow/Mutation.png}
+\caption{igrow mutation operator.}
+\label{igrow:Mutation}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{igrow/ProteinElitistsComplex.png}
+\caption{Synthesized elitists by igrow in complex with their target protein.}
+\label{igrow:ProteinElitistsComplex}
+\end{figure}
+
 Compared to AutoGrow and SmartGrow, our igrow features a plenty of advantageous innovations. From the perspective of input and output, igrow supports direct PDBQT manipulation, i.e. it digests ligands and fragments in PDBQT format and outputs ligands also in PDBQT format, saving the effort of frequently calling external python script for format conversion. igrow utilizes flyweight programming pattern to cache fragments and dynamic pointer vector to cache and sort ligands. From the perspective of CPU and memory utilization, igrow inherits from idock the highly efficient thread pool to parallelize the two genetic operators and maintain a high CPU utilization. igrow estimates the capacity of every vector structure and intensively utilizes right value reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. From the perspective of functional improvements, in mutation, igrow supports halogen replacement as a new type of synthesis in addition to hydrogen replacement, and in crossover, igrow supports branch replacement, and in selection, igrow refreshes ligands with docked coordinates, potentially enabling partial docking as detailed below. igrow traces the sources of synthesized ligands and outputs statistics in CSV format for users to easily analyze how new ligands are synthesized from initial elite ligands and fragments. igrow allows users to specify ranges of several chemical properties, including molecular weight, number of atoms, number of heavy atoms, number of rotatable bonds, number of hydrogen bond donors and number of hydrogen bond acceptors, as validators for newly synthesized ligands. igrow is designed in a flexible way that it reserves room for adaptation to new molecular constraints. Instead of simply depending on the number of generations as a stopping criterion, igrow allows users to specify the number of validation failures as a more reasonable stopping criterion.
 
 Clearly, there are two major problems with our current design. Problem one is the chemical infeasibility of ligands synthesized. This is a functional problem. Problem two is the high cost of invoking external idock in every generation. This is a computational problem.
