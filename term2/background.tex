@@ -75,13 +75,13 @@ Up to date, several SaaS platforms for protein-ligand docking or ligand synthesi
 
 The modern GPU (Graphics Processing Unit) has evolved from a fixed-function graphics pipeline to a programmable parallel processor with extremely high computational throughput and tremendous memory bandwidth at an affordable price. Performance evaluation of hybrid programming patterns for large CPU/GPU heterogeneous clusters has been carried out \citep{1035}. The past five years have seen a fruitful of algorithms for computer-aided drug discovery being ported to the GPU and gaining orders of magnitude of speedup over single threaded CPU counterparts. To name a few, such GPU-accelerated applications include FTMap \citep{722} for binding site mapping, CUDASW++2.0 \citep{189} for protein database search, the leader and the spread algorithms \citep{750} for compound selection, PIPER \citep{723}, PLANTS \citep{779} and parallelized AutoDock \citep{696} for molecular docking, SIML \citep{726} and Tanimoto matrix calculation \citep{881} for chemical similarity calculation, OpenMM \citep{373} and MD-GPU \citep{374} for molecular dynamics, PAPER \citep{491} for molecular shape comparison, CAMPAIGN \citep{932} for data clustering, and visualization \citep{986}.
 
-As of September 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
+As of October 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" with its full implementation codenamed ``GK104", while AMD's latest GPU architecture is codenamed ``Southern Islands" with its full implementation codenamed ``Tahiti".
 
 \subsection{NVIDIA GK104 and CUDA}
 
 From the hardware perspective, the GK104-based GeForce GTX 680 GPU features 3.09 TFLOPS single-precision computing power and 128 GFLOPS double-precision computing power, 2GB GDDR5 memory with a bandwidth of 192GB/s, and a TDP (Thermal Design Power) of 195W.
 
-Figure \ref{GPU:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GTX 680, which consists of 4 GPCs (Graphics Processing Clusters), each having a dedicated raster engine and 2 SMX (next-generation Streaming Multiprocessors) units. With a total of 8 SMX units, the GeForce GTX 680 has 1536 CUDA Cores.
+Figure \ref{GPU:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GTX 680, which consists of 4 GPCs (Graphics Processing Clusters), each having a dedicated raster engine and 2 SMX (next-generation Streaming Multiprocessors) units. With a total of 8 SMX units, the GeForce GTX 680 has 1536 CUDA cores.
 
 \begin{figure}
 \centering
@@ -125,7 +125,7 @@ Figure \ref{GPU:RadeonHD7970BlockDiagram} shows the block diagram of Radeon HD 7
 \label{GPU:RadeonHD7970BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of a GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB of LDS (Local Data Share), and 16KB of L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
+Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB of LDS (Local Data Share), and 16KB of L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
 
 \begin{figure}
 \centering
