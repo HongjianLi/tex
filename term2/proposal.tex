@@ -53,7 +53,7 @@ In 2011, inspired by AutoGrow, we developed SmartGrow, addressing several proble
 
 However, we wrote SmartGrow in a hurry and did not follow a formal software engineering approach. Later on when we conducted a benchmark on SmartGrow, we discovered a great many of exceptional bugs that were rather hard to track due to the messy code structure and lack of comments. Regretfully, we decided to abandon our buggy SmartGrow.
 
-We then developed igrow as a successor of SmartGrow. Instead of porting existing code from SmartGrow and fixing bugs line by line, we rewrote igrow from scratch in a systematic manner. We borrowed several great ideas from idock, and deliberately designed igrow in the way that the output of idock directly feeds igrow as its input. Figure \ref{igrow:Flowchart} shows the flowchart of our current implementation of igrow. During initialization, igrow parses the initial elite ligands predicted by idock in a previous run, and scans a user-specified folder for fragments. Likewise in idock, igrow also creates a novel thread pool in order to parallelize the mutation and crossover operators and reuse threads throughout the entire synthesis procedure. Then igrow enters a loop, and utilizes genetic algorithm to iteratively synthesize novel ligands in parallel by either mutation or crossover, and invoke idock externally to predict free energy and select elite ligands by sorting the predicted free energy asendingly. So far we have implemented the initialization part as well as the selection and mutation operators. The crossover operator is yet to implement.
+We then developed igrow as a successor of SmartGrow. Instead of porting existing code from SmartGrow and fixing bugs line by line, we rewrote igrow from scratch in a systematic manner. We borrowed several great ideas from idock, and deliberately designed igrow in the way that the output of idock directly feeds igrow as its input. Figure \ref{igrow:Flowchart} shows the flowchart of our current implementation of igrow. During initialization, igrow parses the initial elite ligands predicted by idock in a previous run, and scans a user-specified folder for fragments. Likewise in idock, igrow also creates a novel thread pool in order to parallelize the mutation and crossover operators and reuse threads throughout the entire synthesis procedure. Then igrow enters a loop, and utilizes genetic algorithm to iteratively synthesize novel ligands in parallel by either mutation or crossover, and invoke idock externally to predict free energy and select elite ligands by sorting the predicted free energy asendingly. So far we have completed the program, and are now evaluating it.
 
 \begin{figure}
 \centering
@@ -62,7 +62,7 @@ We then developed igrow as a successor of SmartGrow. Instead of porting existing
 \label{igrow:Flowchart}
 \end{figure}
 
-Figure \ref{igrow:Mutation} illustrates the mutation operator in igrow. In the first generation, an elite ligand and a fragment are randomly selected and merged by removing a hydrogen atom from both sides and forming a new rotatable bond to connect both sides, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The mutation operator may produce novel ligands that display a higher binding affinity but may also suffer from a excessive molecular weight. Figure \ref{igrow:ProteinElitistsComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the presence of additional fragments, the elite ligands may occupy significantly different binding conformations.
+Figure \ref{igrow:Mutation} illustrates the mutation operator in igrow. In the first generation, an elite ligand and a fragment are randomly selected and merged by removing a hydrogen atom from both sides and forming a new rotatable bond to connect both sides, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The mutation operator may produce novel ligands that display a higher binding affinity but may also suffer from a excessive molecular weight. Figure \ref{igrow:MutationComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the presence of additional fragments, the elite ligands may occupy significantly different binding conformations.
 
 \begin{figure}
 \centering
@@ -73,9 +73,25 @@ Figure \ref{igrow:Mutation} illustrates the mutation operator in igrow. In the f
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{igrow/ProteinElitistsComplex.png}
-\caption{Synthesized elitists by igrow in complex with their target protein.}
-\label{igrow:ProteinElitistsComplex}
+\includegraphics[width=\textwidth]{igrow/MutationComplex.png}
+\caption{Synthesized elitists by mutation in complex with their target protein.}
+\label{igrow:MutationComplex}
+\end{figure}
+
+Figure \ref{igrow:Crossover} illustrates the crossover operator in igrow. In the first generation, two elite ligands are randomly selected and parts of them are exchanged, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The crossover operator may produce novel ligands that display either a higher binding affinity, or a lower binding affinity. Figure \ref{igrow:CrossoverComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the exchange of molecular parts, the elite ligands may occupy significantly different binding conformations.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{igrow/Crossover.png}
+\caption{igrow crossover operator.}
+\label{igrow:Crossover}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{igrow/CrossoverComplex.png}
+\caption{Synthesized elitists by crossover in complex with their target protein.}
+\label{igrow:CrossoverComplex}
 \end{figure}
 
 Compared to AutoGrow and SmartGrow, our igrow features a plenty of advantageous innovations. From the perspective of input and output, igrow supports direct PDBQT manipulation, i.e. it digests ligands and fragments in PDBQT format and outputs ligands also in PDBQT format, saving the effort of frequently calling external python script for format conversion. igrow utilizes flyweight programming pattern to cache fragments and dynamic pointer vector to cache and sort ligands. From the perspective of CPU and memory utilization, igrow inherits from idock the highly efficient thread pool to parallelize the two genetic operators and maintain a high CPU utilization. igrow estimates the capacity of every vector structure and intensively utilizes right value reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. From the perspective of functional improvements, in mutation, igrow supports halogen replacement as a new type of synthesis in addition to hydrogen replacement, and in crossover, igrow supports branch replacement, and in selection, igrow refreshes ligands with docked coordinates, potentially enabling partial docking as detailed below. igrow traces the sources of synthesized ligands and outputs statistics in CSV format for users to easily analyze how new ligands are synthesized from initial elite ligands and fragments. igrow allows users to specify ranges of several chemical properties, including molecular weight, number of atoms, number of heavy atoms, number of rotatable bonds, number of hydrogen bond donors and number of hydrogen bond acceptors, as validators for newly synthesized ligands. igrow is designed in a flexible way that it reserves room for adaptation to new molecular constraints. Instead of simply depending on the number of generations as a stopping criterion, igrow allows users to specify the number of validation failures as a more reasonable stopping criterion.
