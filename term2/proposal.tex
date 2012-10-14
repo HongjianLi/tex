@@ -117,18 +117,31 @@ As for software availability, igrow is free and open source under Apache License
 
 \section{Local Search Pruning}
 
-\section{Dual-Ligand Docking}
+A local minimum must be a stationary point with zero derivative in continuous functions according to Fermat’s theorem. It is thus possible to prune hopeless local search heuristically.
 
-We propose dual ligand docking, which refers to docking two ligands simultaneously inside one single large binding site, in order to achieve synergistic effect of two inhibitors. This feature is especially handy when the binding site is so large that it can accommodate more than one ligand. An example is the tail-loop binding site of influenza A nucleoprotein (Figure \ref{igrow:2IQHDualLigands}).
+Figure \ref{idock:FunctionLandscape}, reprinted from \citep{1193}, shows a continuous function in 1D space for illustration purpose. Points A, B, and D are with negative derivatives while C is with a positive derivative. Because the scoring function of idock is continuous, there must be a stationary point with zero derivative between A and C according to the intermediate value theorem, but not guaranteed between A and B.
 
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{igrow/2IQHDualLigands.png}
-\caption{Dual ligand docking.}
-\label{igrow:2IQHDualLigands}
+\includegraphics[width=\textwidth]{idock/FunctionLandscape.png}
+\caption{Illustration of a 1D function landscape. Points A, B, and D are with negative derivative and point C is with positive derivative. Figure reprinted from \citep{1193}}
+\label{idock:FunctionLandscape}
 \end{figure}
 
-The existing scoring function shall be revised, properly merging individual scores into an overall one. The existing search algorithm shall also be revised to avoid possible steric clashes.
+We propose a heuristic to check whether a starting point should undergo local search by testing it against the history of visited points. If there is a neighboring point with entirely opposite signs of derivatives in every dimension, the starting point should undergo local search.
+
+\section{Dual-Ligand Docking}
+
+We propose dual ligand docking, which refers to docking two ligands simultaneously inside one single large binding site, in order to achieve synergistic effect of two inhibitors. This feature is especially handy when the binding site is so large that it can accommodate more than one ligand. An example is the tail-loop binding site of influenza A nucleoprotein (Figure \ref{idock:2IQHDualLigands}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{idock/2IQHDualLigands.png}
+\caption{Dual ligand docking.}
+\label{idock:2IQHDualLigands}
+\end{figure}
+
+The existing scoring function shall be revised to properly merge individual scores into an overall one. The existing search algorithm shall also be revised to avoid possible steric clashes between the two ligands.
 
 \section{Hierarchical Ligand Clustering}
 
