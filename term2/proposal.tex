@@ -4,6 +4,8 @@ We propose two major future versions of idock, plus a few other methodological e
 
 \section{idock 2.0: GPU Acceleration}
 
+\subsection{Motivation}
+
 Even though idock 1.6 outperformed AutoDock Vina \citep{595} by at least 8.69 times and at most 37.51 times in terms of docking speed and was capable of docking 16 ligands per minute on a high performance machine, it is estimated to require about 312 days, i.e. nearly a year, to dock the complete 7,220,835 drug-like ligands from ZINC against a certain protein, not to mention multiple proteins. Virtual screening remains a time-consuming practice. Faster implementations are highly desired.
 
 We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and observe thread behaviors. Figure \ref{idock:ThreadProfile} shows the thread profile of idock. Thread 1060 was the main thread, while the other four were workers threads spawned by the main thread and maintained by our novel thread pool. During program startup, the main thread parsed command line arguments, initialized necessary variables, parsed receptor file, and created a thread pool to precalculate the scoring function in parallel. Afterwards, it entered a loop, docking ligands one by one. The four workers threads actually carried out the creation of grid maps as well as running Monte Carlo tasks in parallel, fully occupying all the four CPU cores. Upon completion of docking a ligand, program control was returned to the main thread to write conformations to file and read the next ligand from file. From the figure, it can be concluded that the worker threads acquire most of the CPU computing resources and the precalculation of grid maps and the execution of Monte Carlo tasks constitute the program hotspots, albeit the CPU-intensive Monte Carlo tasks and the I/O-intensive file reading/writing can be possibly pipelined according to our in-house trial.
@@ -16,6 +18,8 @@ We used AMD CodeAnalyst Performance Analyzer v3.6 to detect program hotspots and
 \end{figure}
 
 We propose idock 2.0, incorporating GPU acceleration with both CUDA and OpenCL, harnessing the tremendous computational power and memory bandwidth offered by modern GPUs nowadays. In \citeyear{1138} we developed a fast CUDA implementation of agrep algorithm for approximate nucleotide sequence matching \citep{1138}, demonstrating our expertise in CUDA programming. Meanwhile, we are eagerly learning OpenCL. We will first work on a CUDA version, followed by an OpenCL version.
+
+\subsection{Strategies}
 
 Performance optimization revolves around three basic strategies: 1) maximizing parallel execution, 2) maximizing memory bandwidth, and 3) maximizing instruction throughput.
 
@@ -36,6 +40,8 @@ A GK104 SMX has 64KB of on-chip memory that can be configured as 48KB of shared 
 
 Maximizing instruction throughput can be achieved by using single precision floating point instead of double precision and using intrinsics instead of regular functions. This strategy suggests trading precision for speed as long as the final result is not affected. Since most contemporary GPU chips supply with an astonishingly high throughput for single precision operations at TFLOP level but a relatively low throughput for double precision operations, we prefer the former. In order to make sure the precision loss must not affect the end result too much, we did an in-house trial, demoting double to float in idock, only to find that the predicted conformation and free energy were exactly identical as in the case of double precision given the same random seed for initializing the pseudo random number generator. This experiment concluded idock to be insensitive to precision switch and it is thus safe to utilize single precision operations as well as native intrinsics in idock 2.0.
 
+\subsection{Future Work}
+
 By then with idock 2.0 at hand, we shall be able to do two things that are not possible at present. One one hand, we shall fine tune the parameters of our BFGS local optimizer in order to increase the redocking success rate. Those parameters include the early stopping criterion, the step size in line search, the apprximation of inverse Hessian matrix, and so on. On the other hand, we shall perform proteomic-scale docking for the entire solved proteins in PDB \citep{540,537} and warehouse the huge results into a public database. We believe the community will definitely benefit from such a database with pre-docked information instantly available.
 
 \section{idock 3.0: \textit{De Novo} Ligand Design}
@@ -46,6 +52,8 @@ In 2011, inspired by AutoGrow, we developed SmartGrow, addressing several proble
 
 However, we wrote SmartGrow in a hurry and did not follow a formal software engineering approach. Later on when we conducted a benchmark on SmartGrow, we discovered a great many of exceptional bugs that were rather hard to track due to the messy code structure and lack of comments. Regretfully, we decided to abandon our buggy SmartGrow.
 
+\subsection{Methods and Novel Operators}
+
 We then developed igrow as a successor of SmartGrow. Instead of porting existing code from SmartGrow and fixing bugs line by line, we rewrote igrow from scratch in a systematic manner. We borrowed several great ideas from idock, and deliberately designed igrow in the way that the output of idock directly feeds igrow as its input. Figure \ref{igrow:Flowchart} shows the flowchart of our current implementation of igrow. During initialization, igrow parses the initial elite ligands predicted by idock in a previous run, and scans a user-specified folder for fragments. Likewise in idock, igrow also creates a novel thread pool in order to parallelize the mutation and crossover operators and reuse threads throughout the entire synthesis procedure. Then igrow enters a loop, and utilizes genetic algorithm to iteratively synthesize novel ligands in parallel by either mutation or crossover, and invoke idock externally to predict free energy and select elite ligands by sorting the predicted free energy asendingly. So far we have completed the program, and are now fixing bugs and evaluating it.
 
 \begin{figure}
@@ -55,7 +63,7 @@ We then developed igrow as a successor of SmartGrow. Instead of porting existing
 \label{igrow:Flowchart}
 \end{figure}
 
-Figure \ref{igrow:Addition} illustrates the addition operator in igrow. In the first generation, an elite ligand and a fragment are randomly selected and merged by removing a hydrogen atom from both sides and forming a new rotatable bond to connect both sides, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The addition operator may produce novel ligands that display a higher binding affinity but may also suffer from a excessive molecular weight. Figure \ref{igrow:AdditionComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the presence of additional fragments, the elite ligands may occupy significantly different binding conformations.
+Figure \ref{igrow:Addition} illustrates the addition operator in igrow. An elite ligand and a fragment are randomly selected and merged by removing a hydrogen atom from both sides and forming a new rotatable bond to connect both sides, thereby constructing an elite ligand. The addition operator may produce novel ligands that display a higher binding affinity but may also suffer from a larger molecular weight. Figure \ref{igrow:AdditionComplex} draws the three elitsts in complex with their target protein. Due to the presence of additional fragments, the elite ligands may occupy significantly different binding conformations.
 
 \begin{figure}
 \centering
@@ -71,7 +79,7 @@ Figure \ref{igrow:Addition} illustrates the addition operator in igrow. In the f
 \label{igrow:AdditionComplex}
 \end{figure}
 
-Figure \ref{igrow:Subtraction} illustrates the subtraction operator in igrow. An elite ligand and one of its rotatable bonds are randomly selected. The ligand is split into two by breaking the rotatable bond and substituting a hydrogen, thereby constructing a smaller ligand in the second generation. The subtraction operator may produce novel ligands that display a lower binding affinity but may also benefit from a small molecular weight.
+Figure \ref{igrow:Subtraction} illustrates the subtraction operator in igrow. An elite ligand and one of its rotatable bonds are randomly selected. The ligand is split into two by breaking the rotatable bond and substituting a hydrogen, thereby constructing a smaller ligand. The subtraction operator may produce novel ligands that display a lower binding affinity but may also benefit from a smaller molecular weight.
 
 \begin{figure}
 \centering
@@ -80,7 +88,7 @@ Figure \ref{igrow:Subtraction} illustrates the subtraction operator in igrow. An
 \label{igrow:Subtraction}
 \end{figure}
 
-Figure \ref{igrow:Crossover} illustrates the crossover operator in igrow. In the first generation, two elite ligands are randomly selected and parts of them are exchanged, thereby constructing an elite ligand in the second generation, which repeats the above steps until stopping criteria are satisfied. The crossover operator may produce novel ligands that display either a higher binding affinity, or a lower binding affinity. Figure \ref{igrow:CrossoverComplex} draws the three elitsts in complex with their target protein. It can be seen that due to the exchange of molecular parts, the elite ligands may occupy significantly different binding conformations.
+Figure \ref{igrow:Crossover} illustrates the crossover operator in igrow. Two elite ligands are randomly selected and parts of them are exchanged, thereby constructing an elite ligand. The crossover operator may produce novel ligands that display either a higher binding affinity or a lower binding affinity. Figure \ref{igrow:CrossoverComplex} draws the three elitsts in complex with their target protein. Due to the exchange of molecular moieties, the elite ligands may occupy significantly different binding conformations.
 
 \begin{figure}
 \centering
@@ -95,6 +103,8 @@ Figure \ref{igrow:Crossover} illustrates the crossover operator in igrow. In the
 \caption{Synthesized elitists by crossover in complex with their target protein.}
 \label{igrow:CrossoverComplex}
 \end{figure}
+
+\subsection{Discussion}
 
 Compared to AutoGrow and SmartGrow, our igrow features a plenty of advantageous innovations. From the perspective of input and output, igrow supports direct PDBQT manipulation, i.e. it digests ligands and fragments in PDBQT format and outputs ligands also in PDBQT format, saving the effort of frequently calling external python script for format conversion. igrow utilizes flyweight programming pattern to cache fragments and dynamic pointer vector to cache and sort ligands. From the perspective of CPU and memory utilization, igrow inherits from idock the highly efficient thread pool to parallelize the two genetic operators and maintain a high CPU utilization. igrow estimates the capacity of every vector structure and intensively utilizes right value reference, a new feature in the C++11 standard, to avoid frequent memory reallocation. From the perspective of functional improvements, in addition, igrow supports halogen replacement as a new type of synthesis in addition to hydrogen replacement, in subtraction, igrow supports spliting a ligand into two by breaking a rotatable bond and substituting a hydrogen, and in crossover, igrow supports branch replacement, and in selection, igrow refreshes ligands with docked coordinates, potentially enabling partial docking as detailed below. igrow traces the sources of synthesized ligands and outputs statistics in CSV format for users to easily analyze how new ligands are synthesized from initial elite ligands and fragments (Figure \ref{igrow:SyntheticTraceability}). igrow allows users to specify ranges of several chemical properties, including molecular weight, number of atoms, number of heavy atoms, number of rotatable bonds, number of hydrogen bond donors and number of hydrogen bond acceptors, as validators for newly synthesized ligands. igrow is designed in a flexible way that it reserves room for adaptation to new molecular constraints. Instead of simply depending on the number of generations as a stopping criterion, igrow allows users to specify the number of validation failures as a more reasonable stopping criterion.
 
@@ -113,13 +123,15 @@ Computationally speaking, igrow relies on idock as its external docking engine a
 
 We propose idock 3.0 to address the above two problems. On one hand, inspired by AutoClickChem \citep{1051}, we plan to incorporate click chemistry into igrow to make sure every step of synthesis does follow some kind of well-known chemical reaction. On the other hand, we plan to integrate igrow into idock. In addition to receptor and grid map caching, another advantage of integration is the capability of partial docking, which refers to holding the main body of a ligand rigid while merely rotating newly added fragments. By cutting off the positional and orientational degrees of freedom, obviously partial docking can dramatically reduce search space dimensionality and therefore dramatically speed up the selection operator, which is the bottleneck of igrow.
 
+\subsection{Software Availability}
+
 As for software availability, igrow is free and open source under Apache License 2.0. It is written in C++ and available at https://github.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Use cases and API documentations are also provided.
 
 \section{Local Search Pruning}
 
-A local minimum must be a stationary point with zero derivative in continuous functions according to Fermat’s theorem. It is thus possible to prune hopeless local search heuristically.
+Recall that idock uses Monte Carlo algorithm for global optimization and BFGS (Broyden-Fletcher-Goldfarb-Shanno) Quasi-Newton method \cite{786} for local optimization. It is possible to prune hopeless local search heuristically because a local minimum must be a stationary point with zero derivative in a continuous function, which is the case of the scoring function used in idock, according to Fermat’s theorem.
 
-Figure \ref{idock:FunctionLandscape}, reprinted from \citep{1193}, shows a continuous function in 1D space for illustration purpose. Points A, B, and D are with negative derivatives while C is with a positive derivative. Because the scoring function of idock is continuous, there must be a stationary point with zero derivative between A and C according to the intermediate value theorem, but not guaranteed between A and B.
+Figure \ref{idock:FunctionLandscape}, reprinted from \citep{1193}, shows a continuous function in 1D space for illustration purpose. Points A, B, and D are with negative derivatives while C is with a positive derivative. According to the intermediate value theorem, there must be a stationary point with zero derivative between A and C, but not guaranteed between A and B.
 
 \begin{figure}
 \centering
@@ -128,7 +140,10 @@ Figure \ref{idock:FunctionLandscape}, reprinted from \citep{1193}, shows a conti
 \label{idock:FunctionLandscape}
 \end{figure}
 
-We propose a heuristic to check whether a starting point should undergo local search by testing it against the history of visited points. If there is a neighboring point with entirely opposite signs of derivatives in every dimension, the starting point should undergo local search.
+We propose a heuristic to check whether a Monte Carlo starting point should undergo local search by testing it against the recent history of visited points. If there is a neighboring point with entirely opposite signs of derivatives in every dimension, the starting point should undergo local search, otherwise another random starting point should be picked, pruning a hopeless local search. Utilizing this heuristic, QuickVina \citep{1193} was reported to achieve an average speed-up of 8.34 times compared to AutoDock Vina \citep{595}.
+
+Neverthelss, this heuristic might cause false negative. Two points with derivatives of the same sign do not always suggest there are no stationary
+points in between. We shall work on this issue by plotting and throughly analyzing the landscape of the scoring function.
 
 \section{Dual-Ligand Docking}
 

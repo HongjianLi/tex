@@ -4,6 +4,8 @@ Having released and advertised idock, we kept receiving constant docking require
 
 Originally motivated by the desire to automate the docking process, we then developed istar, a SaaS (Software as a Service) platform. Later on we realized that istar could be a general SaaS platform for any program, therefore in addition to idock \citep{1153}, we also managed to host our tool igrep \citep{1138}. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by browsing our web site or by programming against our RESTful API.
 
+\section{Architecture}
+
 Figure \ref{istar:istar} shows the web site and the architecture of istar. Under typical circumstance, a user opens a browser and submits a job. The web server validates user input and saves it into database. Several workstations fetch jobs from the database and actually carry out the massive experiments. Upon completion, they send the user a completion notification email and write the result to a network file system, which is served as static content by the web server. The user again browses our web site to track progress and retrieve result.
 
 \begin{figure}
@@ -22,8 +24,6 @@ On the database side, we chose MongoDB, a scalable, high-performance, open sourc
 On the workstation side, we are maintaining a Linux workstation, equipped with Intel Xeon W3520 @ 2.66 GHz, 8GB DDR3 SDRAM and NVIDIA GeForce GTX 285 (1024 MB), and running a minimal version of Fedora 17 x64. Meanwhile, from our department we have exclusively reserved 4 Mac workstations, equipped with Intel Core i5 2400 @ 3.10GHz and 4GB DDR3 SDRAM, and running Mac OS X Lion 10.7.4 Build 11E53. We are collaborating with Mr. Frank Ng at ITSC on purchasing a HP s6500 4U Chassis server with 8 NVIDIA Tesla M2090 6GB.
 
 On the network file system side, we mounted a 2TB hard disk for shared use. All the 5 workstations can simultaneously access to the hard disk and perform file reading and writing. In principle, we will persist existing jobs and results until storage shortage.
-
-As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at https://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0.
 
 \section{idock on istar}
 
@@ -102,6 +102,8 @@ On the network file system side, we collected 12,171,187 clean ligands at pH 7 i
 
 On the workstation side, we developed a customized version of idock as a daemon in modern C++11, adding necessary code to iteratively fetch a pending job slice from MongoDB, reuse receptor and grid maps whenever possible, perform 2-phase docking, report progress to MongoDB, and send email notification upon job completion. We deliberately configured the grid map granularity to 0.1\AA\ in order to lower down memory consumption due to the 4GB RAM limit of the Mac workstations.
 
+\subsection{Novel Features}
+
 On one hand, the idock on istar features 2-phase docking (Figure \ref{istar:2PhaseDocking}), due to as many as 12 million ligands to screen. In phase 1, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few thousand candidate compounds. In phase 2, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce job execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
 
 \begin{figure}
@@ -129,6 +131,8 @@ On the other hand, the idock on istar features slice-level parallelism in phase 
 \caption{istar 2-level parallelism.}
 \label{istar:2LevelParallelism}
 \end{figure}
+
+\subsection{Future Work}
 
 Together with 2-phase docking as well as slice-level parallelism, using a Mac workstation alone, on average it takes a week to complete one single slice. Therefore, even though we thoroughly utilize all the 4 Mac workstations, it can take up to 5 months to complete one single job. Currently we have 3 jobs at hand, adding up to 15 months, and we believe more jobs are coming in the future. In order to boost job execution, we plan to port idock to GPU using both CUDA and OpenCL/WebCL in both C++ and JavaScript and deploy new workstations equipped with high-end GPU chips.
 
@@ -160,5 +164,9 @@ Figure \ref{istar:igrep} shows the web site of igrep. The workflow is more or le
 \end{figure}
 
 igrep is not our focus, but its successful hosting on istar tells us two things: istar can host any program and can utilize GPU acceleration.
+
+\section{Software Availability}
+
+As for software availability, similar to idock, istar is also hosted at GitHub for version control and freely available at https://github.com/HongjianLi/istar. Its source code is licensed under the Apache License 2.0 while its documentation is licensed under CC BY 3.0.
 
 \chapterend
