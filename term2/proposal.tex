@@ -142,8 +142,7 @@ Figure \ref{idock:FunctionLandscape}, reprinted from \citep{1193}, shows a conti
 
 We propose a heuristic to check whether a Monte Carlo starting point should undergo local search by testing it against the recent history of visited points. If there is a neighboring point with entirely opposite signs of derivatives in every dimension, the starting point should undergo local search, otherwise another random starting point should be picked, pruning a hopeless local search. Utilizing this heuristic, QuickVina \citep{1193} was reported to achieve an average speed-up of 8.34 times compared to AutoDock Vina \citep{595}.
 
-Neverthelss, this heuristic might cause false negative. Two points with derivatives of the same sign do not always suggest there are no stationary
-points in between. We shall work on this issue by plotting and throughly analyzing the landscape of the scoring function.
+Neverthelss, this heuristic might cause false negatives. Two points with derivatives of the same sign do not always imply there are no stationary points in between. We shall work on this issue by plotting and throughly analyzing the landscape of the scoring function.
 
 \section{Dual-Ligand Docking}
 
@@ -158,9 +157,20 @@ We propose dual ligand docking, which refers to docking two ligands simultaneous
 
 The existing scoring function shall be revised to properly merge individual scores into an overall one. The existing search algorithm shall also be revised to avoid possible steric clashes between the two ligands.
 
-\section{Hierarchical Ligand Clustering}
+\section{Ligand Clustering}
 
+On our istar platform, due to as many as 12 millions to dock, we propose hierarchical ligand clustering and thus estimating similar ligands as a whole rather than individually in order to avoid unnecessary docking and thus accelerate the entire docking procedure. Figure \ref{istar:LigandClustering} plots six ligands with the same skeleton.
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{istar/LigandClustering.png}
+\caption{Ligands sharing an identical skeleton can be clustered hierarchically.}
+\label{istar:LigandClustering}
+\end{figure}
+
+Clustering requires a measurement of similarity. Indeed, there are multiple ways to estimate the similarity between any two ligands. Most methods tend to account for molecular topology. Related work includes SIML \citep{726} and Tanimoto matrix calculation \citep{881} for chemical similarity calculation, PAPER \citep{491} for molecular shape comparison and CAMPAIGN \citep{932} for data clustering.
+
+We propose our own hierarhical ligand clustering method, and apply it to our large dataset. Probably we shall make use of GPU acceleration for this intensive clustering task.
 
 \section{ADMET Property Prediction}
 
@@ -245,6 +255,19 @@ We propose to make use of advanced machine learning techniques to train a regres
 \includegraphics[width=\linewidth]{PKKB/Regression.png}
 \caption{Our proposed regression model for PKKB.}
 \label{PKKB:Regression}
+\end{figure}
+
+\section{iview: HTML5 Visualizer}
+
+Currently the output of idock on istar include docked conformations in PDBQT format. Users have to download them and visualize them using their favorite molecular visualizer, such as PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951}.
+
+Inspired by iCanPlot, a visualizer of high-throughput omics data using interactive HTML5 canvas plotting \citep{1028}, we propose iview, an interactive HTML5 visualizer of protein-ligand complex (Figure \ref{istar:iview}). Users shall be able to view the protein-ligand docking results directly on istar. Typical functionalities include zooming, dragging, and plotting hydrogen bonds.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/iview.png}
+\caption{iview is an interactive HTML5 visualizer of protein-ligand complex.}
+\label{istar:iview}
 \end{figure}
 
 \chapterend
