@@ -121,7 +121,7 @@ istar supports filtering ligands by desired molecular properties and previewing 
 
 During web server startup, the master process loads the 9 molecular properties of the 12 million ligands into memory, and then forks worker processes, which awaits HTTP/SPDY connections. Once a user changes any of the 9 filtering conditions on the web site, a new HTTP query is initiated and sent to the web server. One of the worker processes accepts the query and forwards it to the master process through inter-process message passing. The master process performs an in-memory table scan and aggregates the number of ligands satisfying all the 9 filtering conditions. The ligand count is then signaled back to the query-invoking worker process and then forwarded to the user on the web site. Such an entire round trip costs approximately one second, rendering the feasibility of real-time ligand counting for users to estimate in advance how many ligands will be docked.
 
-Before docking a ligand, our idock daemon checks its 9 molecular properties against the 9 filtering conditions. If any of the conditions fails, the daemon simply skips the current ligand and proceeds with the next one by looking up the offset table and directly seek there.
+Before docking a ligand, our idock daemon checks its 9 molecular properties against the 9 filtering conditions. If any condition fails, the daemon simply skips the current ligand and proceeds with the next one by looking up the offset table and directly seeking there.
 
 \subsection*{\sffamily \large REAL-TIME PROGRESS}
 
@@ -147,7 +147,7 @@ Our idock daemon exploits fine-grained slice-level parallelism in phase 1 and co
 
 \section*{\sffamily \Large BENCHMARKS AND RESULTS}
 
-idock x86\_64 v1.6 and AutoDock Vina x86 v1.1.2 were evaluated and compared on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand. The benchmarks include comparison of their redocking performance in terms of predicted conformations and free energy, and comparison of their virtual screening performance in terms of execution time.
+idock x86\_64 v1.6 and AutoDock Vina x86 v1.1.2 were evaluated and compared on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand. The benchmarks include comparison of their redocking performance in terms of predicted conformations and binding affinity correlation, and comparison of their virtual screening performance in terms of execution time.
 
 \subsection*{\sffamily \large BENCHMARK OF REDOCKING}
 
@@ -157,7 +157,7 @@ Figure \ref{Redocking} visualizes the redocking results of four cases from the r
 
 Table \ref{SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the RMSD (Root Mean Square Deviation) values between the crystal and docked conformations. Given a redocking case, RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation, i.e. the one with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum RMSD value. The condition RMSD1 = RMSDm tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on CSAR NRC HiQ Set 24Sept2010 are consistently higher than PDBbind v2011, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation close enough to the crystal conformation as the first conformation for over half of the cases on both databases.
 
-Figure \ref{FECorrelation} shows the free energy correlation of idock and AutoDock Vina. On the CSAR NRC HiQ Set 24Sept2010 dataset, the Pearson correlations between experimental binding affinity and binding affinity predicted by AutoDock Vina, between experimental binding affinity and binding affinity predicted by idock, and between binding affinity predicted by AutoDock Vina and idock are 0.5998758, 0.5774972, and 0.9824049, respectively. Although both programs did well in conformation prediction, they failed to predict reliable binding affinity, a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinity predicted by both programs is very close to 1 because of their identical scoring function but slightly different approximation methods.
+Figure \ref{FECorrelation} shows the binding affinity correlation of idock and AutoDock Vina. On the CSAR NRC HiQ Set 24Sept2010 dataset, the Pearson correlations between experimental binding affinities and binding affinities predicted by AutoDock Vina, between experimental binding affinities and binding affinities predicted by idock, and between binding affinities predicted by AutoDock Vina and idock are 0.5998758, 0.5774972, and 0.9824049, respectively. Although both programs did well in conformation prediction, they failed to predict reliable binding affinity, a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinities predicted by both programs is very close to 1 because of their identical scoring function but slightly different approximation methods.
 
 \subsection*{\sffamily \large BENCHMARK OF VIRTUAL SCREENING}
 
@@ -235,7 +235,7 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 \end{figure}
 
 \begin{figure}
-\caption{\label{FECorrelation} Free energy correlation on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010. Along the diagonal from top left to bottom right are the histogram distributions of experimental binding affinities, binding affinities predicted by AutoDock Vina, and binding affinities predicted by idock.}
+\caption{\label{FECorrelation} Binding affinity correlation on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010. Along the diagonal from top left to bottom right are the histogram distributions of experimental binding affinities, binding affinities predicted by AutoDock Vina, and binding affinities predicted by idock.}
 \end{figure}
 
 \begin{figure}
