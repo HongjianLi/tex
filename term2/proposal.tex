@@ -127,6 +127,19 @@ We propose idock 3.0 to address the above two problems. On one hand, inspired by
 
 As for software availability, igrow is free and open source under Apache License 2.0. It is written in C++ and available at https://github.com/HongjianLi/igrow. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Use cases and API documentations are also provided.
 
+\section{iview: HTML5 Visualizer}
+
+Currently the output of idock on istar include docked conformations in PDBQT format. Users have to download them and visualize them using their favorite molecular visualizer, such as PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951}.
+
+Inspired by iCanPlot, a visualizer of high-throughput omics data using interactive HTML5 canvas plotting \citep{1028}, we propose iview, an interactive HTML5 visualizer of protein-ligand complex (Figure \ref{istar:iview}). Users shall be able to view the protein-ligand docking results directly on istar. Typical functionalities include zooming, dragging, and plotting hydrogen bonds.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{istar/iview.png}
+\caption{iview is an interactive HTML5 visualizer of protein-ligand complex.}
+\label{istar:iview}
+\end{figure}
+
 \section{Local Search Pruning}
 
 Recall that idock uses Monte Carlo algorithm for global optimization and BFGS (Broyden-Fletcher-Goldfarb-Shanno) Quasi-Newton method \cite{786} for local optimization. It is possible to prune hopeless local search heuristically because a local minimum must be a stationary point with zero derivative in a continuous function, which is the case of the scoring function used in idock, according to Fermat’s theorem.
@@ -255,19 +268,6 @@ We propose to make use of advanced machine learning techniques to train a regres
 \includegraphics[width=\linewidth]{PKKB/Regression.png}
 \caption{Our proposed regression model for PKKB.}
 \label{PKKB:Regression}
-\end{figure}
-
-\section{iview: HTML5 Visualizer}
-
-Currently the output of idock on istar include docked conformations in PDBQT format. Users have to download them and visualize them using their favorite molecular visualizer, such as PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951}.
-
-Inspired by iCanPlot, a visualizer of high-throughput omics data using interactive HTML5 canvas plotting \citep{1028}, we propose iview, an interactive HTML5 visualizer of protein-ligand complex (Figure \ref{istar:iview}). Users shall be able to view the protein-ligand docking results directly on istar. Typical functionalities include zooming, dragging, and plotting hydrogen bonds.
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{istar/iview.png}
-\caption{iview is an interactive HTML5 visualizer of protein-ligand complex.}
-\label{istar:iview}
 \end{figure}
 
 \chapterend
