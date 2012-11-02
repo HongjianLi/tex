@@ -28,7 +28,7 @@
 \maketitle
 
 \begin{abstract}
-We are motivated by the desire to automate large-scale protein-ligand docking using our docking engine idock and thus have developed a novel web platform called istar. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by browsing our web site or by programming against our RESTful API. Our HTML5- and CSS3-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting predicted free energy, ligand efficiency, putative hydrogen bonds, and supplier information for easy purchasing, three unique and useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 yuck-free ligands from the clean subset of the ZINC database with conditional permission from its developer. We have revised our docking engine idock to version 1.6, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. To better evaluate and compare idock 1.6 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a redocking benchmark on the 2,455 protein-ligand complexes of the refined set of PDBbind v2011 and 343 protein-ligand complexes of CSAR NRC HiQ Set 24Sept2010, and a virtual screening benchmark on 12 diverse proteins and 3000 ligands of different molecular weight. The results have shown that under various circumstances idock displayed comparable success rates but outperformed AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times, rendering idock particularly suitable for large-scale protein-ligand docking. We have developed a customized daemon from idock 1.6 for istar, implementing our novel idea of two-phase docking, and exploiting both fine-grained slice-level parallelism in phase 1 and coarse-grained job-level parallelism in phase 2 in order to further shorten job execution time, as well as using gzip to compresses result files in order to save server storage and network bandwidth. We have prepared two graphical tutorials for newbies to get started easily. We have tested our istar web site with Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+. We aim to make istar into a large-scale online docking platform really pragmatic for the computational chemistry community and pharmaceutical companies.
+We are motivated by the desire to automate large-scale protein-ligand docking for drug discovery using our docking engine idock and thus have developed a novel web platform called istar. Without tedious software installation, users, especially computational chemists, can submit jobs on the fly either by using our web site or by programming against our RESTful API. Our HTML5- and CSS3-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting predicted free energy, ligand efficiency, putative hydrogen bonds, and supplier information for easy purchasing, three unique and useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 yuck-free ligands from the clean subset of the ZINC database with conditional permission from its developer. We have revamped our docking engine idock to version 2.0, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. To better evaluate and compare idock 2.0 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a redocking benchmark on the 2,455 protein-ligand complexes of the refined set of PDBbind v2011 and 343 protein-ligand complexes of CSAR NRC HiQ Set 24Sept2010, and a virtual screening benchmark on 12 diverse proteins and 3000 ligands of different molecular weight. The results have shown that under various circumstances idock displayed comparable success rates but outperformed AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times, making idock particularly suitable for large-scale protein-ligand docking. We have developed a customized daemon from idock 2.0 for istar, implementing our novel idea of two-phase docking, and exploiting both fine-grained slice-level parallelism in phase 1 and coarse-grained job-level parallelism in phase 2 in order to further shorten job execution time, as well as using gzip to compresses result files in order to save server storage and network bandwidth. We have prepared two graphical tutorials for novices to get started easily. We have tested our istar web site in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+. We aim to make istar into a large-scale online docking platform really pragmatic for the computational chemistry community and pharmaceutical companies.
 \end{abstract}
 
 \begin{wileykeywords}
@@ -69,7 +69,7 @@ We are motivated to automate large-scale protein-ligand docking using our dockin
 
 \section*{\sffamily \Large SUMMARY}
 
-We have developed istar, a novel web platform for large-scale online protein-ligand docking. Without tedious software installation, users can submit jobs on the fly either by browsing our web site or by programming against our RESTful API. Our HTML5- and CSS3-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting predicted free energy, ligand efficiency, putative hydrogen bonds, and supplier information, three very useful features commonly lacked on other online docking platforms like DOCK Blaster \citep{557} or iScreen \citep{899}. We have collected 12,171,187 yuck-free ligands from the clean subset of ZINC \citep{532,1178} with conditional permission from its developer. We have revised our docking engine idock \citep{1153} to version 1.6, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We have developed a customized daemon from idock 1.6 for istar, implementing two-phase docking and exploiting fine-grained slice-level parallelism in order to further shorten job execution time, as well as using gzip to compresses result files in order to save server storage and network bandwidth. We have also prepared two graphical tutorials for newbies to get started easily. We have tested the istar web site with Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+. We aim to make istar a large-scale online docking platform really pragmatic for the computational chemistry community and pharmaceutical companies.
+We have developed istar, a novel web platform for large-scale online protein-ligand docking for drug discovery. Without tedious software installation, users can submit jobs on the fly either by using our web site or by programming against our RESTful API. Our HTML5- and CSS3-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting predicted free energy, ligand efficiency, putative hydrogen bonds, and supplier information, three very useful features commonly lacked on other online docking platforms like DOCK Blaster \citep{557} or iScreen \citep{899}. We have collected 12,171,187 yuck-free ligands from the clean subset of ZINC \citep{532,1178} with conditional permission from its developer. We have revamped our docking engine idock \citep{1153} to version 2.0, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We have developed a customized daemon from idock 2.0 for istar, implementing two-phase docking and exploiting fine-grained slice-level parallelism in order to further shorten job execution time, as well as using gzip to compresses result files in order to save server storage and network bandwidth. We have also prepared two graphical tutorials for novices to get started easily. We have tested the istar web site in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+. We aim to make istar a large-scale online docking platform really pragmatic for the computational chemistry community and pharmaceutical companies.
 
 \section*{\sffamily \Large INTRODUCTION} % Not needed for rapid communications
 
@@ -85,7 +85,7 @@ Having released idock, we kept receiving docking requirements from our colleague
 
 Figure \ref{architecture} shows the architecture of istar. There are five major components, a web site, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our web site and submits a job. The web server first validates user input and then saves it into database. Several workstations keep running daemons in the background, fetching jobs from the database and carrying out experiments. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our web site to download result or monitor job progress.
 
-\subsection*{\sffamily \large WEB SITE}
+\subsection*{\sffamily \large Web Site}
 
 We have seamlessly combined both the Twitter Bootstrap and the HTML5 Boilerplate into a HTML5- and CSS3-powered istar web site (Figure \ref{idock}). From top to bottom, the first section displays information about existing jobs, including the number of ligands to dock, submission date, current status and progress, and result for download upon completion; the second section allows new job submission by specifying a receptor, its search space, and optionally, desired ligands to dock; the third section plots the histogram distributions of 9 molecular properties of the 12 million ligands; the fourth section delivers two graphical tutorials for newbies to get started easily. We have tested the web site with Chrome 19+, Firefox 12+, Internet Explorer 9+, Safari 5+ and Opera 12+.
 
@@ -93,21 +93,21 @@ A job typically comprises compulsory fields and optional fields. Compulsory fiel
 
 We have prepared two graphical tutorials for users to correctly fill in the compulsory fields. Tutorial 1 illustrates how to prepare a receptor in PDBQT format with MGLTools \citep{596}. Tutorial 2 illustrates how to define a search space with MGLTools \citep{596}, Chimera \citep{1219} or PyMOL \citep{1221}. We deliberately do not introduce an automatic protein binding site detection tool but let the graphical tutorials guide this process with full customization.
 
-\subsection*{\sffamily \large WEB SERVER}
+\subsection*{\sffamily \large Web Server}
 
 We have built the web server using the high-performance express.js web application framework on top of the asynchronous event-driven node.js engine. In addition to the conventional HTTP 1.x protocol, the web server also supports the SPDY protocol v3, the prototype of next generation HTTP 2.0, achieving reduced latency through compression, multiplexing, and prioritization.
 
 We have developed a customized validator module to validate and sanitize user input upon new job submission. Users will be notified by tips should there be any validation errors, such as invalid receptor format, excessively small or excessively large search space, or invalid email address. Only valid jobs are saved into the database.
 
-\subsection*{\sffamily \large DATABASE}
+\subsection*{\sffamily \large Database}
 
 We have established the database using MongoDB, a scalable, high-performance, open source NoSQL database. MongoDB features document store in JSON (JavaScript Object Notation) style, making it particularly suitable for applications requiring flexible document attributes like our istar. 
 
-\subsection*{\sffamily \large WORKSTATIONS}
+\subsection*{\sffamily \large Workstations}
 
-We have deployed several workstations to simultaneously run a customized idock daemon in the background. We have derived the daemon from idock 1.6, adding dozens of lines of code to iteratively and atomically fetch a pending job from MongoDB, reuse receptor structure and grid maps whenever possible, perform 2-phase docking, exploit 2-level parallelism, report progress to MongoDB, output verbose information, and send email notification upon job completion. Compared with the original idock 1.0 \citep{1153}, idock 1.6 further improves docking speed and accuracy, invents new functionalities, and fixes bugs.
+We have deployed several workstations to simultaneously run a customized idock daemon in the background. We have derived the daemon from idock 2.0, adding dozens of lines of code to iteratively and atomically fetch a pending job from MongoDB, reuse receptor structure and grid maps whenever possible, perform 2-phase docking, exploit 2-level parallelism, report progress to MongoDB, output verbose information, and send email notification upon job completion. Compared with the original idock 1.0 \citep{1153}, idock 2.0 further improves docking speed and accuracy, invents new functionalities, and fixes bugs.
 
-\subsection*{\sffamily \large NETWORK FILE SYSTEM}
+\subsection*{\sffamily \large Network File System}
 
 We have configured a network file system for shared access from the workstations, the web server, and the database server. Onto the network file system, we have collected and saved 12,171,187 clean ligands at pH 7 in mol2 format from the fruitful ZINC database \citep{532,1178} with explicit permission of its major developer and maintainer, Prof. John J. Irwin at University of California, San Francisco. Originally the yuck-compound-free ligands are organized into 98 slices, with each slice containing approximately 125,000 clean ligands, among which about 75,000 (60\%) have a molecular weight of at least 350g/mol, the minimum weight requirement that a modern drug should bear. We have converted the entire 12 million ligands into PDBQT format in batch, and combined the 12 million individual structures and their 9 molecular properties and supplier information into one single file as huge as 50GB. We have recorded and encoded the offset of each ligand for fast random seeking and parallel docking.
 
@@ -115,7 +115,7 @@ We have configured a network file system for shared access from the workstations
 
 We would like to highlight the novel and unique features that are only available at istar.
 
-\subsection*{\sffamily \large LIGAND FILTERING}
+\subsection*{\sffamily \large Ligand Filtering}
 
 istar supports filtering ligands by desired molecular properties and previewing the number of ligands to dock. This novel feature is achieved by inter-process message passing and in-memory table scan.
 
@@ -123,13 +123,13 @@ During web server startup, the master process loads the 9 molecular properties o
 
 Before docking a ligand, our idock daemon checks its 9 molecular properties against the 9 filtering conditions. If any condition fails, the daemon simply skips the current ligand and proceeds with the next one by looking up the offset table and directly seeking there.
 
-\subsection*{\sffamily \large REAL-TIME PROGRESS}
+\subsection*{\sffamily \large Real-Time Progress}
 
 istar supports monitoring job progress in real time. This novel feature is achieved by the progress reporting mechanism inside our idock daemon as well as our Ajax (Asynchronous JavaScript and XML) timer and table on the web site.
 
 After docking a ligand, our idock daemon increments a counter and reports the progress to the database. When a user browses our istar web site, an Ajax timer is automatically started, querying against the web server for the most current progress of jobs of the same user at an interval of one second. If the job progress is updated, it is displayed in the corresponding table cell in an Ajax manner without page refresh. In this way, a user can always keep track of job progress in real time, especially for long-running jobs.
 
-\subsection*{\sffamily \large VERBOSE OUTPUT}
+\subsection*{\sffamily \large Verbose Output}
 
 Our idock daemon outputs verbose information to both docked PDBQT file (Figure \ref{OutputPDBQT}) and summary CSV (Comma-Separated Vector) file (Figure \ref{OutputCSV}).
 
@@ -137,19 +137,19 @@ The docked PDBQT file includes predicted free energy, inter-ligand free energy, 
 
 The summary CSV file includes the ZINC ID, predicted free energy and ligand efficiency and putative hydrogen bonds of the top 20 conformations, a hyperlink to the substance information at the ZINC web site, as well as all the possible suppliers. The supplier column includes both compound vendors for purchasing and annotated databases for biological activities.
 
-\subsection*{\sffamily \large 2-PHASE DOCKING}
+\subsection*{\sffamily \large 2-Phase Docking}
 
 Our idock daemon performs 2-phase docking (Figure \ref{2PhaseDocking}), due to as many as 12 million ligands to screen. In phase 1, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few thousand candidate compounds. In phase 2, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce job execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
 
-\subsection*{\sffamily \large 2-LEVEL PARALLELISM}
+\subsection*{\sffamily \large 2-Level Parallelism}
 
 Our idock daemon exploits fine-grained slice-level parallelism in phase 1 and coarse-grained job-level parallelism in phase 2. Generally speaking, multiple workstations can compete for either jobs or slices, with the former known as job-level parallelism and the latter as slice-level parallelism (Figure \ref{2LevelParallelism}). Job-level parallelism is very straightforward to implement and can ensure high utilization of computational power when the number of jobs exceeds the number of workstations. Nevertheless, when the number of workstations exceeds the number of jobs, which is usually the case in practice during the initial stage of istar, slice-level parallelism can better utilize computational power by subdividing a job into slices which are then distributed to workstations. Slice-level parallelism is, in contrast, difficult to implement on both the database side and the workstation side. The technical hurdle becomes even more apparent when results from multiple workstations must be properly combined to produce a final result, and progresses from multiple workstations must be properly combined too to compute an overall progress. We have succeeded in splitting a job into 100 slices by even subdividing the 12 million ligands, and distributing the slices to idle workstations in phase 1 to achieve parallel docking.
 
 \section*{\sffamily \Large BENCHMARKS AND RESULTS}
 
-idock x86\_64 v1.6 and AutoDock Vina x86 v1.1.2 were evaluated and compared on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand. The benchmarks include comparison of their redocking performance in terms of predicted conformations and binding affinity correlation, and comparison of their virtual screening performance in terms of execution time.
+idock x86\_64 v2.0 and AutoDock Vina x86 v1.1.2 were evaluated and compared on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand. The benchmarks include comparison of their redocking performance in terms of predicted conformations and binding affinity correlation, and comparison of their virtual screening performance in terms of execution time.
 
-\subsection*{\sffamily \large BENCHMARK OF REDOCKING}
+\subsection*{\sffamily \large Benchmark of Redocking}
 
 Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used two datasets, the refined set of PDBbind v2011 \citep{529,530} and the two sets of CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. They comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki).
 
@@ -159,7 +159,7 @@ Table \ref{SuccessRate} shows the success rates of idock and AutoDock Vina under
 
 Figure \ref{FECorrelation} shows the binding affinity correlation of idock and AutoDock Vina. On the CSAR NRC HiQ Set 24Sept2010 dataset, the Pearson correlations between experimental binding affinities and binding affinities predicted by AutoDock Vina, between experimental binding affinities and binding affinities predicted by idock, and between binding affinities predicted by AutoDock Vina and idock are 0.5998758, 0.5774972, and 0.9824049, respectively. Although both programs did well in conformation prediction, they failed to predict reliable binding affinity, a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinities predicted by both programs is very close to 1 because of their identical scoring function but slightly different approximation methods.
 
-\subsection*{\sffamily \large BENCHMARK OF VIRTUAL SCREENING}
+\subsection*{\sffamily \large Benchmark of Virtual Screening}
 
 We collected 12 diverse proteins from the PDB (Protein Data Bank) database \cite{540,537}, and 1000 ligands with a molecular weight of 200-300g/mol2, 1000 ligands with a molecular weight of 300-400g/mol2, and 1000 ligands with a molecular weight of 400-500g/mol2 from the clean subset of the ZINC database \cite{532,1178}. The 3000 ligands (Figure \ref{MWT-NRB}) were docked against the 12 proteins by AutoDock Vina and idock. Since AutoDock Vina can dock only one ligand in a run, a bash script containing 1000 lines was executed instead, with each line being an execution of Vina to dock one individual ligand. The GNU Time utility was used as profiler.
 
@@ -195,7 +195,7 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 
 \bibliography{../refworks}   % Produces the bibliography via BibTeX.
 
-
+\iffalse
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \clearpage
@@ -244,22 +244,28 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\fi
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FIGURE FILES
 
 \clearpage
 
+\begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth,keepaspectratio=true]{Architecture.png}
+\caption{\label{architecture} The istar architecture.}
 \end{center}
+\end{figure}
 
 \clearpage
 
+\begin{figure}
 \begin{center}
-\includegraphics[width=\linewidth,keepaspectratio=true]{idock.png}
+\includegraphics[width=0.9\linewidth,keepaspectratio=true]{idock.png}
+\caption{\label{idock} The idock web site on istar, available at http://idock.cse.cuhk.edu.hk}
 \end{center}
+\end{figure}
 
 \clearpage
 
@@ -303,14 +309,18 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 {
   \includegraphics[width=0.315\linewidth]{nrb.pdf}
 }
+\caption{\label{LigandProperties} Histogram distributions of 9 molecular properties of the 12,171,187 clean ligands.}
 \end{figure}
 \end{center}
 
 \clearpage
 
+\begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth,keepaspectratio=true]{2PhaseDocking.png}
+\caption{\label{2PhaseDocking} Illustration of 2-phase docking.}
 \end{center}
+\end{figure}
 
 \clearpage
 
@@ -326,20 +336,27 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 {
   \includegraphics[width=\linewidth]{SliceLevelParallelism.png}
 }
+\caption{\label{2LevelParallelism} Illustration of 2-level parallelism.}
 \end{figure}
 \end{center}
 
 \clearpage
 
+\begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth,keepaspectratio=true]{OutputPDBQT.png}
+\caption{\label{OutputPDBQT} Verbose output of the idock daemon in PDBQT format.}
 \end{center}
+\end{figure}
 
 \clearpage
 
+\begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth,keepaspectratio=true]{OutputCSV.png}
+\caption{\label{OutputCSV} Summary output of the idock daemon in CSV format.}
 \end{center}
+\end{figure}
 
 \clearpage
 
@@ -362,6 +379,7 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 {
   \includegraphics[width=0.485\linewidth]{Redocking3HV8.png}
 }
+\caption{\label{Redocking} Redocking results of four cases.}
 \end{figure}
 \end{center}
 
@@ -412,6 +430,7 @@ RMSDm \textless\ 2.5 \AA & 79\% & 84\% & 90\% & 94\%\\
 {
   \includegraphics[width=0.485\linewidth]{CSARFECorrelation.pdf}
 }
+\caption{\label{FECorrelation} Binding affinity correlation on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010. Along the diagonal from top left to bottom right are the histogram distributions of experimental binding affinities, binding affinities predicted by AutoDock Vina, and binding affinities predicted by idock.}
 \end{figure}
 \end{center}
 
@@ -427,6 +446,7 @@ RMSDm \textless\ 2.5 \AA & 79\% & 84\% & 90\% & 94\%\\
 {
   \includegraphics[width=0.485\linewidth]{NRB3.pdf}
 }
+\caption{\label{MWT-NRB} Boxplot of molecular weight and number of rotatable bonds of the 1000 ligands of each of the three molecular weight sets.}
 \end{figure}
 \end{center}
 
