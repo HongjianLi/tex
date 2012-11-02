@@ -55,14 +55,14 @@ Projects / Case studies & Progress \\
 \midrule
 \textbf{idock 1.0: Protein-Ligand Docking} \citep{1153}. & 100\% \\
 We have implemented built-in support for massive docking, a novel thread pool for parallel execution, automatic detection of inactive torsions, a revised numerical approximation model, and full reproducibility with precompiled executables for five operating systems, source code, use cases and API documentations. & \\
-\textbf{idock 1.6: Protein-Ligand Docking} (submitted to a journal). & 100\% \\
-We have implemented support for a total of 25 chemical elements, support for gzip/bzip2 compression, automatic docking recovery, detection of putative hydrogen bonds, per-atom binding affinity output, neat progress report, and many other great features. & \\
+\textbf{idock 2.0: Protein-Ligand Docking}. & 100\% \\
+We have implemented support for a total of 25 chemical elements, support for gzip/bzip2 compression, automatic docking recovery, detection of putative hydrogen bonds, per-atom binding affinity and ligand efficiency output, neat progress report, and many other great features. & \\
 \textbf{istar: SaaS Platform} (submitted to a journal) & 100\% \\
 We have developed istar as a SaaS (Software as a Service) platform for running programs online, and ported idock and igrep onto istar, featuring ligand filtering and previewing, progress monitoring in real time, innovative two-phase docking, slice-level parallelism, supplier list output, and GPU acceleration. & \\
-\textbf{idock 2.0: GPU Acceleration} & 5\% \\
-We have surveyed the latest GPU architectures codenamed GK104 and Tahiti, and observed thread behaviors and identified program hotspots of idock 1.x. We propose to support both CUDA and OpenCL in idock 2.0. & \\
-\textbf{idock 3.0: Ligand Synthesis} & 30\% \\
-We are developing igrow for computational synthesis of potent ligands, utilizing idock as the backend docking engine. We propose to integrate igrow into idock 3.0 to realize data caching and partial docking. We will exploit click chemistry for realistic synthetic feasibility, and implement dual-ligand docking. & \\
+\textbf{idock 3.0: GPU Acceleration} & 5\% \\
+We have surveyed the latest GPU architectures codenamed GK104 and Tahiti, and observed thread behaviors and identified program hotspots of idock 2.0. We propose to support both CUDA and OpenCL in idock 3.0. & \\
+\textbf{idock 4.0: Ligand Synthesis} & 30\% \\
+We are developing igrow for computational synthesis of potent ligands, utilizing idock as the backend docking engine. We propose to integrate igrow into idock 4.0 to realize data caching and partial docking. We will exploit click chemistry for realistic synthetic feasibility, and implement dual-ligand docking. & \\
 \textbf{Case Study of Influenza A Virus H1N1} & 90\% \\
 We have identified the nucleoprotein and the RNA polymerase subunits PA and PB2 as druggable protein targets, and spent six months in running idock to test over 10 million ligands. We are now seeking for appropriate vendors. & \\
 \textbf{Case Study of CCRK-Related Cancers} & 90\% \\
@@ -77,6 +77,6 @@ We have identified the Wnt/$\beta$-catenin signaling pathway. Unfortunately, we 
 
 \section{Outline}
 
-Chapter 2 serves as a literature survey on computer-aided drug discovery. Chapter 3 presents idock for protein-ligand docking. Chapter 4 presents istar as a SaaS platform. Chapter 5 describes our proposal about idock 2.0 and idock 3.0. Chapter 6 introduces our real-life drug discovery case studies. Chapter 7 concludes the thesis proposal. Appendix A lists my publications.
+Chapter 2 serves as a literature survey on computer-aided drug discovery. Chapter 3 presents idock for protein-ligand docking. Chapter 4 presents istar as a SaaS platform. Chapter 5 describes our proposal about idock 3.0, idock 4.0, iview and other ideas. Chapter 6 introduces our real-life drug discovery case studies. Chapter 7 concludes the thesis proposal. Appendix A lists my publications.
 
 \chapterend
