@@ -111,7 +111,7 @@ We have deployed several workstations to simultaneously run a customized idock d
 
 We have configured a network file system for shared access from the workstations, the web server, and the database server. Onto the network file system, we have collected and saved 12,171,187 clean ligands at pH 7 in mol2 format from the fruitful ZINC database \citep{532,1178} with explicit permission of its major developer and maintainer, Prof. John J. Irwin at University of California, San Francisco. Originally the yuck-compound-free ligands are organized into 98 slices, with each slice containing approximately 125,000 clean ligands, among which about 75,000 (60\%) have a molecular weight of at least 350g/mol, the minimum weight requirement that a modern drug should bear. We have converted the entire 12 million ligands into PDBQT format in batch, and combined the 12 million individual structures and their 9 molecular properties and supplier information into one single file as huge as 50GB. We have recorded and encoded the offset of each ligand for fast random seeking and parallel docking.
 
-\section*{\sffamily \Large NOVEL AND UNIQUE FEATURES}
+\section*{\sffamily \Large NOVEL FEATURES OF ISTAR}
 
 We would like to highlight the novel and unique features that are only available at istar.
 
@@ -144,6 +144,38 @@ Our idock daemon performs 2-phase docking (Figure \ref{2PhaseDocking}), due to a
 \subsection*{\sffamily \large 2-Level Parallelism}
 
 Our idock daemon exploits fine-grained slice-level parallelism in phase 1 and coarse-grained job-level parallelism in phase 2. Generally speaking, multiple workstations can compete for either jobs or slices, with the former known as job-level parallelism and the latter as slice-level parallelism (Figure \ref{2LevelParallelism}). Job-level parallelism is very straightforward to implement and can ensure high utilization of computational power when the number of jobs exceeds the number of workstations. Nevertheless, when the number of workstations exceeds the number of jobs, which is usually the case in practice during the initial stage of istar, slice-level parallelism can better utilize computational power by subdividing a job into slices which are then distributed to workstations. Slice-level parallelism is, in contrast, difficult to implement on both the database side and the workstation side. The technical hurdle becomes even more apparent when results from multiple workstations must be properly combined to produce a final result, and progresses from multiple workstations must be properly combined too to compute an overall progress. We have succeeded in splitting a job into 100 slices by even subdividing the 12 million ligands, and distributing the slices to idle workstations in phase 1 to achieve parallel docking.
+
+\section*{\sffamily \Large KEY FEATURES OF IDOCK 2.0}
+
+We have revamped our docking engine idock to version 2.0, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We highlight some key features. Refer to the idock web site for a full list of enhancements and bugfixes.
+
+\subsection*{\sffamily \large Lightweight Thread Pool}
+
+idock implements a lightweight thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure (Figure \ref{ThreadPool}). During program initialization, idock creates a thread pool of $N$ threads, where $N$ is defaulted to the number of CPU cores, or can be specified by user via a command line argument. When idle, the threads sleep. When tasks arrive, the threads compete for tasks. The thread that completes its current task will automatically fetch a pending one to execute until all are done. Synchronization is implemented to ensure full completeness of the tasks and availability of results. The task here is an abstract concept in programming sense and can be instantiated either as scoring function task, grid map task or Monte Carlo task. To be exact, the thread pool in fact parallelizes the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
+
+\subsection*{\sffamily \large Lightweight Progress Bar}
+
+idock implements our own lightweight thread-safe progress bar. For each ligand, it reports progress at every 10\% for the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
+
+%\subsection*{\sffamily \large Detection of Inactive Torsions}
+
+%idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the torsional degrees of freedom to optimize in the local optimization step, leading to easier finding of local minimums.
+
+\subsection*{\sffamily \large Automatic Recovery}
+
+idock enables automatic recovery. While docking is in progress, in case the process gets killed accidentally and restarted some time later, idock not only resumes docking from the previous stopping point, skipping ligands that were already docked in a previous run, but also detects and reports possible file content errors, ensuring all the output ligands are well written.
+
+\subsection*{\sffamily \large Gzip/Bzip2 Compression}
+
+idock supports reading and writing compressed ligand files with in gzip/bzip2 format, resulting in a file footprint as low as just one eighth of the raw size using gzip (Figure \ref{Compression}). This new functionality turns out to be extremely handy given an enormous amount of ligands to dock.
+
+\subsection*{\sffamily \large Chemical Elements}
+
+Both idock and AutoDock Vina support 16 common chemical elements, which are H (hydrogen), C (carbon), N (nitrogen), O (oxygen), F (fluorine), Mg (magnesium), P (phosphorus), S (sulfur), Cl (chlorine), Ca (calcium), Mn (manganese), Fe (iron), Zn (zinc), Se (selenium), Br (bromine), and I (iodine). idock adds 9 additional elements, which are Na (sodium), K (potassium), Co (cobalt), Ni (nickel), Cu (copper), Sr (strontium), Cd (cadmium), Hg (mercury), and As (arsenic). Hence idock supports as many as 25 chemical elements, covering the majority of atom types in the field of protein-ligand docking (Figure \ref{ChemicalElements}).
+
+\subsection*{\sffamily \large External Docking Engine}
+
+idock can be used as an external docking engine for our in-house \textit{de novo} ligand design tool called igrow, which implements genetic algorithm and novel genetic operators to produce novel ligands by appending a molecular fragment to a ligand, by splitting a ligand into two, or by exchanging parts of two ligands. The produced population of ligands are then evaluated by idock and sorted according to their free energy predicted by idock.
 
 \section*{\sffamily \Large BENCHMARKS AND RESULTS}
 
@@ -355,6 +387,46 @@ We thank Professor John J. Irwin, the developer and maintainer of ZINC \citep{53
 \begin{center}
 \includegraphics[width=\linewidth,keepaspectratio=true]{OutputCSV.png}
 \caption{\label{OutputCSV} Summary output of the idock daemon in CSV format.}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{ThreadPool.png}
+\caption{A thread pool of four threads competing for tasks. X: executed task. R: running task. Q: queued task.}
+\label{ThreadPool}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{InactiveTorsions.png}
+\caption{Example of inactive torsions highlighted in yellow. Nonpolar hydrogens are not shown for clarity.}
+\label{InactiveTorsions}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{Compression.png}
+\caption{Gzip/Bzip2 compression/decompression support.}
+\label{Compression}
+\end{center}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{ChemicalElements.png}
+\caption{Chemical elements in red box are supported by both Vina and idock. Chemical elements in blue box are additional chemical elements solely supported by idock.}
+\label{ChemicalElements}
 \end{center}
 \end{figure}
 
