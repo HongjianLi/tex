@@ -226,41 +226,41 @@ idock x86\_64 v1.5 and AutoDock Vina x86 v1.1.2 were evaluated on desktop comput
 
 \subsection{Benchmark of Redocking}
 
-Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used two databases, PDBbind v2011 \citep{529,530} and CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki).
+Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used three databases, PDBbind v2012 and v2011 \citep{529,530} and CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. The refined set of PDBbind v2012 and v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,897, 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki).
 
-Table \ref{idock:SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the RMSD values between the crystal and docked conformations. Given a redocking case, RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation, i.e. the one with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum RMSD value. The condition RMSD1 = RMSDm tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on CSAR NRC HiQ Set 24Sept2010 are consistently higher than PDBbind v2011, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, both programs manage to predict a conformation close enough to the crystal conformation as the first conformation for over half of the cases on both databases.
+Table \ref{idock:SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the RMSD values between the crystal and docked conformations. Given a redocking case, RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation, i.e. the one with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum RMSD value. The condition RMSD1 = RMSDm tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on CSAR NRC HiQ Set 24Sept2010 are consistently higher than PDBbind v2012 and v2011, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, both programs manage to predict a conformation close enough to the crystal conformation as the first conformation for over half of the cases on both databases.
 
 \begin{table}[t]
 \centering
 \begin{tabular*}
 {\linewidth}
-{@{\extracolsep{\fill}}crrrr}
+{@{\extracolsep{\fill}}crrrrrr}
 \toprule
-& \multicolumn{2}{c}{PDBbind v2011} & \multicolumn{2}{c}{CSAR NRC HiQ}\\
+& \multicolumn{2}{c}{PDBbind v2012} & \multicolumn{2}{c}{PDBbind v2011} & \multicolumn{2}{c}{CSAR NRC HiQ}\\
 Condition & idock & Vina & idock & Vina\\
 \midrule
-RMSD1 = RMSDm   & 47\% & 54\% & 57\% & 71\%\\
-RMSD2 = RMSDm   & 16\% & 14\% & 17\% & 13\%\\
-RMSD3 = RMSDm   &  8\% &  8\% &  7\% &  4\%\\
-RMSD4 = RMSDm   &  6\% &  5\% &  5\% &  3\%\\
-RMSD5 = RMSDm   &  5\% &  5\% &  4\% &  1\%\\
-RMSD6 = RMSDm   &  5\% &  4\% &  3\% &  3\%\\
-RMSD7 = RMSDm   &  5\% &  4\% &  1\% &  2\%\\
-RMSD8 = RMSDm   &  4\% &  3\% &  3\% &  2\%\\
-RMSD9 = RMSDm   &  4\% &  3\% &  3\% &  2\%\\
-RMSD1 < 0.5 \AA & 11\% & 12\% & 21\% & 21\%\\
-RMSD1 < 1.0 \AA & 29\% & 31\% & 40\% & 47\%\\
-RMSD1 < 1.5 \AA & 45\% & 47\% & 61\% & 67\%\\
-RMSD1 < 2.0 \AA & 53\% & 56\% & 68\% & 73\%\\
-RMSD1 < 2.5 \AA & 58\% & 61\% & 72\% & 76\%\\
-RMSDm < 0.5 \AA & 14\% & 15\% & 24\% & 26\%\\
-RMSDm < 1.0 \AA & 39\% & 40\% & 54\% & 55\%\\
-RMSDm < 1.5 \AA & 64\% & 65\% & 78\% & 84\%\\
-RMSDm < 2.0 \AA & 74\% & 78\% & 86\% & 92\%\\
-RMSDm < 2.5 \AA & 79\% & 84\% & 90\% & 94\%\\
+RMSD1 = RMSDm & 49\% & 53\% & 47\% & 54\% & 57\% & 71\%\\
+RMSD2 = RMSDm & 15\% & 16\% & 16\% & 14\% & 17\% & 13\%\\
+RMSD3 = RMSDm &  8\% &  7\% &  8\% &  8\% &  7\% &  4\%\\
+RMSD4 = RMSDm &  6\% &  6\% &  6\% &  5\% &  5\% &  3\%\\
+RMSD5 = RMSDm &  5\% &  4\% &  5\% &  5\% &  4\% &  1\%\\
+RMSD6 = RMSDm &  5\% &  3\% &  5\% &  4\% &  3\% &  3\%\\
+RMSD7 = RMSDm &  4\% &  4\% &  5\% &  4\% &  1\% &  2\%\\
+RMSD8 = RMSDm &  5\% &  3\% &  4\% &  3\% &  3\% &  2\%\\
+RMSD9 = RMSDm &  4\% &  3\% &  4\% &  3\% &  3\% &  2\%\\
+RMSD1 < 0.5 \AA & 10\% & 12\% & 11\% & 12\% & 21\% & 21\%\\
+RMSD1 < 1.0 \AA & 26\% & 31\% & 29\% & 31\% & 40\% & 47\%\\
+RMSD1 < 1.5 \AA & 43\% & 47\% & 45\% & 47\% & 61\% & 67\%\\
+RMSD1 < 2.0 \AA & 51\% & 56\% & 53\% & 56\% & 68\% & 73\%\\
+RMSD1 < 2.5 \AA & 56\% & 61\% & 58\% & 61\% & 72\% & 76\%\\
+RMSDm < 0.5 \AA & 12\% & 15\% & 14\% & 15\% & 24\% & 26\%\\
+RMSDm < 1.0 \AA & 35\% & 40\% & 39\% & 40\% & 54\% & 55\%\\
+RMSDm < 1.5 \AA & 61\% & 65\% & 64\% & 65\% & 78\% & 84\%\\
+RMSDm < 2.0 \AA & 72\% & 79\% & 74\% & 78\% & 86\% & 92\%\\
+RMSDm < 2.5 \AA & 77\% & 85\% & 79\% & 84\% & 90\% & 94\%\\
 \bottomrule
 \end{tabular*}
-\caption{Success rates of idock and AutoDock Vina under various conditions on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010.}
+\caption{Success rates of idock and AutoDock Vina under various conditions on PDBbind v2012 and v2011 and CSAR NRC HiQ Set 24Sept2010.}
 \label{idock:SuccessRate}
 \end{table}
 
@@ -293,15 +293,19 @@ Figure \ref{idock:FECorrelation} shows the free energy correlation of idock and 
 
 \begin{figure*}
 \centering
-\subfloat[PDBbind v2011]
+\subfloat[PDBbind v2012 refined set]
 {
-  \includegraphics[width=0.485\linewidth]{idock/PDBbindFECorrelation.pdf}
+  \includegraphics[width=0.31\linewidth]{idock/PDBbind2012FECorrelation.pdf}
+}
+\subfloat[PDBbind v2011 refined set]
+{
+  \includegraphics[width=0.31\linewidth]{idock/PDBbind2011FECorrelation.pdf}
 }
 \subfloat[CSAR NRC HiQ Set 24Sept2010]
 {
-  \includegraphics[width=0.485\linewidth]{idock/CSARFECorrelation.pdf}
+  \includegraphics[width=0.31\linewidth]{idock/CSARFECorrelation.pdf}
 }
-\caption{Free energy correlation on PDBbind v2011 and CSAR NRC HiQ Set 24Sept2010.}
+\caption{Free energy correlation on PDBbind v2012 and v2011 and CSAR NRC HiQ Set 24Sept2010. Along the diagonal from top left to bottom right are the histogram distributions of experimental binding affinities, binding affinities predicted by AutoDock Vina, and binding affinities predicted by idock.}
 \label{idock:FECorrelation}
 \end{figure*}
 
