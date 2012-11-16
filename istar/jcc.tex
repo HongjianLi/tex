@@ -81,6 +81,8 @@ In 2011, inspired by AutoDock Vina, we developed idock 1.0 \citep{1153}, a multi
 
 Having released idock, we kept receiving docking requirements from our colleagues and collaborators. They are mostly biochemists and pharmacists, outsourcing the docking research to us after discovering pharmaceutical protein targets for certain diseases of therapeutic interest. All of a sudden, we had to grab the protein structure, do format conversion, define search space, set up docking parameters, and keep running idock in batch for months. Tedious enough, all the above work was done manually, resulting in very low research productivity. In order to automate large-scale protein-ligand docking using our idock, we therefore developed a novel web platform called istar. Figure \ref{relationship} depicts the relationship between istar and idock. idock is a concrete application hosted on the istar platform.
 
+Here is the outline of the paper. We will first describe the five functional components of istar, followed by its novel features that are only available at istar and commonly unseen on other docking platforms. We will then present the key features of idock 2.0 compared to version 1.0. In the result section, we will detail the benchmarks of both redocking and virtual screening. In the end, we will give software availability and a discussion.
+
 \section*{\sffamily \Large ARCHITECTURE}
 
 Figure \ref{architecture} shows the architecture of istar. There are five major components, a web site, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our web site and submits a job. The web server first validates user input and then saves it into database. Several workstations keep running daemons in the background, fetching jobs from the database and carrying out experiments. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our web site to download result or monitor job progress.
@@ -157,10 +159,6 @@ idock implements a lightweight thread pool in order to reuse threads and maintai
 
 idock implements our own lightweight thread-safe progress bar. For each ligand, it reports progress at every 10\% for the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
 
-%\subsection*{\sffamily \large Detection of Inactive Torsions}
-
-%idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the torsional degrees of freedom to optimize in the local optimization step, leading to easier finding of local minimums.
-
 \subsection*{\sffamily \large Automatic Recovery}
 
 idock enables automatic recovery. While docking is in progress, in case the process gets killed accidentally and restarted some time later, idock not only resumes docking from the previous stopping point, skipping ligands that were already docked in a previous run, but also detects and reports possible file content errors, ensuring all the output ligands are well written.
@@ -171,7 +169,7 @@ idock supports reading and writing compressed ligand files with in gzip/bzip2 fo
 
 \subsection*{\sffamily \large Chemical Elements}
 
-Both idock and AutoDock Vina support 16 common chemical elements, which are H (hydrogen), C (carbon), N (nitrogen), O (oxygen), F (fluorine), Mg (magnesium), P (phosphorus), S (sulfur), Cl (chlorine), Ca (calcium), Mn (manganese), Fe (iron), Zn (zinc), Se (selenium), Br (bromine), and I (iodine). idock adds 9 additional elements, which are Na (sodium), K (potassium), Co (cobalt), Ni (nickel), Cu (copper), Sr (strontium), Cd (cadmium), Hg (mercury), and As (arsenic). Hence idock supports as many as 25 chemical elements, covering the majority of atom types in the field of protein-ligand docking (Figure \ref{ChemicalElements}).
+Both idock and AutoDock Vina support 16 common chemical elements, which are H (hydrogen), C (carbon), N (nitrogen), O (oxygen), F (fluorine), Mg (magnesium), P (phosphorus), S (sulfur), Cl (chlorine), Ca (calcium), Mn (manganese), Fe (iron), Zn (zinc), Se (selenium), Br (bromine), and I (iodine). idock supports 9 additional elements, which are Na (sodium), K (potassium), Co (cobalt), Ni (nickel), Cu (copper), Sr (strontium), Cd (cadmium), Hg (mercury), and As (arsenic). Hence idock supports as many as 25 chemical elements, covering the majority of atom types in the field of protein-ligand docking (Figure \ref{ChemicalElements}).
 
 \subsection*{\sffamily \large External Docking Engine}
 
@@ -183,7 +181,7 @@ idock x86\_64 v2.0 and AutoDock Vina x86 v1.1.2 were evaluated and compared on d
 
 \subsection*{\sffamily \large Benchmark of Redocking}
 
-Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used three datasets, the refined set of PDBbind v2012 \citep{529,530}, the refined set of PDBbind v2011 \citep{529,530}, and the two sets of CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. They comprise 2,897, 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki).
+Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used three datasets, the refined set of PDBbind v2012 \citep{529,530}, the refined set of PDBbind v2011 \citep{529,530}, and the two sets of CSAR NRC HiQ Set 24Sept2010 \citep{857,960}. They comprise 2,897, 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki). Note that the 2rio entry of PDBbind contains two Sr (strontium) metal ions, which are supported by idock but not by AutoDock Vina, so we manually removed them before invoking AutoDock Vina.
 
 Figure \ref{Redocking} visualizes the redocking results of four cases from the refined set of PDBbind v2011. In the case of PDB ID 1B8N, both programs managed to predict a conformation close enough to the crystal one. In the case of PDB ID 4TMN, both programs failed, probably due to the presence of a zinc ion in the binding site. In the case of PDB ID 1PKX, idock succeeded but AutoDock Vina failed. In the case of PDB ID 3HV8, AutoDock Vina succeeded but idock failed.
 
