@@ -17,6 +17,7 @@
 %\usepackage[nolists, nomarkers, figuresfirst]{endfloat}
 \usepackage{subfig}
 %\usepackage{booktabs}
+\usepackage{longtable}
 
 \definecolor{background-color}{gray}{0.98}
 
@@ -529,9 +530,7 @@ RMSDm \textless\ 2.5 \AA & 77\% & 85\% & 79\% & 84\% & 90\% & 94\%\\
 
 \clearpage
 
-\begin{table}
-\centering
-\begin{tabular}{crrrrrr}
+\begin{longtable}{crrrrrr}
 \hline
 & \multicolumn{2}{c}{200-300g/mol} & \multicolumn{2}{c}{300-400g/mol} & \multicolumn{2}{c}{400-500g/mol}\\
 & CPU & Elapsed & CPU & Elapsed & CPU & Elapsed\\
@@ -576,9 +575,8 @@ idock &  0.77 &  0.20 &  1.20 &  0.32 &  2.09 &  0.55\\
 Vina  & 10.31 &  2.81 & 17.52 &  4.70 & 38.73 & 10.26\\
 idock &  0.85 &  0.22 &  1.38 &  0.36 &  2.58 &  0.67\\
 \hline
-\end{tabular}
 \caption{\label{ExecutionTime} CPU time and elapsed time in hours of docking 3000 clean ligands of 3 molecular weight sets against 12 diverse receptors by AutoDock Vina and idock.}
-\end{table}
+\end{longtable}
 
 \end{document}
 
