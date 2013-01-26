@@ -7,5 +7,6 @@
 *.lot
 *.toc
 *.out
+*.dvis
 nlcc
 match

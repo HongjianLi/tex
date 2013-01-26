@@ -81,7 +81,7 @@ $\ast$ E-mail: hjli@cse.cuhk.edu.hk
 
 % Please keep the abstract between 250 and 300 words
 \section*{Abstract}
-We are motivated by the desire to automate large-scale protein-ligand docking for drug discovery using our docking engine idock and thus have developed a web platform called istar. Without tedious software installation, users can submit jobs on the fly either by using our web site or by programming against our RESTful API. Our HTML5-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting predicted free energy, ligand efficiency, RF-Score, putative hydrogen bonds, and supplier information for easy purchasing, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 ligands from the clean subset of the ZINC database with conditional permission from its developer. We have revamped our docking engine idock to version 2.1, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We have prepared two graphical tutorials for novices to get started easily. We have tested our istar web site successfully in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+.
+We are motivated by the desire to automate large-scale protein-ligand docking for drug discovery using our docking engine idock and thus have developed a web platform called istar. Without tedious software installation, users can submit jobs on the fly either by using our web site or by programming against our RESTful API. Our HTML5-powered istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting free energy and ligand efficiency predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchasing, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 ligands from the clean subset of the ZINC database with conditional permission from its developer. We have revamped our docking engine idock to version 2.1, further improving docking speed and accuracy, inventing new functionalities, and fixing bugs. We have prepared two graphical tutorials for novices to get started easily. We have tested our istar web site successfully in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLoS ONE authors please skip this step. 
@@ -145,16 +145,19 @@ No set up required. No need to divide jobs into 100 slices. No need to write a s
 
 DOCK Blaster \cite{557}, an expert system, was created to investigate the feasibility of full automation of large-scale protein-ligand docking. Here we highlight the advantages of istar over DOCK Blaster. First and foremost, istar is free and open source under Apache License 2.0. Everyone is welcome to download a copy and deploy istar to his/her own servers. istar is designed as a general SaaS platform. It can host not only idock but also igrep and any other program. istar utilizes HTML5, CSS3, node.js, SPDY, NoSQL, GPU acceleration and so on, representing a state-of-the-art platform. istar supports filtering and previewing ligands to dock, as well as monitoring job progress in real time, two very useful features only available at istar. istar implements 2-phase docking and exploits fine-grained slice-level parallelism in phase 1.
 
-Two virtual machines, Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM.
+Two virtual machines, Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM
 A separate web server Intel Xeon W3520 @ 2.66 GHz and 8GB DDR3 SDRAM
+3TB NFS
 Due to limited budget, we could not offer hardware resource as much as DOCK Blaster did (i.e. 700 CPU cores plus 20TB RAID-6 storage), so we tried every endeavor on software optimization. Alternatively, one can freely deploy a copy of istar. In the future we plan to port idock to GPU in order to further boost performance.
 
 Give the structure of a target, both istar and DOCK Blaster will dock and score each molecule against the target and provide a ranked list which you may review and prioritize for purchase and testing.
 
+Open source
 PocketPickker (CLIPPERS) \cite{395}
 Binding site indication: cubic box VS docked ligand, binding site residues
 actives and inactives
-Ligands filtered by molecular properties VS clean fragments, clean leads
+Ligands filtered by molecular properties VS predefined ligand subsets. By property: clean fragments, clean leads. By vendor, virtual, user-created subset, user-uploaded subset. Not exactly the same ligand filtering criteria. istar allows fine control on molecular property selection.
+Tutorials VS wiki
 
 % You may title this section "Methods" or "Models". 
 % "Models" is not a valid title for PLoS ONE authors. However, PLoS ONE
@@ -257,16 +260,6 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 {\bf Verbose output of the idock daemon in PDBQT format.}
 }
 \label{OutputPDBQT}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-%\includegraphics[width=4in]{OutputCSV.eps}
-\end{center}
-\caption{
-{\bf Summary output of the idock daemon in CSV format.}
-}
-\label{OutputCSV}
 \end{figure}
 
 \begin{figure}[!ht]
