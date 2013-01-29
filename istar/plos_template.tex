@@ -153,16 +153,12 @@ We emphasize full reproducibility. Both idock and istar are free and open source
 \section*{Discussion}
 
 \subsection*{Comparison of Online istar and Offline idock}
-Automation is the major reason of submitting jobs to istar instead of running idock locally on one's computer. On istar, there are over 12 million ready-to-dock ligands collected from ZINC \cite{532,1178}. These ligands come with supplier information for easy purchase. 
-, with supplier output plus RF-Score.
-No set up required. No need to divide jobs into 100 slices. No need to write a script to filter ligands.
+Automation is the major reason of submitting jobs to istar instead of running idock locally on one's computer. On istar, there are over 12 million ready-to-dock ligands collected from ZINC \cite{532,1178}. These ligands come with supplier information for easy purchase, and they can be filtered by nine molecular properties. Besides, istar integrates the accurate RF-Score to provide an alternative score, and thus a consensus score. Furthermore, istar transparently divides jobs into slices for parallel executions on multiple workstations. With istar at hand, users do not need to write special scripts to fetch ligands from some sources, to invoke RF-Score externally, or to implement parallelism by themselves, so that they can concentrate on the docking results and subsequent analysis rather than the docking process itself.
 
 \subsection*{Comparison of istar and DOCK Blaster}
 DOCK Blaster \cite{557} is an expert system created to investigate the feasibility of full automation of large-scale protein-ligand docking. It uses DOCK \cite{1222} as the docking program and ZINC \cite{532,1178} as the ligand repository. Although DOCK is open source, DOCK Blaster itself is not open source.
 
-Give the structure of a target protein, both istar and DOCK Blaster will dock and score each ligand against the target and provide a ranked list which users may review and prioritize for purchase and testing. From the perspective of binding site indication, istar relies on a user-supplied cubic box, while DOCK Blaster chooses a site by either a docked ligand or some binding site residues. From the perspective of ligand selection, istar features ligand filtering by desired molecular properties in a fine-grained manner, while DOCK Blaster predefines several subsets either by property, by vendor, or by user. From the perspective of documentation, istar presents graphical tutorials on how to prepare a receptor in PDBQT format with MGLTools \cite{596}, and how to define a search space with MGLTools \cite{596}, Chimera \cite{1219} or PyMOL \cite{1221}, while DOCK Blaster deploys a wiki with very rich contents covering all procedures of DOCK Blaster. As extra features, DOCK Blaster allows the input of known active and inactive binders as heuristic information for docking.
-
-We have prepared two graphical tutorials for users to correctly fill in the compulsory fields. Tutorial 1 illustrates how to prepare a receptor in PDBQT format with MGLTools \cite{596}. Tutorial 2 illustrates how to define a search space with MGLTools \cite{596}, Chimera \cite{1219} or PyMOL \cite{1221}. We deliberately do not introduce an automatic protein binding site detection tool but let the graphical tutorials guide this process with full customization.
+Given the structure of a target protein, both istar and DOCK Blaster will dock and score each ligand against the target and provide a ranked list which users may review and prioritize for purchase and testing. From the perspective of binding site indication, istar relies on a user-supplied cubic box, while DOCK Blaster chooses a site by either a docked ligand or some binding site residues. From the perspective of ligand selection, istar features ligand filtering by desired molecular properties in a fine-grained manner, while DOCK Blaster predefines several subsets either by property, by vendor, or by user. From the perspective of documentation, istar presents graphical tutorials on how to prepare a receptor in PDBQT format with MGLTools \cite{596}, and how to define a search space with MGLTools \cite{596}, Chimera \cite{1219} or PyMOL \cite{1221}, while DOCK Blaster deploys a wiki with very rich contents covering all the procedures of DOCK Blaster. As extra features, DOCK Blaster allows the input of known active and inactive binders as heuristic information for docking.
 
 Currently, we have deployed a machine with Intel Xeon W3520 @ 2.66 GHz and 8GB DDR3 SDRAM to run the web server, and two identical virtual machines with Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM to run the idock daemon. We have mounted a 3TB hard disk into our network file system to store docking results. Due to limited budget at the moment, we cannot offer as much hardware resource as DOCK Blaster did (i.e. 700 CPU cores plus 20TB RAID-6 storage). As a compensation, we have released istar under a permissive open source license so that anyone who possesses sufficient hardware resource is welcome to deploy a copy of istar to his/her own infrastructure with no charge.
 
@@ -227,7 +223,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 %\includegraphics[width=4in]{Redocking1B8N.eps}
 \end{center}
 \caption{
-{\bf Redocking case of PDB ID 1B8N.} The crystal conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD_{Vina} = 0.139 \AA$. $RMSD_{idock} = 0.127 \AA$.
+{\bf Redocking case of PDB ID 1B8N.} The crystal conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD = 0.139 \AA$ for Vina. $RMSD = 0.127 \AA$ for idock.
 }
 \label{Redocking1B8N}
 \end{figure}
@@ -237,7 +233,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 %\includegraphics[width=4in]{Redocking4TMN.eps}
 \end{center}
 \caption{
-{\bf Redocking case of PDB ID 4TMN.} $RMSD_{Vina} = 8.401 \AA$. $RMSD_{idock} = 9.909 \AA$.
+{\bf Redocking case of PDB ID 4TMN.} $RMSD = 8.401 \AA$ for Vina. $RMSD = 9.909 \AA$ for idock.
 }
 \label{Redocking4TMN}
 \end{figure}
@@ -247,7 +243,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 %\includegraphics[width=4in]{Redocking1PKX.eps}
 \end{center}
 \caption{
-{\bf Redocking case of PDB ID 1PKX.} $RMSD_{Vina} = 7.059 \AA$. $RMSD_{idock} = 0.214 \AA$.
+{\bf Redocking case of PDB ID 1PKX.} $RMSD = 7.059 \AA$ for Vina. $RMSD = 0.214 \AA$ for idock.
 }
 \label{Redocking1PKX}
 \end{figure}
@@ -257,7 +253,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 %\includegraphics[width=4in]{Redocking3HV8.eps}
 \end{center}
 \caption{
-{\bf Redocking case of PDB ID 3HV8.} $RMSD_{Vina} = 0.290 \AA$. $RMSD_{idock} = 10.232 \AA$.
+{\bf Redocking case of PDB ID 3HV8.} $RMSD = 0.290 \AA$ for Vina. $RMSD = 10.232 \AA$ for idock.
 }
 \label{Redocking3HV8}
 \end{figure}
@@ -406,4 +402,3 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 \end{table}
 
 \end{document}
-
