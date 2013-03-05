@@ -83,7 +83,7 @@ $\ast$ E-mail: JackyLeeHongJian@Gmail.com
 
 % Please keep the abstract between 250 and 300 words
 \section*{Abstract}
-We are motivated by the desire to automate large-scale protein-ligand docking for drug discovery using our docking engine idock and thus have developed a web platform called istar. Without tedious software installation, users can submit jobs on the fly either by using our web site or by programming against our RESTful API. Our istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting free energy and ligand efficiency predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchase, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 ligands from the clean subset of the ZINC database, and revamped our docking engine idock to version 2.1, further improving docking speed and accuracy, inventing new functionalities, and integrating RF-Score as an alternative rescoring function. To compare idock 2.1 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a rescoring benchmark and a redocking benchmark on the 2,897 and 343 protein-ligand complexes of the refined set of PDBbind v2012 and CSAR NRC HiQ Set 24Sept2010 respectively, and a execution time benchmark on 12 diverse proteins and 3,000 ligands of different molecular weight. The results have shown that under various circumstances idock displayed comparable success rates but outperformed AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times. When evaluated on the core set of PDBbind v2012, our istar platform combining with RF-Score managed to reproduce a Pearson correlation and a Spearman correlation of as high as 0.855 and 0.859 respectively between the experimental binding affinity and the predicted binding affinity of the docked conformation. istar is available at http://istar.cse.cuhk.edu.hk.
+We are motivated by the desire to automate large-scale protein-ligand docking for drug discovery using our docking engine idock and thus have developed a web platform called istar. Without tedious software installation, users can submit jobs on the fly either by using our web site or by programming against our REST API. Our istar web site supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) outputting free energy and ligand efficiency predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchase, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 12,171,187 ligands from the clean subset of the ZINC database, and revamped our docking engine idock to version 2.1, further improving docking speed and accuracy, inventing new functionalities, and integrating RF-Score as an alternative rescoring function. To compare idock 2.1 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a rescoring benchmark and a redocking benchmark on the 2,897 and 343 protein-ligand complexes of PDBbind v2012 refined set and CSAR NRC HiQ Set 24Sept2010 respectively, and a execution time benchmark on 12 diverse proteins and 3,000 ligands of different molecular weight. The results have shown that under various circumstances idock displayed comparable success rates but outperformed AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times. When evaluated on the core set of PDBbind v2012, our istar platform combining with RF-Score managed to reproduce a Pearson correlation and a Spearman correlation of as high as 0.855 and 0.859 respectively between the experimental binding affinity and the predicted binding affinity of the docked conformation. istar is freely available at http://istar.cse.cuhk.edu.hk.
 
 % Please keep the Author Summary between 150 and 200 words
 % Use first person. PLoS ONE authors please skip this step. 
@@ -128,49 +128,50 @@ The third key feature of istar is the output of verbose information in PDBQT for
 \section{Datasets}
 We used three different datasets for our benchmarks. They are PDBbind \cite{529,530}, CSAR \cite{857,960} and ZINC \cite{532,1178}.
 
-The PDBbind v2012 dataset contains a diverse collection of experimentally determined protein-ligand complexes carefully selected from PDB (Protein Data Bank) \cite{540,537}. For each complex, the experimental binding affinity (either dissociation constant $K_d$, inhibition constant $K_i$, or half maximal inhibitory concentration $IC_{50}$) is manually collected from its primary literature reference, thus resulting in the general set of 9,308 complexes. Out of them, the complexes with a resolution of 2.5 \AA\ or better, with known $K_d$ or $K_i$ values, and with ligand containing merely the common heavy atoms (i.e. C, N, O, F, P, S, Cl, Br, I) are filtered to constitute the refined set of 2,897 complexes. These complexes are then clustered by protein sequence similarity using BLAST at a cutoff of 90\%, and for each of the 67 resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity are selected to constitute the core set of 201 complexes.
+The PDBbind v2012 dataset contains a diverse collection of experimentally determined protein-ligand complexes carefully selected from PDB (Protein Data Bank) \cite{540,537}. For each complex, the experimental binding affinity (either dissociation constant $K_d$, inhibition constant $K_i$, or half maximal inhibitory concentration $IC_{50}$) is manually collected from its primary literature reference, thus resulting in the general set of 9,308 complexes. Out of them, the complexes with a resolution of 2.5 \AA\ or better, with known $K_d$ or $K_i$ values, and with ligand containing merely the common heavy atoms (i.e. C, N, O, F, P, S, Cl, Br, I) are filtered to constitute the refined set of 2,897 complexes. These complexes are then clustered by protein sequence similarity using BLAST at a cutoff of 90\%, and for each of the 67 resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity are selected to constitute the core set of 201 complexes, whose experimental binding affinity spans 10 pK units.
 
-The CSAR (Community Structure Activity Resource) NRC HiQ Set 24Sept2010 contains 343 diverse protein-ligand complexes and their binding affinity spans 14 pKd units. They are selected from existing PDB \cite{540,537} entries which have binding affinity ($K_d$ or $K_i$) in Binding MOAD \cite{517,518}, augmented with entries from PDBbind \cite{529,530}.
+The CSAR (Community Structure Activity Resource) NRC HiQ Set 24Sept2010 contains 343 diverse protein-ligand complexes and their binding affinity spans 12 pKd units. They are selected from existing PDB \cite{540,537} entries which have binding affinity ($K_d$ or $K_i$) in Binding MOAD \cite{517,518}, augmented with entries from PDBbind \cite{529,530}.
 
-The 
+The ZINC \cite{532,1178} database contains over 21 million purchasable small molecules in popular MOL2 and SDF formats.
 
 % Results and Discussion can be combined.
 \section*{Results}
 idock x86\_64 v2.1 and AutoDock Vina x86 v1.1.2 were evaluated and compared on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output 9 predicted conformations per ligand.
 
 \subsection*{Benchmark of Rescoring}
+Rescoring refers to 
 Figures \ref{PDBbind2012Correlations} and \ref{CSAR2010Correlations} show the binding affinity correlation of idock and AutoDock Vina. Although both programs did well in conformation prediction, they could not predict binding affinity too accurately, a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinities predicted by both programs is very close to 1 because of their identical scoring function but slightly different approximation methods.
 
 Figure \ref{ScoringFunctionComparison} shows
 
 \subsection*{Benchmark of Redocking}
-Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used three datasets: the refined set of PDBbind v2012 \cite{529,530}, the refined set of PDBbind v2011 \cite{529,530}, and the two sets of CSAR NRC HiQ Set 24Sept2010 \cite{857,960}. They comprise 2,897, 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data (Kd or Ki). Note that the 2rio entry of PDBbind contains two Sr (strontium) metal ions, which are supported by idock but not by AutoDock Vina, so we manually removed them before invoking AutoDock Vina.
+Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used the PDBbind v2012 \cite{529,530} refined set (N = 2,897) and the CSAR NRC HiQ Set 24Sept2010 (N = 343) \cite{857,960}. Note that the 2rio entry of PDBbind contains two Sr (strontium) metal ions, which are supported by idock but not by AutoDock Vina, so we manually removed them before invoking AutoDock Vina.
 
-Figures \ref{Redocking1B8N}, \ref{Redocking4TMN}, \ref{Redocking1PKX} and \ref{Redocking3HV8} visualize the redocking results of four cases from the refined set of PDBbind v2012.  We used root mean square deviation, or RMSD for short, to measure the closeness between two conformations. The lower the RMSD is, the closer the two conformations are. Usually the RMSD value is calculated between a reference and a prediction. Very often the RMSD of 2.0Å is the positive control for correct bound structure prediction. In the case of PDB ID 1B8N, both programs managed to predict a conformation close enough to the crystal one. In the case of PDB ID 4TMN, both programs failed, probably due to the presence of a zinc ion in the binding site. In the case of PDB ID 1PKX, idock succeeded but AutoDock Vina failed. In the case of PDB ID 3HV8, AutoDock Vina succeeded but idock failed.
+Figures \ref{Redocking1B8N}, \ref{Redocking4TMN}, \ref{Redocking1PKX} and \ref{Redocking3HV8} visualize the redocking results of four cases from the PDBbind v2012 refined set. We used root mean square deviation, or RMSD for short, to measure the closeness between two conformations. The lower the RMSD is, the closer the two conformations are. Usually the RMSD value is calculated between a reference and a prediction. Very often the RMSD of 2.0Å is the positive control for correct bound structure prediction. In the case of PDB ID 1B8N, both programs managed to predict a conformation close enough to the crystal one. In the case of PDB ID 4TMN, both programs failed, probably due to the presence of a zinc ion in the binding site. In the case of PDB ID 1PKX, idock succeeded but AutoDock Vina failed. In the case of PDB ID 3HV8, AutoDock Vina succeeded but idock failed.
 
 Table \ref{SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the RMSD (Root Mean Square Deviation) values between the crystal and docked conformations. Given a redocking case, RMSD1 refers to the RMSD value between the crystal conformation and the first docked conformation, i.e. the one with the highest predicted binding affinity, while RMSDm refers to the RMSD value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum RMSD value. The condition RMSD1 = RMSDm tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on CSAR NRC HiQ Set 24Sept2010 are consistently higher than PDBbind v2011 and v2012, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation close enough to the crystal conformation as the first conformation for over half of the cases on both databases.
 
 N = 201
 pK-idockConf1idock
-rmse 2.15074764402755
-sdev 2.11396579843799
-pcor 0.501892078054656
-scor 0.530134881544645
-kcor 0.367625624766633
+rmse 2.15
+sdev 2.11
+pcor 0.502
+scor 0.530
+kcor 0.368
 
 pK-idockConfsRFScoreMax
-rmse 1.56522904522105
-sdev 1.55210495416191
-pcor 0.814982041175705
-scor 0.817465225963799
-kcor 0.628716913408723
+rmse 1.57
+sdev 1.55
+pcor 0.815
+scor 0.817
+kcor 0.629
 
 pK-idockConf1RFScore
-rmse 1.41275719330851
-sdev 1.41537801404597
-pcor 0.854873420169116
-scor 0.8587117393171
-kcor 0.678819037528588
+rmse 1.41
+sdev 1.42
+pcor 0.855
+scor 0.859
+kcor 0.679
 
 \subsection*{Benchmark of Execution Time}
 We collected 12 diverse proteins from the PDB (Protein Data Bank) database \cite{540,537}, and 1000 ligands with a molecular weight of 200-300g/mol2, 1000 ligands with a molecular weight of 300-400g/mol2, and 1000 ligands with a molecular weight of 400-500g/mol2 from the clean subset of the ZINC database \cite{532,1178}. The 3,000 ligands were docked against the 12 proteins by AutoDock Vina and idock. Since AutoDock Vina can dock only one ligand in a run, a bash script containing 1000 lines was executed instead, with each line being an execution of Vina to dock one individual ligand. The GNU Time utility was used as a profiler.
@@ -183,7 +184,7 @@ Table \ref{ExecutionTime} compares the CPU time and elapsed time of both program
 %BEDROC was proposed \cite{490}. An $\alpha$ value of 20 contributes to 80\% of the total BEDROC score at 8\% of the ordered rank list, it is thus suggested as a reasonable choice for a VS evaluation.
 
 \section*{Availability}
-We emphasize full reproducibility. Both idock and istar are free and open source under Apache License 2.0. For idock, its C++ source code, precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris, 13 docking examples, and a doxygen file for generating API documentations are available at https://github.com/HongjianLi/idock. For istar, its C++ and JavaScript source code and RESTful API documentation is available at https://github.com/HongjianLi/istar. Our istar web site is running at http://istar.cse.cuhk.edu.hk. It has been tested successfully in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+.
+We emphasize full reproducibility. Both idock and istar are free and open source under Apache License 2.0. For idock, its C++ source code, precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris, 13 docking examples, and a doxygen file for generating API documentations are available at https://github.com/HongjianLi/idock. For istar, its C++ and JavaScript source code and REST API documentation is available at https://github.com/HongjianLi/istar. Our istar web site is running at http://istar.cse.cuhk.edu.hk. It has been tested successfully in Chrome 19+, Firefox 12+, IE 9+, Safari 5+ and Opera 12+.
 
 \section*{Discussion}
 
