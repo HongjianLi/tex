@@ -108,7 +108,31 @@ There are other online protein-ligand docking platforms. DOCK Blaster \cite{557}
 Figure \ref{Architecture} shows the overall architecture of istar. There are five major components: a web site, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our web site and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our web site to download result or monitor job progress.
 
 \subsection*{Web Site}
-On our istar web site, the first section displays summary of existing jobs and the second section allows new job submission. A job comprises compulsory fields and optional fields. Compulsory fields include a receptor in PDBQT format as used by idock and the AutoDock series, a search space defined by a cubic box, a brief description about the job, and an email to receive completion notification. Optional fields include nine ligand filtering conditions and ligand sorting criterion. The nine ligand filtering conditions are molecular weight, partition coefficient xlogP, apolar desolvation, polar desolvation, number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA, net charge, and number of rotatable bonds. The ligand sorting criterion can be either idock score, RF-Score \cite{564}, or their consensus score. RF-Score is a machine learning approach to predicting protein-ligand binding affinity. It has been integrated into istar as an alternative option to re-score and re-rank predicted conformations. The consensus score is implemented as the arithmetic mean of idock score and RF-Score, so that it directly reflects the predicted potency in $pK_d$ or $pK_i$ unit.
+On our istar web site, the first section displays summary of existing jobs and the second section allows new job submission. A job comprises compulsory fields and optional fields. Compulsory fields include a receptor in PDBQT format as used by idock and the AutoDock series, a search space defined by a cubic box, a brief description about the job, and an email to receive completion notification. Optional fields include nine ligand filtering conditions and ligand sorting criterion. The nine ligand filtering conditions are molecular weight, partition coefficient xlogP, apolar desolvation, polar desolvation, number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA, net charge, and number of rotatable bonds. The ligand sorting criterion can be either idock score, RF-Score \cite{564}, or their consensus score.
+
+RF-Score is a machine learning approach to predicting protein-ligand binding affinity. We have integrated a revised version of RF-Score into istar as an alternative option to re-score and re-rank predicted conformations. The consensus score is implemented as the average effect of idock score and RF-Score, so that it directly reflects the predicted potency in $pK_d$ or $pK_i$ unit. Mathematically speaking, equations \eqref{eqn1} to \eqref{eqn3} relate equilibrium constant $K_{eq}$ and dissociation constant $K_d$ with Gibbs free energy $\Delta G$, where $R$ is gas constant and $T$ is absolute temperature.
+\begin{equation}
+\label{eqn1}
+\Delta G = -RT\ln K_{eq}
+\end{equation}
+\begin{equation}
+\label{eqn2}
+K_d = \frac{1}{K_{eq}}
+\end{equation}
+\begin{equation}
+\label{eqn3}
+pK_d = -\ln K_d
+\end{equation}
+Assuming gas constant $R = 1.9858775 \times 10^{-3} kcal/mol$ and at room temperature $T = 298.15K$, plugging equations \eqref{eqn2} and \eqref{eqn3} into \eqref{eqn1} yields
+\begin{equation}
+\label{eqn4}
+pK_d = \frac{1}{-RT\ln 10}\Delta G = \frac{1}{-1.9858775 \times 10^{-3} \times 298.15 \times \ln 10}\Delta G = -0.73349480509 \cdot \Delta G
+\end{equation}
+Equation \eqref{eqn4} translates the predicted free energy output by idock in kcal/mol into binding affinity in $pK_d$ unit. The consensus score is thus defined as
+\begin{equation}
+\label{eqn5}
+Consensus = 0.5 \times (-0.73349480509 \cdot \Delta G + RFScore)
+\end{equation}
 
 We have collected 12,171,187 ligands at pH 7 in mol2 format from version 2012-04-06 of the All Clean subset the ZINC database \cite{532,1178} with explicit permission of its major developer and maintainer, and converted the entire 12 million ligands in batch into PDBQT format as used by idock and the AutoDock series.
 
@@ -322,7 +346,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 \includegraphics[width=4in]{VinaConf1RMSD-idockConf1RMSD.eps}
 \end{center}
 \caption{
-{\bf $RMSD$ of the predicted ligand conformation from the crystal one, showing the values for idock and AutoDock Vina. The color encodes the number of active rotatable bonds.} Very often the $RMSD$ of 2.0 \AA\ is regarded as the positive control for correct bound structure prediction.
+{\bf $RMSD$ of the predicted ligand conformation from the crystal one, showing the values for idock and AutoDock Vina. The color encodes the number of active rotatable bonds (NRB).} Very often the $RMSD$ of 2.0 \AA\ is regarded as the positive control for correct bound structure prediction.
 }
 \label{VinaConf1RMSD-idockConf1RMSD}
 \end{figure}
@@ -332,7 +356,7 @@ We thank Dr. Pedro J. Ballester for sharing with us the code and documentation o
 \includegraphics[width=4in]{NRB-RMSD.eps}
 \end{center}
 \caption{
-{\bf $RMSD$ of the predicted ligand conformation from the crystal one. Abscissa shows the number of active rotatable bonds.} Very often the $RMSD$ of 2.0 \AA\ is regarded as the positive control for correct bound structure prediction.
+{\bf $RMSD$ of the predicted ligand conformation from the crystal one. Abscissa shows the number of active rotatable bonds (NRB).} Very often the $RMSD$ of 2.0 \AA\ is regarded as the positive control for correct bound structure prediction.
 }
 \label{NRB-RMSD}
 \end{figure}
