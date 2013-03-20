@@ -104,7 +104,7 @@ There are other online protein-ligand docking platforms. DOCK Blaster \cite{557}
 % You may title this section "Methods" or "Models". 
 % "Models" is not a valid title for PLoS ONE authors. However, PLoS ONE
 % authors may use "Analysis" 
-\section*{Components and Features}
+\section*{Methods}
 Figure \ref{Architecture} shows the overall architecture of istar. There are five major components: a web site, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our web site and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our web site to download result or monitor job progress.
 
 \subsection*{Web Site}
@@ -167,7 +167,7 @@ idock x86\_64 v2.1 and AutoDock Vina x86 v1.1.2 were evaluated and compared on d
 \subsection*{Benchmark of Rescoring}
 Rescoring refers to predicting the binding affinity as close to the experimental binding affinity as possible given a crystal protein-ligand complex. For the rescoring benchmark, we used the PDBbind v2012 \cite{529,530} refined set ($N$ = 2,897) and the CSAR NRC HiQ Set 24Sept2010 ($N$ = 343) \cite{857,960}.
 
-Figures \ref{PDBbind2012Correlations} and \ref{CSAR2010Correlations} plot the pairwise correlations amongst experimental binding affinity and predicted binding affinity by RF-Score, AutoDock Vina and idock on the two datasets. Judging from the result on the PDBbind v2012 refined set, on one hand, the revised RF-Score, which is trained on the PDBbind v2012 refined set less the core set, managed to reproduce the binding affinity very accurately with Pearson's correlation coefficient $R$ = 0.965, Spearman's correlation coefficient $R_s$ = 0.966, root mean square error $RMSE$ = 0.60, and standard deviation $SD$ = 0.60. On the other hand, although AutoDock Vina and idock claimed to do well in conformation prediction, they could not predict binding affinity very accurately ($R$ = 0.466, $R_s$ = 0.464, $RMSE$ = 2.29, $SD$ = 2.21 for AutoDock Vina, and $R$ = 0.451, $R_s$ = 0.453, $RMSE$ = 2.28, $SD$ = 2.25 for idock), a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinity predicted by AutoDock Vina and idock is very close to 1 because of their identical scoring function but different numerical approximation methods \cite{1153}. The above observations also apply to the result on the CSAR NRC HiQ Set 24Sept2010.
+Figures \ref{PDBbind2012Correlations} and \ref{CSAR2010Correlations} plot the pairwise correlations amongst experimental binding affinity and predicted binding affinity by RF-Score, AutoDock Vina and idock on the two datasets. Judging from the result on the PDBbind v2012 refined set, on one hand, the revised RF-Score, which is trained on the PDBbind v2012 refined set, managed to reproduce the binding affinity very accurately with Pearson's correlation coefficient $R$ = 0.965, Spearman's correlation coefficient $R_s$ = 0.966, root mean square error $RMSE$ = 0.60, and standard deviation $SD$ = 0.60. On the other hand, although AutoDock Vina and idock claimed to do well in conformation prediction, they could not predict binding affinity very accurately ($R$ = 0.466, $R_s$ = 0.464, $RMSE$ = 2.29, $SD$ = 2.21 for AutoDock Vina, and $R$ = 0.451, $R_s$ = 0.453, $RMSE$ = 2.28, $SD$ = 2.25 for idock), a very common obstacle in the entire computational chemistry community. As expected, the correlation between binding affinity predicted by AutoDock Vina and idock is very close to 1 because of their identical scoring function but different numerical approximation methods \cite{1153}. The above observations also apply to the result on the CSAR NRC HiQ Set 24Sept2010.
 
 Table \ref{ScoringFunctionComparison} compares 21 scoring functions on PDBbind v2007 core set ($N$ = 195). In terms of Pearson's correlation coefficient, RF-Score performed the best, while AutoDock Vina and idock ranked 5th and 7th respectively, already outperforming the majority of commercial scoring functions.
 
@@ -213,7 +213,6 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \item We shall limit the number of top hits for download to 1000 ligands from a single job.
 \item We shall update our ligands when ZINC data is updated so that users can benefit from the most current ligand data.
 \end{enumerate}
-We thank Dr. Pedro J. Ballester for sharing with us the code and documentation of RF-Score \cite{564}.
 
 %\section*{References}
 % The bibtex filename
