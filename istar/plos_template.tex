@@ -206,7 +206,7 @@ Given the structure of a target protein, both istar and DOCK Blaster can dock an
 At the moment, we have deployed a machine with Intel Xeon W3520 @ 2.66 GHz and 8GB DDR3 SDRAM to run the web server, and two identical virtual machines with Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM to run the idock daemons. We have mounted a 3TB hard disk into our network file system to store docking jobs and results. Due to limited budget, we cannot offer as much hardware resource as DOCK Blaster (i.e. 700 CPU cores plus 20TB RAID-6 storage). As a compensation, we have released istar under a permissive open source license so that anyone who possesses sufficient hardware resource is welcome to deploy a copy of istar to his/her own infrastructure with no charge.
 
 % Do NOT remove this, even if you are not including acknowledgments
-\section*{Acknowledgments}
+\section*{Acknowledgements}
 We thank Professor John J. Irwin for granting us permission to use ZINC \cite{532,1178} with three conditions:
 \begin{enumerate}
 \item We shall provide links to http://zinc.docking.org/substance/zincid for top hits so that users can seek for the most current purchasing information at ZINC's official web site.
@@ -285,7 +285,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking1B8N.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 1B8N.} The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD$ = 0.139\AA\ for Vina, and $RMSD$ = 0.127\AA\ for idock.
+{\bf Redocking result of PDB ID 1B8N.} The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD$ = 0.139\AA\ for Vina, and $RMSD$ = 0.127\AA\ for idock. Both programs managed to predict a conformation close enough to the crystal one.
 }
 \label{Redocking1B8N}
 \end{figure}
@@ -295,7 +295,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking4TMN.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 4TMN.} The protein target is thermolysin. $RMSD$ = 8.401\AA\ for Vina, and $RMSD$ = 9.909\AA\ for idock.
+{\bf Redocking result of PDB ID 4TMN.} The protein target is thermolysin. $RMSD$ = 8.401\AA\ for Vina, and $RMSD$ = 9.909\AA\ for idock. Both programs failed to predict a conformation close enough to the crystal one, probably due to the presence of a zinc ion in the binding site.
 }
 \label{Redocking4TMN}
 \end{figure}
@@ -305,7 +305,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking1PKX.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 1PKX.} The protein target is bifunctional purine biosynthesis protein PURH. $RMSD$ = 7.059\AA\ for Vina, and $RMSD$ = 0.214\AA\ for idock.
+{\bf Redocking result of PDB ID 1PKX.} The protein target is bifunctional purine biosynthesis protein PURH. $RMSD$ = 7.059\AA\ for Vina, and $RMSD$ = 0.214\AA\ for idock. idock managed to predict a conformation close enough to the crystal one but AutoDock Vina failed.
 }
 \label{Redocking1PKX}
 \end{figure}
@@ -315,7 +315,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking3HV8.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 3HV8.} The protein target is FimX. $RMSD$ = 0.290\AA\ for Vina, and $RMSD$ = 10.232\AA\ for idock.
+{\bf Redocking result of PDB ID 3HV8.} The protein target is FimX. $RMSD$ = 0.290\AA\ for Vina, and $RMSD$ = 10.232\AA\ for idock. AutoDock Vina managed to predict a conformation close enough to the crystal one but idock failed.
 }
 \label{Redocking3HV8}
 \end{figure}
