@@ -368,7 +368,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking1B8N.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 1B8N.} The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD$ = 0.139\AA\ for Vina, and $RMSD$ = 0.127\AA\ for idock. Both programs managed to predict a conformation close enough to the crystal one.
+{\bf Redocking result of PDB ID 1B8N.} The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD$ = 0.14\AA\ for Vina, and $RMSD$ = 0.13\AA\ for idock. Both methods managed to predict a conformation sufficiently close to that of the co-crystallised ligand.
 }
 \label{Redocking1B8N}
 \end{figure}
@@ -378,7 +378,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking4TMN.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 4TMN.} The protein target is thermolysin. $RMSD$ = 8.401\AA\ for Vina, and $RMSD$ = 9.909\AA\ for idock. Both programs failed to predict a conformation close enough to the crystal one, probably due to the presence of a zinc ion in the binding site.
+{\bf Redocking result of PDB ID 4TMN.} The protein target is thermolysin. $RMSD$ = 8.40\AA\ for Vina, and $RMSD$ = 9.91\AA\ for idock. Both methods failed to predict a conformation sufficiently close to that of the co-crystallised ligand, probably due to the presence of a zinc ion in the binding site.
 }
 \label{Redocking4TMN}
 \end{figure}
@@ -388,7 +388,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking1PKX.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 1PKX.} The protein target is bifunctional purine biosynthesis protein PURH. $RMSD$ = 7.059\AA\ for Vina, and $RMSD$ = 0.214\AA\ for idock. idock managed to predict a conformation close enough to the crystal one but AutoDock Vina failed.
+{\bf Redocking result of PDB ID 1PKX.} The protein target is bifunctional purine biosynthesis protein PURH. $RMSD$ = 7.06\AA\ for Vina, and $RMSD$ = 0.21\AA\ for idock. idock managed to predict a conformation sufficiently close to that of the co-crystallised ligand but AutoDock Vina failed.
 }
 \label{Redocking1PKX}
 \end{figure}
@@ -398,7 +398,7 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \includegraphics[width=4in]{Redocking3HV8.eps}
 \end{center}
 \caption{
-{\bf Redocking result of PDB ID 3HV8.} The protein target is FimX. $RMSD$ = 0.290\AA\ for Vina, and $RMSD$ = 10.232\AA\ for idock. AutoDock Vina managed to predict a conformation close enough to the crystal one but idock failed.
+{\bf Redocking result of PDB ID 3HV8.} The protein target is FimX. $RMSD$ = 0.29\AA\ for Vina, and $RMSD$ = 10.23\AA\ for idock. AutoDock Vina managed to predict a conformation sufficiently close to that of the co-crystallised ligand but idock failed.
 }
 \label{Redocking3HV8}
 \end{figure}
@@ -484,7 +484,7 @@ GOLD::GoldScore & 0.295 & 0.322 & 2.29\\
 SYBYL::PMF-Score & 0.268 & 0.273 & 2.29\\
 SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 \end{tabular}
-\begin{flushleft}\label{ScoringFunctionComparison} Pearson's correlation coefficient $R_p$, Spearman's correlation coefficient $R_s$ and standard deviation $SD$ of the difference between predicted and experimental binding affinity on PDBbind v2007 core set ($N$ = 195). Scoring functions are sorted in the descending order of $R_p$. RF-Score, AutoDock Vina and idock rank 1st, 5th and 7th respectively in terms of Pearson's correlation coefficient $R_p$.
+\begin{flushleft}\label{ScoringFunctionComparison} Pearson's correlation coefficient $R_p$, Spearman's correlation coefficient $R_s$ and standard deviation $SD$ of the difference between predicted and experimental binding affinity on PDBbind v2007 core set ($N$ = 195). Scoring functions are sorted in the descending order of $R_p$. RF-Score, AutoDock Vina and idock rank 1st, 5th and 7th respectively in terms of Pearson's correlation coefficient $R_p$. RF-Score, SVR-Score and X-Score are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set.
 \end{flushleft}
 \end{table}
 
