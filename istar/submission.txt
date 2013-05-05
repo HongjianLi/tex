@@ -1,0 +1,12 @@
+Covering letter
+it is easy to use, many colleagues will be using it in the future,
+it can provide the best docking poses for a particular target out of more 12 million molecules,
+you can easily customise the search space for the target,
+results directly provide how to buy compounds for test.
+It is very useful, pragmatic
+
+Suggested reviewers
+Dr Adrian Schreyer: http://www-cryst.bioc.cam.ac.uk/people
+Dr Douglas Houston:
+http://www.research.ed.ac.uk/portal/en/persons/douglas-houston%2884391399-2fa8-4564-a4db-f6b3e54aa469%29.html
+Prof Charlotte Deane: http://www.stats.ox.ac.uk/~deane/
