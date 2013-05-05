@@ -78,7 +78,7 @@ Man-Hon Wong$^{1}$
 \bf{1} Department of Computer Science and Engineering, Chinese University of Hong Kong, Shatin, New Territories, Hong Kong
 \bf{2} European Bioinformatics Institute, Cambridge, UK
 \\
-$\ast$ E-mail: JackyLeeHongJian@Gmail.com
+$\ast$ E-mail: JackyLeeHongJian@Gmail.com, pedro.ballester@ebi.ac.uk
 \end{flushleft}
 
 % Please keep the abstract between 250 and 300 words
@@ -265,7 +265,7 @@ We collected 12 diverse proteins from the PDB (Protein Data Bank) database \cite
 Table \ref{ExecutionTime} compares the CPU time and elapsed time of AutoDock Vina and idock. The execution time varied a lot from protein to protein and from molecular weight set to molecular weight set. In conclusion, idock outperformed AutoDock Vina by at least 8.69 times and at most 37.51 times, making idock particularly ideal for large-scale docking, as is the case of istar.
 
 \subsection*{2-Phase Ranking Benchmark}
-To verify that phase 1 is able to capture the majority of ligands that deserve to pass to phase 2, we used E3 ubiquitin ligase as protein target and selected 1,107 ligands to dock. In phase 1, all the 1,107 ligands were docked by creating 32 optimizations runs per ligand, and then were ranked according to their idock score. The top 1,000 ligands were passed to phase 2 for refinement by creating 128 optimizations runs per ligand, and then were also ranked according to their idock score. The rankings in both phases agree, resulting in a Pearson/Spearman correlation coefficient of 0.9542897.
+To verify that phase 1 is able to capture the majority of ligands that deserve to pass to phase 2, we used E3 ubiquitin ligase as protein target and selected 1,107 ligands to dock. In phase 1, all the 1,107 ligands were docked by creating 32 optimizations runs per ligand, and then were ranked according to their idock score. The top 1,000 ligands were passed to phase 2 for refinement by creating 128 optimizations runs per ligand, and then were also ranked according to their idock score. The rankings in both phases agree, resulting in a Spearman correlation coefficient of 0.954.
 
 %\subsection*{Benchmark of Enrichment}
 %Consider three basic cases related to the “early recognition” problem. (1) half of the actives are retrieved at the very beginning of the rank-ordered list and the other half at the end; (2) the actives are randomly distributed all across the ranks; (3) all of the actives are retrieved in the middle of the list. In all three cases, the ROC metric is 1/2 when, in terms of the “early recognition”, case 1 is clearly better than case 2, which is also significantly better than case 3.
