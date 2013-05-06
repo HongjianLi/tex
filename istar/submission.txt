@@ -1,12 +1,7 @@
 Covering letter
-it is easy to use, many colleagues will be using it in the future,
-it can provide the best docking poses for a particular target out of more 12 million molecules,
-you can easily customise the search space for the target,
-results directly provide how to buy compounds for test.
-It is very useful, pragmatic
+We develop a web platform called istar to automate large-scale protein-ligand docking using our fast docking engine idock. It can provide the best docking poses for a particular protein target out of more than 12 million ligands. Users can easily customize the search space for the target and select which ligands to dock. Results directly provide where to buy compounds for wet-lab test. Our web platform is very pragmatic and much easier to use than DOCK Blaster. We believe many colleagues will be using it in the future.
 
 Suggested reviewers
-Dr Adrian Schreyer: http://www-cryst.bioc.cam.ac.uk/people
-Dr Douglas Houston:
-http://www.research.ed.ac.uk/portal/en/persons/douglas-houston%2884391399-2fa8-4564-a4db-f6b3e54aa469%29.html
-Prof Charlotte Deane: http://www.stats.ox.ac.uk/~deane/
+Dr. Adrian Schreyer, Department of Biochemistry, University of Cambridge, adrian@cryst.bioc.cam.ac.uk, +44(0)1223-766033, http://www-cryst.bioc.cam.ac.uk/people
+Dr. Douglas Houston, School of Biological Sciences, University of Edinburgh, DouglasR.Houston@ed.ac.uk, 0131 650 7358, http://www.ed.ac.uk/schools-departments/biology/people?id=dhouston&cw_xml=research_profile.php
+Prof. Charlotte Deane, Department of Statistics, University of Oxford, deane@stats.ox.ac.uk, +44 1865 281301, http://www.stats.ox.ac.uk/~deane
