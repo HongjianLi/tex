@@ -30,15 +30,11 @@ http://istar.cse.cuhk.edu.hk/iview
 
 \section{Introduction}
 
-Visualization of protein-ligand complex plays an important role in elaborating protein-ligand interactions and aiding novel drug design. To date, there are dozens of visualization tools. Among them, PyMOL \citep{1221}, Chimera \citep{1219} and VMD \citep{1220} are very well-known and highly cited. They can interpret multiple file formats and generate multiple representations to provide users with precise and powerful control. AutoDockTools4 \citep{596} provides native support for the PDBQT file format, which is widely used in various protein-ligand docking software such as AutoDock \citep{596}, AutoDock Vina \citep{595}, and our idock \citep{1153}. We also developed our own program \citep{1265} to visualize structures in virtual reality settings and employ fragment-based \textit{de novo} ligand design strategy for interactive drug design. LigPlot+ \citep{951} and PoseView \citep{748}, on the other hand, plot 2D diagrams of protein-ligand interactions from 3D coordinates.
+Visualization of protein-ligand complex plays an important role in elaborating protein-ligand interactions and aiding novel drug design. To date, dozens of visualization tools already exist. PyMOL \citep{1221}, Chimera \citep{1219} and VMD \citep{1220} are very well-known and highly cited. They can interpret multiple file formats and generate multiple representations to provide users with precise and powerful control. AutoDockTools4 \citep{596} provides native support for the PDBQT file format, which is widely used in various protein-ligand docking software such as AutoDock \citep{596}, AutoDock Vina \citep{595}, and our idock \citep{1153}. A case study \citep{1321} is presented to process large amounts of geometry data for real-time 3D exploration, superimposition, and interactive navigational tasks in a virtual reality environment. We also developed our own program \citep{1265} to visualize structures in virtual reality settings and employ fragment-based \textit{de novo} ligand design strategy for interactive drug design. LigPlot+ \citep{951} and PoseView \citep{748}, on the other hand, plot 2D diagrams of protein-ligand interactions from 3D coordinates.
 
-In addition, there are web tools based on either Java applet, Flash, or HTML5 canvas. Jmol \citep{1263}, an open source Java viewer for chemical structures in 3D, has been deployed worldwide and recognized as the \textit{de facto} molecular viewer on the web. JSmol \citep{1314}, a JavaScript-only version of Jmol, includes the full implementation of the entire set of Jmol functionalities. GLmol \citep{1319}, a molecular viewer on WebGL/Javascript, supports ... ChemDoodle Web Components \citep{1264}, a pure Javascript chemical graphics and cheminformatics library, presents 2D and 3D graphics and animations for chemical structures, reactions and spectra. ChemCalc \citep{}, ... ePlant \citep{1242}, a suite of open-source Flash-based web tools, visualizes integrative systems biology from the model organism \textit{Arabidopsis thaliana}.
+In addition, there are web tools based on either Java applet, Flash, or HTML5 canvas. Jmol \citep{1263}, an open source Java viewer for chemical structures in 3D, has been deployed worldwide and recognized as the \textit{de facto} molecular viewer on the web. JSmol \citep{1314}, a JavaScript-only version of Jmol, includes the full implementation of the entire set of Jmol functionalities. GLmol \citep{1319}, a molecular viewer on WebGL/Javascript, supports multiple file formats and representations and features an experimental version of molecular surface based on the EDTSurf algorithm \citep{1297}. Another study \citep{1262} also presents a WebGL technology for rendering molecular surface using the SpiderGL library \citep{1320} ChemDoodle Web Components \citep{1264}, a pure Javascript chemical graphics and cheminformatics library, presents 2D and 3D graphics and animations for chemical structures, reactions and spectra. ePlant \citep{1242}, a suite of open-source Flash-based web tools, visualizes integrative systems biology from the model organism \textit{Arabidopsis thaliana}. PLI \citep{1288} is a web-based tool for the comparison of protein-ligand interactions observed on PDB structures. BioJS \citep{1308} is an open source JavaScript framework for biological data visualization. There is a review that covers a history of web-based structure input \citep{1243}.
 
-The creation of interactive 3D visualization schemes on the web platform using WebGL is presented for scientific data produced by molecular and cellular biology research \citep{1262}. PLI \citep{1288} is a web-based tool for the comparison of protein-ligand interactions observed on PDB structures. BioJS \citep{1308} is an open source JavaScript framework for biological data visualization.
-
-However, there is no protein-ligand complex visualizer based on HTML5. We propose iview, an interactive WebGL visualizer of protein-ligand complex (Figure \ref{istar:iview}). Users shall be able to view the protein-ligand docking results directly on istar. Typical functionalities include zooming, dragging, and plotting hydrogen bonds. The output of idock on istar include docked conformations in PDBQT format.
-
-Modern browsers, e.g. Chrome, Firefox, Safari and Opera, support WebGL.
+However, there is no online docking. We develop iview, an interactive WebGL visualizer of protein-ligand complex (Figure \ref{istar:iview}). iview is refactored from GLmol \citep{1319}.
 
 \section{Approach}
 
@@ -49,6 +45,15 @@ Modern browsers, e.g. Chrome, Firefox, Safari and Opera, support WebGL.
 EDTSurf \citep{1297} is an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform.
 Protein formats: PDB, PDBQT
 Ligand formats: PDB, PDBQT, MOL2, SDF, XYZ
+Camera: perspective, orthographic
+Background: black, grey, white
+Color by: spectrum, chain, secondary structure, B factor, residue, polarity, atom
+Primary structure: line, stick, ball-and-stick, sphere, nothing
+Secondary structure: ribbon, strand, cylinder and plate, C alpha trace, nothing
+Protein surface: molecular surface, solvent excluded surface, solvent accessible surface, vdw surface
+Surface opacity
+Rotate, translate, zoom model with mouse
+Fog and slab
 
 \end{methods}
 
@@ -56,6 +61,10 @@ Ligand formats: PDB, PDBQT, MOL2, SDF, XYZ
 %\centerline{\includegraphics{fig01.eps}}
 \caption{Caption, caption.}\label{fig:01}
 \end{figure}
+
+\section{Availability}
+
+Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL.
 
 \section{Conclusion}
 
