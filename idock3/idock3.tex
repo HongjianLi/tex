@@ -1,0 +1,129 @@
+\documentclass[10pt, conference, compsocconf]{../IEEEtran}
+\usepackage{xltxtra}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[numbers,sort&compress]{natbib}
+\setmainfont{Times New Roman}
+
+\begin{document}
+
+\title{idock 3: Ultrafast Protein-Ligand Docking on GPU Cluster} % can use linebreaks \\ within to get better formatting as desired
+\author
+{
+\IEEEauthorblockN
+{
+Hongjian Li, Kwong-Sak Leung and Man-Hon Wong
+\IEEEauthorblockA
+{
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong, P.R. China\\
+JackyLeeHongJian@Gmail.com
+}
+}
+}
+\maketitle
+
+\begin{abstract}
+
+Protein-ligand docking is a key computational method in the design of starting points for the drug discovery process. We are motivated by the desire to accelerate large-scale docking and have thus developed idock 3 to utilize the tremendous computational power of GPU clusters.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+
+bioinformatics, chemoinformatics, drug discovery, protein-ligand docking, virtual screening, multithreading
+
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Protein-ligand docking predicts the preferred conformation and binding affinity of a small ligand as non-covalently bound to the specific binding site of a protein. Docking can therefore be used not only to determine whether a ligand binds, but also to understand how it binds. The latter is subsequently important to improve the potency and selectivity of binding. To date, there are hundreds of docking programs \cite{493,922}. The AutoDock series \cite{597,596,595} is the most cited docking software in the research community, with over 5,000 citations according to Google Scholar. AutoDock has contributed to the discovery of several drugs, including the first clinically approved HIV integrase inhibitor \cite{1169}. Following its initial release, several parallel implementations were developed using either multithreading or computer cluster \cite{115,560,782}.
+
+In 2009, AutoDock Vina \cite{595} was released. As the successor of AutoDock 4 \cite{596}, AutoDock Vina significantly improves the average accuracy of the binding mode predictions while running two orders of magnitude faster with multithreading \cite{595}. It was compared to AutoDock 4 on selecting active compounds against HIV protease, and was recommended for docking large molecules \cite{556}. Its functionality of semi-flexible protein docking by enabling flexibility of side-chain residues was evaluated on VEGFR-2 \cite{1084}. To further facilitate the usage of AutoDock Vina, auxiliary tools were subsequently developed, including a PyMOL \cite{1221} plugin for program settings and visualization \cite{609}, a bootable operating system for computer clusters \cite{773}, a console application for virtual screening on Windows \cite{1268}, and a GUI for virtual screening on Windows \cite{1250}.
+
+In 2011, inspired by AutoDock Vina, we developed idock 1.0 \cite{1153}, a multithreaded virtual screening tool for flexible ligand docking. idock introduces plenty of innovations, such as caching receptor and grid maps in memory to permit efficient large-scale docking, revised numerical model for much faster energy approximation, capability of automatic detection and deactivation of inactive torsions for dimensionality reduction, utilization of our lightweight thread pool to parallelize grid map creation and reuse threads, utilization of the new C++11 programming features to avoid frequent memory reallocation, and accelerated parsers for both receptors and ligands. When benchmarked on docking 10,928 drug-like ligands against HIV reverse transcriptase, idock 1.0 achieved a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average compared to AutoDock Vina, making idock one of the fastest docking software.
+
+Having released idock, we kept receiving docking requests from our colleagues and collaborators. They are mostly biochemists and pharmacologists, outsourcing the docking research to us after discovering pharmaceutical protein targets for certain diseases of therapeutic interest. Consequently, we had to grab the protein structure, do format conversion, define search space, set up docking parameters, and keep running idock in batch for months. Tedious enough, all the above work was done manually, resulting in very low research productivity. In order to automate large-scale protein-ligand docking using our idock, we have therefore developed a web platform called istar.
+
+%GPGPU background
+
+\section{Methods}
+
+idock 3 is written in C++11 with CUDA and experimental OpenCL support.
+
+\subsection{CUDA driver API and OpenCL}
+
+Low level. Forward compatibility. Intel Xeon Phi support.
+
+\subsection{Scheduling Models}
+
+\subsubsection{Naive serial}
+straightforward, not adaptable to multi core CPU nowadays
+
+\subsubsection{Ad hoc multithreading}
+on the fly, just in time
+Thread construction and destruction overhead
+Implemented in Vina
+
+\subsubsection{Thread pool}
+Buffer threads
+Implemented in idock 2.0
+
+\subsubsection{Central dispatcher}
+multiple devices, each has a command queue
+fine grained to coarse grained parallelism
+Estimate task execution time based on theoretical Gflops
+Hard to estimate exactly given different task size, instruction branches, concurrent device utilization
+synchronize once in the end
+
+\subsubsection{Static producer/consumer}
+central queue expands until full
+no dispatcher, concurrent consumers
+device queue size = 1, host thread syncs with device beforing fetching next task
+Implemented in idock 3.0
+
+\subsubsection{Dynamic producer/consumer}
+concurrent enqueue and dequeue
+idock 3.0
+
+\subsubsection{Async callback}
+Overlap host threads with device threads
+central dispatcher or producer/consumer
+Thread construction and destruction overhead
+
+\subsubsection{Async callback with multiple queues}
+HyperQ on compute capability 3.5 and higher
+
+\subsection{Optimization Algorithm Variants}
+
+\subsubsection{SA}
+Vina, CPU async execution
+
+\subsubsection{MC}
+same PC in warp, less divergence
+greedy, no metroplis acceptance
+mutate current local optimum
+
+\subsubsection{MC2}
+mutate so-far-best local optimum
+
+\subsection{Address Spaces}
+
+global, constant, shared, local
+
+\subsection{Data Structures}
+
+AOS to SOA to meet requirements of global memory coalesced access.
+
+\section{Results and Discussion}
+
+
+
+\section{Availability}
+
+idock is open source under Apache License 2.0 and is freely available at https://GitHub.com/HongjianLi/idock. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Docking examples and API documentations are also provided.
+
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
