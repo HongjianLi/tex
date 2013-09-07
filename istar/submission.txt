@@ -4,6 +4,7 @@ We develop a web platform called istar to automate large-scale protein-ligand do
 Suggested reviewers
 Dr. Adrian Schreyer, Department of Biochemistry, University of Cambridge, adrian@cryst.bioc.cam.ac.uk, +44(0)1223-766033, http://www-cryst.bioc.cam.ac.uk/people
 Dr. Douglas Houston, School of Biological Sciences, University of Edinburgh, DouglasR.Houston@ed.ac.uk, 0131 650 7358, http://www.ed.ac.uk/schools-departments/biology/people?id=dhouston&cw_xml=research_profile.php
+
 Prof. Charlotte Deane, Department of Statistics, University of Oxford, deane@stats.ox.ac.uk, +44 1865 281301, http://www.stats.ox.ac.uk/~deane
 
 Suggested editor
