@@ -36,8 +36,9 @@ In addition, there are web tools based on either Java applet, Flash, or HTML5 ca
 
 However, there is no online docking. We develop iview, an interactive WebGL visualizer of protein-ligand complex (Figure \ref{istar:iview}). iview is refactored from GLmol \citep{1319}.
 
-\section{Approach}
+Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL. IE11 will also support WebGL.
 
+\section{Approach}
 
 \begin{methods}
 \section{Methods}
@@ -54,22 +55,22 @@ Protein surface: molecular surface, solvent excluded surface, solvent accessible
 Surface opacity
 Rotate, translate, zoom model with mouse
 Fog and slab
-Port canvas to png
+Export canvas to png
 
 \end{methods}
 
-\begin{figure}[!tpb]%figure1
-%\centerline{\includegraphics{fig01.eps}}
-\caption{Caption, caption.}\label{fig:01}
+\begin{figure}[!tpb]
+\centerline{\includegraphics{4MBS.png}}
+\caption{PDB code: 4MBS.}\label{fig:4MBS}
 \end{figure}
 
 \section{Availability}
 
-Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL.
+iview is free and open source under Apache License 2.0. iview is available at http://istar.cse.cuhk.edu.hk/iview. Its source code is available at https://github.com/HongjianLi/istar.
 
-\section{Conclusion}
+%\section{Conclusion}
 
-We have developed iview, an interactive HTML5 visualizer of real-time protein-ligand docking.
+%We have developed iview, an interactive WebGL visualizer of protein-ligand complex.
 
 \bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
