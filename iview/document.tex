@@ -34,28 +34,35 @@ Visualization of protein-ligand complex plays an important role in elaborating p
 
 In addition, there are web tools based on either Java applet, Flash, or HTML5 canvas. Jmol \citep{1263}, an open source Java viewer for chemical structures in 3D, has been deployed worldwide and recognized as the \textit{de facto} molecular viewer on the web. JSmol \citep{1314}, a JavaScript-only version of Jmol, includes the full implementation of the entire set of Jmol functionalities. GLmol \citep{1319}, a molecular viewer on WebGL/Javascript, supports multiple file formats and representations and features an experimental version of molecular surface based on the EDTSurf algorithm \citep{1297}. Another study \citep{1262} also presents a WebGL technology for rendering molecular surface using the SpiderGL library \citep{1320} ChemDoodle Web Components \citep{1264}, a pure Javascript chemical graphics and cheminformatics library, presents 2D and 3D graphics and animations for chemical structures, reactions and spectra. ePlant \citep{1242}, a suite of open-source Flash-based web tools, visualizes integrative systems biology from the model organism \textit{Arabidopsis thaliana}. PLI \citep{1288} is a web-based tool for the comparison of protein-ligand interactions observed on PDB structures. BioJS \citep{1308} is an open source JavaScript framework for biological data visualization. There is a review that covers a history of web-based structure input \citep{1243}.
 
-However, there is no online docking. We develop iview, an interactive WebGL visualizer of protein-ligand complex (Figure \ref{istar:iview}). iview is refactored from GLmol \citep{1319}.
+However, there is easy-to-use online visualizer. We develop iview, an interactive WebGL visualizer of protein-ligand complex (Figure \ref{istar:iview}). iview is refactored from GLmol 0.47 \citep{1319}.
 
-Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL. IE11 will also support WebGL.
+Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL. IE11 will support WebGL too.
 
 \section{Approach}
 
 \begin{methods}
 \section{Methods}
 
-EDTSurf \citep{1297} is an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform.
-Protein formats: PDB, PDBQT
-Ligand formats: PDB, PDBQT, MOL2, SDF, XYZ
+Load structure from PDB
 Camera: perspective, orthographic
 Background: black, grey, white
 Color by: spectrum, chain, secondary structure, B factor, residue, polarity, atom
 Primary structure: line, stick, ball-and-stick, sphere, nothing
 Secondary structure: ribbon, strand, cylinder and plate, C alpha trace, nothing
-Protein surface: molecular surface, solvent excluded surface, solvent accessible surface, vdw surface
+EDTSurf \citep{1297} is an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform.
+Protein surface: Van der Waals surface, solvent excluded surface, solvent accessible surface, molecular surface 
 Surface opacity
-Rotate, translate, zoom model with mouse
-Fog and slab
+Wireframe
+Rotate, translate, zoom in/out, slab with mouse
 Export canvas to png
+
+Tailor-made version specifically for idock jobs
+Protein and top hit ligands in PDBQT format
+Search space in cubic box
+Top 100 ligand switch
+Putative hydrogen bonds
+10 molecular properties
+suppliers
 
 \end{methods}
 
