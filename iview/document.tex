@@ -5,7 +5,7 @@
 \begin{document}
 \firstpage{1}
 
-\title[iview]{iview: Interactive WebGL Visualizer of Protein-Ligand Complex}
+\title[iview]{iview: WebGL Visualizer of Protein-Ligand Complex}
 \author[Hongjian Li \textit{et~al}]{Hongjian Li\,$^{1,}$\footnote{to whom correspondence should be addressed}, Takanori Nakane\,$^{2}$, Kwong-Sak Leung\,$^{1}$ and Man-Hon Wong\,$^{1}$}
 \address{$^{1}$Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong\\
 $^{2}$Graduate School of Medicine, Kyoto University, Japan}
@@ -38,6 +38,8 @@ However, there is easy-to-use online visualizer. We develop iview, an interactiv
 
 Modern browsers nowadays, e.g. Chrome, Firefox, Safari and Opera, support WebGL. IE11 will support WebGL too.
 
+4MBS \citep{1348}
+
 \section{Approach}
 
 \begin{methods}
@@ -66,9 +68,9 @@ suppliers
 
 \end{methods}
 
-\begin{figure}[!tpb]
-\centerline{\includegraphics{4MBS.png}}
-\caption{PDB code: 4MBS.}\label{fig:4MBS}
+\begin{figure}%[!tpb]
+\centerline{\includegraphics[width=\linewidth]{4MBS.png}}
+\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex (PDB code: 4MBS). The human CCR5 is rendered as molecular surface colored by spectrum. The marketed HIV drug maraviroc is rendered as stick colored by atom types. It can be clearly seen that the CCR5 forms a deep allosteric cavity where maraviroc is buried.}\label{fig:4MBS}
 \end{figure}
 
 \section{Availability}
