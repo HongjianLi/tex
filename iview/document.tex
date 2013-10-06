@@ -43,12 +43,9 @@ However, the existing web visualizers are either too complicated to use, or lack
 \begin{methods}
 \section{Methods}
 
-iview is refactored from GLmol 0.47. It loads protein-ligand structures from the PDB (Protein Data Bank) \citep{539,537} as its data source. It provides cameras for both perspective and orthographic projections.
-Background: black, grey, white
-Color by: spectrum, chain, secondary structure, B factor, residue, polarity, atom
-Primary structure: line, stick, ball-and-stick, sphere, nothing
-Secondary structure: ribbon, strand, cylinder and plate, C alpha trace, nothing
-EDTSurf \citep{1297} is an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform.
+iview is refactored from GLmol 0.47, using three.js as its primary 3D engine with antialias support. It loads a protein-ligand structure from the PDB (Protein Data Bank) \citep{539,537} as its data source via a RESTful interface. It renders four representations for primary structure, namely line, stick, ball \& stick, and sphere. It renders five representations for secondary structure, namely ribbon, strand, cylinder \& plate, C alpha trace, and B factor tube. It colors the complex by either atom spectrum, protein chain, protein secondary structure, B factor, residue name, residue polarity, or atom type, by changing the vertex colors of the. It provides cameras for both perspective and orthographic projections. It supports rotation, translation, zooming and slab with mouse manipulation.
+
+iview features EDTSurf \citep{1297} is an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform.
 Protein surface: Van der Waals surface, solvent excluded surface, solvent accessible surface, molecular surface 
 Surface opacity
 Wireframe
@@ -74,7 +71,7 @@ iview is free and open source under Apache License 2.0. iview is available at ht
 
 %\section{Conclusion}
 
-%We have developed iview, an interactive WebGL visualizer of protein-ligand complex.
+%We have developed iview, an interactive WebGL visualizer of protein-ligand complex. Manipulate ligands only. Text rendering. Visual docking. Rescoring with RF-Score.
 
 \bibliographystyle{natbib}
 %\bibliographystyle{achemnat}
