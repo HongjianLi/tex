@@ -43,8 +43,7 @@ However, the existing web visualizers are either too complicated to use, or lack
 \begin{methods}
 \section{Methods}
 
-iview is refactored from GLmol 0.47. It loads protein-ligand structures from the PDB (Protein Data Bank) \cite{539,537} as its data source.
-Camera: perspective, orthographic
+iview is refactored from GLmol 0.47. It loads protein-ligand structures from the PDB (Protein Data Bank) \citep{539,537} as its data source. It provides cameras for both perspective and orthographic projections.
 Background: black, grey, white
 Color by: spectrum, chain, secondary structure, B factor, residue, polarity, atom
 Primary structure: line, stick, ball-and-stick, sphere, nothing
@@ -56,13 +55,7 @@ Wireframe
 Rotate, translate, zoom in/out, slab with mouse
 Export canvas to png
 
-
-Protein and top hit ligands in PDBQT format
-Search space in cubic box
-Top 100 ligand switch
-Putative hydrogen bonds
-10 molecular properties
-suppliers
+Based on the feature-rich version, the tailor-made version of iview specifically for idock jobs removes the majority of dispensable functions and therefore shapes a very neat interface. It only retains the rendering of primary structure of protein and ligand in four representations, as well as the construction of protein surface. Most importantly, it implements additional features. It displays the user-supplied search space in the form of a cubic box so that the binding site is visually depicted. Its parsers are capable of parsing a protein and multiple top hit ligands in PDBQT format as used by idock. It provides a straightforward way to switch top hit ligands easily. In four separate columns of a panel, it shows the docking result files, molecular properties, compound suppliers/annotations, and putative hydrogen bonds, respectively, in order to give users a quick overview of the top hit ligands, and assist them in making decisions of which compounds to purchase for subsequent wet-lab experiments.
 
 \end{methods}
 
