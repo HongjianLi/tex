@@ -1,0 +1,8 @@
+Cover letter
+We have developed iview, a WebGL visualizer of protein-ligand complex. Compared to other web visualizers, iview features realtime macromolecular surface construction and virtual reality support. Our iview is based on HTML5 canvas and thus requires no Java or browser plugins. It can be possibly integrated into the official PDB website at http://pdb.org as an alternative online visualizer to the existing three visualizers, namely Simple Viewer, Protein Workshop and Kiosk Viewer, which all require Java.
+
+Suggested reviewers
+
+
+Suggested editor
+
