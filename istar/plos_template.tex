@@ -217,21 +217,21 @@ ConsensusScore = 0.5 \times (-0.73349480509 \cdot idockScore + RFScore)
 \end{equation}
 
 \subsection*{Web platform istar}
-Figure \ref{Architecture} shows the overall architecture of istar. There are five major components: a website, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our website and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our website to download result or monitor job progress. Our web server also supports REST API for developers to program against.
+Figure S1 shows the overall architecture of istar. There are five major components: a website, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our website and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our website to download result or monitor job progress. Our web server also supports REST API for developers to program against.
 
 On our istar website, the first section displays summary of existing jobs and the second section allows new job submission. A job comprises compulsory fields and optional fields. Compulsory fields include a receptor in PDBQT format as used by idock and the AutoDock series, a search space defined by a cubic box, a brief description about the job, and an email to receive completion notification. Optional fields include nine ligand filtering conditions and ligand sorting criterion. The nine ligand filtering conditions are molecular weight, partition coefficient xlogP, apolar desolvation, polar desolvation, number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA, net charge, and number of rotatable bonds. These nine molecular descriptors are directly retrieved from our data source, i.e. the ZINC database \cite{532,1178}, in which the nine descriptors are already precalculated. Note that although molecular mass in Dalton unit may be a more appropriate descriptor than molecular weight in g/mol unit, we stick to the latter in order to maintain consistency with ZINC, in which the g/mol unit is used for molecular weight. The ligand sorting criterion can be either idock score, RF-Score, or their consensus score.
 
 We have collected 17,224,424 ligands at pH 7 in mol2 format from versions 2012-04-26 and 2013-01-10 of the All Clean subset the ZINC database \cite{532,1178} with explicit permission of its major developer and maintainer. The All Clean subset is constituted by applying strict filtering rules (http://blaster.docking.org/filtering), e.g. aldehydes and thiols have been removed. We have then converted the entire 17 million ligands in batch into PDBQT format.
 
-istar supports ligand selection by desired molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time (Figure \ref{Slider}). Users can move the nine sliders to filter ligands in the form of closed intervals. Only the ligands satisfying all the nine filtering conditions will be docked. Because of the relationship of logical and, in order to nullify a specific filtering condition, one may expand its closed interval to cover the entire possible range. We have set up default values of the lower and upper bounds of the nine molecular properties for novices to get started easily.
+istar supports ligand selection by desired molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time (Figure S2). Users can move the nine sliders to filter ligands in the form of closed intervals. Only the ligands satisfying all the nine filtering conditions will be docked. Because of the relationship of logical and, in order to nullify a specific filtering condition, one may expand its closed interval to cover the entire possible range. We have set up default values of the lower and upper bounds of the nine molecular properties for novices to get started easily.
 
 After jobs are submitted and queued in the server, it is the daemon that indeed performs protein-ligand docking. A daemon is a program running in the background and doing some kind of jobs. Based on the offline version of idock, we have derived a customized daemon specifically for use in the istar environment.
 
 Notably, our idock daemon performs 2-phase docking. In phase 1, the daemon performs coarse but fast docking without writing any conformations, aiming to quickly shortlist a few thousand candidate compounds out of the large amount of user-selected ligands. The coarse docking mode behaves similarly to the offline version of idock in the sense that they both execute 32 optimization runs per ligand, except that the daemon writes no conformations in order to save I/O cost, and it exploits slice-level parallelism. The entire 17 million ligands are evenly subdivided into 100 slices, with each slice covering 0.17 million ligands. The 100 slices are then distributed to idle workstations to achieve parallel docking. Therefore even a single job can benefit from multiple CPU cores across multiple workstations, ensuring all the computational resources are fully utilized. In phase 2, the daemon performs fine but slow docking, writing as many conformations as possible for users to download and aiming to refine the predicted conformations and binding affinity of candidate compounds, i.e. the top 1,000 ligands ranked in phase 1. The fine docking mode increases the number of optimization runs from 32 to 128 in order to explore the conformational space more exhaustively, but requires 4x execution time in return. It exploits job-level parallelism instead, i.e. the phase 2 of multiple jobs can be distributed to idle workstations for parallel docking, but the phase 2 itself cannot be further split into slices. In this way, the daemon utilizes all the CPU cores of one single workstation. It is certainly possible to implement slice-level parallelism in phase 2, but the implementation would become far too sophisticated. Most importantly, the current design can already hide the pipelining latency because given a set of $N$ workstations and a queue of two or more jobs, one workstation executes phase 2 of the first job in parallel while all the other $N-1$ workstations execute phase 1 of the second job in parallel. We have done a ranking benchmark to confirm that phase 1 is able to capture most of the ligands that deserve to pass to phase 2.
 
-istar supports monitoring job progress in real time (Figure \ref{Progress}). We have composed a timer to automatically fetch and report the latest job progress every second without page refresh. Users can thus have a rough estimation in advance of how long the jobs will take and when the jobs will complete. This feature is particularly handy when the jobs are long running, which is usually the case of large-scale docking.
+istar supports monitoring job progress in real time (Figure S3). We have composed a timer to automatically fetch and report the latest job progress every second without page refresh. Users can thus have a rough estimation in advance of how long the jobs will take and when the jobs will complete. This feature is particularly handy when the jobs are long running, which is usually the case of large-scale docking.
 
-istar outputs verbose information in PDBQT format (Figure \ref{OutputPDBQT}). The first REMARK line describes the ZINC ID, molecular weight (g/mol), partition coefficient xlogP, apolar desolvation (kcal/mol), polar desolvation (kcal/mol), number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA ($\AA^2$), net charge, and number of rotatable bonds of a selected ligand. The second REMARK line describes the SMILES representation. The third REMARK line describes the number of suppliers followed by their names, which conform to the nomenclature as used by ZINC. For each predicted conformation, the REMARK lines describe the free energy and ligand efficiency predicted by idock, putative hydrogen bonds, binding affinity predicted by RF-Score, and consensus score in $pK_d$ or $pK_i$ unit. Columns 71 to 76 of the ATOM lines describe the predicted free energy of each atom. The individual atom contribution to the overall score facilitates the detection of protein-ligand interaction hotspots, and thus assists in \textit{de novo} ligand design.
+istar outputs verbose information in PDBQT format (Figure S4). The first REMARK line describes the ZINC ID, molecular weight (g/mol), partition coefficient xlogP, apolar desolvation (kcal/mol), polar desolvation (kcal/mol), number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA ($\AA^2$), net charge, and number of rotatable bonds of a selected ligand. The second REMARK line describes the SMILES representation. The third REMARK line describes the number of suppliers followed by their names, which conform to the nomenclature as used by ZINC. For each predicted conformation, the REMARK lines describe the free energy and ligand efficiency predicted by idock, putative hydrogen bonds, binding affinity predicted by RF-Score, and consensus score in $pK_d$ or $pK_i$ unit. Columns 71 to 76 of the ATOM lines describe the predicted free energy of each atom. The individual atom contribution to the overall score facilitates the detection of protein-ligand interaction hotspots, and thus assists in \textit{de novo} ligand design.
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -253,7 +253,7 @@ Figure \ref{PDBbind2012Correlations} plots the pairwise correlations amongst exp
 \subsection*{Redocking Benchmark}
 Redocking refers to randomizing the crystal ligand conformation in a protein-ligand complex and trying to dock the randomized conformation back to its crystal conformation as close as possible. For the redocking benchmark, we used the PDBbind v2012 \cite{529,530} refined set ($N$ = 2,897), the PDBbind v2011 refined set ($N$ = 2,455), and the CSAR NRC HiQ Set 24Sept2010 ($N$ = 343) \cite{857,960}, because they are the latest versions and contain the largest number of high-quality and diverse protein-ligand structures. We wrote a script to automatically define the search box first by finding the smallest cubic box that covers the entire ligand and then by extending the box by 10\AA\ in all the three dimensions. Note that the 2rio entry of PDBbind contains two strontium ions, which are supported by idock but not by AutoDock Vina, we manually removed them before invoking AutoDock Vina.
 
-Figures \ref{Redocking1B8N}, \ref{Redocking4TMN}, \ref{Redocking1PKX} and \ref{Redocking3HV8} visualize the redocking results of four protein-ligand complexes selected from the PDBbind v2012 refined set. We used root mean square deviation $RMSD$ to measure the closeness between two conformations. The lower the $RMSD$ is, the closer the two conformations are. Usually the $RMSD$ value is calculated between the crystal conformation and the docked conformation. Very often the $RMSD$ of 2.0\AA\ is regarded as the positive control for correct bound structure prediction. In Figure \ref{Redocking1B8N} where the protein target is purine nucleoside phosphorylase (PDB ID 1B8N), both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand. In Figure \ref{Redocking4TMN} where the protein target is thermolysin (PDB ID 4TMN), both programs failed, probably due to the presence of a zinc ion in the binding site. In Figure \ref{Redocking1PKX} where the protein target is bifunctional purine biosynthesis protein PURH (PDB ID 1PKX), idock succeeded but AutoDock Vina failed. In Figure \ref{Redocking3HV8} where the protein target is of FimX (PDB ID 3HV8), AutoDock Vina succeeded but idock failed.
+Figures S5, S6, S7 and S8 visualize the redocking results of four protein-ligand complexes selected from the PDBbind v2012 refined set. We used root mean square deviation $RMSD$ to measure the closeness between two conformations. The lower the $RMSD$ is, the closer the two conformations are. Usually the $RMSD$ value is calculated between the crystal conformation and the docked conformation. Very often the $RMSD$ of 2.0\AA\ is regarded as the positive control for correct bound structure prediction. In Figure S5 where the protein target is purine nucleoside phosphorylase (PDB ID 1B8N), both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand. In Figure S6 where the protein target is thermolysin (PDB ID 4TMN), both programs failed, probably due to the presence of a zinc ion in the binding site. In Figure S7 where the protein target is bifunctional purine biosynthesis protein PURH (PDB ID 1PKX), idock succeeded but AutoDock Vina failed. In Figure S8 where the protein target is of FimX (PDB ID 3HV8), AutoDock Vina succeeded but idock failed.
 
 Table \ref{SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the $RMSD$ values between the crystal and docked conformations. Given a redocking case, $RMSD_i (i = 1,2,...,9)$ refers to the $RMSD$ value between the crystal conformation and the $i$th docked conformation, i.e. the one with the $i$th highest predicted binding affinity, while $RMSD_{min}$ refers to the $RMSD$ value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum $RMSD$ value. $RMSD_{min} = \displaystyle\min_{i}RMSD_i\ (i = 1,2,...,9)$. The condition $RMSD_1$ = $RMSD_{min}$ therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on the CSAR NRC HiQ Set 24Sept2010 are consistently higher than the PDBbind v2012 and v2011 refined sets, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0\AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand as the first conformation in over half of the cases, without any manual tweaking of the protein model.
 
@@ -313,46 +313,6 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 
 \begin{figure}[!ht]
 \begin{center}
-\includegraphics[width=4in]{Architecture.eps}
-\end{center}
-\caption{
-{\bf The overall architecture of istar.} There are five major components: a website, a web server, a database management system, several workstations, and a network file system.
-}
-\label{Architecture}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Slider.eps}
-\end{center}
-\caption{
-{\bf istar supports filtering ligands with molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time.} Users can move the nine sliders to filter ligands in the form of closed intervals.
-}
-\label{Slider}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Progress.eps}
-\end{center}
-\caption{
-{\bf istar supports monitoring job progress in real time.} Users can thus have a rough estimation in advance of how long the jobs will take and when the jobs will complete.
-}
-\label{Progress}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{OutputPDBQT.eps}
-\end{center}
-\caption{
-{\bf istar writes verbose output to file in PDBQT format.} The REMARK lines describe the ZINC ID, molecular properties, SMILES representation and suppliers of a ligand. For each predicted conformation, the REMARK lines also describe the free energy and ligand efficiency predicted by idock, putative hydrogen bonds, binding affinity predicted by RF-Score, and consensus score in $pK_d$ or $pK_i$ unit. Columns 71 to 76 of the ATOM lines describe per-atom free energy predicted by idock.
-}
-\label{OutputPDBQT}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
 \includegraphics[width=4in]{PDBbind2012Correlations.eps}
 \end{center}
 \caption{
@@ -369,46 +329,6 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 {\bf Pairwise correlations of experimental binding affinity and predicted binding affinity by RF-Score, AutoDock Vina and idock on the CSAR NRC HiQ Set 24Sept2010 ($N$ = 343).} Values are in $pK_d$ or $pK_i$ unit. The three scoring functions are all trained on the PDBbind v2007 refined set ($N$ = 1,300). $R_p$ = 0.801, $R_s$ = 0.795, $RMSE$ = 1.34, $SD$ = 1.34 for RF-Score, $R_p$ = 0.595, $R_s$ = 0.612, $RMSE$ = 1.79, $SD$ = 1.79 for Vina, and $R_p$ = 0.597, $R_s$ = 0.613, $RMSE$ = 1.79, $SD$ = 1.79 for idock.
 }
 \label{CSAR2010Correlations}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Redocking1B8N.eps}
-\end{center}
-\caption{
-{\bf Redocking result of PDB ID 1B8N.} The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. $RMSD$ = 0.14\AA\ for Vina, and $RMSD$ = 0.13\AA\ for idock. Both methods managed to predict a conformation sufficiently close to that of the co-crystallized ligand.
-}
-\label{Redocking1B8N}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Redocking4TMN.eps}
-\end{center}
-\caption{
-{\bf Redocking result of PDB ID 4TMN.} The protein target is thermolysin. $RMSD$ = 8.40\AA\ for Vina, and $RMSD$ = 9.91\AA\ for idock. Both methods failed to predict a conformation sufficiently close to that of the co-crystallized ligand, probably due to the presence of a zinc ion in the binding site.
-}
-\label{Redocking4TMN}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Redocking1PKX.eps}
-\end{center}
-\caption{
-{\bf Redocking result of PDB ID 1PKX.} The protein target is bifunctional purine biosynthesis protein PURH. $RMSD$ = 7.06\AA\ for Vina, and $RMSD$ = 0.21\AA\ for idock. idock managed to predict a conformation sufficiently close to that of the co-crystallized ligand but AutoDock Vina failed.
-}
-\label{Redocking1PKX}
-\end{figure}
-
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=4in]{Redocking3HV8.eps}
-\end{center}
-\caption{
-{\bf Redocking result of PDB ID 3HV8.} The protein target is FimX. $RMSD$ = 0.29\AA\ for Vina, and $RMSD$ = 10.23\AA\ for idock. AutoDock Vina managed to predict a conformation sufficiently close to that of the co-crystallized ligand but idock failed.
-}
-\label{Redocking3HV8}
 \end{figure}
 
 %\begin{figure}[!ht]
