@@ -227,8 +227,7 @@ istar outputs verbose information in PDBQT format (Figure S4). The first REMARK 
 
 At the moment, we have deployed a machine with Intel Xeon W3520 @ 2.66 GHz and 8GB DDR3 SDRAM to run the web server, and two identical virtual machines with Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM to run the idock daemons. We have mounted a 2TB hard disk into our network file system to store docking jobs and results.
 
-% Results and Discussion can be combined.
-\section*{Results}
+\subsection*{Experimental Settings}
 We evaluated and compared the latest versions of idock and AutoDock Vina from the perspectives of rescoring, redocking, and execution time on three datasets, which are PDBbind \cite{529,530}, CSAR \cite{857,960} and ZINC \cite{532,1178}.
 
 The PDBbind v2012 dataset contains a diverse collection of experimentally determined structures carefully selected from PDB (Protein Data Bank) \cite{540,537}. For each complex, the experimental binding affinity (either dissociation constant $K_d$, inhibition constant $K_i$, or half maximal inhibitory concentration $IC_{50}$) is manually collected from its primary literature reference, thus resulting in the general set of 9,308 complexes, with 7,121 being protein-ligand complexes. Out of them, the complexes with a resolution of 2.5\AA\ or better, with known $K_d$ or $K_i$ values, and with ligand containing merely the common heavy atoms (i.e. C, N, O, F, P, S, Cl, Br, I) are filtered to constitute the refined set of 2,897 complexes. These complexes are then clustered by protein sequence similarity using BLAST at a cutoff of 90\%, and for each of the 67 resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity are selected to constitute the core set of 201 complexes, whose experimental binding affinity spans 10 $pK_d$ or $pK_i$ units.
@@ -238,6 +237,9 @@ The CSAR (Community Structure Activity Resource) NRC HiQ Set 24Sept2010 contains
 The ZINC database contains over 21 million purchasable small molecules in popular MOL2 and SDF formats.
 
 We executed idock x86\_64 v2.1 and AutoDock Vina x86 v1.1.2 on desktop computers with Intel Core i5-2400 CPU @ 3.10GHz and 4GB DDR3 RAM under Mac OS X 10.7.4 Build 11E53. Arguments to both programs were left as default. By default, both programs output at most 9 predicted conformations per ligand.
+
+% Results and Discussion can be combined.
+\section*{Results}
 
 \subsection*{Rescoring Benchmark}
 Rescoring refers to predicting the binding affinity as close to the experimental binding affinity as possible given a crystal protein-ligand complex. Table \ref{ScoringFunctionComparison} compares 21 scoring functions on PDBbind v2007 core set ($N$ = 195). RF-Score \cite{564}, ID-Score \cite{1305}, SVR-Score \cite{1295} and X-Score \cite{573} are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set. In terms of Pearson's correlation coefficient, RF-Score performed the best, while AutoDock Vina and idock ranked 7th and 8th respectively, already outperforming the majority of commercial scoring functions.
