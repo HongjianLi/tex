@@ -179,7 +179,7 @@ Likewise in AutoDock Vina, idock also uses Broyden-Fletcher-Goldfarb-Shanno (BFG
 
 idock introduces a novel feature that can automatically detect and deactivate certain torsions which are activated in the input file but indeed have no impact on the overall scoring, such as hydroxyl group \textemdash{OH}, amine group \textemdash{NH$_2$} or methyl group \textemdash{CH$_3$}, because they only rotate the hydrogens and thus have no contributions to the idock score. idock is capable of re-classifying them as inactive torsions during parsing, thus reducing the dimension of variables to optimize in subsequent BFGS iterations.
 
-idock encapsulates many more improvements. Please refer to its change log at https://github.com/HongjianLi/idock for a complete list of new features and bugfixes.
+idock encapsulates many more improvements. Please refer to its change log for a complete list of new features and bugfixes.
 
 \subsection*{Scoring Function RF-Score}
 RF-Score \cite{564} is a member of a new class of scoring functions that use non-parametric machine learning approach to predict binding affinity in an entirely data-driven manner. RF-Score has been rigorously shown \cite{564,908} to perform better than 16 classical scoring functions in ranking protein-ligand complexes according to predicted binding affinity. It has also been shown to be useful in the discovery of new molecular scaffolds in antibacterial hit identification \cite{1281}.
