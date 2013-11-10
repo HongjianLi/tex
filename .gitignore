@@ -8,5 +8,6 @@
 *.toc
 *.out
 *.dvi
+*.ps
 nlcc
 match
