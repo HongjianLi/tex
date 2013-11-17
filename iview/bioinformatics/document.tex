@@ -48,7 +48,7 @@ iview is refactored from GLmol 0.47, using three.js as its primary 3D engine wit
 We have ported EDTSurf \citep{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to JavaScript and integrated it into iview to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface, with opacity and wireframe adjustable by users (Fig. \ref{fig:4MBS}). Although the JavaScript implementation of the EDTSurf algorithm typically consumes a few seconds and 500MB to 700MB memory for computation, it is sufficiently efficient for practical applications. To limit CPU and memory usage, the calculation grid size is restricted to 180 x 180 x 180.
 
 \begin{figure}[t]
-\centerline{\includegraphics[width=\linewidth]{4MBS.png}}
+\centerline{\includegraphics[width=\linewidth]{../4MBS.png}}
 \caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex \citep{1348} (PDB code: 4MBS). The human CCR5 is rendered as molecular surface colored by chain. The marketed HIV drug maraviroc is rendered as stick colored by chain. It can be clearly seen that the crystal structure consists of two complexes, and the CCR5 forms a deep allosteric cavity where maraviroc is buried.}\label{fig:4MBS}
 \end{figure}
 
@@ -75,6 +75,6 @@ Takanori Nakane thanks Japan Society for the Promotion of Science (JSPS) for sch
 %
 %\bibliographystyle{plain}
 
-\bibliography{../refworks}
+\bibliography{../../refworks}
 
 \end{document}
