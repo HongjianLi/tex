@@ -34,7 +34,7 @@ Having released idock, we kept receiving docking requirements from our colleague
 Figure \ref{istar:architecture} shows the architecture of istar. There are five major components: a web site, a web server, a database management system, several workstations, and a network file system. Under typical circumstance, a user browses our web site and submits a job. The web server first validates user input and then saves it into database. Several workstations run daemons in the background, fetching jobs from the database and carrying out experiments. Upon completion, they send a notification email to the user and write the result to the network file system, which is served and cached as static content. The user again browses our web site to download result.
 
 \begin{figure}
-\centerline{\includegraphics[width=\linewidth]{Architecture.png}}
+\centerline{\includegraphics[width=\linewidth]{../Architecture.png}}
 \caption{istar architecture.}\label{istar:architecture}
 \end{figure}
 
