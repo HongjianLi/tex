@@ -168,7 +168,7 @@
 %\note[id=n1]{Equal contributor} % note, connected to author
 \end{artnotes}
 
-\end{fmbox}% comment this for two column layout
+%\end{fmbox}% comment this for two column layout
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -205,6 +205,7 @@ http://istar.cse.cuhk.edu.hk/iview
 \begin{keyword}
 \kwd{structural bioinformatics}
 \kwd{visualization}
+\kwd{molecular docking}
 \end{keyword}
 
 % MSC classifications codes, if any
@@ -216,7 +217,7 @@ http://istar.cse.cuhk.edu.hk/iview
 
 \end{abstractbox}
 %
-%\end{fmbox}% uncomment this for twcolumn layout
+\end{fmbox}% uncomment this for twcolumn layout
 
 \end{frontmatter}
 
@@ -282,7 +283,7 @@ In the output phase of a docking job, it displays the user-supplied cubic box fo
 The authors declare that they have no competing interests.
 
 \section*{Author's contributions}
-JBP developed the presented software and drafted the manuscript. JCM has been involved in writing and editing the manuscript. He has also given the final approval of this version to be submitted. All authors read and approved the final manuscript.
+HL and TN developed the presented software. HL drafted the manuscript. TN, KWL and MHW edited the manuscript.% All authors read and approved the final manuscript.
 
 \section*{Acknowledgements}
 Takanori Nakane thanks Japan Society for the Promotion of Science (JSPS) for scholarship (DC1). This work was partly supported by Grant-in-Aid for JSPS Fellows (Grant Number 11J04341).
@@ -354,13 +355,70 @@ Takanori Nakane thanks Japan Society for the Promotion of Science (JSPS) for sch
 %%
 \section*{Tables}
 \begin{table}[h!]
-\caption{Sample table title. This is where the description of the table should go.}\label{tbl:features}
-      \begin{tabular}{cccc}
+\caption{Full features of iview. iview is the only web visualizer that is accelerated by GPU hardware and supports three unique features: protein surface construction, virtual reality effects, and PDBQT format input.}\label{tbl:features}
+      \begin{tabular}{ll}
         \hline
-           & B1  &B2   & B3\\ \hline
-        A1 & 0.1 & 0.2 & 0.3\\
-        A2 & ... & ..  & .\\
-        A3 & ..  & .   & .\\ \hline
+                 Category & Features\\
+        \hline
+        File format input & PDB\\
+                          & PDBQT\\
+        \hline
+                   Camera & perspective\\
+                          & orthographic\\
+        \hline
+               Background & black\\
+                          & grey\\
+                          & white\\
+        \hline
+       Structure coloring & atom spectrum\\
+                          & protein chain\\
+                          & protein secondary structure\\
+                          & B factor\\
+                          & residue name\\
+                          & residue polarity\\
+                          & atom type\\
+        \hline
+        Primary structure & line\\
+                          & stick\\
+                          & ball \& stick\\
+                          & sphere\\
+                          & dot\\
+        \hline
+      Secondary structure & ribbon\\
+                          & strand\\
+                          & cylinder \& plate\\
+                          & C alpha trace\\
+                          & B factor tube\\
+        \hline
+          Protein surface & Van der Waals surface\\
+                          & solvent excluded surface\\
+                          & solvent accessible surface\\
+                          & molecular surface\\
+        \hline
+ Proteins surface opacity & 1.0\\
+                          & 0.9\\
+                          & 0.8\\
+                          & 0.7\\
+                          & 0.6\\
+                          & 0.5\\
+        \hline
+Protein surface wireframe & yes\\
+                          & no\\
+        \hline
+   Virtual reality effect & anaglyph\\
+                          & parallax barrier\\
+                          & oculus rift\\
+        \hline
+      Canvas manipulation & mouse\\
+                          & hand touch\\
+        \hline
+            Canvas keying & rotation\\
+                          & translation\\
+                          & zooming\\
+                          & slab\\
+        \hline
+            Canvas export & png\\
+        \hline
       \end{tabular}
 \end{table}
 
