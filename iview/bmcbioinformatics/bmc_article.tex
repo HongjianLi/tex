@@ -263,7 +263,7 @@ iview is refactored from GLmol 0.47, using three.js as its primary 3D engine wit
 
 We have ported EDTSurf \cite{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to JavaScript and integrated it into iview to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface, with opacity and wireframe adjustable by users. Although the JavaScript implementation of the EDTSurf algorithm typically consumes a few seconds and 500MB to 700MB memory for computation, it is sufficiently efficient for practical applications. To limit CPU and memory usage, the calculation grid size is restricted to 180 x 180 x 180.
 
-It is worthwhile to highlight that iview performs all parsing and rendering in the client browser, without any dependency on server side at all, ensuring the data privacy is maintained. This is unlike ChemDoodle Web Components, some of whose functions send data to a dedicated server for processing and wait for receival of results.
+It is worthwhile to highlight that iview performs all parsing and rendering in the client browser, without any dependency on server side at all, ensuring the data privacy is maintained. This is unlike ChemDoodle Web Components, some of whose functions send data to a dedicated server for processing and wait for retrieval of results.
 
 \section*{Results}
 
