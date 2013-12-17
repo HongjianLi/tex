@@ -49,16 +49,9 @@ Having released idock, we kept receiving docking requests from our colleagues an
 
 \section{Methods}
 
-idock 3 is written in C++11 with CUDA and experimental OpenCL support.
-
-\subsection{CUDA driver API and OpenCL}
-
-Low level. Forward compatibility. Intel Xeon Phi support.
+idock 3 is written in C++11 with CUDA driver API. Low level. Forward compatibility.
 
 \subsection{Scheduling Models}
-
-\subsubsection{Naive serial}
-straightforward, not adaptable to multi core CPU nowadays
 
 \subsubsection{Ad hoc multithreading}
 on the fly, just in time
@@ -72,26 +65,15 @@ Implemented in idock 2.0
 \subsubsection{Central dispatcher}
 multiple devices, each has a command queue
 fine grained to coarse grained parallelism
-Estimate task execution time based on theoretical Gflops
-Hard to estimate exactly given different task size, instruction branches, concurrent device utilization
-synchronize once in the end
-
-\subsubsection{Static producer/consumer}
-central queue expands until full
-no dispatcher, concurrent consumers
-device queue size = 1, host thread syncs with device beforing fetching next task
+concurrent consumers
+device queue size = 1, host thread syncs with device before fetching next task
 Implemented in idock 3.0
-
-\subsubsection{Dynamic producer/consumer}
 concurrent enqueue and dequeue
 idock 3.0
-
-\subsubsection{Async callback}
 Overlap host threads with device threads
 central dispatcher or producer/consumer
 Thread construction and destruction overhead
 
-\subsubsection{Async callback with multiple queues}
 HyperQ on compute capability 3.5 and higher, and Souther Islands
 Parallel compute and transfer, applied to CPU too
 
@@ -102,7 +84,7 @@ Vina, CPU async execution
 
 \subsubsection{MC}
 same PC in warp, less divergence
-greedy, no metroplis acceptance
+greedy, no metropolis acceptance
 mutate current local optimum
 
 \subsubsection{MC2}
@@ -128,7 +110,7 @@ AOS to SOA to meet requirements of global memory coalesced access.
 
 \section{Availability}
 
-idock is open source under Apache License 2.0 and is freely available at https://GitHub.com/HongjianLi/idock. Precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris are provided. Docking examples and API documentations are also provided.
+idock is free and open source under Apache License 2.0. Its precompiled executables for 64-bit Linux and Windows, docking examples and API documentations are available at https://GitHub.com/HongjianLi/idock. A web server for large-scale protein-ligand docking is available at http://istar.cse.cuhk.edu.hk/idock.
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
