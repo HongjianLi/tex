@@ -1,5 +1,94 @@
 \chapter{Real Life Case Study of Influenza A H1N1}
 
+\section{Background}
 
+Influenza viruses has been causing sporadic pandemics and annual epidemics worldwide, resulting in about three to five million cases of severe illness and claiming 250,000 to 500,000 lives each year according to the fact sheets of World Health Organization. The H1N1 swine flu outbreak in 2009 and the ever-present threat of H5N1 acquiring human-to-human transmission capability remind us of the imminent danger posed by the influenza virus.
+
+To date, four antiviral drugs have been approved by the FDA. They are oseltamivir (Tamiflu\textsuperscript{\textregistered}), zanamivir (Relenza\textsuperscript{\textregistered}), amantadine (Symmetrel\textsuperscript{\textregistered}) and rimantadine (Flumadine\textsuperscript{\textregistered}) \citep{1229}. Three of them (oseltamivir, amantidine, rimantidine) are now found to be ineffective against circulating strains due to the rapid emergence of drug-resistant viral mutations in pandemic and seasonal influenza viruses. Besides, amantadine and rimantadine exhibit side effects on the central nervous system. These alarming facts highlight the urgent need for designing new anti-influenza drugs.
+
+Influenza viruses are negative-sense single-stranded RNA viruses. They are classified into types A, B and C based on the antigenic difference in their nucleoproteins and matrix proteins. Influenza A is the major pathogen for most cases of epidemic influenza. Influenza A viruses are further organized into 16 hemagglutinin subtypes (H1-H16) and 9 neuraminidase subtypes (N1-N9) according to their distinct antigenic properties. The influenza A genome code for 11 proteins, which are hemagglutinin (HA), neuraminidase (NA), matrix protein 1 (M1), M2 proton channel, nucleoprotein (NP), non-structural protein 1 (NS1), nuclear export protein (NEP), polymerase acid protein (PA), polymerase basic proteins (PB1 and PB2) and PB1-F2.
+
+Inhibitors of several viral proteins have been identified. Neu5Ac (N-acetylneuraminic acid) targets the sialic acid binding site of HA. TBHQ (tert-butylhydroquinone) targets the TBHQ binding site of HA. Oseltamivir and zanamivir target the active site of NA. Amantadine and rimantadine target the inside pore near Ser31 of M2. No inhibitors have been firmly established for the rest 8 viral proteins, but leads have been proposed in some cases.
+
+The influenza viral nucleoprotein, identified as an antiviral target \citep{906}, forms the protein scaffold of the helical genomic ribonucleoprotein complexes, and interacts with the viral RNA polymerase to promote viral RNA replication. Oligomerization of the nucleoprotein is mediated by a flexible tail loop that is inserted into the body domain of a neighbouring nucleoprotein molecule and makes extensive interactions through intermolecular $\beta$-sheets, hydrophobic interactions and salt bridges \citep{1140} (Figure \ref{Case:2IQH}). A salt bridge between E339 lining the binding pocket and R416 on the tail loop is crucial for tail-loop binding \citep{1232,1233}. The amino acids in the tail-loop binding groove for nucleoprotein oligomerization are identical among several influenza A strains, and the displacement of the tail loop from its binding pocket causes significant structural rearrangements in nucleoprotein and completely abolishes the replication and transcription functions \citep{1231}. Chemical compounds which competitively displace the tail loop from its binding pocket would interfere with viral genome replication, and therefore serve as promising compounds for anti-influenza drug development \citep{1140}. The tail-loop peptide can inhibit nucleoprotein oligomerization and slow down viral replication. A potent inhibitor of nucleoprotein of wild-type and mutant strains has been identified through virtual screening \citep{1233}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2IQH.png}
+\caption{Nucleoprotein trimer with three subunits shown in different colors. The flexible tail loop of a nucleoprotein molecule is inserted into the body domain of an adjacent nucleoprotein molecule.}
+\label{Case:2IQH}
+\end{figure}
+
+The influenza A RNA polymerase is a heterotrimer composed of three subunits, namely PA, PB1 and PB2. It binds the conserved 3' and 5' ends of each of the 8 single-stranded RNA segments in the influenza A virus genome. All the three subunits are required for both transcription and replication. PA is involved in assembly of the functional complex, cap binding and vRNA (virion RNA) promoter binding. PB1 carries the polymerase active site. PB2 includes the capped-RNA recognition domain. On one hand, the carboxy-terminal domain of PA forms a deep and highly hydrophobic groove (residues 257-716) into which the amino-terminal residues of PB1 (residues 1-16) can fit by forming a helix and interact through an array of hydrogen bonds and hydrophobic contacts \citep{1141} (Figure \ref{Case:2ZNL}). The loss of PA abolishes RNA polymerase activity and viral replication. PA and its interface with PB1 are therefore potential drug targets \citep{1141}. A peptide corresponding to the N-terminal 25 residues of PB1 inhibits the polymerase activity and viral replication, presumably by blocking the assembly of the polymerase trimer \citep{1234}. A novel inhibitor targeting the PA-PB1 binding site has been discovered by virtual screening \citep{1235}. On the other hand, PB2 binds the 5' cap of host pre-mRNAs, which are cleaved after 10-13 nucleotides by the endonucleolytic activity of PB1. Residues 318-483 of PB2 form the cap-binding domain (Figure \ref{Case:2VQZ}). An inhibitor of cap-snatching activities of PB2 has been identified by high-throughput screening \citep{1236}.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2ZNL.png}
+\caption{Crystal structure of the C-terminal domain of PA, colored in green, bound to the N-terminal peptide of PB1, colored in orange.}
+\label{Case:2ZNL}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2VQZ.png}
+\caption{PB2 cap binding domain (amino acids 318 to 483) in complex with m\textsuperscript{7}GTP.}
+\label{Case:2VQZ}
+\end{figure}
+
+\section{Our Contributions}
+
+We collaborate with Prof. Pang-Chui Shaw and his team from Department of Biochemistry at Chinese University of Hong Kong, and employ structure-based virtual screening on nucleoprotein and polymerase subunits PA and PB2 in order to identify novel class of anti-influenza drugs. We obtained the X-ray crystal structures of influenza viral nucleoprotein with PDB ID 2IQH \citep{1140}, influenza A RNA polymerase subunits PA-PB1 complex with PDB ID 2ZNL \citep{1141}, and subunit PB2 in complex with m\textsuperscript{7}GTP with PDB ID 2VQZ \citep{1192}. For the nucleoprotein, we removed chains B and C and only retained chain A. For the PA-PB1 complex, we removed PB1 and only retained PA. For the PB2-m\textsuperscript{7}GTP complex, we removed PB2 chains B, D, E, F and m\textsuperscript{7}GTP and only retained PB2 chain A. Using idock 1.5 with a fine grid map granularity of 0.08\AA, we docked 7,220,835 ZINC \citep{532} clean ligands against nucleoprotein chain A and 73,648 ZINC clean ligands against PA. All the ligands are free of yuck compounds and have a molecular weight of at least 350g/mol. The docking took us 5 months. Later on we developed idock 1.6 and used it to dock 1,869,678 ligands against PB2 with vendor information available. Figures \ref{Case:2IQH-ZINC20464531} and \ref{Case:2IQH-ZINC33733935} depict the interactions between influenza viral nucleoprotein chain A and two high-rank ligands. Figures \ref{Case:2ZNL-ZINC17206951} and \ref{Case:2ZNL-ZINC40879809} depict the interactions between influenza A RNA polymerase subunit PA and two high-rank ligands. Figures \ref{Case:2VQZ-ZINC03015113} and \ref{Case:2VQZ-ZINC08386295} depict the interactions between influenza A RNA polymerase subunit PB2 and two high-rank ligands.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2IQH-ZINC20464531.png}
+\caption{Influenza viral nucleoprotein chain A in complex of ZINC20464531, which forms 4 hydrogen bonds with VAL186, GLY268 and HIS272, Pi-Pi interactions with TRP330, and Pi-Cation interaction with HIS272 and ARG389. Free energy predicted by idock is -13.305 kcal/mol.}
+\label{Case:2IQH-ZINC20464531}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2IQH-ZINC33733935.png}
+\caption{Influenza viral nucleoprotein chain A in complex with ZINC33733935, which forms 2 hydrogen bonds with HIS272 and THR390, Pi-Pi interactions with PHE458, and Pi-Cation interaction with HIS272. Free energy predicted by idock is -13.220 kcal/mol.}
+\label{Case:2IQH-ZINC33733935}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2ZNL-ZINC17206951.png}
+\caption{Influenza A RNA polymerase subunit PA in complex of ZINC17206951, which forms 8 hydrogen bonds with GLN408, ASN412, ILE621, GLU623, SER662 and ASN703, and Pi-Pi interactions with TRP706. Free energy predicted by idock is -9.562 kcal/mol.}
+\label{Case:2ZNL-ZINC17206951}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2ZNL-ZINC40879809.png}
+\caption{Influenza A RNA polymerase subunit PA in complex of ZINC40879809, which forms 3 hydrogen bonds with GLY622, LYS643 and ASN703, and Pi-Pi interactions with TRP706. Free energy predicted by idock is -11.465 kcal/mol.}
+\label{Case:2ZNL-ZINC40879809}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2VQZ-ZINC03015113.png}
+\caption{Influenza A RNA polymerase subunit PB2 in complex of ZINC03015113, which forms 3 hydrogen bonds with SER321 and ARG355. Free energy predicted by idock is -11.866 kcal/mol.}
+\label{Case:2VQZ-ZINC03015113}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../influenza/2VQZ-ZINC08386295.png}
+\caption{Influenza A RNA polymerase subunit PB2 in complex of ZINC08386295, which forms 3 hydrogen bonds with SER321 and ARG355. Free energy predicted by idock is -12.165 kcal/mol.}
+\label{Case:2VQZ-ZINC08386295}
+\end{figure}
+
+\section{Future Work}
+
+The top scoring compounds will be subjected to post-screening evaluations, including Lipinski’s rule filter, visual inspection and consensus docking using DOCK \citep{1222}, AutoDock Vina \citep{595}, or PLANTS \citep{610,607,779}. The commercially available compounds will be purchased for subsequent biological evaluations.
+
+The cytotoxicity of the compounds will first be tested by MTT assay. Influenza RNP (ribonucleoprotein) reconstitution assay will then be performed to investigate their ability to inhibit RNP transcriptional activity. Hit compounds causing significant reduction of RNP activity will be subjected to whole virus assay including plaque reduction assay and yield reduction assay using seasonal flu viruses. Surface plasmon resonance will also be performed to test the \textit{in vitro} binding affinity of the compounds to the target protein. 
+
+For compounds that exhibit substantial anti-influenza properties, chemical analogues will be purchased for further evaluation. Structure activity relationship study will be performed to further characterize the interaction between the compound and the target protein.
+
+We believe such precious experience builds us strong confidence to subsequently work on other influenza A subtypes like H5N1 (bird flu).
 
 \chapterend

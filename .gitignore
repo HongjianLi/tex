@@ -10,5 +10,4 @@
 *.dvi
 *.ps
 *.html
-nlcc
-match
+*/*.bib

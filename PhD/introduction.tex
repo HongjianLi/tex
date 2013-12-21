@@ -1,23 +1,37 @@
 \chapter{Introduction}
 
-Drug (Figure \ref{fig:Drugs}) discovery is an industrial process, an expensive and long-term business, and a wasteful game. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}. Out of 30,000 compounds synthesized, only 1 (0.003\%) makes a satisfactory Return On Investment (ROI) \citep{713}.
-
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Figures/Drugs.jpg}
-\caption{Drugs.}
-\label{fig:Drugs}
-\end{figure}
+Drug discovery is an industrial process, an expensive and long-term business, and a wasteful game. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}. Out of 30,000 compounds synthesized, only 1 (0.003\%) makes a satisfactory Return On Investment (ROI) \citep{713}. %The process of modern drug discovery typically includes target identification, hit identification, lead optimization and clinical trials. Target could be a fundamental pathological pathway, altering which should be expected to be curative or antisymptomatic. a biological target, which is any system that can potentially be modulated by a molecule to produce a beneficial effect. hits, which are compounds that have activity at a predetermined level against a target, but little else is known at this early stage. potency and selectivity versus a panel of other targets, physicochemical characteristics, drug-like properties, and absorption, distribution, metabolism, excretion and toxicity (ADMET) properties. the data on the successful candidates will then be submitted to the appropriate health authorities to get permission to conduct clinical investigations on animals and humans.
 
 \section{Motivation}
 
 Drug discovery via merely biological and chemical means are both cost-inefficient and time-inefficient. A computational framework for fast and accurate drug discovery is thus greatly required. However, existing tools suffer from several major problems. They 1) are commercially available only, 2) are not released under an open source license, 3) are developed by separate groups, conforming to different standards and formats, 4) require intensive and tedious configurations, 5) do not run sufficiently fast, 6) lack fruitful documentations, or even worse, 7) are declared dead immediately upon their release due to zero maintenance afterward. Therefore, we are going to address these shortcomings in this thesis.
 
+Drug discovery via biological and chemical means alone are both cost- and time-inefficient. It highlights the need for cheaper and faster method, and computer-aided drug discovery thus comes into the scene. Over recent decades, researchers have developed countless tools and utilities, and more are constantly emerging. We have surveyed those tools and utilities, and summarized the major problems they suffer from. Generally speaking, they
+\begin{enumerate}
+\item are commercially available, selling at a price that most small enterprises and academic researchers cannot afford,
+\item are proprietary, making it difficult for others to learn inner implementation techniques and locate possible bugs,
+\item conform to different standards and formats, resulting in loss of information during format conversion,
+\item require intensive and tedious configurations and lack fruitful documentations, a great obstacle for program setup,
+\item run very slowly, using old-fashioned, blocking, single-threaded, low-performance programming style,
+\item are declared dead immediately upon their initial release due to zero maintenance afterward.
+\end{enumerate}
+Therefore, we are going to address these shortcomings.
+
 \section{Objective}
 
 Ultimately we aim to develop a computational framework for structure-based drug discovery with GPU acceleration, simulating the early phases of modern drug discovery process in order to save money and time. The tools of such a framework shall 1) be free to the general public, 2) be released under permissive open source licenses, 3) be designed in conformance to a uniform bioinformatics standard, 4) provide a web version based on the latest HTML5 technology, 5) run fast with multithreading and GPU acceleration, 6) supply with user manuals and API documents in detail, and 7) be constantly updated from time to time.
 
-\section{Method}
+We aim to develop a novel and concise computational framework for modern drug discovery. Our framework shall
+\begin{enumerate}
+\item be free to the general public so that everyone can obtain it,
+\item be released under permissive open source licenses so that everyone can study it,
+\item be designed in conformance to a uniform and well-accepted standard so that everyone can use it with ease,
+\item provide a SaaS (Software as a Service) platform with a responsive web site so that everyone can play with it,
+\item utilize multithreading and GPU acceleration to boost performance so that everyone can really benefit from it,
+\item track bugs, absorb user feedback, and release new versions regularly so that everyone can keep using it.
+\end{enumerate}
+
+\section{Contributions}
 
 Simulating the early phases of modern drug discovery process by computer programs typically refers to 1) identifying a potential biological target and its binding site, 2) shortlisting a few promising compounds out of millions that are predicted to bind to the target, and 3) optimizing the candidate compounds according to potency and selectivity as well as physicochemical and drug-like properties before advancing to \textit{in vitro} wet-lab experiments and biological assays.
 
