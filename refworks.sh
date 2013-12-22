@@ -1,1 +1,1 @@
-sed 's/[_&$]/\\&/g' < JackyLeeHongJian-RefList.txt | sed 's/α/$\\alpha$/g' | sed 's/β/$\\beta$/g' > refworks.bib
+sed -e 's/[_&$]/\\&/g' -e 's/α/$\\alpha$/g' -e 's/β/$\\beta$/g' < JackyLeeHongJian-RefList.txt > refworks.bib
