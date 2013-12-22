@@ -1,1 +1,1 @@
-cat JackyLeeHongJian-RefList.txt | sed 's/[_&$]/\\&/g' | sed 's/α/$\\alpha$/g' | sed 's/β/$\\beta$/g' > refworks.bib
+sed 's/[_&$]/\\&/g' < JackyLeeHongJian-RefList.txt | sed 's/α/$\\alpha$/g' | sed 's/β/$\\beta$/g' > refworks.bib
