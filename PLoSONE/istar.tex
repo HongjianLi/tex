@@ -509,20 +509,20 @@ idock &  0.85 &  0.22 &  1.38 &  0.36 &  2.58 &  0.67\\
 
 \section*{Supporting Information Legends}
 
-Figure S1. The overall architecture of istar.
+Figure S1. The overall architecture of istar. There are five major components: a website, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our website and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our website to download result or monitor job progress. Our web server also supports REST API for developers to program against. Instructions on how to use the REST API can be found at https://github.com/HongjianLi/istar.
 
-Figure S2. istar supports filtering ligands with molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time.
+Figure S2. istar supports filtering ligands with molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time. Users can move the nine sliders to filter 17 million ligands in the form of closed intervals.
 
-Figure S3. istar supports monitoring job progress in real time.
+Figure S3. istar supports monitoring job progress in real time. Users can thus have a rough estimation in advance of how long the jobs will take and when the jobs will complete.
 
-Figure S4. istar writes verbose output to file in PDBQT format.
+Figure S4. istar writes verbose output to file in PDBQT format. The first three REMARK lines describe the ZINC ID, molecular properties, SMILES representation, and suppliers/annotations of a ligand. The subsequent REMARK lines describe the free energy and ligand efficiency predicted by idock, putative hydrogen bonds, binding affinity predicted by RF-Score, and consensus score in $pK_d$ or $pK_i$ unit. Columns 71 to 76 of the ATOM lines describe per-atom free energy predicted by idock.
 
-Figure S5. Redocking result of PDB ID 1B8N.
+Figure S5. Redocking result of PDB ID 1B8N. The protein target is purine nucleoside phosphorylase. The crystal ligand conformation is rendered in green. The conformation predicted by Vina is rendered in red. The conformation predicted by idock is rendered in blue. The same color scheme applies to the subsequent three redocking cases. RMSD = 0.14\AA\ for Vina, and RMSD = 0.13\AA\ for idock. Both methods managed to predict a conformation sufficiently close to that of the co-crystallized ligand.
 
-Figure S6. Redocking result of PDB ID 4TMN.
+Figure S6. Redocking result of PDB ID 4TMN. The protein target is thermolysin. RMSD = 8.40\AA\ for Vina, and RMSD = 9.91\AA\ for idock. Both methods failed to predict a conformation sufficiently close to that of the co-crystallized ligand, probably due to the presence of a zinc ion in the binding site.
 
-Figure S7. Redocking result of PDB ID 1PKX.
+Figure S7. Redocking result of PDB ID 1PKX. The protein target is bifunctional purine biosynthesis protein PURH. RMSD = 7.06\AA\ for Vina, and RMSD = 0.21\AA\ for idock. idock managed to predict a conformation sufficiently close to that of the co-crystallized ligand but AutoDock Vina failed.
 
-Figure S8. Redocking result of PDB ID 3HV8.
+Figure S8. Redocking result of PDB ID 3HV8. The protein target is FimX. RMSD = 0.29\AA\ for Vina, and RMSD = 10.23\AA\ for idock. AutoDock Vina managed to predict a conformation sufficiently close to that of the co-crystallized ligand but idock failed.
 
 \end{document}
