@@ -4391,6 +4391,7 @@
 	year	=	{2008},
 	series	=	{Drug Truths},
 	publisher=	{John Wiley & Sons, Inc.},
+	address	=	{New York},
 	pages	=	{23-37}
 }
 
@@ -9232,7 +9233,9 @@
 	author	=	{Dong Xu and Hua Li and Yang Zhang},
 	title	=	{{Fast and Accurate Calculation of Protein Depth by Euclidean Distance Transform}},
 	year	=	{2013},
+	series	=	{Research in Computational Molecular Biology},
 	publisher=	{Springer Berlin Heidelberg},
+	address	=	{Berlin},
 	volume	=	{7821},
 	pages	=	{304-316}
 }
