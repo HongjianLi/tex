@@ -2576,6 +2576,16 @@
 	pages	=	{82-94}
 }
 
+@article{1360,
+	author	=	{Tobias Girschick and Lucia Puchbauer and Stefan Kramer},
+	title	=	{{Improving Structural Similarity Based Virtual Screening Using Background Knowledge}},
+	journal	=	{Journal of Cheminformatics},
+	year	=	{2013},
+	volume	=	{5},
+	number	=	{1},
+	pages	=	{50}
+}
+
 @article{329,
 	author	=	{M. P. Gleeson},
 	title	=	{{Generation of a Set of Simple, Interpretable ADMET Rules of Thumb}},
@@ -2734,6 +2744,16 @@
 	volume	=	{51},
 	number	=	{12},
 	pages	=	{3287-3294}
+}
+
+@article{1358,
+	author	=	{Yingying Guo and Liyong Dong and Xiaolin Qiu and Yishu Wang and Bailing Zhang and Hongnan Liu and You Yu and Yi Zang and Maojun Yang and Zhiwei Huang},
+	title	=	{{Structural basis for hijacking CBF-β and CUL5 E3 ligase complex by HIV-1 Vif}},
+	journal	=	{Nature},
+	year	=	{2014},
+	volume	=	{505},
+	number	=	{7482},
+	pages	=	{229-233}
 }
 
 @article{273,
@@ -3681,6 +3701,16 @@
 	volume	=	{26},
 	number	=	{12},
 	pages	=	{1493-1499}
+}
+
+@article{1359,
+	author	=	{Kota Kasahara and Kengzo Kinoshita},
+	title	=	{{GIANT: pattern analysis of molecular interactions in 3D structures of protein-small ligand complexes}},
+	journal	=	{BMC Bioinformatics},
+	year	=	{2014},
+	volume	=	{15},
+	number	=	{1},
+	pages	=	{12}
 }
 
 @article{236,
