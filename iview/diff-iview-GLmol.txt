@@ -1,0 +1,15 @@
+GLmol has been a discontinued project since 29 August 2012. Based on GLmol, iview has fixed many bugs and meanwhile introduced new features. Their differences are as follows:
+	iview supports three virtual reality effects, which GLmol lacks.
+	iview allows users to choose a surface opacity between 1.0 and 0.5 so that users can inspect both protein surface and internal structures at the same time.
+	iview can parse alternate atoms and reconstruct their covalent bonds, but GLmol simply ignores them. An example is 3KFN. You can try loading 3KFN in iview and GLmol and see the difference.
+	iview can identify metal ions and highlight their bonds by dashed lines. GLmol does not distinguish metal ions and displays their bonds by ordinary lines.
+	iview supports as many as 100 atom types, from H to Fm, i.e. the first 100 atoms in the periodic table. GLmol can only recognize about 16 common atoms.
+
+Furthermore, our tailor-made version specifically for protein-ligand docking also supports the following features:
+	Parsing of the PDBQT file format, which is widely used in the most cited AutoDock series and our idock software.
+	Automatic protein binding site detection using the position and molecular size of the co-crystallized ligand.
+	Automatic detection and display of intermolecular hydrogen bonds.
+	Automatic annotation of important atoms, such as those involving in intermolecular hydrogen bonds.
+	Asynchronous generation of protein surface by a web worker, making the web page responsive.
+	Result file gzip decompression by the zlib.js library.
+	Fast toggling among different representations via in-memory caching.
