@@ -261,7 +261,7 @@ To address the above obstacles, we have developed iview, an interactive WebGL vi
 \section*{Implementation}
 iview is refactored from GLmol 0.47, using three.js as its primary 3D engine with antialiasing support. It is based on WebGL canvas and can be easily integrated into existing HTML5 web pages to display molecular models without requiring Java or browser plugins. It loads a protein-ligand structure from the PDB (Protein Data Bank) \cite{1357} as its data source via a RESTful interface. It renders four standard representations of primary structure, namely line, stick, ball \& stick and sphere, and five standard representations of secondary structure, namely ribbon, strand, cylinder \& plate, C alpha trace and B factor tube. It colors the structure by either atom spectrum, protein chain, protein secondary structure, B factor, residue name, residue polarity, or atom type, by setting the vertex colors of the geometry object of the corresponding representation. It supports user interactions including rotation, translation, zooming and slab with mouse or hand touch manipulation. It provides both perspective and orthographic cameras, and anaglyph, parallax barrier and oculus rift effects from three.js examples for use in a virtual reality environment.
 
-We have ported EDTSurf \cite{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to JavaScript and integrated it into iview to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface, with opacity and wireframe adjustable by users. Although the JavaScript implementation of the EDTSurf algorithm typically consumes a few seconds and 500MB to 700MB memory for computation, it is sufficiently efficient for practical applications. To limit CPU and memory usage, the calculation grid size is restricted to 180 x 180 x 180.
+We have ported EDTSurf \cite{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to JavaScript and integrated it into iview to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface, with opacity and wireframe adjustable by users. Note that molecular surface is in fact solvent excluded surface, but EDTSurf uses different ways to derive them. We therefore provide them both as two different surface representations in iview. Although the JavaScript implementation of the EDTSurf algorithm typically consumes a few seconds and 500MB to 700MB memory for computation, it is sufficiently efficient for practical applications. To limit CPU and memory usage, the calculation grid size is restricted to 180 x 180 x 180.
 
 It is worthwhile to highlight that iview performs all parsing and rendering in the client browser, without any dependency on server side at all, ensuring the data privacy is maintained. This is unlike ChemDoodle Web Components, some of whose functions send data to a dedicated server for processing and wait for retrieval of results.
 
@@ -370,7 +370,6 @@ Takanori Nakane thanks Japan Society for the Promotion of Science (JSPS) for sch
 }\label{fig:anaglyph}
       \end{figure}
 
-
   \begin{figure}[h!]
   \caption{\csentence{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex \cite{1348} (PDB code: 4MBS), with protein surface enabled.}
       The human CCR5 is rendered as molecular surface colored by chain. The marketed HIV drug maraviroc is rendered as stick colored by chain. It can be clearly seen that the crystal structure consists of two complexes, and the CCR5 forms a deep allosteric cavity where maraviroc is buried. This figure can be reproduced at http://istar.cse.cuhk.edu.hk/iview/?4MBS}\label{fig:surface}
@@ -442,7 +441,7 @@ Takanori Nakane thanks Japan Society for the Promotion of Science (JSPS) for sch
 Protein surface wireframe & yes\\
                           & no\\
         \hline
-            Atom labeling & yes\\
+Atom and residue labeling & yes\\
                           & no\\
         \hline
    Virtual reality effect & anaglyph\\
