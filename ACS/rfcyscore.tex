@@ -74,7 +74,7 @@
 %% the title and author information, if needed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \abbreviations{MLR,RF}
-\keywords{Docking, binding affinity}
+\keywords{Molecular docking, binding affinity, machine learning}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The manuscript does not need to include \maketitle, which is
@@ -125,75 +125,22 @@ abstract
 
 AutoDock Vina \cite{595}
 
+Eq. \ref{eqn:example}
+\begin{equation}
+  \frac{\mathrm{d}}{\mathrm{d}x} \, r^2 = 2r
+  \label{eqn:example}
+\end{equation}
+
 \section{Results and discussion}
 
-\subsection{Floats}
-
-New float types are automatically set up by the class file.  The
-means graphics are included as follows (Scheme~\ref{sch:example}).  As
-illustrated, the float is ``here'' if possible.
-\begin{scheme}
-  Your scheme graphic would go here: \texttt{.eps} format\\
-  for \LaTeX\, or \texttt{.pdf} (or \texttt{.png}) for pdf\LaTeX\\
-  \textsc{ChemDraw} files are best saved as \texttt{.eps} files:\\
-  these can be scaled without loss of quality, and can be\\
-  converted to \texttt{.pdf} files easily using \texttt{eps2pdf}.\\
-  %\includegraphics{graphic}
-  \caption{An example scheme}
-  \label{sch:example}
-\end{scheme}
-
 \begin{figure}
-  As well as the standard float types \texttt{table}\\
-  and \texttt{figure}, the class also recognises\\
-  \texttt{scheme}, \texttt{chart} and \texttt{graph}.
+  \begin{center}
+  \includegraphics{../rfcyscore/x4/trn-247-tst-195-yr.tiff}
+  \end{center}
   \caption{An example figure}
   \label{fgr:example}
 \end{figure}
 
-Charts, figures and schemes do not necessarily have to be labelled or
-captioned.  However, tables should always have a title. It is
-possible to include a number and label for a graphic without any
-title, using an empty argument to the \texttt{\textbackslash caption}
-macro.
-
-The use of the different floating environments is not required, but
-it is intended to make document preparation easier for authors. In
-general, you should place your graphics where they make logical
-sense; the production process will move them if needed.
-
-\subsection{Math(s)}
-
-The \textsf{achemso} class does not load any particular additional
-support for mathematics.  If packages such as \textsf{amsmath} are
-required, they should be loaded in the preamble.  However,
-the basic \LaTeX\ math(s) input should work correctly without
-this.  Some inline material \( y = mx + c \) or $ 1 + 1 = 2 $
-followed by some display. \[ A = \pi r^2 \]
-
-It is possible to label equations in the usual way (Eq.~\ref{eqn:example}).
-\begin{equation}
-  \frac{\mathrm{d}}{\mathrm{d}x} \, r^2 = 2r \label{eqn:example}
-\end{equation}
-This can also be used to have equations containing graphical
-content. To align the equation number with the middle of the graphic,
-rather than the bottom, a minipage may be used.
-\begin{equation}
-  \begin{minipage}[c]{0.80\linewidth}
-    \centering
-    As illustrated here, the width of \\
-    the minipage needs to allow some  \\
-    space for the number to fit in to.
-    %\includegraphics{graphic}
-  \end{minipage}
-  \label{eqn:graphic}
-\end{equation}
-
-\section{Experimental}
-
-The usual experimental details should appear here.  This could
-include a table, which can be referenced as Table~\ref{tbl:example}.
-Notice that the caption is positioned at the top of the table.
 \begin{table}
   \caption{An example table}
   \label{tbl:example}
@@ -209,36 +156,6 @@ Notice that the caption is positioned at the top of the table.
   \end{tabular}
 \end{table}
 
-Adding notes to tables can be complicated.  Perhaps the easiest
-method is to generate these using the basic
-\texttt{\textbackslash textsuperscript} and
-\texttt{\textbackslash emph} macros, as illustrated (Table~\ref{tbl:notes}).
-\begin{table}
-  \caption{A table with notes}
-  \label{tbl:notes}
-  \begin{tabular}{ll}
-    \hline
-    Header one                            & Header two \\
-    \hline
-    Entry one\textsuperscript{\emph{a}}   & Entry two  \\
-    Entry three\textsuperscript{\emph{b}} & Entry four \\
-    \hline
-  \end{tabular}
-
-  \textsuperscript{\emph{a}} Some text;
-  \textsuperscript{\emph{b}} Some more text.
-\end{table}
-
-The example file also loads the optional \textsf{mhchem} package, so
-that formulas are easy to input: \texttt{\textbackslash ce\{H2SO4\}}
-gives \ce{H2SO4}.  See the use in the bibliography file (when using
-titles in the references section).
-
-The use of new commands should be limited to simple things which will
-not interfere with the production process.  For example,
-\texttt{\textbackslash mycommand} has been defined in this example,
-to give italic, mono-spaced text: \mycommand{some text}.
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
 %% classes.  This should be given within the "acknowledgement"
@@ -246,7 +163,7 @@ to give italic, mono-spaced text: \mycommand{some text}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{acknowledgement}
 
-The authors thank Cao Lei.
+The authors thank Yang Cao.
 
 \end{acknowledgement}
 
@@ -256,9 +173,7 @@ The authors thank Cao Lei.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{suppinfo}
 
-This will usually read something like: ``Experimental procedures and
-characterization data for all new compounds. The class will
-automatically add a sentence pointing to the information on-line:
+
 
 \end{suppinfo}
 
@@ -267,6 +182,6 @@ automatically add a sentence pointing to the information on-line:
 %% Notice that the class file automatically sets \bibliographystyle
 %% and also names the section correctly.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibliography{refworks}
+\bibliography{../refworks}
 
 \end{document}
