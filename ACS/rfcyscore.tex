@@ -137,7 +137,7 @@ Cyscore assumes that the overall protein-ligand binding free energy can be decom
 
 In addition to classical scoring functions, recent years have seen a growing number of new developments of machine-learning scoring functions, with RF-Score \cite{564} being one of the representatives. RF-Score, as its name suggests, uses Random Forest (RF) \cite{1309} to implicitly learn the functional form in an entirely data-driven manner, and thus circumvents the modeling assumption of classical scoring functions. RF-Score was shown to remarkably outperform 16 classical scoring functions when evaluated on the common PDBbind v2007 benchmark \cite{564}. Despite being a recent development, RF-Score has already been successfully used to discover a large number of innovative binders against antibacterial DHQase2 targets \cite{1281}. For the purpose of prospective virtual screening, RF-Score has now been incorporated into istar \cite{1362}, a user-friendly large-scale docking service available at http://istar.cse.cuhk.edu.hk/idock.
 
-In this study we compare the prediction performance of MLR and RF in various contexts, and investigate the conditions of substituting RF for MLR.
+In this study we compare the prediction performance of MLR and RF, and investigate their application conditions under various contexts.
 
 \section{Methods}
 
@@ -145,9 +145,8 @@ In this study we compare the prediction performance of MLR and RF in various con
 
 MLR vs RF were compared as two regression models.
 
-by analysing how their performances improve with the increase of structural and binding data used for training.
 
-This section introduces three scoring functions building upon Autodock Vina, two benchmarks to evaluate performance of these scoring functions and the performance metrics that will be used to this end.
+This section introduces two regression models, three benchmarks to evaluate performance of the two regression models, and the performance metrics used in this study.
 
 \subsection{Multiple Linear Regression (MLR)}
 
@@ -206,6 +205,8 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 \label{eqn:rs}
 \end{equation}
 
+where N is the number of complexes in the set, a and b are the intercept and coefficient of the linear correlation between   and   on the test, whereas   and   are the rankings of   and  , respectively. 
+
 The above three measures are invariant under linear transformations (e.g. changing the intercept value obtained by linear regression), so they are mainly used for comparative purpose. In some applications the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we propose a more realistic measure, i.e. the root mean square error RMSE between measured binding affinities and the predicted ones without a linear correlation on the test set.
 
 \section{Results and discussion}
@@ -224,8 +225,11 @@ MLR & 4 &  247 & 195 & 1.80 & 1.79 & 0.660 & 0.687\\
 MLR & 4 & 1105 & 195 & 1.87 & 1.82 & 0.649 & 0.681\\
 MLR & 4 & 2280 & 195 & 1.93 & 1.83 & 0.643 & 0.676\\
 MLR & 4 &  247 & 201 & 1.88 & 1.89 & 0.630 & 0.639\\
-MLR & 4 & 1105 & 201 & 1.95 & 1.92 & 0.610 & 0.625\\
 MLR & 4 & 2280 & 201 & 2.00 & 1.95 & 0.596 & 0.608\\
+MLR & 4 &  792 & 382 & 1.71 & 1.69 & 0.517 & 0.490 & 0.346\\
+MLR & 4 & 1300 & 382 & 1.75 & 1.73 & 0.486 & 0.461 & 0.320\\
+MLR & 4 & 2059 & 382 & 1.73 & 1.73 & 0.487 & 0.463 & 0.321\\
+MLR & 4 & 2897 & 382 & 1.72 & 1.73 & 0.490 & 0.466 & 0.324\\
 \hline
 \end{tabular}
 \end{table}
@@ -306,6 +310,8 @@ Compare x42 and x46
 Machine-learning scoring functions are fundamentally different from classical ones because of not imposing a functional form on the relationship between structural and binding data.
 Same training set, same test set, same featuers lead to same applicability domain when it comes to binding affinity prediction.
 the superior performance of machine-learning scoring functions comes exclusively from the avoidance of the assumed functional form of classical scoring functions. By fixing the remaining design variables (i.e. using the same features, training set and test set), any performance difference must necessarily come from the choice of regression model. Moreover, in this case the used training data and features are identical, so will be the domain of applicability of the resulting scoring functions. 
+
+by analysing how their performances improve with the increase of structural and binding data used for training.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
