@@ -175,7 +175,7 @@ The PDBbind v2012 dataset contains a diverse collection of experimentally determ
 
 The overlaps between training and test sets = 0. |refined12 U core12| = 28
 
-\subsection{PDBbind v2013 blind test}
+\subsection{PDBbind v2013 blind benchmark}
 
 We propose a new benchmark mimicking a blind test in order to study how performance varies with training data set size. The test set will be all the structures in the 2013 release of the PDBbind refined set that were not already in the 2012 release. It resulted in 382 protein-ligand complexes. To account for the structural and binding data available in the public domain at four previous times, we will use as training sets four previous PDBbind releases (these were selected so that there is approximately the same number of complexes between consecutive releases). In this way, we have not control on the composition of each training set or test set, while the benchmark is conducted as a blind test in that we use all the data available on a certain year to predict the binding affinities of 2013 complexes as if these had not been measured yet. By construction, there are no complexes in common between the test set and any of the training sets. 
 
@@ -183,7 +183,7 @@ The four training sets are the refined sets of PDBbind v2002 (N=792), v2007 (N=1
 
 \subsection{Performance Measures}
 
-Mathematically, for a given scoring function f, $p^{(n)}=f(x^{(n)})$is the predicted binding affinity given the features   describing the nth complex 
+Mathematically, for a given scoring function f, $p^{(n)}=f(x^{(n)})$ is the predicted binding affinity given the features   describing the nth complex 
 
 Prediction accuracy was quantified through standard deviation SD in linear correlation (Eq. \ref{eqn:sd}), Pearson's correlation coefficient Rp (Eq. \ref{eqn:rp}) and Spearman's correlation coefficient Rs (Eq. \ref{eqn:rs}), three commonly used criteria for binding affinity prediction.
 
@@ -213,41 +213,94 @@ preamble
 \subsection{For MLR, more training data lead to worse prediction performance}
 
 \begin{table}
-\caption{Prediction performance of MLR}
+\caption{Prediction performance of MLR and RF using varying numbers of features and training complexes on PDBbind v2007 core set (N=195)}
 \label{tbl:performance}
-\begin{tabular}{rrrrrrrr}
+\begin{tabular}{rrrrrrr}
 \hline
-model & x & trn & tst & RMSE & SD & Rp & Rs\\
-MLR & 4 &  247 & 195 & 1.80 & 1.79 & 0.660 & 0.687\\
-MLR & 4 & 1105 & 195 & 1.87 & 1.82 & 0.649 & 0.681\\
-MLR & 4 & 2280 & 195 & 1.93 & 1.83 & 0.643 & 0.676\\
-MLR & 4 &  247 & 201 & 1.88 & 1.89 & 0.630 & 0.639\\
-MLR & 4 & 1105 & 201 & 1.95 & 1.92 & 0.610 & 0.625\\
-MLR & 4 & 2280 & 201 & 2.00 & 1.95 & 0.596 & 0.608\\
-%MLR & 4 &  792 & 382 & 1.71 & 1.69 & 0.517 & 0.490 & 0.346\\
-%MLR & 4 & 1300 & 382 & 1.75 & 1.73 & 0.486 & 0.461 & 0.320\\
-%MLR & 4 & 2059 & 382 & 1.73 & 1.73 & 0.487 & 0.463 & 0.321\\
-%MLR & 4 & 2897 & 382 & 1.72 & 1.73 & 0.490 & 0.466 & 0.324\\
+model & x & trn & RMSE & SD & Rp & Rs\\
+\hline
+MLR &  2 &  247 & 1.88 & 1.89 & 0.612 & 0.637\\
+MLR &  2 & 1105 & 1.96 & 1.92 & 0.594 & 0.632\\
+MLR &  2 & 2280 & 2.03 & 1.96 & 0.569 & 0.611\\
+MLR &  4 &  247 & 1.80 & 1.79 & 0.660 & 0.687\\
+MLR &  4 & 1105 & 1.87 & 1.82 & 0.649 & 0.681\\
+MLR &  4 & 2280 & 1.93 & 1.83 & 0.643 & 0.676\\
+MLR & 10 &  247 & 1.89 & 1.88 & 0.614 & 0.636\\
+MLR & 10 & 1105 & 1.89 & 1.87 & 0.624 & 0.669\\
+MLR & 10 & 2280 & 1.93 & 1.88 & 0.616 & 0.661\\
+MLR & 40 &  247 & 2.10 & 2.02 & 0.530 & 0.646\\
+MLR & 40 & 1105 & 1.86 & 1.86 & 0.626 & 0.722\\
+MLR & 40 & 2280 & 1.89 & 1.84 & 0.637 & 0.700\\
+MLR & 46 &  247 & 2.05 & 1.98 & 0.562 & 0.638\\
+MLR & 46 & 1105 & 1.79 & 1.77 & 0.672 & 0.735\\
+MLR & 46 & 2280 & 1.88 & 1.84 & 0.637 & 0.705\\
+ RF &  2 &  247 & 2.03 & 1.99 & 0.551 & 0.557\\
+ RF &  2 & 1105 & 1.91 & 1.91 & 0.598 & 0.612\\
+ RF &  2 & 2280 & 2.06 & 2.05 & 0.515 & 0.530\\
+ RF &  4 &  247 & 1.82 & 1.82 & 0.648 & 0.648\\
+ RF &  4 & 1105 & 1.75 & 1.73 & 0.687 & 0.694\\
+ RF &  4 & 2280 & 1.89 & 1.84 & 0.637 & 0.650\\
+ RF & 10 &  247 & 1.78 & 1.79 & 0.662 & 0.668\\
+ RF & 10 & 1105 & 1.63 & 1.58 & 0.749 & 0.759\\
+ RF & 10 & 2280 & 1.81 & 1.78 & 0.668 & 0.669\\
+ RF & 40 &  247 & 1.78 & 1.78 & 0.667 & 0.686\\
+ RF & 40 & 1105 & 1.54 & 1.46 & 0.790 & 0.780\\
+ RF & 40 & 2280 & 1.71 & 1.65 & 0.722 & 0.738\\
+ RF & 46 &  247 & 1.77 & 1.77 & 0.673 & 0.689\\
+ RF & 46 & 1105 & 1.52 & 1.42 & 0.803 & 0.798\\
+ RF & 46 & 2280 & 1.70 & 1.60 & 0.744 & 0.765\\
 \hline
 \end{tabular}
 \end{table}
 
-\begin{figure}
-\minipage{0.33\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
-\endminipage\hfill
-\minipage{0.33\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-1105-tst-195-yp.png}
-\endminipage\hfill
-\minipage{0.33\textwidth}%
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-2280-tst-195-yp.png}
-\endminipage
-\caption{MLR performance on PDBbind v2007 core set (N=195).}
-\label{fig:mlr-tst-195}
-\end{figure}
+\begin{table}
+\caption{Prediction performance of MLR and RF on PDBbind v2012 core set (N=201)}
+\label{tbl:performance}
+\begin{tabular}{rrrrrrr}
+\hline
+model & x & trn & RMSE & SD & Rp & Rs\\
+\hline
+MLR &  2 &  247 & 1.94 & 1.94 & 0.600 & 0.607\\
+MLR &  2 & 2280 & 2.08 & 2.01 & 0.563 & 0.566\\
+MLR &  4 &  247 & 1.88 & 1.89 & 0.630 & 0.639\\
+MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
+MLR & 10 &  247 & 1.94 & 1.94 & 0.602 & 0.612\\
+MLR & 10 & 2280 & 2.01 & 1.96 & 0.588 & 0.593\\
+MLR & 40 &  247 & 2.04 & 2.02 & 0.552 & 0.577\\
+MLR & 40 & 2280 & 1.99 & 1.96 & 0.592 & 0.608\\
+MLR & 46 &  247 & 2.07 & 2.05 & 0.538 & 0.554\\
+MLR & 46 & 2280 & 1.99 & 1.96 & 0.592 & 0.606\\
+ RF &  2 &  247 & 2.13 & 2.10 & 0.504 & 0.512\\
+ RF &  2 & 2280 & 2.04 & 2.01 & 0.558 & 0.563\\
+ RF &  4 &  247 & 1.87 & 1.87 & 0.637 & 0.641\\
+ RF &  4 & 2280 & 1.95 & 1.90 & 0.621 & 0.622\\
+ RF & 10 &  247 & 1.85 & 1.86 & 0.644 & 0.652\\
+ RF & 10 & 2280 & 1.85 & 1.80 & 0.672 & 0.663\\
+ RF & 40 &  247 & 1.89 & 1.89 & 0.626 & 0.630\\
+ RF & 40 & 2280 & 1.79 & 1.72 & 0.706 & 0.699\\
+ RF & 46 &  247 & 1.86 & 1.87 & 0.640 & 0.642\\
+ RF & 46 & 2280 & 1.77 & 1.67 & 0.726 & 0.719\\
+\hline
+\end{tabular}
+\end{table}
 
 Conclusion: For MLR, more training data lead to worse prediction performance. Better to select fewer training samples, but of high quality, like Cyscore did.
 improvements with data set size can only be gain with the appropriate regression model anyway.
+
+two tables, one for tst=195,trn=247||1105||2280, the other for tst=201,trn=247||2280.
+
+tst=195||201
+x=40||46, 1) trn1105>trn2280>trn247, 2) RF>MLR
+x=10, 1) trn1105 best, 2) RF>MLR, 3) tst=195, trn2280>trn247 in terms of SD,Rp,Rs, worse of RMSE; tst=201, trn2280>trn247 for RF, worse for MLR
+x=4, 1) m=MLR, trn247>trn1105>trn2280, 2) m=RF, trn1105>trn247>trn2280
+x=2, 1) m=MLR, trn247>trn1105>trn2280, 2) m=RF, tst=195, trn1105>trn247>trn2280; tst=201, trn2280>trn1105>trn247
+1) m=MLR, x= 4 and trn= 247 best over x={2,4,10,40,46} and trn={247,2280}. More x and trn no use for MLR
+2) m=RF , x=46 and trn=2280 best over x={2,4,10,40,46} and trn={247,2280}. More x and trn useful for RF.
+
+tst=382
+x=46||42, 1) trn2897>trn2059>trn1300>trn792, 2) RF>MLR
+x=10, 1) m=MLR, trn792>trn2897>trn2059>trn1300, 2) m=RF, trn2897>trn2059>trn1300>trn792
+x= 4, 1) m=MLR, trn792>trn2897>trn2059>trn1300, 2) m=RF, trn2897>trn2059>trn791>trn1300
 
 \subsection{refined07\\core07 is not a good benchmark}
 
@@ -265,20 +318,22 @@ not only the difference in performance is substantial but grows as more data is 
 \subsection{Machine-learning scoring functions are remarkably more accurate than empirical scoring functions}
 
 \begin{table}
-\caption{Pearson's correlation coefficient Rp, Spearman's correlation coefficient Rs and standard deviation SD of the difference between predicted and experimental binding affinity on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF-Score, AutoDock Vina and idock rank 1st, 7th and 8th respectively in terms of Pearson's correlation coefficient Rp. RF-Score, ID-Score, SVR-Score and X-Score are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set. The statistics for AutoDock Vina and idock are reported in this study and the statistics for the other 19 scoring functions are collected from \cite{1313,564,1305,1295}.}
-\label{tbl:sf}
+\caption{Pearson's correlation coefficient Rp, Spearman's correlation coefficient Rs and standard deviation SD of the difference between predicted and experimental binding affinity on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF-Score and Cyscore rank 1st and 3rd respectively in terms of Pearson's correlation coefficient Rp. RF-Score, ID-Score, SVR-Score and X-Score are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set. The statistics for the other 21 scoring functions are collected from \cite{1313,1362,564,1305,1295}.}
+\label{tbl:tst195}
 \begin{tabular}{lrrr}
 \hline
 Scoring function & Rp & Rs & SD\\
 \hline
-RF-Score & 0.774 & 0.762 & 1.59\\
-ID-Score & 0.753 & 0.779 & 1.63\\
-SVR-Score & 0.726 & 0.739 & 1.70\\
+RF::CyscoreVinaElem & & & \\
+Cyscore & & & \\
+%RF-Score & 0.774 & 0.762 & 1.59\\
+%ID-Score & 0.753 & 0.779 & 1.63\\
+%SVR-Score & 0.726 & 0.739 & 1.70\\
 X-Score::HMScore & 0.644 & 0.705 & 1.83\\
 DrugScoreCSD & 0.569 & 0.627 & 1.96\\
 SYBYL::ChemScore & 0.555 & 0.585 & 1.98\\
-AutoDock Vina & 0.554 & 0.608 & 1.98\\
-idock & 0.546 & 0.612 & 1.99\\
+%AutoDock Vina & 0.554 & 0.608 & 1.98\\
+%idock & 0.546 & 0.612 & 1.99\\
 DS::PLP1 & 0.545 & 0.588 & 2.00\\
 GOLD::ASP & 0.534 & 0.577 & 2.02\\
 SYBYL::G-Score & 0.492 & 0.536 & 2.08\\
@@ -296,7 +351,33 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 \end{tabular}
 \end{table}
 
-16 classical scoring functions on core07 \cite{1313}
+16 classical scoring functions on tst195 \cite{1313}
+
+\subsection{Improving Cyscore using Random Forest}
+
+two correlation plots, one for best MLR (x=4,trn=247), the other for best RF (x=46,trn=2280). Conclude that RF>MLR.
+
+\begin{figure}
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-195-yp.png}
+\endminipage\hfill
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2007 core set (N=195).}
+\label{fig:tst195}
+\end{figure}
+
+\begin{figure}
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
+\endminipage\hfill
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2012 core set (N=201).}
+\label{fig:tst201}
+\end{figure}
 
 \subsection{Cyscore feature usefulness}
 
@@ -306,9 +387,11 @@ Compare x42 and x46
 
 Machine-learning scoring functions are fundamentally different from classical ones because of not imposing a functional form on the relationship between structural and binding data.
 
-the superior performance of machine-learning scoring functions comes exclusively from the avoidance of the assumed functional form of classical scoring functions. By fixing the remaining design variables (i.e. using the same features, training set and test set), any performance difference must necessarily come from the choice of regression model. Moreover, in this case the used training data and features are identical, so will be the domain of applicability of the resulting scoring functions. 
+The superior performance of machine-learning scoring functions comes exclusively from the avoidance of the assumed functional form of classical scoring functions. By fixing the same features, training set and test set, any performance difference must necessarily come from the choice of regression model. Moreover, in this case the used training data and features are identical, so will be the domain of applicability of the resulting scoring functions. 
 
-by analysing how their performances improve with the increase of structural and binding data used for training.
+by analysing how their performances improve with the increase of structural and binding data used for training. improvements with data set size can only be gain with the appropriate regression model anyway.
+
+MLR requires meaningful features. RF can benefit from more numerical features.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
@@ -317,7 +400,7 @@ by analysing how their performances improve with the increase of structural and 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{acknowledgement}
 
-We gratefully acknowledge the Direct Grant from the Chinese University of Hong Kong, the GRF Grant (Project No. 2150764) from the Research Grants Council of Hong Kong SAR, and the Medical Research Council for a Methodology Research Fellowship (Grant No. G0902106, awarded to P.J.B.). We also thank Yang Cao for helping us to reproduce the Cyscore results.
+We gratefully acknowledge the Direct Grant from the Chinese University of Hong Kong, the GRF Grant (Project No. 2150764) from the Research Grants Council of Hong Kong SAR, and the Medical Research Council for a Methodology Research Fellowship (Grant No. G0902106, awarded to P.J.B.). We thank Yang Cao for helping us to reproduce the Cyscore results.
 
 \end{acknowledgement}
 
