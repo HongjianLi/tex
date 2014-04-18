@@ -1,0 +1,308 @@
+\documentclass[10pt,conference,compsocconf]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{booktabs}
+\usepackage{flushend}
+\usepackage[numbers,sort&compress]{natbib}
+
+\begin{document}
+
+\title{Improving Protein-Ligand Binding Affinity Prediction by Substituting Random Forest for Multiple Linear Regression: Using Cyscore as an Example} % can use linebreaks \\ within to get better formatting as desired
+\author
+{
+\IEEEauthorblockN
+{
+Hongjian Li\IEEEauthorrefmark{1}, Kwong-Sak Leung\IEEEauthorrefmark{1}, Man-Hon Wong\IEEEauthorrefmark{1} and Pedro J. Ballester\IEEEauthorrefmark{2}
+\IEEEauthorblockA
+{
+\IEEEauthorrefmark{1}
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong\\
+jackyleehongjian@gmail.com
+}
+\IEEEauthorblockA
+{
+\IEEEauthorrefmark{2}
+European Bioinformatics Institute, Wellcome Trust Genome Campus, Hinxton, Cambridge - CB10 1SD, UK\\
+pedro.ballester@ebi.ac.uk
+}
+}
+}
+\maketitle
+
+\begin{abstract}
+
+State-of-the-art protein-ligand docking methods are generally limited by the traditionally low accuracy of their scoring functions, which are used to predict binding affinity and thus vital for discriminating between active and inactive compounds. Despite intensive research in recent years, many newly-developed scoring functions hardly show satisfactory prediction performance. They often assume a predetermined additive functional form for some sophisticated numerical features, and utilize standard least-square multivariate linear regression on experimental data to derive the coefficients. In this study we show that such a simple functional form is detrimental for its performance, and replacing linear regression by machine learning techniques like random forest (RF) can significantly improve prediction performance. Most importantly, we investigate the conditions of applying RF and find that RF requires sufficient features and training samples to implicitly capture the non-linearity between structural features and measured binding affinities. Lastly, we show that RF-based scoring functions can be as interpretable as classical ones. We use Cyscore, an empirical scoring function recently published in a top journal, as baseline.
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+
+Molecular docking, binding affinity, machine learning
+
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+Protein-ligand docking is a structural bioinformatic method that predicts how a ligand binds to a target protein and their binding affinity. Hence docking is useful in elaborating intermolecular interactions and enhancing the potency and selectivity of binding in subsequent phases of the modern drug discovery process. Docking has a wide variety of pragmatic and successful applications in structure-based virtual screening, drug repurposing, lead compound optimization, protein cavity identification, protein function prediction, etc.
+
+Docking consists of two major operations: predicting the position, orientation and conformation of a ligand when docked to the protein's binding pocket, and predicting their binding strength. The former operation is known as pose generation, and the latter is known as scoring. State-of-the-art docking methods, such as AutoDock Vina \cite{595} and idock \cite{1153}, have managed to cope with the pose generation problem with a redocking success rate of over 50\% \cite{1362} on the benchmarks of both PDBbind v2012 and v2011 \cite{529,530} and the CSAR NRC HiQ Set 24Sept2010 \cite{857,960}. Therefore the single most critical limitation of docking is the traditionally low accuracy of the scoring functions.
+
+Classical scoring functions assume a fixed functional form for the relationship between the numerical features that characterize the protein-ligand complex and its predicted binding affinity. Such functional form is typically inspired by some sorts of established chemistry theories, and is often additive. The overall binding affinity is calculated as a weighted sum of several physically meaningful terms, while their coefficients are typically derived from standard least-square multivariate linear regression (MLR) on experimental data. Cyscore \cite{1372}, a recently published empirical scoring function, is an example of classical scoring functions.
+
+Cyscore assumes that the overall protein-ligand binding free energy can be decomposed into four terms: hydrophobic free energy, van der Waals interaction energy, hydrogen bond interaction energy and ligand's conformational entropy. Cyscore mainly focuses on improving the prediction of hydrophobic free energy by using a novel curvature-dependent surface-area model, which was claimed to be able to distinguish convex, planar and concave surface in hydrophobic free energy calculation.
+
+In addition to classical scoring functions, recent years have seen a growing number of new developments of machine-learning scoring functions, with RF-Score \cite{564} being one of the representatives (see \cite{1373} for a comprehensive review). RF-Score, as its name suggests, uses Random Forest (RF) \cite{1309} to implicitly learn the functional form in an entirely data-driven manner, and thus circumvents the modelling assumption of classical scoring functions. RF-Score was shown to remarkably outperform 16 classical scoring functions when evaluated on the common PDBbind v2007 benchmark \cite{564}. Despite being a recent development, RF-Score has already been successfully used to discover a large number of innovative binders against antibacterial DHQase2 targets \cite{1281}. For the purpose of prospective virtual screening, RF-Score has now been incorporated into istar \cite{1362}, a user-friendly large-scale docking service available at http://istar.cse.cuhk.edu.hk/idock.
+
+In this study we compare the prediction performance of two regression models MLR and RF, and investigate their application conditions under various contexts.
+
+\section{Methods}
+
+%This section introduces two regression models MLR and RF, three benchmarks to evaluate performance of the two regression models, and the performance metrics used in this study.
+
+\subsection{Multiple Linear Regression (MLR)}
+
+Cyscore is a classical empirical scoring function in an additive functional form of four terms (Eq. \ref{eqn:cyscore}), whose coefficients were obtained by MLR on 247 high-quality complexes carefully selected from PDBbind v2012 refined set. The intercept value was not reported in the original publication, but was included in this study in order to compute absolute binding affinity values.
+
+\begin{eqnarray}
+\label{eqn:cyscore}
+\Delta G_{bind}
+&=& k_h\Delta G_{hydrophobic} \nonumber \\
+&+& k_v\Delta G_{vdw} \nonumber \\
+&+& k_b\Delta G_{hbond} \nonumber \\
+&+& k_e\Delta G_{entropy} \nonumber \\
+&+& C
+\end{eqnarray}
+
+\subsection{Random Forest (RF)}
+
+A RF \cite{1309} is a consensus of a sufficient number of different decision trees generated from random bootstrap sampling of the same training data. During tree construction, at each inner node RF chooses the best splitting feature that results in the highest purity gain from a normally small number (mtry) of randomly selected features rather than utilizing all input features. In regression problems, the final output is calculated as the arithmetic mean of all individual tree predictions in the RF. Further details on RF construction can be found in \cite{564,1362}.
+
+In this study, multiple RFs of the default number of 500 trees were built using values of the mtry control parameter from one to the total number of input features. The selected RF was the one resulting in the lowest root mean square error (RMSE) on the Out-of-Bag (OOB) samples of the training set. Only one single random seed was used because seed is not a significant impact factor of the prediction performance, and using fewer seeds has the additional advantage of leading to computationally faster training process.
+
+\subsection{Features}
+
+We aim to analyze how MLR and RF respond to varying numbers of features. Hence we chose three sources of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for protein (C, N, O, S) and nine for ligand (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate features that are as dense as possible, while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the four combinations of these feature sources used in this study.
+
+\begin{table}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rl}
+\toprule
+features & description\\
+\midrule
+ 4 & 4 from Cyscore\\
+10 & 4 from Cyscore + 6 from AutoDock Vina\\
+40 & 4 from Cyscore + 36 from RF-Score\\
+46 & 4 from Cyscore + 6 from AutoDock Vina + 36 from RF-Score\\
+\bottomrule
+\end{tabular*}
+\caption{Combinations of different sources of features.}
+\label{tbl:features}
+\end{table}
+
+\subsection{PDBbind v2007 and v2012 benchmarks}
+
+The PDBbind benchmark is arguably the most widely used for binding affinity prediction. It contains an especially diverse collection of experimentally determined protein-ligand complexes, assembled through a systematic mining of the yearly releases of the entire PDB \cite{540,537}. For each complex, the experimentally measured binding affinity, either dissociation constant Kd or inhibition constant Ki, was manually collected from its primary literature reference. The complexes with a resolution of 2.5\AA\ or better and with the ligand comprising merely nine common heavy atom types (C, N, O, F, P, S, Cl, Br, I) were filtered to constitute the refined set. These complexes were then clustered by protein sequence similarity with a cutoff of 90\%, and for each of the resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity were selected to constitute the core set.
+
+On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinity spans 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria (see the original publication \cite{1372} for the selection criteria in detail), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets.
+
+In order to see the effect of using more samples for training, in this study we propose a new training set, which comprises all the complexes in PDBbind v2013 refined set excluding those in PDBbind v2007 and v2012 core sets. This led to a total of 2280 complexes. By construction, this training set does not overlap with any of the two test sets either.
+
+Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and many of them were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
+
+\subsection{Performance metrics}
+
+Prediction performance was quantified through standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs, three metrics commonly used in the community \cite{1313}.
+
+The above three metrics are invariant under linear transformations (e.g. changing the intercept and coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we propose a more realistic metric, the root mean square error (RMSE) between measured and predicted binding affinities without a linear correlation on the test set.
+
+\section{Results and discussion}
+
+Tables \ref{tbl:tst195} and \ref{tbl:tst201} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201), respectively.
+
+\begin{table}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rrrrrrr}
+\toprule
+model & features & samples & RMSE & SD & Rp & Rs\\
+\midrule
+MLR &  4 &  247 & 1.80 & 1.79 & 0.660 & 0.687\\
+MLR &  4 & 1105 & 1.87 & 1.82 & 0.649 & 0.681\\
+MLR &  4 & 2280 & 1.93 & 1.83 & 0.643 & 0.676\\
+MLR & 10 &  247 & 1.89 & 1.88 & 0.614 & 0.636\\
+MLR & 10 & 1105 & 1.89 & 1.87 & 0.624 & 0.669\\
+MLR & 10 & 2280 & 1.93 & 1.88 & 0.616 & 0.661\\
+MLR & 40 &  247 & 2.10 & 2.02 & 0.530 & 0.646\\
+MLR & 40 & 1105 & 1.86 & 1.86 & 0.626 & 0.722\\
+MLR & 40 & 2280 & 1.89 & 1.84 & 0.637 & 0.700\\
+MLR & 46 &  247 & 2.05 & 1.98 & 0.562 & 0.638\\
+MLR & 46 & 1105 & 1.79 & 1.77 & 0.672 & 0.735\\
+MLR & 46 & 2280 & 1.88 & 1.84 & 0.637 & 0.705\\
+ RF &  4 &  247 & 1.82 & 1.82 & 0.648 & 0.648\\
+ RF &  4 & 1105 & 1.75 & 1.73 & 0.687 & 0.694\\
+ RF &  4 & 2280 & 1.89 & 1.84 & 0.637 & 0.650\\
+ RF & 10 &  247 & 1.78 & 1.79 & 0.662 & 0.668\\
+ RF & 10 & 1105 & 1.63 & 1.58 & 0.749 & 0.759\\
+ RF & 10 & 2280 & 1.81 & 1.78 & 0.668 & 0.669\\
+ RF & 40 &  247 & 1.78 & 1.78 & 0.667 & 0.686\\
+ RF & 40 & 1105 & 1.54 & 1.46 & 0.790 & 0.780\\
+ RF & 40 & 2280 & 1.71 & 1.65 & 0.722 & 0.738\\
+ RF & 46 &  247 & 1.77 & 1.77 & 0.673 & 0.689\\
+ RF & 46 & 1105 & 1.52 & 1.42 & 0.803 & 0.798\\
+ RF & 46 & 2280 & 1.70 & 1.60 & 0.744 & 0.765\\
+\bottomrule
+\end{tabular*}
+\caption{Prediction performance of MLR and RF trained with varying numbers of features and samples on PDBbind v2007 core set (N=195).}
+\label{tbl:tst195}
+\end{table}
+
+\begin{table}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}rrrrrrr}
+\toprule
+model & features & samples & RMSE & SD & Rp & Rs\\
+\midrule
+MLR &  4 &  247 & 1.88 & 1.89 & 0.630 & 0.639\\
+MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
+MLR & 10 &  247 & 1.94 & 1.94 & 0.602 & 0.612\\
+MLR & 10 & 2280 & 2.01 & 1.96 & 0.588 & 0.593\\
+MLR & 40 &  247 & 2.04 & 2.02 & 0.552 & 0.577\\
+MLR & 40 & 2280 & 1.99 & 1.96 & 0.592 & 0.608\\
+MLR & 46 &  247 & 2.07 & 2.05 & 0.538 & 0.554\\
+MLR & 46 & 2280 & 1.99 & 1.96 & 0.592 & 0.606\\
+ RF &  4 &  247 & 1.87 & 1.87 & 0.637 & 0.641\\
+ RF &  4 & 2280 & 1.95 & 1.90 & 0.621 & 0.622\\
+ RF & 10 &  247 & 1.85 & 1.86 & 0.644 & 0.652\\
+ RF & 10 & 2280 & 1.85 & 1.80 & 0.672 & 0.663\\
+ RF & 40 &  247 & 1.89 & 1.89 & 0.626 & 0.630\\
+ RF & 40 & 2280 & 1.79 & 1.72 & 0.706 & 0.699\\
+ RF & 46 &  247 & 1.86 & 1.87 & 0.640 & 0.642\\
+ RF & 46 & 2280 & 1.77 & 1.67 & 0.726 & 0.719\\
+\bottomrule
+\end{tabular*}
+\caption{Prediction performance of MLR and RF trained with varying numbers of features and samples on PDBbind v2012 core set (N=201).}
+\label{tbl:tst201}
+\end{table}
+
+\subsection{For MLR, more training data lead to worse prediction performance}
+
+Conclusion: For MLR, more training data lead to worse prediction performance. Better to select fewer training samples, but of high quality, like Cyscore did.
+improvements with data set size can only be gain with the appropriate regression model anyway.
+
+tst=195||201
+x=40||46, 1) trn1105>trn2280>trn247, 2) RF>MLR
+x=10, 1) trn1105 best, 2) RF>MLR, 3) tst=195, trn2280>trn247 in terms of SD,Rp,Rs, worse of RMSE; tst=201, trn2280>trn247 for RF, worse for MLR
+x=4, 1) m=MLR, trn247>trn1105>trn2280, 2) m=RF, trn1105>trn247>trn2280
+
+tst=382
+m=MLR, almost same performance for x=2,4,10,40,46 and trn=792,1300,2059,2897, except x=40,46 and trn=792 having astronishing high RMSE values (insufficient samples given a large set of features).
+m=RF, 
+x=46||42, 1) trn2897>trn2059>trn1300>trn792, 2) RF>MLR
+x=10, 1) m=MLR, trn792>trn2897>trn2059>trn1300, 2) m=RF, trn2897>trn2059>trn1300>trn792
+x= 4, 1) m=MLR, trn792>trn2897>trn2059>trn1300, 2) m=RF, trn2897>trn2059>trn791>trn1300
+
+\subsection{refined07 minus core07 is not a good benchmark}
+
+trn1105 is better than trn247 and trn2280
+
+Same cluster (protein family)
+
+Conclusion: refined07 minus core07 not a good benchmark.
+The superior performance of RF-Score was highlighted by, who nevertheless attribute it to the characteristics of the most widely-used benchmark. \cite{774}
+
+\subsection{Machine-learning scoring functions are remarkably more accurate than empirical scoring functions}
+
+Table \ref{tbl:trn1105tst195} compares RF::CyscoreVinaElem and Cyscore to 16 classical scoring functions on PDBbind v2007 core set (N=195) \cite{1313}.
+
+\begin{table}
+\centering
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lrrr}
+\toprule
+Scoring function & Rp & Rs & SD\\
+\midrule
+RF::CyscoreVinaElem & 0.803 & 0.798 & 1.42\\
+RF-Score & 0.774 & 0.762 & 1.59\\
+ID-Score & 0.753 & 0.779 & 1.63\\
+SVR-Score & 0.726 & 0.739 & 1.70\\
+Cyscore & 0.660 & 0.687 & 1.79\\
+X-Score::HMScore & 0.644 & 0.705 & 1.83\\
+DrugScoreCSD & 0.569 & 0.627 & 1.96\\
+SYBYL::ChemScore & 0.555 & 0.585 & 1.98\\
+%AutoDock Vina & 0.554 & 0.608 & 1.98\\
+%idock & 0.546 & 0.612 & 1.99\\
+DS::PLP1 & 0.545 & 0.588 & 2.00\\
+GOLD::ASP & 0.534 & 0.577 & 2.02\\
+SYBYL::G-Score & 0.492 & 0.536 & 2.08\\
+DS::LUDI3 & 0.487 & 0.478 & 2.09\\
+DS::LigScore2 & 0.464 & 0.507 & 2.12\\
+GlideScore-XP & 0.457 & 0.435 & 2.14\\
+DS::PMF & 0.445 & 0.448 & 2.14\\
+GOLD::ChemScore & 0.441 & 0.452 & 2.15\\
+SYBYL::D-Score & 0.392 & 0.447 & 2.19\\
+DS::Jain & 0.316 & 0.346 & 2.24\\
+GOLD::GoldScore & 0.295 & 0.322 & 2.29\\
+SYBYL::PMF-Score & 0.268 & 0.273 & 2.29\\
+SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
+\bottomrule
+\end{tabular*}
+\caption{Pearson correlation coefficient Rp, Spearman correlation coefficient Rs and standard deviation SD in linear correlation between predicted and experimental binding affinity on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem refers to the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. RF::CyscoreVinaElem, RF-Score, ID-Score, SVR-Score and X-Score are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set. The statistics for the other 21 scoring functions are collected from \cite{1313,1362,564,1305,1295}.}
+\label{tbl:trn1105tst195}
+\end{table}
+
+\subsection{More features and training samples boost RF performance but not MLR}
+
+MLR requires carefully derived features. RF in contrast can exploit them.
+
+1) m=MLR, x= 4 and trn= 247 best over x={2,4,10,40,46} and trn={247,2280}. More x and trn no use for MLR
+2) m=RF , x=46 and trn=2280 best over x={2,4,10,40,46} and trn={247,2280}. More x and trn useful for RF.
+True on both tst195 and tst201.
+Improving Cyscore using Random Forest. Conclude that RF>MLR.
+Figure 2 shows their performance on PDBbind benchmark, with RF::VinaElem greatly improving Vina by -0.90 in RMSE, -0.57 in SD, +0.249 in Rp and +0.190 in Rs.
+RF is capable of effectively exploiting a more comprehensive set of structural features.
+
+\begin{figure}
+\minipage{0.5\linewidth}
+\includegraphics[width=1.37\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
+\endminipage
+\minipage{0.5\linewidth}
+\includegraphics[width=1.37\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-195-yp.png}
+\endminipage
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2007 core set (N=195).}
+\label{fig:tst195}
+\end{figure}
+
+\begin{figure}
+\minipage{0.5\linewidth}
+\includegraphics[width=1.37\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
+\endminipage
+\minipage{0.5\linewidth}
+\includegraphics[width=1.37\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
+\endminipage
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2012 core set (N=201).}
+\label{fig:tst201}
+\end{figure}
+
+\subsection{RF-based scoring functions can be as interpretable as classical ones}
+
+variable importance plot
+
+\begin{figure}
+\centering
+\includegraphics[width=1.37\linewidth,natwidth=960,natheight=1600]{../rfcyscore/x46/rf/trn-2280.png}
+\caption{Variable importance of RF::CyscoreVinaElem.}
+\label{fig:varimp}
+\end{figure}
+
+\section{Conclusions}
+
+Machine-learning scoring functions are fundamentally different from classical ones because of not imposing a functional form on the relationship between structural and binding data.
+
+The superior performance of machine-learning scoring functions comes exclusively from the avoidance of the assumed functional form of classical scoring functions. By fixing the same features, training set and test set, any performance difference must necessarily come from the choice of regression model. Moreover, in this case the used training data and features are identical, so will be the domain of applicability of the resulting scoring functions. 
+
+by analysing how their performances improve with the increase of structural and binding data used for training. improvements with data set size can only be gain with the appropriate regression model anyway.
+
+MLR requires meaningful features. RF can benefit from more numerical features.
+
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
