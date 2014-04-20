@@ -188,17 +188,17 @@ In this way, the benchmark is conducted as a complete blind test in the sense th
 
 Prediction performance was quantified through standard deviation SD in linear correlation (Eq. \ref{eqn:sd}) on the test set, Pearson correlation coefficient Rp (Eq. \ref{eqn:rp}) and Spearman correlation coefficient Rs (Eq. \ref{eqn:rs}), three metrics commonly used in the community \cite{1313}.
 
-The above three metrics are invariant under linear transformations (e.g. changing the intercept and coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE (Eq. \ref{eqn:rmse}) between measured and predicted binding affinities without a linear correlation on the test set.
+The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE (Eq. \ref{eqn:rmse}) between measured and predicted binding affinities without a linear correlation on the test set.
 
-Mathematically, for a given scoring function $f$, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity given the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex, $N$ is the number of complexes in the set, $a$ and $b$ are the intercept and coefficient of the linear correlation between $y^{(n)}$ and $p^{(n)}$ on the test set, whereas $y_r^{(n)}$ and $p_r^{(n)}$ are the rankings of $y^{(n)}$ and $p^{(n)}$, respectively. 
+Mathematically, given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $N$ is the number of complexes in the test set, $a$ and $b$ are the intercept and coefficient of the linear correlation between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. 
 
 \begin{equation}
-RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(y^{(n)}-p^{(n)})^2}
+RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
 \label{eqn:rmse}
 \end{equation}
 
 \begin{equation}
-SD = \sqrt{\frac{1}{N-2}\sum_{n=1}^N(y^{(n)}-(a+bp^{(n)}))^2}
+SD = \sqrt{\frac{1}{N-2}\sum_{n=1}^N(a+bp^{(n)}-y^{(n)})^2}
 \label{eqn:sd}
 \end{equation}
 
@@ -299,7 +299,7 @@ MLR &  4 & 2897 & 1.72 & 1.73 & 0.490 & 0.466\\
 
 On both PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks, MLR performed the best when it was trained on the 247 carefully selected complexes as used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 blind benchmark (Table \ref{tbl:tst382}), MLR performed the best when it was trained on 792 complexes rather than on the fewest 247 complexes or on the most 2897 complexes, although it delivered approximately the same performance when using training samples of five different volumes.
 
-These results show that MLR is unable to exploit large volumes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR actually increases the difficulty in calibrating the coefficients well. Generally it would be a good idea to select fewer but high quality samples to train MLR, as is the case of Cyscore.
+These results show that MLR is unable to exploit large volumes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR actually increases the difficulty in calibrating the coefficients well. Generally it would be a good idea to select fewer but high quality samples to train MLR, as was the case of Cyscore.
 
 \subsection{RF performance does not scale up with more training samples when there are insufficient structural features}
 
@@ -311,7 +311,7 @@ These results suggest that RF cannot benefit from more training samples if the s
 
 When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when even more features (42 and 46) were used.
 
-These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data.
+These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
 
 However, there was a notable exception on PDBbind v2007 benchmark. When the 1105 remaining complexes in PDBbind v2007 refined set were used to train the RF, its prediction performance turned out to be even better than using 247 or 2280 complexes. This superior performance was pointed out \cite{774} to be due to the characteristics of the benchmark itself, where every complex in the test set has complexes involving the same protein family in the training set. Even so, MLR still failed to benefit from this special training set.
 
