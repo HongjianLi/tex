@@ -391,6 +391,17 @@ This effectively improves Cyscore using Random Forest as the regression model an
 \label{fig:tst201}
 \end{figure}
 
+\begin{figure}
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.png}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.png}
+\endminipage\hfill
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2012 core set (N=201).}
+\label{fig:tst201}
+\end{figure}
+
 \subsection{Machine-learning scoring functions assimilate data better than empirical scoring functions}
 
 not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF.
