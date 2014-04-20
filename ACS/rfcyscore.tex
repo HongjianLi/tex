@@ -294,65 +294,33 @@ MLR &  4 & 2897 & 1.72 & 1.73 & 0.490 & 0.466\\
 \end{tabular}
 \end{table}
 
-\subsection{Cyscore can be strongly improved by substituting RF for MLR}
+\subsection{MLR requires fewer training samples}
 
-On PDBbind v2007 core set (N=195) (Table \ref{tbl:tst195}), 1) MLR, trn=247 best. 2) RF, trn1105 best. Every complex in the test set has complexes involving the same protein in the training set. The superior performance of RF-Score was highlighted by, who nevertheless attribute it to the characteristics of the most widely-used benchmark \cite{774}. Conclusion: refined07 minus core07 not a good benchmark.
-
+On PDBbind v2007 core set (N=195) (Table \ref{tbl:tst195}), 1) MLR, trn=247 best. 2) RF, trn1105 best. 
 On PDBbind v2012 core set (N=201) (Table \ref{tbl:tst201}), 1) MLR, trn=247 best.
-
-On PDBbind v2013\textbackslash v2012 refined set (N=382) (Table \ref{tbl:tst382}), 1) trn=792 best.
+On PDBbind v2013\textbackslash v2012 refined set (N=382) (Table \ref{tbl:tst382}), 1) trn=792 best. Using fewer training samples is slightly better. Do not scale up, almost same performance for trn=792,1300,2059,2897.
 
 MLR requires carefully derived features. For MLR, using fewer training samples results in better prediction performance. This is true on all the three test sets. More training samples lead to the difficulty in recovering the coefficients. More x and trn no use for MLR.
 
-tst=195||201
-x=40||46, 1) trn1105>trn2280>trn247, 2) RF>MLR
-x=10, 1) trn1105 best, 2) RF>MLR, 3) tst=195, trn2280>trn247 in terms of SD,Rp,Rs, worse of RMSE; tst=201, trn2280>trn247 for RF
-x=4, 1) m=RF, trn1105>trn247>trn2280
+high quality training samples, a small set of coefficients cannot sufficiently capture the non-linearity. generalization error. For MLR, more training data lead to worse prediction performance. Better to select fewer training samples, but of high quality, like Cyscore did.
 
-tst=382 Table \ref{tbl:tst382}
-m=MLR, trn792>trn2897>trn2059>trn1300. Using fewer training samples is slightly better. Do not scale up, almost same performance for trn=792,1300,2059,2897.
-m=RF, 1) More trn leads to better prediction for all x=4,10,42,46. 2) x=4, RF(trn2280)~MLR(trn792). x=10,42,46, RF>MLR for any trn.
+\subsection{RF requires more features and training samples}
+
+x=46 and trn=2280 best over x={4,10,40,46} and trn={247,2280}. More x and trn useful for RF. True on both tst195 and tst201.
+tst382: More trn leads to better prediction for all x=4,10,42,46
+
+more training samples, more knowledge to know.
+Exception: trn1105 best. Every complex in the test set has complexes involving the same protein in the training set. The superior performance of RF-Score was highlighted by, who nevertheless attribute it to the characteristics of the most widely-used benchmark \cite{774}. Conclusion: refined07 minus core07 not a good benchmark. Even so, MLR cannot benefit from same protein family.
 
 RF in contrast can exploit them.
 
-2) m=RF , x=46 and trn=2280 best over x={4,10,40,46} and trn={247,2280}. More x and trn useful for RF.
-True on both tst195 and tst201.
-
-This effectively improves Cyscore using Random Forest as the regression model and more features and training samples. Conclude that RF>MLR.
-RF::CyscoreVinaElem refers to the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score.
-Figure 2 shows their performance on PDBbind benchmark, with RF::VinaElem greatly improving Vina by -0.90 in RMSE, -0.57 in SD, +0.249 in Rp and +0.190 in Rs.
-RF is capable of effectively exploiting a more comprehensive set of structural features.
-More features and training samples boost RF performance but not MLR
-
-Conclusion: For MLR, more training data lead to worse prediction performance. Better to select fewer training samples, but of high quality, like Cyscore did.
 RF requires sufficient features and training samples to implicitly capture the non-linearity
-improvements with training dataset size can only be gained with the appropriate regression model anyway.
-
-\begin{figure}
-\minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
-\endminipage\hfill
-\minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-195-yp.png}
-\endminipage\hfill
-\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2007 core set (N=195).}
-\label{fig:tst195}
-\end{figure}
-
-\begin{figure}
-\minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
-\endminipage\hfill
-\minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
-\endminipage\hfill
-\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2012 core set (N=201).}
-\label{fig:tst201}
-\end{figure}
+RF is capable of effectively exploiting a more comprehensive set of structural features.
 
 \subsection{Machine-learning scoring functions are remarkably more accurate than empirical scoring functions}
 
 Table \ref{tbl:trn1105tst195} compares 21 scoring functions on PDBbind v2007 core set (N=195).
+RF::CyscoreVinaElem refers to the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score.
 
 \begin{table}
 \caption{Pearson correlation coefficient Rp, Spearman correlation coefficient Rs and standard deviation SD in linear correlation between predicted and experimental binding affinity on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. The statistics for the other 19 scoring functions are collected from \cite{1362}.}
@@ -386,6 +354,43 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 \end{tabular}
 \end{table}
 
+\subsection{Cyscore can be strongly improved by substituting RF for MLR}
+
+Substitute
+1) On tst195, RF(x=46,trn=1105) for MLR(x=4,trn=247). Figure \ref{fig:tst195} shows their performance on PDBbind benchmark, with RF::CyscoreVinaElem greatly improving Vina by -0.90 in RMSE, -0.57 in SD, +0.249 in Rp and +0.190 in Rs.
+x=40||46, 1) trn1105>trn2280>trn247, 2) RF>MLR
+x=10, 1) trn1105 best, 2) RF>MLR, 3) tst=195, trn2280>trn247 in terms of SD,Rp,Rs, worse of RMSE; tst=201, trn2280>trn247 for RF
+x=4, 1) trn1105>trn247>trn2280
+
+2) On tst201, RF(x=46,trn=2280) for MLR(x=4,trn=247). Figure \ref{fig:tst201}
+
+3) On tst382, RF(x=46,trn=2897) for MLR(x=4,trn=247). Figure \ref{fig:tst382}
+x=4, RF(trn2280)~MLR(trn792). x=10,42,46, RF>MLR for any trn.
+
+This effectively improves Cyscore using Random Forest as the regression model and more features and training samples. Conclude that RF>MLR.
+
+\begin{figure}
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-195-yp.png}
+\endminipage\hfill
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2007 core set (N=195).}
+\label{fig:tst195}
+\end{figure}
+
+\begin{figure}
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
+\endminipage\hfill
+\minipage{0.5\textwidth}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
+\endminipage\hfill
+\caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2012 core set (N=201).}
+\label{fig:tst201}
+\end{figure}
+
 \subsection{Machine-learning scoring functions assimilate data better than empirical scoring functions}
 
 not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF.
@@ -409,6 +414,8 @@ The superior performance of machine-learning scoring functions comes exclusively
 by analysing how their performances improve with the increase of structural and binding data used for training. improvements with data set size can only be gain with the appropriate regression model anyway.
 
 MLR requires meaningful features. RF can benefit from more numerical features.
+
+More features and training samples boost RF performance but not MLR. Improvements with training dataset size can only be gained with the appropriate regression model anyway.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
