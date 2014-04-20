@@ -361,11 +361,11 @@ Substitute
 x=40||46, 1) trn1105>trn2280>trn247, 2) RF>MLR
 x=10, 1) trn1105 best, 2) RF>MLR, 3) tst=195, trn2280>trn247 in terms of SD,Rp,Rs, worse of RMSE; tst=201, trn2280>trn247 for RF
 x=4, 1) trn1105>trn247>trn2280
+x=4, RF(trn2280)~MLR(trn792). x=10,42,46, RF>MLR for any trn.
 
 2) On tst201, RF(x=46,trn=2280) for MLR(x=4,trn=247). Figure \ref{fig:tst201}
 
 3) On tst382, RF(x=46,trn=2897) for MLR(x=4,trn=247). Figure \ref{fig:tst382}
-x=4, RF(trn2280)~MLR(trn792). x=10,42,46, RF>MLR for any trn.
 
 This effectively improves Cyscore using Random Forest as the regression model and more features and training samples. Conclude that RF>MLR.
 
@@ -374,7 +374,7 @@ This effectively improves Cyscore using Random Forest as the regression model an
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
 \endminipage\hfill
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-195-yp.png}
+\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.png}
 \endminipage\hfill
 \caption{MLR::Cyscore (left plot) and RF::CyscoreVinaElem (right plot) performance on PDBbind v2007 core set (N=195).}
 \label{fig:tst195}
