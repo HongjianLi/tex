@@ -153,7 +153,7 @@ In this study, multiple RFs of the default number of 500 trees were built using 
 
 We aimed to analyze how RF responds to varying numbers of features and hence we chose three sources of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for protein (C, N, O, S) and nine for ligand (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the four combinations of these feature sources used to train RF models in this study.
 
-\begin{table}
+\begin{table}[h]
 \caption{Combinations of different sources of features.}
 \label{tbl:features}
 \begin{tabular}{rl}
@@ -319,7 +319,7 @@ However, there was a notable exception on PDBbind v2007 benchmark. When the 1105
 
 We use RF::CyscoreVinaElem to denote the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score. Table \ref{tbl:trn1105tst195} compares RF::CyscoreVinaElem and Cyscore against 19 other scoring functions on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem performing the best in terms of Rp, Rs and SD.
 
-\begin{table}
+\begin{table}[h]
 \caption{Prediction performance of 21 scoring functions evaluated on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. The statistics for the other 19 scoring functions are collected from \cite{1362}.}
 \label{tbl:trn1105tst195}
 \begin{tabular}{lrrr}
@@ -355,62 +355,60 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst382} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 blind benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.09 in RMSE, -0.01 in SD, +0.010 in Rp and +0.012 in Rs.
 
-\begin{figure}
+\begin{figure}[h]
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
-\endminipage\hfill
+\endminipage
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.png}
-\endminipage\hfill
+\endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem trained on 1105 complexes.}
 \label{fig:tst195}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
-\endminipage\hfill
+\endminipage
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
-\endminipage\hfill
+\endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2012 core set (N=201), with RF::CyscoreVinaElem trained on 2280 complexes.}
 \label{fig:tst201}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.png}
-\endminipage\hfill
+\endminipage
 \minipage{0.5\textwidth}
 \includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.png}
-\endminipage\hfill
+\endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013\textbackslash v2012 refined set (N=382), with RF::CyscoreVinaElem trained on 2897 complexes.}
-\label{fig:tst201}
+\label{fig:tst382}
 \end{figure}
 
 These results show that one can develop a much more accurate scoring function out of an existing one simply by changing the regression model from MLR to RF.
 
 \subsection{RF-based scoring functions can be as interpretable as classical ones}
 
-MLR has a straightforward functional form. For RF, the functional form is implicit. It is natural to argue.
-one could also evaluate the SF for that pose with each feature set to zero in turn, with the features leading to the largest variation in the predicted pKd value being the most important. This can also be easily implemented in machine-learning SFs to understand ligand binding.
-variable importance plot, use x4 instead.
+The functional form of classical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Neverthelss, one can estimate the importance of each particular feature by permutating its training values, and the feature leading to the largest variation in the predicted binding affinity on OOB data can be regarded as the most important.
 
-\begin{figure}
-\includegraphics[width=0.8\linewidth,natwidth=960,natheight=1600]{../rfcyscore/x46/rf/trn-2280.png}
-\caption{Variable importance of RF::CyscoreVinaElem.}
+Figure \ref{fig:varimp} plots the increase in error observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy and hydrophobic free energy being particularly important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
+
+\begin{figure}[h]
+\includegraphics[width=1.4\linewidth,natwidth=960,natheight=480]{../rfcyscore/x4/rf/trn-1105.png}
+\caption{Feature importance estimated on internal OOB data.}
 \label{fig:varimp}
 \end{figure}
 
 \section{Conclusions}
 
-Machine-learning scoring functions are fundamentally different from classical ones because of circumventing the functional form on the relationship between structural and binding data. The superior performance of machine-learning scoring functions comes exclusively from the avoidance of the assumed functional form of classical scoring functions. By fixing the same features, training set and test set, any performance difference must necessarily come from the choice of regression model. Moreover, in this case the used training data and features are identical, so will be the domain of applicability of the resulting scoring functions. 
+Machine-learning scoring functions are fundamentally different from classical ones because of circumventing the functional form on the relationship between structural features and binding affinities. In this study we have demonstrated that the MLR regression model used in classical scoring functions does not scale up its performance in the presence of abundant training samples, and the RF regression model does not necessarily boost performance with more training samples if just a small set of features are used. When there are sufficient structural features and sufficient training samples, RF starts to demonstrate its advantage over MLR in comprehensively capturing the non-linearity in the data in nature. Under this circumstance, RF-based scoring functions assimilate data significantly better than classical scoring functions like Cyscore. Improvements with dataset size can only be gained with the appropriate regression model anyway. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures.
 
-RF performance does not necessarily scale up with more training samples unless there are sufficient structural features. RF requires sufficient features and training samples to implicitly capture the non-linearity. Under this circumstance, machine-learning scoring functions assimilate data better than empirical scoring functions in case of sufficient features.
+Moreover, classical scoring functions usually rely on complicated numerical features that must be carefully devised from some kinds of established chemistry theories, whereas RF-based scoring functions can also effectively exploit features as simple as occurrence count of intermolecular contacts. In this study we have shown that using more structural features appropriately can also substantially enhance the prediction accuracy of RF. This further stresses the importance of substituting RF for MLR in scoring function development.
 
-by analysing how their performances improve with the increase of structural and binding data used for training. Improvements with data set size can only be gained with the appropriate regression model anyway. More features and training samples boost RF performance but not MLR. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures. not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF.
-
-MLR requires meaningful features. RF can benefit from more numerical features. MLR requires carefully devised and usually sophisticated features, but RF can also benefit from simple ones.
+Last but not the least, RF-based scoring functions, having correctly estimated the feature importance, can be as interpretable as classical ones.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
