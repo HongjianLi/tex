@@ -73,7 +73,7 @@
 %% the title and author information, if needed.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \abbreviations{MLR,RF}
-\keywords{Molecular docking, binding affinity, machine learning}
+\keywords{Molecular docking, binding affinity, drug discovery, machine learning}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The manuscript does not need to include \maketitle, which is
@@ -113,7 +113,7 @@ separate page at the end of the document.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-State-of-the-art protein-ligand docking methods are generally limited by the traditionally low accuracy of their scoring functions, which are used to predict binding affinity and thus vital for discriminating between active and inactive compounds. Despite intensive research in recent years, many newly-developed scoring functions hardly show satisfactory prediction performance. They often assume a predetermined additive functional form for some sophisticated numerical features, and utilize standard least-square multivariate linear regression on experimental data to derive the coefficients. In this study we show that such a simple functional form is detrimental for its performance, and replacing linear regression by machine learning techniques like random forest (RF) can significantly improve prediction performance. Most importantly, we investigate the conditions of applying RF and find that RF requires sufficient features and training samples to implicitly capture the non-linearity between structural features and measured binding affinities. Lastly, we show that RF-based scoring functions can be as interpretable as classical ones. We use Cyscore, an empirical scoring function recently published in a top journal, as baseline.
+State-of-the-art protein-ligand docking methods are generally limited by the traditionally low accuracy of their scoring functions, which are used to predict binding affinity and thus vital for discriminating between active and inactive compounds. Despite intensive research in recent years, many newly-developed scoring functions hardly show satisfactory prediction performance. They often assume a predetermined additive functional form for some sophisticated numerical features, and utilize standard least-square multivariate linear regression on experimental data to derive the coefficients. In this study we show that such a simple functional form is detrimental for its performance, and replacing linear regression by machine learning techniques like random forest (RF) can significantly improve prediction performance. Most importantly, we investigate the conditions of applying RF under various contexts and find that RF requires sufficient structural features and training samples to implicitly and comprehensively capture the non-linearity between structural features and measured binding affinities. Lastly, we show that RF-based scoring functions can be as interpretable as classical ones. We use Cyscore, an empirical scoring function recently published in a top journal, as baseline.
 
 \end{abstract}
 
@@ -176,7 +176,7 @@ On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set 
 
 In order to see the effect of using more samples for training, in this study we propose a new training set, which comprises all the complexes in PDBbind v2013 refined set excluding those in PDBbind v2007 and v2012 core sets. This led to a total of 2280 complexes. By construction, this training set does not overlap with any of the two test sets either.
 
-Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and many of them were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
+Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and many of them were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Note that this training set has 28 overlapping complexes in PDBbind v2012 core set, so it was used merely in the v2007 benchmark. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
 \subsection{PDBbind v2013 blind benchmark}
 
@@ -270,6 +270,7 @@ MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
 \hline
 model & features & samples & RMSE & SD & Rp & Rs\\
 \hline
+MLR &  4 &  247 & 1.80 & 1.71 & 0.503 & 0.474\\
 MLR &  4 &  792 & 1.71 & 1.69 & 0.517 & 0.490\\
 MLR &  4 & 1300 & 1.75 & 1.73 & 0.486 & 0.461\\
 MLR &  4 & 2059 & 1.73 & 1.73 & 0.487 & 0.463\\
@@ -294,25 +295,23 @@ MLR &  4 & 2897 & 1.72 & 1.73 & 0.490 & 0.466\\
 \end{tabular}
 \end{table}
 
-\subsection{MLR requires fewer training samples}
+\subsection{MLR performance does not scale up with more training samples}
 
-On PDBbind v2007 core set (N=195) (Table \ref{tbl:tst195}), 1) MLR, trn=247 best. 2) RF, trn1105 best. 
-On PDBbind v2012 core set (N=201) (Table \ref{tbl:tst201}), 1) MLR, trn=247 best.
-On PDBbind v2013\textbackslash v2012 refined set (N=382) (Table \ref{tbl:tst382}), 1) trn=792 best. Using fewer training samples is slightly better. Do not scale up, almost same performance for trn=792,1300,2059,2897.
+On both PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks, MLR delivered the best performance when it was trained with the 247 carefully selected complexes. Its performance dropped when more complexes were used for training. On PDBbind v2013 blind benchmark (Table \ref{tbl:tst382}), MLR delivered the best performance when it was trained with 792 complexes rather than the fewest 247 complexes or the most 2897 complexes, although it displayed approximately the same performance when using training samples of five different volumes.
 
-MLR requires carefully derived features. For MLR, using fewer training samples results in better prediction performance. This is true on all the three test sets. More training samples lead to the difficulty in recovering the coefficients. More x and trn no use for MLR.
+These results show that MLR is unable to exploit large volumes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR actually increases the difficulty in calibrating the coefficients well. Generally it would be a good idea to select fewer but high quality samples to train MLR, as is the case of Cyscore.
 
-high quality training samples, a small set of coefficients cannot sufficiently capture the non-linearity. generalization error. For MLR, more training data lead to worse prediction performance. Better to select fewer training samples, but of high quality, like Cyscore did.
+\subsection{RF requires sufficient structural features and training samples to comprehensively learn knowledge}
 
-\subsection{RF requires more features and training samples}
+When the features are few (x=4), RF performance does not necessarily scale up with more training samples.
 
 x=46 and trn=2280 best over x={4,10,40,46} and trn={247,2280}. More x and trn useful for RF. True on both tst195 and tst201.
-tst382: More trn leads to better prediction for all x=4,10,42,46
+tst382: More trn leads to better prediction for all x=4,10,42,46. not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF. tst382 can help to see the trend more clearly. Machine-learning scoring functions assimilate data better than empirical scoring functions
 
-more training samples, more knowledge to know.
+more training samples, more knowledge to learn.
 Exception: trn1105 best. Every complex in the test set has complexes involving the same protein in the training set. The superior performance of RF-Score was highlighted by, who nevertheless attribute it to the characteristics of the most widely-used benchmark \cite{774}. Conclusion: refined07 minus core07 not a good benchmark. Even so, MLR cannot benefit from same protein family.
 
-RF in contrast can exploit them.
+RF in contrast can exploit them. sufficiently capture the non-linearity. overtrain, generalization error.
 
 RF requires sufficient features and training samples to implicitly capture the non-linearity
 RF is capable of effectively exploiting a more comprehensive set of structural features.
@@ -402,10 +401,6 @@ This effectively improves Cyscore using Random Forest as the regression model an
 \label{fig:tst201}
 \end{figure}
 
-\subsection{Machine-learning scoring functions assimilate data better than empirical scoring functions}
-
-not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF.
-
 \subsection{RF-based scoring functions can be as interpretable as classical ones}
 
 variable importance plot
@@ -426,7 +421,9 @@ by analysing how their performances improve with the increase of structural and 
 
 MLR requires meaningful features. RF can benefit from more numerical features.
 
-More features and training samples boost RF performance but not MLR. Improvements with training dataset size can only be gained with the appropriate regression model anyway.
+More features and training samples boost RF performance but not MLR. Improvements with training dataset size can only be gained with the appropriate regression model anyway. given tremendous abundance of training samples.
+
+MLR requires  carefully devised and usually sophisticated features, but RF can also benefit from simple ones.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The "Acknowledgement" section can be given in all manuscript
