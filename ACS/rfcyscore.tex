@@ -113,7 +113,7 @@ separate page at the end of the document.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-State-of-the-art protein-ligand docking methods are generally limited by the traditionally low accuracy of their scoring functions, which are used to predict binding affinity and thus vital for discriminating between active and inactive compounds. Despite intensive research in recent years, many newly-developed scoring functions hardly show satisfactory prediction performance. They often assume a predetermined additive functional form for some sophisticated numerical features, and utilize standard least-square multivariate linear regression on experimental data to derive the coefficients. In this study we show that such a simple functional form is detrimental for its performance, and replacing linear regression by machine learning techniques like random forest (RF) can significantly improve prediction performance. Most importantly, we investigate the conditions of applying RF under various contexts and find that RF requires sufficient structural features and training samples to implicitly and comprehensively capture the non-linearity between structural features and measured binding affinities. Lastly, we show that RF-based scoring functions can be as interpretable as classical ones. We use Cyscore, an empirical scoring function recently published in a top journal, as baseline.
+State-of-the-art protein-ligand docking methods are generally limited by the traditionally low accuracy of their scoring functions, which are used to predict binding affinity and thus vital for discriminating between active and inactive compounds. Despite intensive research in recent years, many newly-developed scoring functions hardly show satisfactory prediction performance. They often assume a predetermined additive functional form for some sophisticated numerical features, and utilize standard least-square multivariate linear regression on experimental data to derive the coefficients. In this study we show that such a simple functional form is detrimental for its performance, and replacing linear regression by machine learning techniques like random forest (RF) can significantly improve prediction performance. Most importantly, we investigate the conditions of applying RF under various contexts and find that RF requires sufficient structural features and training samples to implicitly and comprehensively capture the non-linearity between structural features and measured binding affinities. Lastly, we show that RF-based scoring functions can be as interpretable as classical ones. We use Cyscore, an empirical scoring function recently published in a top journal, as a baseline.
 
 \end{abstract}
 
@@ -355,7 +355,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst382} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 blind benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.34 in RMSE, -0.25 in SD, +0.172 in Rp and +0.176 in Rs.
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
 \endminipage
@@ -366,7 +366,7 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 \label{fig:tst195}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.eps}
 \endminipage
@@ -377,7 +377,7 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 \label{fig:tst201}
 \end{figure}
 
-\begin{figure}[ht]
+\begin{figure}[ht!]
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.eps}
 \endminipage
@@ -396,7 +396,7 @@ The functional form of classical scoring functions is straightforward, while it 
 
 Figure \ref{fig:varimp} plots the increase in error observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy and hydrophobic free energy being particularly important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
 
-\begin{figure}[t]
+\begin{figure}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
 \caption{Feature importance estimated on internal OOB data.}
 \label{fig:varimp}
@@ -404,7 +404,7 @@ Figure \ref{fig:varimp} plots the increase in error observed when each of the 4 
 
 \section{Conclusions}
 
-Machine-learning scoring functions are fundamentally different from classical ones because of circumventing the functional form on the relationship between structural features and binding affinities. In this study we have demonstrated that the MLR regression model used in classical scoring functions does not scale up its performance in the presence of abundant training samples, and the RF regression model does not necessarily boost performance with more training samples if just a small set of features are used. When there are sufficient structural features and sufficient training samples, RF starts to demonstrate its advantage over MLR in comprehensively capturing the non-linearity in the data in nature. Under this circumstance, RF-based scoring functions assimilate data significantly better than classical scoring functions like Cyscore. Improvements with dataset size can only be gained with the appropriate regression model anyway. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures.
+Machine-learning scoring functions are fundamentally different from classical ones because of circumventing the functional form on the relationship between structural features and binding affinities. In this study we have demonstrated that the multiple linear regression (MLR) model used in classical scoring functions does not improve its performance in the presence of abundant training samples, and the random forest (RF) regression model does not necessarily boost performance with more training samples if just a small set of features are used. When there are sufficient structural features and sufficient training samples, RF starts to demonstrate its advantage over MLR in comprehensively capturing the non-linearity in the data in nature. Under this circumstance, RF-based scoring functions assimilate data significantly better than classical scoring functions like Cyscore. Improvements with dataset size can only be gained with the appropriate regression model anyway. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures.
 
 Moreover, classical scoring functions usually rely on complicated numerical features that must be carefully devised from some kinds of established chemistry theories, whereas RF-based scoring functions can also effectively exploit features as simple as occurrence count of intermolecular contacts. In this study we have shown that using more structural features appropriately can also substantially enhance the prediction accuracy of RF. This further stresses the importance of substituting RF for MLR in scoring function development.
 
