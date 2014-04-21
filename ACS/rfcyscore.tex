@@ -319,7 +319,7 @@ However, there was a notable exception on PDBbind v2007 benchmark. When the 1105
 
 We use RF::CyscoreVinaElem to denote the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score. Table \ref{tbl:trn1105tst195} compares RF::CyscoreVinaElem and Cyscore against 19 other scoring functions on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem performing the best in terms of Rp, Rs and SD.
 
-\begin{table}[h]
+\begin{table}[ht]
 \caption{Prediction performance of 21 scoring functions evaluated on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. The statistics for the other 19 scoring functions are collected from \cite{1362}.}
 \label{tbl:trn1105tst195}
 \begin{tabular}{lrrr}
@@ -353,36 +353,36 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 \subsection{Cyscore can be strongly improved by substituting RF for MLR}
 
-Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst382} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 blind benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.09 in RMSE, -0.01 in SD, +0.010 in Rp and +0.012 in Rs.
+Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst382} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 blind benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.34 in RMSE, -0.25 in SD, +0.172 in Rp and +0.176 in Rs.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
 \endminipage
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.eps}
 \endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem trained on 1105 complexes.}
 \label{fig:tst195}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.eps}
 \endminipage
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.eps}
 \endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2012 core set (N=201), with RF::CyscoreVinaElem trained on 2280 complexes.}
 \label{fig:tst201}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.eps}
 \endminipage
 \minipage{0.5\textwidth}
-\includegraphics[width=1.4\linewidth,natwidth=480,natheight=480]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.png}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.eps}
 \endminipage
 \caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013\textbackslash v2012 refined set (N=382), with RF::CyscoreVinaElem trained on 2897 complexes.}
 \label{fig:tst382}
@@ -396,8 +396,8 @@ The functional form of classical scoring functions is straightforward, while it 
 
 Figure \ref{fig:varimp} plots the increase in error observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy and hydrophobic free energy being particularly important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
 
-\begin{figure}[h]
-\includegraphics[width=1.4\linewidth,natwidth=960,natheight=480]{../rfcyscore/x4/rf/trn-1105.png}
+\begin{figure}[t]
+\includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
 \caption{Feature importance estimated on internal OOB data.}
 \label{fig:varimp}
 \end{figure}
