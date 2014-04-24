@@ -416,7 +416,7 @@ These results show that one can develop a much more accurate scoring function ou
 
 The functional form of classical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Nevertheless, one can estimate the importance of each particular feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on OOB data can be regarded as the most important.
 
-Figure \ref{fig:varimp} plots the percentage of increase in mean square error observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy and hydrophobic free energy being particularly important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
+Figure \ref{fig:varimp} plots the percentage of increase in mean square error (\%IncMSE) observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy and hydrophobic free energy being particularly important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
