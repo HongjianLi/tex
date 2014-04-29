@@ -1,0 +1,138 @@
+%%%%%%%%%%%%%%%%%%%%%%% file template.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is a general template file for the LaTeX package SVJour3
+% for Springer journals.          Springer Heidelberg 2010/09/16
+%
+% Copy it to a new file with a new name and use it as the basis
+% for your article. Delete % signs as needed.
+%
+% This template includes a few options for different layouts and
+% content for various journals. Please consult a previous issue of
+% your journal as needed.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{fix-cm}
+
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+%\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+\documentclass[twocolumn]{svjour3}          % twocolumn
+
+\smartqed  % flush right qed marks, e.g. at end of proof
+
+\usepackage{graphicx}
+
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+
+\journalname{Journal of Computer-Aided Molecular Design}
+
+\begin{document}
+
+\title{USRT: a de novo Ligand Deduplication Algorithm Based on Ultrafast Shape Recognition
+%\thanks{Grants or other notes about the article that should go on the front page should be placed here. General acknowledgments should be placed at the end of the article.}
+}
+%\subtitle{Do you have a subtitle?\\ If so, write it here}
+
+%\titlerunning{Short form of title}        % if too long for running head
+
+\author{Hongjian Li \and Kwong-Sak Leung \and Man-Hon Wong
+}
+
+%\authorrunning{Short form of author list} % if too long for running head
+
+\institute{Hongjian Li, Kwong-Sak Leung, Man-Hon Wong\at
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong\\
+\email{hjli@cse.cuhk.edu.hk}           %  \\
+%\emph{Present address:} of F. Author  %  if needed
+%\and
+%S. Author \at
+%second address
+}
+
+\date{Received: date / Accepted: date}
+% The correct dates will be entered by the editor
+
+\maketitle
+
+\begin{abstract}
+
+We present the first,
+can combine with other USR variants, e.g. USRCAT.
+
+\keywords{First keyword \and Second keyword \and More}
+% \PACS{PACS code1 \and PACS code2 \and more}
+% \subclass{MSC code1 \and MSC code2 \and more} % mathematical subject classification numbers
+\end{abstract}
+
+\section{Introduction}
+\label{intro}
+
+iSyn \cite{}
+
+coarse methods, compare mwt, nha
+
+\section{Methods}
+\label{sec:methods}
+
+
+
+\subsection{Subsection title}
+\label{sec:2}
+
+(see Sect.~\ref{sec:methods}).
+
+\paragraph{Paragraph headings} Use paragraph headings as needed.
+
+\begin{equation}
+a^2+b^2=c^2
+\end{equation}
+
+\begin{figure*}
+%\includegraphics[width=0.75\textwidth]{example.eps}
+\caption{Please write your figure caption here}
+\label{fig:2}
+\end{figure*}
+
+\begin{table}
+\caption{Please write your table caption here}
+\label{tab:1}
+\begin{tabular}{lll}
+\hline\noalign{\smallskip}
+first & second & third  \\
+\noalign{\smallskip}\hline\noalign{\smallskip}
+number & number & number \\
+number & number & number \\
+\noalign{\smallskip}\hline
+\end{tabular}
+\end{table}
+
+\section{Conclusion}
+
+A general method that can be applied to various drug design applications.
+USRT has constraints: known ROOT frame, in-frame atom types, connector atom types
+
+\begin{acknowledgements}
+
+This work was supported by the Direct Grant from the Chinese University of Hong Kong and the GRF Grant (Project No. 2150764) from the Research Grants Council of Hong Kong SAR.
+
+\end{acknowledgements}
+
+\bibliographystyle{spbasic}      % basic style, author-year citations
+%\bibliographystyle{spmpsci}      % mathematics and physical sciences
+%\bibliographystyle{spphys}       % APS-like style for physics
+\bibliography{../refworks}   % name your BibTeX data base
+
+\end{document}
+
+%Journal of Computer-Aided Molecular Design 3.172
+%Chemical Biology & Drug Design 2.469 
+%Molecular Informatics 2.338
+%Journal of Molecular Graphics and Modelling 2.325
+%IEEE-ACM Transactions on Computational Biology and Bioinformatics 1.616
