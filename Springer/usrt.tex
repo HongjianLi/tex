@@ -166,29 +166,21 @@ pose & element 1 & element 2\\
 
 USR was claimed to be three orders of magnitude faster than ESshape3D. USR is 1,546 and 2,038 times faster than ESshape3D and Shape Signatures. USR is 14,238 times faster than ROCS, the fastest alignment-based method.
 
-\section{Discussion}
+\section{Discussion and Conclusion}
 
 USR has advantages in being independent of position and orientation.
 
-USRT inherits advantages from USR, and is also independent of torsions, which are introduced by flexible ligand docking.
+We have developed USRT (Ultrafast Shape Recognition with Torsions), the first algorithm that can distinguish ligands with different torsions. USRT is computationally very fast, independent of torsions, compatible with USRCAT and other USR variants. USRT inherits advantages from USR, and is also independent of torsions, which are introduced by flexible ligand docking.
 
 Output is a feature vector, which maps to a point in a high dimensional space. All existing clustering algorithms can be utilized.
 
-Software availability.
-
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \cite{1362}, which has collected 23 million ligands from ZINC \cite{532,1178}.
 
+USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design.
+
+Software availability. USRT is free and open source under Apache License 2.0. It is available at https://github.com/HongjianLi/usrt and written in C++11. Precompiled executables for 64bit Linux/Windows and examples are provided.
+
 The current version of USRT has some constraints: known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research.
-
-\section{Availability}
-
-USRT is free and open source under Apache License 2.0. It is available at https://github.com/HongjianLi/usrt and written in C++11. Precompiled executables for 64bit Linux/Windows and examples are provided.
-
-\section{Conclusion}
-
-We have developed USRT (Ultrafast Shape Recognition with Torsions), the first algorithm that can distinguish ligands with different torsions. USRT is computationally very fast, independent of torsions, compatible with USRCAT and other USR variants.
-
-USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering.
 
 \section{Author Contributions}
 
