@@ -208,11 +208,11 @@ v2013 & 382 & 2897\\
 
 \subsection{Performance metrics}
 
-Prediction performance in terms of the predicted binding affinities against measured ones was quantified through standard deviation SD in linear correlation (Eq. \ref{eqn:sd}) on the test set, Pearson correlation coefficient Rp (Eq. \ref{eqn:rp}) and Spearman correlation coefficient Rs (Eq. \ref{eqn:rs}), three metrics commonly used in the community \cite{1313}.
+Prediction performance in terms of the predicted binding affinities against measured ones was quantified through standard deviation SD in linear correlation (Eq. \ref{eqn:sd}) on the test set, Pearson correlation coefficient Rp (Eq. \ref{eqn:rp}) and Spearman correlation coefficient Rs (Eq. \ref{eqn:rs}), three metrics commonly used in the community \cite{1313}. The SD metric is essentially the same as the residual standard error (RSE) metric used in some other studies \cite{963}.
 
 The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE (Eq. \ref{eqn:rmse}) between measured and predicted binding affinities without a linear correlation on the test set.
 
-Mathematically, given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $N$ is the number of complexes in the test set, $a$ and $b$ are the intercept and coefficient of the linear correlation between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. 
+Mathematically, given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. 
 
 \begin{equation}
 RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
@@ -220,7 +220,7 @@ RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
 \end{equation}
 
 \begin{equation}
-SD = \sqrt{\frac{1}{N-2}\sum_{n=1}^N(a+bp^{(n)}-y^{(n)})^2}
+SD = \sqrt{\frac{1}{N-2}\sum_{n=1}^N(\hat{p}^{(n)}-y^{(n)})^2}
 \label{eqn:sd}
 \end{equation}
 
