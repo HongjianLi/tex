@@ -178,16 +178,18 @@ In this study we used exactly the same training set and the same test sets in th
 
 Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Note that this training set has 28 overlapping complexes in PDBbind v2012 core set, so it was used merely in the v2007 benchmark. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
-\subsection{PDBbind v2013 blind benchmark}
+\subsection{PDBbind v2013 benchmark}
 
-We propose a new benchmark to investigate how prediction performance changes with varying numbers of training samples. The test set comprises the complexes in PDBbind v2013 refined set excluding those in PDBbind v2012 refined set. This led to a total of 382 complexes, whose experimental binding affinities span 9.51 pKd units. There are four time-stamped training sets, which are the refined sets of PDBbind v2002 (N=792), v2007 (N=1300), v2010 (N=2059) and v2012 (N=2897). They were chosen because the number of complexes between consecutive releases is approximately equal.
+We propose a new benchmark to investigate how prediction performance changes with varying numbers of training samples. We used PDBbind v2013 refined set, and divided it into five equal partitions using uniform sampling.
 
-In this way, the benchmark is conducted as a blind test in the sense that all the training samples available in a certain past year are used to train the regression model and predict the binding affinities of new complexes as if they had not yet been measured. By construction, there are no complexes in common between the test set and any of the four training sets.
+The test set comprises the complexes in. This led to a total of 592 complexes, whose experimental binding affinities span 9.85 pKd units. The test set size is significantly larger than that of the v2007 or v2012 benchmarks. By construction, there are no complexes in common between the test set and any of the four training sets.
+
+%5-fold cross validation, as was used by ID-Score \cite{1305}.
 
 Table \ref{tbl:benchmarks} summarizes the number of training samples for each of the three benchmarks.
 
 \begin{table}
-\caption{The number of training samples for the PDBbind v2007 and v2012 benchmarks and the PDBbind v2013 blind benchmark used in this study.}
+\caption{The number of training samples for the PDBbind v2007, v2012 and v2013 benchmarks used in this study.}
 \label{tbl:benchmarks}
 \begin{tabular}{rrr}
 \hline
@@ -198,10 +200,10 @@ v2007 & 195 & 1105\\
 v2007 & 195 & 2280\\
 v2012 & 201 &  247\\
 v2012 & 201 & 2280\\
-v2013 & 382 &  792\\
-v2013 & 382 & 1300\\
-v2013 & 382 & 2059\\
-v2013 & 382 & 2897\\
+v2013 & 592 &  592\\
+v2013 & 592 & 1184\\
+v2013 & 592 & 1776\\
+v2013 & 592 & 2367\\
 \hline
 \end{tabular}
 \end{table}
@@ -236,10 +238,10 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 
 \section{Results and discussion}
 
-Tables \ref{tbl:tst195}, \ref{tbl:tst201} and \ref{tbl:tst382} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 core set (N=195), PDBbind v2012 core set (N=201) and PDBbind v2013\textbackslash v2012 refined set (N=382), respectively. % TODO: replace tables by figures.
+Tables \ref{tbl:tst195}, \ref{tbl:tst201} and \ref{tbl:592} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592), respectively. % TODO: replace tables by figures.
 
 \begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2007 core set (N=195) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
+\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2007 benchmark (N=195) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
 \label{tbl:tst195}
 \begin{tabular}{rrrrrrr}
 \hline
@@ -265,7 +267,7 @@ MLR &  4 & 2280 & 1.93 & 1.83 & 0.643 & 0.676\\
 \end{table}
 
 \begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2012 core set (N=201) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
+\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2012 benchmark (N=201) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
 \label{tbl:tst201}
 \begin{tabular}{rrrrrrr}
 \hline
@@ -286,8 +288,8 @@ MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
 \end{table}
 
 \begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2013\textbackslash v2012 refined set (N=382) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
-\label{tbl:tst382}
+\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2013 benchmark (N=592) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
+\label{tbl:tst592}
 \begin{tabular}{rrrrrrr}
 \hline
 model & features & samples & RMSE & SD & Rp & Rs\\
@@ -313,19 +315,23 @@ MLR &  4 & 2897 & 1.72 & 1.73 & 0.490 & 0.466\\
  RF & 46 & 1300 & 1.59 & 1.58 & 0.602 & 0.580\\
  RF & 46 & 2059 & 1.50 & 1.50 & 0.654 & 0.636\\
  RF & 46 & 2897 & 1.46 & 1.46 & 0.675 & 0.650\\
+ RF & 46 &  592 & 1.53 & 1.53 & 0.643 & 0.645\\
+ RF & 46 & 1184 & 1.47 & 1.47 & 0.679 & 0.681\\
+ RF & 46 & 1776 & 1.43 & 1.43 & 0.698 & 0.697\\
+ RF & 46 & 2367 & 1.41 & 1.41 & 0.711 & 0.709\\
 \hline
 \end{tabular}
 \end{table}
 
 \subsection{MLR performance does not increase with more training samples}
 
-On both PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks, MLR performed best when it was trained on the 247 carefully selected complexes as used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 blind benchmark (Table \ref{tbl:tst382}), MLR performed best when it was trained on 792 complexes rather than on the fewest 247 complexes or on the most 2897 complexes, although it delivered approximately the same performance when using training samples of five different sizes.
+On both PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks, MLR performed best when it was trained on the 247 carefully selected complexes as used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 benchmark (Table \ref{tbl:tst592}), MLR performed best when it was trained on 792 complexes rather than on the fewest 247 complexes or on the most 2897 complexes, although it delivered approximately the same performance when using training samples of five different sizes.
 
 These results show that MLR is unable to exploit large sizes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR actually increases the difficulty in regressing the coefficients well. Generally it would be a good idea to select fewer but high quality samples to train MLR, as was the case of Cyscore.
 
 \subsection{RF performance does not increase with more training samples when there are insufficient structural features}
 
-When only the 4 Cyscore features were used, the RF trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. The same phenomenon applies to PDBbind v2013 blind benchmark (Table \ref{tbl:tst382}), where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
+When only the 4 Cyscore features were used, the RF trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. The same phenomenon applies to PDBbind v2013 benchmark (Table \ref{tbl:tst592}), where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
 
 These results suggest that RF cannot benefit from more training samples if the structural features are insufficient. The reason could be that, tracing back to the nature of RF during tree construction, the chosen splitting feature can only result in a low purity gain at each non-leaf node.
 
@@ -336,6 +342,10 @@ When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF tra
 These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
 
 However, there was a notable exception on PDBbind v2007 benchmark. When the 1105 remaining complexes in PDBbind v2007 refined set were used to train the RF, its prediction performance turned out to be even better than using 247 or 2280 complexes. This superior performance was pointed out \cite{774} to be due to the characteristics of the benchmark itself, where every complex in the test set has complexes involving the same protein family in the training set. Even so, MLR still failed to benefit from this special training set. % TODO: rewrite
+
+\subsection{RF performs consistently well in cross validation}
+
+
 
 \subsection{Machine-learning scoring functions are significantly more accurate than empirical scoring functions}
 
@@ -375,7 +385,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 \subsection{Cyscore can be strongly improved by substituting RF for MLR}
 
-Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst382} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 blind benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.34 in RMSE, -0.25 in SD, +0.172 in Rp and +0.176 in Rs.
+Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst592} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.34 in RMSE, -0.25 in SD, +0.172 in Rp and +0.176 in Rs.
 
 \begin{figure}[ht!]
 \minipage{0.5\textwidth}
@@ -384,7 +394,7 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.eps}
 \endminipage
-\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem trained on 1105 complexes.}
+\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes.}
 \label{fig:tst195}
 \end{figure}
 
@@ -395,7 +405,7 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2280-tst-201-yp.eps}
 \endminipage
-\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2012 core set (N=201), with RF::CyscoreVinaElem trained on 2280 complexes.}
+\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2280 complexes.}
 \label{fig:tst201}
 \end{figure}
 
@@ -406,7 +416,7 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 \minipage{0.5\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.eps}
 \endminipage
-\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013\textbackslash v2012 refined set (N=382), with RF::CyscoreVinaElem trained on 2897 complexes.}
+\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2897 complexes.}
 \label{fig:tst382}
 \end{figure}
 
