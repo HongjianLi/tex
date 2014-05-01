@@ -125,27 +125,37 @@ Extensible: reference points, moments
 \subsection{USRT: Ultrafast Shape Recognition with Torsions}
 \label{sec:usrt}
 
-PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification.
+PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification (http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file).
 
-Figure \ref{fig:t27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of –π to π. 
+Figure \ref{fig:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of –π to π. 
 
-\begin{figure*}
-%\includegraphics[width=\textwidth]{example.png}
-\caption{Figure with T27 and T27 with two torsions. T27 is still too complicated. Use half of T27.}
-\label{fig:t27}
-\end{figure*}
-
-Reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y (Figure \ref{fig:PDBQT}), and is often the first of the current frame. For the ROOT frame, it is the first.
+Reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first.
 
 \begin{figure*}
-%\includegraphics[width=\textwidth]{example.png}
+\minipage{0.5\textwidth}
+\centering
+\includegraphics[width=1.36\textwidth,natwidth=638,natheight=386]{../usrt/MRV0.png}
+\endminipage
+\minipage{0.5\textwidth}
+\centering
+\includegraphics[width=1.36\textwidth,natwidth=638,natheight=386]{../usrt/MRV1.png}
+\endminipage
+\\
+\minipage{0.5\textwidth}
+\centering
+\includegraphics[width=1.36\textwidth,natwidth=638,natheight=386]{../usrt/MRV0.png}
+\endminipage
+\minipage{0.5\textwidth}
+\centering
+\includegraphics[width=1.36\textwidth,natwidth=638,natheight=386]{../usrt/MRV1.png}
+\endminipage
 \caption{Figure of PDBQT lines in Notepad++}
-\label{fig:PDBQT}
+\label{fig:T27}
 \end{figure*}
 
 Once a reference atom is determined, the next is to compute inter-atom distances and their 1st, 2nd, 3rd moments.
 
-Frames with less than 2 heavy atoms are ignored.
+Frames with less than 2 heavy atoms are ignored. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments.
 
 \section{Results}
 
@@ -170,17 +180,17 @@ USR was claimed to be three orders of magnitude faster than ESshape3D. USR is 1,
 
 USR has advantages in being independent of position and orientation.
 
-We have developed USRT (Ultrafast Shape Recognition with Torsions), the first algorithm that can distinguish ligands with different torsions. USRT is computationally very fast, independent of torsions, compatible with USRCAT and other USR variants. USRT inherits advantages from USR, and is also independent of torsions, which are introduced by flexible ligand docking.
+We have developed USRT (Ultrafast Shape Recognition with Torsions), the first algorithm that can distinguish ligands with different torsions. USRT is computationally very fast, independent of torsions. USRT inherits advantages from USR, and is also independent of torsions, which are introduced by flexible ligand docking. It circumvents the need of aligning the molecules before testing for similarity.
 
 Output is a feature vector, which maps to a point in a high dimensional space. All existing clustering algorithms can be utilized.
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \cite{1362}, which has collected 23 million ligands from ZINC \cite{532,1178}.
 
-USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design.
+USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design. Compatible with USRCAT \cite{1331} and other USR variants.
 
-Software availability. USRT is free and open source under Apache License 2.0. It is available at https://github.com/HongjianLi/usrt and written in C++11. Precompiled executables for 64bit Linux/Windows and examples are provided.
+USRT is free and open source under Apache License 2.0. It is available at https://github.com/HongjianLi/usrt and written in C++11. Precompiled executables for 64bit Linux/Windows and examples are provided.
 
-The current version of USRT has some constraints: known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research.
+The current version of USRT, 1.0.0, has some constraints: known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research.
 
 \section{Author Contributions}
 
