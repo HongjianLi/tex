@@ -151,10 +151,10 @@ A RF \cite{1309} is a consensus of a large number of different decision trees ge
 
 In this study, multiple RFs of the default number of 500 trees were built using values of the mtry control parameter from one to the total number of input features. The selected RF was the one resulting in the lowest root mean square error (RMSE) on the Out-of-Bag (OOB) samples of the training set. Only one single random seed was used because seed is not a significant impact factor of the prediction performance, and using fewer seeds has the additional advantage of leading to computationally faster training process.
 
-In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the four combinations of these feature sources used to train RF models in this study. % TODO: use model names, e.g. RF-40.
+In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the three combinations of these feature sources used to train RF models in this study. % TODO: use model names, e.g. RF-x4, RF-x10, RF-x46.
 
 \begin{table}[h]
-\caption{The four combinations of three different sources of features used to train RF models in this study.}
+\caption{The three combinations of three different sources of features used to train RF models in this study.}
 \label{tbl:features}
 \begin{tabular}{rl}
 \hline
@@ -162,7 +162,6 @@ features & description\\
 \hline
  4 & 4 Cyscore features\\
 10 & 4 Cyscore features + 6 AutoDock Vina features\\
-40 & 4 Cyscore features + 36 RF-Score features\\
 46 & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Score features\\
 \hline
 \end{tabular}
@@ -174,7 +173,7 @@ The PDBbind benchmark is arguably the most widely used for binding affinity pred
 
 On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets.
 
-In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison. Additionally, in order to see the effect of using more samples for training, we propose a new training set, which comprises all the complexes in PDBbind v2013 refined set excluding those in PDBbind v2007 and v2012 core sets. This led to a total of 2280 complexes. By construction, this training set does not overlap with any of the two test sets, and it represents the maximum collection of structural data so far. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12
+In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison. Additionally, in order to see the effect of using more samples for training, we propose a new training set, which comprises all the complexes in PDBbind v2013 refined set excluding those in PDBbind v2007 and v2012 core sets. This led to a total of 2280 complexes. By construction, this training set does not overlap with any of the two test sets, and it represents the maximum collection of structural data so far. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
 
 Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Note that this training set has 28 overlapping complexes in PDBbind v2012 core set, so it was used merely in the v2007 benchmark. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
@@ -256,9 +255,6 @@ MLR &  4 & 2280 & 1.93 & 1.83 & 0.643 & 0.676\\
  RF & 10 &  247 & 1.78 & 1.79 & 0.662 & 0.668\\
  RF & 10 & 1105 & 1.63 & 1.58 & 0.749 & 0.759\\
  RF & 10 & 2280 & 1.81 & 1.78 & 0.668 & 0.669\\
- RF & 40 &  247 & 1.78 & 1.78 & 0.667 & 0.686\\
- RF & 40 & 1105 & 1.54 & 1.46 & 0.790 & 0.780\\
- RF & 40 & 2280 & 1.71 & 1.65 & 0.722 & 0.738\\
  RF & 46 &  247 & 1.77 & 1.77 & 0.673 & 0.689\\
  RF & 46 & 1105 & 1.52 & 1.42 & 0.803 & 0.798\\
  RF & 46 & 2280 & 1.70 & 1.60 & 0.744 & 0.765\\
@@ -279,8 +275,6 @@ MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
  RF &  4 & 2280 & 1.95 & 1.90 & 0.621 & 0.622\\
  RF & 10 &  247 & 1.85 & 1.86 & 0.644 & 0.652\\
  RF & 10 & 2280 & 1.85 & 1.80 & 0.672 & 0.663\\
- RF & 40 &  247 & 1.89 & 1.89 & 0.626 & 0.630\\
- RF & 40 & 2280 & 1.79 & 1.72 & 0.706 & 0.699\\
  RF & 46 &  247 & 1.86 & 1.87 & 0.640 & 0.642\\
  RF & 46 & 2280 & 1.77 & 1.67 & 0.726 & 0.719\\
 \hline
@@ -294,27 +288,19 @@ MLR &  4 & 2280 & 2.00 & 1.95 & 0.596 & 0.608\\
 \hline
 model & features & samples & RMSE & SD & Rp & Rs\\
 \hline
-MLR &  4 &  247 & 1.80 & 1.71 & 0.503 & 0.474\\
-MLR &  4 &  792 & 1.71 & 1.69 & 0.517 & 0.490\\
-MLR &  4 & 1300 & 1.75 & 1.73 & 0.486 & 0.461\\
-MLR &  4 & 2059 & 1.73 & 1.73 & 0.487 & 0.463\\
-MLR &  4 & 2897 & 1.72 & 1.73 & 0.490 & 0.466\\
- RF &  4 &  792 & 1.80 & 1.74 & 0.475 & 0.454\\
- RF &  4 & 1300 & 1.81 & 1.75 & 0.469 & 0.450\\
- RF &  4 & 2059 & 1.73 & 1.71 & 0.502 & 0.482\\
- RF &  4 & 2897 & 1.71 & 1.70 & 0.513 & 0.486\\
- RF & 10 &  792 & 1.69 & 1.67 & 0.539 & 0.525\\
- RF & 10 & 1300 & 1.69 & 1.66 & 0.544 & 0.532\\
- RF & 10 & 2059 & 1.61 & 1.60 & 0.588 & 0.571\\
- RF & 10 & 2897 & 1.57 & 1.56 & 0.616 & 0.588\\
- RF & 40 &  792 & 1.70 & 1.68 & 0.527 & 0.526\\
- RF & 40 & 1300 & 1.61 & 1.59 & 0.592 & 0.572\\
- RF & 40 & 2059 & 1.51 & 1.51 & 0.647 & 0.627\\
- RF & 40 & 2897 & 1.47 & 1.47 & 0.668 & 0.642\\
- RF & 46 &  792 & 1.65 & 1.64 & 0.560 & 0.555\\
- RF & 46 & 1300 & 1.59 & 1.58 & 0.602 & 0.580\\
- RF & 46 & 2059 & 1.50 & 1.50 & 0.654 & 0.636\\
- RF & 46 & 2897 & 1.46 & 1.46 & 0.675 & 0.650\\
+MLR &  4 &  247 & 1.81 & 1.70 & 0.524 & 0.525\\
+MLR &  4 &  592 & 1.69 & 1.70 & 0.531 & 0.530\\
+MLR &  4 & 1184 & 1.69 & 1.70 & 0.531 & 0.529\\
+MLR &  4 & 1776 & 1.70 & 1.70 & 0.530 & 0.528\\
+MLR &  4 & 2367 & 1.69 & 1.70 & 0.531 & 0.529\\
+ RF &  4 &  592 & 1.71 & 1.71 & 0.518 & 0.510\\
+ RF &  4 & 1184 & 1.67 & 1.66 & 0.555 & 0.541\\
+ RF &  4 & 1776 & 1.66 & 1.66 & 0.556 & 0.540\\
+ RF &  4 & 2367 & 1.66 & 1.66 & 0.561 & 0.545\\
+ RF & 10 &  592 & 1.56 & 1.56 & 0.627 & 0.622\\
+ RF & 10 & 1184 & 1.50 & 1.50 & 0.661 & 0.657\\
+ RF & 10 & 1776 & 1.50 & 1.50 & 0.662 & 0.656\\
+ RF & 10 & 2367 & 1.49 & 1.49 & 0.668 & 0.665\\
  RF & 46 &  592 & 1.53 & 1.53 & 0.643 & 0.645\\
  RF & 46 & 1184 & 1.47 & 1.47 & 0.679 & 0.681\\
  RF & 46 & 1776 & 1.43 & 1.43 & 0.698 & 0.697\\
@@ -337,11 +323,11 @@ These results suggest that RF cannot benefit from more training samples if the s
 
 \subsection{RF requires sufficient structural features and training samples to comprehensively learn knowledge}
 
-When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when even more features (42 and 46) were used.
+When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when 46 features were used.
 
 These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
 
-However, there was a notable exception on PDBbind v2007 benchmark. When the 1105 remaining complexes in PDBbind v2007 refined set were used to train the RF, its prediction performance turned out to be even better than using 247 or 2280 complexes. This superior performance was pointed out \cite{774} to be due to the characteristics of the benchmark itself, where every complex in the test set has complexes involving the same protein family in the training set. Even so, MLR still failed to benefit from this special training set. % TODO: rewrite
+However, there was a notable exception on PDBbind v2007 benchmark. When the 1105 remaining complexes in PDBbind v2007 refined set were used to train the RF, its prediction performance turned out to be even better than using 247 or 2280 complexes. This superior performance was pointed out \cite{774} to be due to the characteristics of the benchmark itself, where every complex in the test set has complexes involving the same protein family in the training set. Even so, MLR still failed to benefit from this special training set. % TODO: rewrite.
 
 \subsection{RF performs consistently well in cross validation}
 
@@ -385,7 +371,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 \subsection{Cyscore can be strongly improved by substituting RF for MLR}
 
-Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst592} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.34 in RMSE, -0.25 in SD, +0.172 in Rp and +0.176 in Rs.
+Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2007 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs. Figure \ref{fig:tst201} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2012 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.11 in RMSE, -0.22 in SD, +0.096 in Rp and +0.080 in Rs. Figure \ref{fig:tst592} compares the prediction performance of Cyscore and RF::CyscoreVinaElem on PDBbind v2013 benchmark, with RF::CyscoreVinaElem improving Cyscore by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs.
 
 \begin{figure}[ht!]
 \minipage{0.5\textwidth}
@@ -411,13 +397,13 @@ Figure \ref{fig:tst195} compares the prediction performance of Cyscore and RF::C
 
 \begin{figure}[ht!]
 \minipage{0.5\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-382-yp.eps}
+\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-592-yp.eps}
 \endminipage
 \minipage{0.5\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2897-tst-382-yp.eps}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2367-tst-592-yp.eps}
 \endminipage
-\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2897 complexes.}
-\label{fig:tst382}
+\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right) on PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
+\label{fig:tst592}
 \end{figure}
 
 These results show that RF consistently performed better than MLR in all the three different data partitions, and one can develop a much more accurate scoring function out of an existing one simply by changing the regression model from MLR to RF.
