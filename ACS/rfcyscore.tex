@@ -151,7 +151,7 @@ A RF \cite{1309} is a consensus of a large number of different decision trees ge
 
 In this study, multiple RFs of the default number of 500 trees were built using values of the mtry control parameter from one to the total number of input features. The selected RF was the one resulting in the lowest root mean square error (RMSE) on the Out-of-Bag (OOB) samples of the training set. Only one single random seed was used because seed is not a significant impact factor of the prediction performance, and using fewer seeds has the additional advantage of leading to computationally faster training process.
 
-In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the three combinations of these feature sources used to train RF models in this study. % TODO: use model names, e.g. RF-x4, RF-x10, RF-x46.
+In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the three combinations of these feature sources used to train RF models in this study.
 
 \begin{table}[h]
 \caption{The three combinations of three different sources of features used to train RF models in this study.}
@@ -171,11 +171,11 @@ CyscoreVinaElem & 46 & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Sco
 
 The PDBbind benchmark is arguably the most widely used for binding affinity prediction. It contains an especially diverse collection of experimentally resolved protein-ligand complexes, assembled through a systematic mining of the yearly releases of the entire PDB \cite{540,537}. For each complex, the experimentally measured binding affinity, either dissociation constant Kd or inhibition constant Ki, was manually collected from its primary literature reference. The complexes with a resolution of 2.5\AA\ or better and with the ligand comprising merely nine common heavy atom types (C, N, O, F, P, S, Cl, Br, I) were filtered to constitute the refined set. These complexes were then clustered by protein sequence similarity with a cutoff of 90\%, and for each of the resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity were selected to constitute the core set.
 
-On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets.
-
-In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison. Additionally, in order to see the effect of using more samples for training, we propose a new training set, which comprises all the complexes in PDBbind v2013 refined set excluding those in PDBbind v2007 and v2012 core sets. This led to a total of 2280 complexes. By construction, this training set does not overlap with any of the two test sets, and it represents the maximum collection of structural data so far. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
+On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets. In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison.
 
 Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Note that this training set has 28 overlapping complexes in PDBbind v2012 core set, so it was used merely in the v2007 benchmark. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
+
+Additionally, in order to see the effect of using more samples for training, we used the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core sets. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
 
 \subsection{PDBbind v2013 benchmark}
 
@@ -236,7 +236,7 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 
 \section{Results and discussion}
 
-Tables \ref{tbl:tst195}, \ref{tbl:tst201} and \ref{tbl:tst592} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592), respectively. % TODO: replace tables by figures.
+Tables \ref{tbl:tst195}, \ref{tbl:tst201} and \ref{tbl:tst592} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592), respectively.
 
 \begin{table}
 \caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2007 benchmark (N=195) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
@@ -303,6 +303,8 @@ MLR &  4 & 2367 & 1.69 & 1.70 & 0.531 & 0.529\\
 \hline
 \end{tabular}
 \end{table}
+
+Figure \ref{fig:stat} shows the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592).
 
 \begin{figure}[ht!]
 \minipage{0.25\textwidth}
@@ -374,13 +376,14 @@ These results suggest that RF is capable of effectively exploiting a more compre
 We use RF::CyscoreVinaElem to denote the scoring function built with RF and 46 features from Cyscore, AutoDock Vina and RF-Score. Table \ref{tbl:trn1105tst195} compares RF::CyscoreVinaElem and Cyscore against 19 other scoring functions on PDBbind v2007 core set (N=195), with RF::CyscoreVinaElem performing best in terms of Rp, Rs and SD.
 
 \begin{table}[ht]
-\caption{Prediction performance of 21 scoring functions evaluated on PDBbind v2007 core set (N=195) in terms of Pearson correlation coefficient Rp, Spearman correlation coefficient Rs and standard deviation SD in linear correlation on the test set. The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. The statistics for the other 19 scoring functions are collected from \cite{1362}.}
+\caption{Prediction performance of 22 scoring functions evaluated on PDBbind v2007 core set (N=195) in terms of Pearson correlation coefficient Rp, Spearman correlation coefficient Rs and standard deviation SD in linear correlation on the test set. The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem and Cyscore rank 1st and 5th respectively in terms of Rp. The statistics for the other 20 scoring functions are collected from \cite{1362,1370}.}
 \label{tbl:trn1105tst195}
 \begin{tabular}{lrrr}
 \hline
 Scoring function & Rp & Rs & SD\\
 \hline
 RF::CyscoreVinaElem & 0.803 & 0.798 & 1.42\\
+RF-Score::Elem-v2 & 0.803 & 0.797 & 1.54 \\
 RF-Score & 0.774 & 0.762 & 1.59\\
 ID-Score & 0.753 & 0.779 & 1.63\\
 SVR-Score & 0.726 & 0.739 & 1.70\\
@@ -409,7 +412,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 benchmark.
 
-\begin{figure}[ht!]
+\begin{figure}[h!]
 \minipage{0.4\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
 \endminipage
