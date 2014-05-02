@@ -125,7 +125,7 @@ Extensible: reference points, moments
 \subsection{USRT: Ultrafast Shape Recognition with Torsions}
 \label{sec:usrt}
 
-PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification (http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file). A frame is the largest connected unit with no rotatable bonds.
+PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification (http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file).  The structure of a ligand in PDBQT format can be represented by a tree structure of frames, where a frame is the largest connected unit with no rotatable bonds. There are three types of frames: root frame, inner frame, and leaf frame. A root frame has no parent frame and has zero or more child frames. A inner frame has one parent frame and one or more child frames. A leaf frame has one parent frame and no child frames. A ligand must have a root frame, and could have inner or leaf frames.
 
 Figure \ref{fig:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of –π to π. 
 
