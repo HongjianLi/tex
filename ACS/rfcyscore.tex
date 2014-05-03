@@ -156,13 +156,13 @@ In our experiments we aimed at analyzing how RF responds to varying numbers of f
 \begin{table}[h]
 \caption{The three combinations of three different sources of features used to train RF models in this study.}
 \label{tbl:features}
-\begin{tabular}{lrl}
+\begin{tabular}{ll}
 \hline
-name & features & description\\
+name & description\\
 \hline
-Cyscore         &  4 & 4 Cyscore features\\
-CyscoreVina     & 10 & 4 Cyscore features + 6 AutoDock Vina features\\
-CyscoreVinaElem & 46 & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Score features\\
+Cyscore         & 4 Cyscore features\\
+CyscoreVina     & 4 Cyscore features + 6 AutoDock Vina features\\
+CyscoreVinaElem & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Score features\\
 \hline
 \end{tabular}
 \end{table}
@@ -208,11 +208,11 @@ v2013 & 592 & 2367\\
 
 \subsection{Performance metrics}
 
-Prediction performance in terms of the predicted binding affinities against measured ones was quantified through standard deviation SD in linear correlation (Eq. \ref{eqn:sd}) on the test set, Pearson correlation coefficient Rp (Eq. \ref{eqn:rp}) and Spearman correlation coefficient Rs (Eq. \ref{eqn:rs}), three metrics commonly used in the community \cite{1313}. The SD metric is essentially the same as the residual standard error (RSE) metric used in some other studies \cite{963}.
+Prediction performance was quantified through standard deviation SD in linear correlation, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs between the measured and predicted binding affinities of the test set. These three metrics are commonly used in the community \cite{1313}, and the SD metric is essentially the same as the residual standard error (RSE) metric used in some other studies \cite{963}.
 
-The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE (Eq. \ref{eqn:rmse}) between measured and predicted binding affinities without a linear correlation on the test set.
+The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE between measured and predicted binding affinities without a linear correlation on the test set.
 
-Mathematically, given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. 
+Mathematically, equations \ref{eqn:rmse}, \ref{eqn:sdev}, \ref{eqn:pcor} and \ref{eqn:scor} show the exact expressions of the four metrics. Given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. 
 
 \begin{equation}
 RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
@@ -221,88 +221,20 @@ RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
 
 \begin{equation}
 SD = \sqrt{\frac{1}{N-2}\sum_{n=1}^N(\hat{p}^{(n)}-y^{(n)})^2}
-\label{eqn:sd}
+\label{eqn:sdev}
 \end{equation}
 
 \begin{equation}
 R_p = \frac{N\sum_{n=1}^Np^{(n)}y^{(n)}-\sum_{n=1}^Np^{(n)}\sum_{n=1}^Ny^{(n)}}{\sqrt{(N\sum_{n=1}^N(p^{(n)})^2-(\sum_{n=1}^Np^{(n)})^2)(N\sum_{n=1}^N(y^{(n)})^2-(\sum_{n=1}^Ny^{(n)})^2)}}
-\label{eqn:rp}
+\label{eqn:pcor}
 \end{equation}
 
 \begin{equation}
 R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r^{(n)}}{\sqrt{(N\sum_{n=1}^N(p_r^{(n)})^2-(\sum_{n=1}^Np_r^{(n)})^2)(N\sum_{n=1}^N(y_r^{(n)})^2-(\sum_{n=1}^Ny_r^{(n)})^2)}}
-\label{eqn:rs}
+\label{eqn:scor}
 \end{equation}
 
 \section{Results and discussion}
-
-Tables \ref{tbl:tst195}, \ref{tbl:tst201} and \ref{tbl:tst592} list the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592), respectively.
-
-\begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2007 benchmark (N=195) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
-\label{tbl:tst195}
-\begin{tabular}{rrrrrrr}
-\hline
-model & features & samples & RMSE & SD & Rp & Rs\\
-\hline
-MLR &  4 &  247 & 1.80 & 1.79 & 0.660 & 0.687\\
-MLR &  4 & 1105 & 1.87 & 1.82 & 0.649 & 0.681\\
- RF &  4 &  247 & 1.82 & 1.82 & 0.648 & 0.648\\
- RF &  4 & 1105 & 1.75 & 1.73 & 0.687 & 0.694\\
- RF & 10 &  247 & 1.78 & 1.79 & 0.662 & 0.668\\
- RF & 10 & 1105 & 1.63 & 1.58 & 0.749 & 0.759\\
- RF & 46 &  247 & 1.77 & 1.77 & 0.673 & 0.689\\
- RF & 46 & 1105 & 1.52 & 1.42 & 0.803 & 0.798\\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2012 benchmark (N=201) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
-\label{tbl:tst201}
-\begin{tabular}{rrrrrrr}
-\hline
-model & features & samples & RMSE & SD & Rp & Rs\\
-\hline
-MLR &  4 &  247 & 1.88 & 1.89 & 0.630 & 0.639\\
-MLR &  4 & 2696 & 1.99 & 1.94 & 0.604 & 0.614\\
- RF &  4 &  247 & 1.87 & 1.87 & 0.637 & 0.641\\
- RF &  4 & 2696 & 1.89 & 1.84 & 0.653 & 0.649\\
- RF & 10 &  247 & 1.85 & 1.86 & 0.644 & 0.652\\
- RF & 10 & 2696 & 1.83 & 1.77 & 0.683 & 0.678\\
- RF & 46 &  247 & 1.86 & 1.87 & 0.640 & 0.642\\
- RF & 46 & 2696 & 1.74 & 1.64 & 0.736 & 0.732\\
-\hline
-\end{tabular}
-\end{table}
-
-\begin{table}
-\caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples on PDBbind v2013 benchmark (N=592) in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
-\label{tbl:tst592}
-\begin{tabular}{rrrrrrr}
-\hline
-model & features & samples & RMSE & SD & Rp & Rs\\
-\hline
-MLR &  4 &  247 & 1.81 & 1.70 & 0.524 & 0.525\\
-MLR &  4 &  592 & 1.69 & 1.70 & 0.531 & 0.530\\
-MLR &  4 & 1184 & 1.69 & 1.70 & 0.531 & 0.529\\
-MLR &  4 & 1776 & 1.70 & 1.70 & 0.530 & 0.528\\
-MLR &  4 & 2367 & 1.69 & 1.70 & 0.531 & 0.529\\
- RF &  4 &  592 & 1.71 & 1.71 & 0.518 & 0.510\\
- RF &  4 & 1184 & 1.67 & 1.66 & 0.555 & 0.541\\
- RF &  4 & 1776 & 1.66 & 1.66 & 0.556 & 0.540\\
- RF &  4 & 2367 & 1.66 & 1.66 & 0.561 & 0.545\\
- RF & 10 &  592 & 1.56 & 1.56 & 0.627 & 0.622\\
- RF & 10 & 1184 & 1.50 & 1.50 & 0.661 & 0.657\\
- RF & 10 & 1776 & 1.50 & 1.50 & 0.662 & 0.656\\
- RF & 10 & 2367 & 1.49 & 1.49 & 0.668 & 0.665\\
- RF & 46 &  592 & 1.53 & 1.53 & 0.643 & 0.645\\
- RF & 46 & 1184 & 1.47 & 1.47 & 0.679 & 0.681\\
- RF & 46 & 1776 & 1.43 & 1.43 & 0.698 & 0.697\\
- RF & 46 & 2367 & 1.41 & 1.41 & 0.711 & 0.709\\
-\hline
-\end{tabular}
-\end{table}
 
 Figure \ref{fig:stat} shows the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592).
 
@@ -351,19 +283,19 @@ Figure \ref{fig:stat} shows the prediction performance of MLR and RF using diffe
 
 \subsection{MLR performance does not increase with more training samples}
 
-On both PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks, MLR performed best when it was trained on the 247 carefully selected complexes as used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 benchmark (Table \ref{tbl:tst592}), MLR performed best when it was trained on 792 complexes rather than on the fewest 247 complexes or on the most 2897 complexes, although it delivered approximately the same performance when using training samples of five different sizes.
+On both PDBbind v2007 and v2012 benchmarks, MLR performed best when it was trained on the 247 carefully selected complexes as used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 benchmark, MLR performed best when it was trained on 792 complexes rather than on the fewest 247 complexes or on the most 2897 complexes, although it delivered approximately the same performance when using training samples of five different sizes.
 
 These results show that MLR is unable to exploit large sizes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR actually increases the difficulty in regressing the coefficients well. Generally it would be a good idea to select fewer but high quality samples to train MLR, as was the case of Cyscore.
 
 \subsection{RF performance does not increase with more training samples when there are insufficient structural features}
 
-When only the 4 Cyscore features were used, the RF trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. The same phenomenon applies to PDBbind v2013 benchmark (Table \ref{tbl:tst592}), where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
+When only the 4 Cyscore features were used, the RF trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 and v2012 benchmarks. The same phenomenon applies to PDBbind v2013 benchmark, where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
 
 These results suggest that RF cannot benefit from more training samples if the structural features are insufficient. The reason could be that, tracing back to the nature of RF during tree construction, the chosen splitting feature can only result in a low purity gain at each non-leaf node.
 
 \subsection{RF requires sufficient structural features and training samples to comprehensively learn knowledge}
 
-When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 (Table \ref{tbl:tst195}) and v2012 (Table \ref{tbl:tst201}) benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when 46 features were used.
+When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 and v2012 benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when 46 features were used.
 
 These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
 
@@ -412,7 +344,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 
 Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 benchmark.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
 \minipage{0.4\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
 \endminipage
@@ -439,7 +371,7 @@ Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::Cysc
 
 These results show that RF consistently performed better than MLR in all the three different data partitions, and one can develop a much more accurate scoring function out of an existing one simply by changing the regression model from MLR to RF.
 
-\subsection{RF-based scoring functions can be as interpretable as empirical ones} % TODO: delete this section
+\subsection{RF-based scoring functions can be as interpretable as empirical ones} % TODO: delete this section.
 
 The functional form of empirical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Nevertheless, one can estimate the importance of each particular feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on OOB data can be regarded as the most important.
 
