@@ -65,7 +65,7 @@
 %% a running title from the author: this should be supplied as an
 %% optional argument to \title.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[RF::Cyscore]{Binding Affinity Prediction Performance of Empirical Scoring Functions can be Improved by Substituting Random Forest for Multiple Linear Regression: Cyscore as a Case Study}
+\title[RF::Cyscore]{Substituting Random Forest for Multiple Linear Regression Improves Binding Affinity Prediction Performance of Empirical Scoring Functions: Cyscore as a Case Study}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Some journals require a list of abbreviations or keywords to be
@@ -173,9 +173,9 @@ The PDBbind benchmark is arguably the most widely used for binding affinity pred
 
 On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets. In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison.
 
-Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Note that this training set has 28 overlapping complexes in PDBbind v2012 core set, so it was used merely in the v2007 benchmark. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
+Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
-Additionally, in order to see the effect of using more samples for training, we used the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core sets. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
+Likewise for the PDBbind v2012 benchmark, we used an additional training set comprising the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core set. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
 
 \subsection{PDBbind v2013 benchmark}
 
@@ -289,13 +289,13 @@ These results show that MLR is unable to exploit large sizes of structural data 
 
 \subsection{RF performance does not increase with more training samples when there are insufficient structural features}
 
-When only the 4 Cyscore features were used, the RF trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 and v2012 benchmarks. The same phenomenon applies to PDBbind v2013 benchmark, where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
+RF::Cyscore trained with 2280 complexes led to worse performance than that trained with just 247 complexes on both the PDBbind v2007 and v2012 benchmarks. The same phenomenon applies to PDBbind v2013 benchmark, where the RF trained with 1300 complexes resulted in worse performance than that trained with 792 complexes.
 
 These results suggest that RF cannot benefit from more training samples if the structural features are insufficient. The reason could be that, tracing back to the nature of RF during tree construction, the chosen splitting feature can only result in a low purity gain at each non-leaf node.
 
 \subsection{RF requires sufficient structural features and training samples to comprehensively learn knowledge}
 
-When 10 features (4 from Cyscore and 6 from AutoDock Vina) were used, the RF trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 and v2012 benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when 46 features were used.
+RF::CyscoreVina trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 and v2012 benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when RF::CyscoreVinaElem were used.
 
 These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
 
@@ -451,9 +451,9 @@ We gratefully acknowledge the Direct Grant from the Chinese University of Hong K
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{suppinfo}
 
-stat.xlsx contains the prediction performance of regression models MLR and RF trained with varying numbers of features and samples and tested on the PDBbind v2007, v2012 and v2013 benchmarks in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.
+\paragraph{stat.xlsx} contains the prediction performance of regression models MLR and RF trained with varying numbers of features and samples and tested on the PDBbind v2007, v2012 and v2013 benchmarks in terms of root mean square error RMSE, standard deviation SD in linear correlation on the test set, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.
 
-cv.xlsx contains the PDB IDs and measured binding affinities of the protein-ligand complexes in the five partitions of PDBbind v2013 refined set.
+\paragraph{cv.xlsx} contains the PDB IDs and measured binding affinities of the protein-ligand complexes in the five partitions of PDBbind v2013 refined set.
 
 \end{suppinfo}
 
@@ -470,3 +470,9 @@ cv.xlsx contains the PDB IDs and measured binding affinities of the protein-liga
 %Journal of Cheminformatics 3.59
 %BMC Bioinformatics 3.02
 %Molecular Informatics 2.338
+
+%Sheng-Yong Yang, yangsy@scu.edu.cn, State Key Laboratory of Biotherapy and Cancer Center, West China Hospital, West China Medical School, Sichuan University, Sichuan 610041, China
+%Dik-Lung Ma, edmondma@hkbu.edu.hk, Department of Chemistry, Hong Kong Baptist University, Kowloon Tong, China
+%Elizabeth Yuriev, Elizabeth.Yuriev@monash.edu, Medicinal Chemistry, Monash Institute of Pharmaceutical Sciences, Monash University, Parkville, VIC, Australia
+%Samy O. Meroueh, smeroueh@iupui.edu, Department of Biochemistry and Molecular Biology, Indiana University, Indianapolis, Indiana, United States
+%James B. Dunbar, Jr., jbdunbar@umich.edu, Department of Medicinal Chemistry, University of Michigan, 428 Church Street, Ann Arbor, Michigan 48109-1065, United States
