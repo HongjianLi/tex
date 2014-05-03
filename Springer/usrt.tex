@@ -72,7 +72,7 @@ Given a target protein, hundreds of thousands of ligands are usually docked to f
 
 $10^{60}$ drug-like molecules \cite{1104} % Review LEA3D paper
 
-AutoGrow \cite{466}, AutoGrow 3.0 \cite{1354}, iSyn \cite{1381}. They use genetic algorithm. Operators include, mutation, addition, crossover, cutting, selection, etc. Goal is to design ligands that have higher binding affinities. Typical method is to grow an initial scaffold by adding fragments. Any of these types of operators could possibly lead to the generation of duplicate ligands.
+AutoGrow \cite{466}, AutoGrow 3.0 \cite{1354}, iSyn \cite{1381,1387}. They use genetic algorithm. Operators include, mutation, addition, crossover, cutting, selection, etc. Goal is to design ligands that have higher binding affinities. Typical method is to grow an initial scaffold by adding fragments. Any of these types of operators could possibly lead to the generation of duplicate ligands.
 
 In the GA operators, duplicate ligands are occasionally generated. Cumulate generation by generation, and getting sereve. Elitism and fitness proportion in GA not work. Illustrate with two figures, one from iSynMCB, one from crossover (same moieties from different parent ligands, resulting from random mixing, Swap the chemical moieties of known ligands. Link the scaffold and fragment through their respective linker hydrogen atoms).
 
@@ -93,7 +93,7 @@ Selection operator done by iSyn externally calls idock \cite{1153} to evaluate t
 
 Alignment based methods. Molecular superposition. Precise geometric comparison. Computationally expensive. Similarity score is calculated as the volume overlap.
 
-In iSyn \cite{1381}, we used USR \cite{1379,1280}. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR is independent of position and orientation, but is dependent on torsions.
+In iSyn \cite{1381,1387}, we used USR \cite{1379,1280}. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR is independent of position and orientation, but is dependent on torsions.
 
 USR variants include USR + MACCS \cite{1333}, Chirality \cite{1334,1335}, lipophilicity into ElectroShape \cite{1337,1338}, USRCAT \cite{1331}. The above variants cannot address the duplication issue. One can use ensemble methods like comparing mwt, nha in addition to USR. These are coarse.
 
