@@ -305,16 +305,16 @@ These results show that MLR is unable to exploit large sizes of structural data 
 
 \subsection{RF requires sufficient structural features and training samples to comprehensively learn knowledge}
 
-RF::CyscoreVina trained with 2280 complexes started to outperform that trained with 247 complexes on both the PDBbind v2007 and v2012 benchmarks. Likewise, the RF trained with 2897 complexes outperformed those trained with 792, 1300 or 2059 complexes. The trend became clearer when RF::CyscoreVinaElem were used.
+On all three benchmarks, given the same structural features, the RF models trained with more samples resulted in higher prediction accuracy. Similarly, given the same training samples, the RF models trained with more structural features resulted in higher prediction accuracy.
 
-These results suggest that RF is capable of effectively exploiting a more comprehensive set of training samples given enough structural features. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Besides, using more features appropriately can also boost RF performance.
+These results suggest that RF is capable of effectively exploiting a comprehensive set of structural features and training samples. Generally the more training samples, the more knowledge for RF to learn so as to capture the non-linearity of the structural data. Likewise, the more appropriate features, the higher probability of choosing the best splitting feature that can result in a high purity gain at non-leaf nodes during RF construction, and hence the higher chance of boosted RF performance.
 
 \subsection{RF performs consistently well in cross validation}
 
 Table \ref{tbl:cv} shows the results of the 5-fold cross validation. For all the four models, the best performance was obtained on partition 2. In terms of average performance, the relative performance ranking is consistent, where RF::CyscoreVinaElem (RMSE=1.35, SD=1.35, Rp=0.738, Rs=0.738) is better than RF::CyscoreVina (RMSE=1.44, SD=1.44, Rp=0.693, Rs=0.690), which is better than RF::Cyscore (RMSE=1.59, SD=1.59, Rp=0.603, Rs=0.587), which is better than MLR::Cyscore (RMSE=1.66, SD=1.66, Rp=0.556, Rs=0.559).
 
 \begin{table}
-\caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set.}
+\caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set (N=2959).}
 \label{tbl:cv}
 \begin{tabular}{rrrrr}
 \hline
@@ -422,7 +422,7 @@ Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::Cysc
 \label{fig:cor}
 \end{figure}
 
-These results show that RF consistently performed better than MLR on all the three benchmarks, and one can develop a much more accurate scoring function out of an existing one simply by changing the regression model from MLR to RF.
+These results show that RF::CyscoreVinaElem performed consistently better than Cyscore on all the three benchmarks. One can develop a much more accurate scoring function out of an existing empirical one simply by changing the regression model from MLR to RF.
 
 \subsection{RF-based scoring functions can be as interpretable as empirical ones} % TODO: delete this section.
 
@@ -432,13 +432,13 @@ Figure \ref{fig:varimp} plots the percentage of increase in mean square error (\
 
 \begin{figure}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
-\caption{Feature importance estimated on internal OOB data. The \%IncMSE value of a particular feature was computed as the percentage of increase in mean square error observed in OOB prediction when that features was randomly permuted.}
+\caption{Feature importance estimated on internal OOB data of the 1105 complexes from PDBbind v2007 refined set. The \%IncMSE value of a particular feature was computed as the percentage of increase in mean square error observed in OOB prediction when that features was randomly permuted.}
 \label{fig:varimp}
 \end{figure}
 
 \section{Conclusions}
 
-Machine-learning scoring functions are fundamentally different from empirical ones because of circumventing the functional form on the relationship between structural features and binding affinities. In this study we have demonstrated that the multiple linear regression (MLR) model used in empirical scoring functions like Cyscore does not improve its performance in the presence of abundant training samples, and the random forest (RF) regression model does not necessarily boost performance with more training samples if just a small set of features are used. When there are sufficient structural features and sufficient training samples, RF starts to demonstrate its advantage over MLR in comprehensively capturing the non-linear nature in the data. Under this circumstance, RF-based scoring functions assimilate data significantly better than empirical scoring functions. Improvements with dataset size can only be gained with the appropriate regression model anyway. Simply changing the regression model of Cyscore from MLR to RF and expanding the feature set and the sample set can significantly increase the prediction accuracy. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures.
+Machine-learning scoring functions are fundamentally different from empirical ones because of circumventing the functional form on the relationship between structural features and binding affinities. In this study we have demonstrated that the multiple linear regression (MLR) model used in empirical scoring functions like Cyscore does not improve its performance in the presence of abundant training samples. When there are sufficient structural features and sufficient training samples, RF demonstrates its advantage over MLR by a large margin in comprehensively capturing the non-linear nature in the data. Under this circumstance, RF-based scoring functions assimilate data significantly better than empirical scoring functions. Improvements with dataset size can only be gained with the appropriate regression model anyway. Simply changing the regression model of Cyscore from MLR to RF and expanding the feature set and the sample set can significantly increase the prediction accuracy. The performance gap between MLR and RF will be further widened given the future availability of more and more resolved structures.
 
 Moreover, empirical scoring functions usually rely on complicated energetic contributions that must be carefully devised from intermolecular interactions, whereas RF-based scoring functions can also effectively exploit features as simple as occurrence count of intermolecular contacts. In this study we have shown that using more structural features appropriately can also substantially enhance the prediction accuracy of RF. This further stresses the importance of substituting RF for MLR in scoring function development.
 
