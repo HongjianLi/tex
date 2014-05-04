@@ -1,4 +1,3 @@
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% This is a (brief) model paper using the achemso class
 %% The document class accepts keyval options, which should include
@@ -50,7 +49,7 @@
 %% when authors are associated with multiple institutions.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \author{Hongjian Li}
-\email{hjli@cse.cuhk.edu.hk}
+\email{jackyleehongjian@gmail.com}
 \author{Kwong-Sak Leung}
 \author{Man-Hon Wong}
 \affiliation[Chinese University of Hong Kong]
@@ -138,7 +137,7 @@ In this study we compare the prediction performance of two regression models MLR
 
 \subsection{Multiple Linear Regression (MLR) with Cyscore features}
 
-Cyscore is a empirical scoring function in an additive functional form of four terms (Eq. \ref{eqn:cyscore}), whose coefficients were obtained by MLR on 247 high-quality complexes carefully selected from PDBbind v2012 refined set. The intercept value was not reported in the original publication, but was included in this study in order to compute absolute binding affinity values. We use MLR::Cyscore to denote the scoring function built with MLR and the 4 features from Cyscore.
+Cyscore is a empirical scoring function in an additive functional form of four terms (Eq. \ref{eqn:cyscore}), whose coefficients were obtained by MLR on 247 high-quality complexes carefully selected from PDBbind v2012 refined set. The intercept value was not reported in the original publication, but was included in this study in order to compute absolute binding affinity values. We use MLR::Cyscore to denote the scoring function built with MLR and the 4 features from Cyscore. It is noteworthy that Cyscore is a pure MLR model, unlike AutoDock Vina \cite{595} which is a quasi MLR model because the number of rotatable bonds $N_{rot}$ is in the denominator so as to penalize ligand flexibility (see \cite{1362} for the exact equation) and therefore MLR::Vina requires an additional grid search for the weight of the $N_{rot}$ parameter. So this study allows a more direct comparison between MLR and RF.
 
 \begin{equation}
 \Delta G_{bind} = k_h\Delta G_{hydrophobic} + k_v\Delta G_{vdw} + k_b\Delta G_{hbond} + k_e\Delta G_{entropy} + C
@@ -151,7 +150,7 @@ A RF \cite{1309} is a consensus of a large number of different decision trees ge
 
 In this study, multiple RFs of the default number of 500 trees were built using values of the mtry control parameter from one to the total number of input features. The selected RF was the one resulting in the lowest root mean square error (RMSE) on the Out-of-Bag (OOB) samples of the training set. Only one single random seed was used because seed is not a significant impact factor of the prediction performance, and using fewer seeds has the additional advantage of leading to computationally faster training process.
 
-In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the three combinations of these feature sets used to train RF models in this study.
+In our experiments we aimed at analyzing how RF responds to varying numbers of features and hence we selected three sets of features: Cyscore \cite{1372}, AutoDock Vina \cite{595} and RF-Score \cite{564}. Cyscore comprises four numerical features: $\Delta G_{hydrophobic}$, $\Delta G_{vdw}$, $\Delta G_{hbond}$ and $\Delta G_{entropy}$. AutoDock Vina comprises six numerical features: $Gauss_1$, $Gauss_2$, $Repulsion$, $Hydrophobic$, $HBonding$ and $N_{rot}$. RF-Score comprises 36 features, defined as the occurrence count of intermolecular contacts between two elemental atom types. Four atom types for proteins (C, N, O, S) and nine for ligands (C, N, O, S, P, F, Cl, Br, I) were selected so as to generate dense features while considering all the heavy atom types commonly observed in protein-ligand complexes. Table \ref{tbl:features} summarizes the three combinations of these feature sets used to train RF models. Altogether four models (MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem) were evaluated in this study.
 
 \begin{table}[h]
 \caption{The three combinations of three different sets of features used to train RF models in this study.}
@@ -171,7 +170,7 @@ RF::CyscoreVinaElem & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Scor
 
 The PDBbind benchmark is arguably the most widely used for binding affinity prediction. It contains an especially diverse collection of experimentally resolved protein-ligand complexes, assembled through a systematic mining of the yearly releases of the entire PDB \cite{540,537}. For each complex, the experimentally measured binding affinity, either dissociation constant Kd or inhibition constant Ki, was manually collected from its primary literature reference. The complexes with a resolution of 2.5\AA\ or better and with the ligand comprising merely nine common heavy atom types (C, N, O, F, P, S, Cl, Br, I) were filtered to constitute the refined set. These complexes were then clustered by protein sequence similarity with a cutoff of 90\%, and for each of the resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity were selected to constitute the core set.
 
-On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets. In this study we used exactly the same training set and the same test sets in the Cyscore publication in order to make a fair comparison.
+On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201). The experimental binding affinities span 12.56 and 9.85 pKd units in the former and latter test sets, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution < 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets. In this study we used exactly the same training set and the same test sets in order to make a fair comparison to Cyscore.
 
 Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \cite{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
@@ -179,20 +178,36 @@ Likewise for the PDBbind v2012 benchmark, we used an additional training set com
 
 \subsection{PDBbind v2013 benchmark}
 
-We propose a new benchmark to investigate how prediction performance changes with varying numbers of training samples. We used PDBbind v2013 refined set, and divided it into five equal partitions using uniform sampling.
+We propose a new benchmark to investigate how prediction performance of the four models changes in cross validation and with varying numbers of training samples. We used PDBbind v2013 refined set (N=2959), which is the latest version up to date and comprises the most comprehensive structural data.
 
-The test set comprises the complexes in. This led to a total of 592 complexes, whose experimental binding affinities span 9.80 pKd units. The test set size is significantly larger than that of the v2007 or v2012 benchmarks. By construction, there are no complexes in common between the test set and any of the four training sets.
-
-%5-fold cross validation, as was used by ID-Score \cite{1305}.
-
-Table \ref{tbl:benchmarks} summarizes the number of training samples for each of the three benchmarks.
+We used 5-fold cross validation, as was used by the recently-published empirical scoring function ID-Score \cite{1305}. The entire PDBbind v2013 refined set (N=2959) was divided into five equal partitions using uniform sampling on a round-robin basis: the entire 2959 complexes were first sorted in the ascending order of their measured binding affinity, and the complexes with the 1st, 6th, 11th, etc. lowest binding affinity belonged to the first partition, the complexes with the 2nd, 7th, 12th, etc. lowest binding affinity belonged to the second partition, and so on. This partitioning method, though not completely random, has two advantages: one one hand, each partition is guaranteed to span the largest range of binding affinities and incorporates the largest structural diversity of different protein families; on the other hand, each partition is composed of a deterministic list of complexes, ensuring reproducibility and comparison in future studies. Table \ref{tbl:partitions} summarizes the statistics of the five partitions. The PDB IDs and measured binding affinities of the complexes in the five partitions are available in the supporting file cv.xlsx.
 
 \begin{table}
-\caption{The number of training samples for the PDBbind v2007, v2012 and v2013 benchmarks used in this study.}
+\caption{The statistics of the five partitions of PDBbind v2013 refined set (N=2959).}
+\label{tbl:partitions}
+\begin{tabular}{rrrr}
+\hline
+\# & complexes & lowest pKd & highest pKd\\
+\hline
+1 & 592 & 2.00 & 11.74\\
+2 & 592 & 2.00 & 11.80\\
+3 & 592 & 2.00 & 11.85\\
+4 & 592 & 2.00 & 11.92\\
+5 & 591 & 2.05 & 11.72\\
+\hline
+\end{tabular}
+\end{table}
+
+We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the 1st training set comprises partition 1 (N=592), the 2nd training set comprises partitions 1 and 3 (N=1184), the 3rd training set comprises partitions 1, 3 and 4 (N=1776), and the 4th training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training sample size, and its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks.
+
+Table \ref{tbl:benchmarks} summarizes the numbers of test samples and training samples for each of the three benchmarks.
+
+\begin{table}
+\caption{The numbers of test samples and training samples for the PDBbind v2007, v2012 and v2013 benchmarks used in this study.}
 \label{tbl:benchmarks}
 \begin{tabular}{rrr}
 \hline
-PDBbind benchmark & test samples & training samples\\
+benchmark & test samples & training samples\\
 \hline
 v2007 & 195 &  247\\
 v2007 & 195 & 1105\\
