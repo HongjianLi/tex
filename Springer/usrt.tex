@@ -127,6 +127,8 @@ Extensible: reference points, moments
 
 PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification (http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file).  The structure of a ligand in PDBQT format can be represented by a tree structure of frames, where a frame is the largest connected unit with no rotatable bonds. There are three types of frames: root frame, inner frame, and leaf frame. A root frame has no parent frame and has zero or more child frames. A inner frame has one parent frame and one or more child frames. A leaf frame has one parent frame and no child frames. A ligand must have a root frame, and could have inner or leaf frames.
 
+Ligands can be treated as flexible in AutoDock, and we use the idea of a "torsion tree" to represent the rigid and rotatable pieces. There is always one "root", and zero or more "branches". Branches can be nested. Every branch defines one rotatable bond. The torsion tree is represented in the PDBQT with the following records, and the placement of these records is important, and usually means reordering the ATOM/HETATM records:
+
 Figure \ref{fig:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of –π to π. 
 
 Reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first.
@@ -159,18 +161,25 @@ Frames with less than 2 heavy atoms are ignored. Could be inactive frames like -
 
 \section{Results}
 
-\begin{table}
-\caption{USRT output feature vector of the nine poses of the same ligand}
-\label{tab:1}
-\begin{tabular}{rrr}
+\begin{table*}
+\caption{USRT output feature vector of the nine poses of the same ligand.}
+\label{tab:T27output}
+\begin{tabular}{cc}
 \hline\noalign{\smallskip}
-pose & element 1 & element 2\\
+pose & output vector\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
-1 & 0.2332 & 0.6982\\
-2 & 0.2332 & 0.6982\\
+1 & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7861,1.0556,-0.8661)\\
+2 & (1.8338,0.9506,-0.8938,1.6926,1.0121,-0.8433,1.7862,1.0558,-0.8660)\\
+3 & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8433,1.7868,1.0559,-0.8661)\\
+4 & (1.8338,0.9506,-0.8938,1.6930,1.0123,-0.8433,1.7868,1.0561,-0.8661)\\
+5 & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7867,1.0560,-0.8660)\\
+6 & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8434,1.7870,1.0561,-0.8661)\\
+7 & (1.8338,0.9506,-0.8938,1.6930,1.0124,-0.8431,1.7867,1.0560,-0.8660)\\
+8 & (1.8338,0.9506,-0.8938,1.6927,1.0121,-0.8434,1.7861,1.0555,-0.8663)\\
+9 & (1.8338,0.9506,-0.8938,1.6925,1.0121,-0.8432,1.7868,1.0558,-0.8663)\\
 \noalign{\smallskip}\hline
 \end{tabular}
-\end{table}
+\end{table*}
 
 \subsection{Execution Time Comparison}
 
