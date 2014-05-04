@@ -125,7 +125,7 @@ Protein-ligand docking is a computational tool that predicts how a ligand binds 
 
 Docking consists of two major operations: predicting the position, orientation and conformation of a ligand when docked to the protein's binding pocket, and predicting their binding strength. The former operation is known as pose generation, and the latter is known as scoring. State-of-the-art docking methods, such as AutoDock Vina \cite{595} and idock \cite{1153}, work reasonably well at pose generation with a redocking success rate of over 50\% \cite{1362} on the benchmarks of both PDBbind v2012 and v2011 \cite{529,530} and the CSAR NRC HiQ Set 24Sept2010 \cite{857,960}. However, the single most critical limitation of docking is the traditionally low accuracy of the scoring functions.
 
-Empirical scoring functions assume a fixed functional form for the relationship between the numerical features that characterize the protein-ligand complex and its predicted binding affinity. Such a functional form is composed of the energetic contributions of various intermolecular interactions, and is often additive. The overall binding affinity is calculated as a weighted sum of several physically meaningful terms, while their coefficients are typically derived from standard least squares multivariate linear regression (MLR) on experimental data. Cyscore \cite{1372}, a recently published empirical scoring function, is an example of empirical scoring functions.
+Empirical scoring functions assume a fixed functional form for the relationship between the numerical features that characterize the protein-ligand complex and its predicted binding affinity. Such a functional form is composed of the energetic contributions of various intermolecular interactions, and is often additive. The overall binding affinity is calculated as a weighted sum of several physically meaningful terms, while their coefficients are typically derived from standard least squares multivariate linear regression (MLR) on experimental data. Cyscore \cite{1372}, a recently published scoring function, is an example of empirical scoring functions.
 
 Cyscore assumes that the overall protein-ligand binding free energy can be decomposed into four terms: hydrophobic free energy, van der Waals interaction energy, hydrogen bond interaction energy and ligand's conformational entropy. Cyscore focuses on improving the prediction of hydrophobic free energy by using a novel curvature-dependent surface-area model, which was claimed to be able to distinguish convex, planar and concave surface in hydrophobic free energy calculation.
 
@@ -198,7 +198,7 @@ We used 5-fold cross validation, as was used by the recently-published empirical
 \end{tabular}
 \end{table}
 
-We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the 1st training set comprises partition 1 (N=592), the 2nd training set comprises partitions 1 and 3 (N=1184), the 3rd training set comprises partitions 1, 3 and 4 (N=1776), and the 4th training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training sample size, and its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks.
+We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the first training set comprises partition 1 (N=592), the second training set comprises partitions 1 and 3 (N=1184), the third training set comprises partitions 1, 3 and 4 (N=1776), and the fourth training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training sample size, and its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks.
 
 Table \ref{tbl:benchmarks} summarizes the numbers of test samples and training samples for each of the three benchmarks.
 
@@ -227,7 +227,7 @@ Prediction performance was quantified through standard deviation SD in linear co
 
 The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE between measured and predicted binding affinities without a linear correlation on the test set.
 
-Mathematically, equations \ref{eqn:rmse}, \ref{eqn:sdev}, \ref{eqn:pcor} and \ref{eqn:scor} show the exact expressions of the four metrics. Given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. The lower the better for RMSE and SD, and the higher the better for Rp and Rs.
+Mathematically, equations \ref{eqn:rmse}, \ref{eqn:sdev}, \ref{eqn:pcor} and \ref{eqn:scor} show the exact expressions of the four metrics. Given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. Lower values in RMSE and SD and higher values in Rp and Rs indicate better prediction performance.
 
 \begin{equation}
 RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
@@ -398,27 +398,26 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 benchmark.
 
 \begin{figure}[ht!]
-\minipage{0.4\textwidth}
+\minipage{0.33\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
 \endminipage
-\minipage{0.4\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.eps}
-\endminipage
-\\
-\minipage{0.4\textwidth}
+\minipage{0.33\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.eps}
 \endminipage
-\minipage{0.4\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2696-tst-201-yp.eps}
-\endminipage
-\\
-\minipage{0.4\textwidth}
+\minipage{0.33\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-592-yp.eps}
 \endminipage
-\minipage{0.4\textwidth}
+\\
+\minipage{0.33\textwidth}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.eps}
+\endminipage
+\minipage{0.33\textwidth}
+\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2696-tst-201-yp.eps}
+\endminipage
+\minipage{0.33\textwidth}
 \includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2367-tst-592-yp.eps}
 \endminipage
-\caption{Correlation plots of Cyscore (left) and RF::CyscoreVinaElem (right). Top row: PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes. Middle row: PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2696 complexes. Bottom row: PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
+\caption{Correlation plots of predicted binding affinities against measured ones. Top: Cyscore. Bottom: RF::CyscoreVinaElem. Left: PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes. Center: PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2696 complexes. Right: PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
 \label{fig:cor}
 \end{figure}
 
