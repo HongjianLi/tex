@@ -419,7 +419,7 @@ Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::Cysc
 
 These results show that RF::CyscoreVinaElem performed consistently better than Cyscore on all the three benchmarks. One can develop a much more accurate scoring function out of an existing empirical one simply by changing the regression model from MLR to RF.
 
-\subsection{RF-based scoring functions can be as interpretable as empirical ones} % TODO: delete this section.
+\subsection{RF-based scoring functions can conduct feature sensitivity analysis} % TODO: delete this section.
 
 The functional form of empirical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Nevertheless, one can estimate the importance of each particular feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on OOB data can be regarded as the most important.
 
