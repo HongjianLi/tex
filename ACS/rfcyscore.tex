@@ -170,7 +170,7 @@ RF::CyscoreVinaElem & 4 Cyscore features + 6 AutoDock Vina features + 36 RF-Scor
 
 \subsection{PDBbind v2007 and v2012 benchmarks}
 
-The PDBbind \cite{529,530} benchmark is arguably the most widely used for binding affinity prediction. It contains an especially diverse collection of experimentally resolved protein-ligand complexes, assembled through a systematic mining of the yearly releases of the entire PDB \cite{540,537}. For each complex, the experimentally measured binding affinity, either dissociation constant Kd or inhibition constant Ki, was manually collected from its primary literature reference. The complexes with a resolution of 2.5\AA\ or better and with the ligand comprising merely nine common heavy atom types (C, N, O, F, P, S, Cl, Br, I) were filtered to constitute the refined set. These complexes were then clustered by protein sequence similarity with a cutoff of 90\%, and for each of the resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity were selected to constitute the core set. Because of the structural diversity of the core set, it is a common practice to use the core set as a test set and use the remaining complexes in the refined set as a training set.
+The PDBbind \cite{529,530} benchmark is arguably the most widely used for binding affinity prediction. It contains an especially diverse collection of experimentally resolved protein-ligand complexes, assembled through a systematic mining of the yearly releases of the entire PDB \cite{540,537}. For each complex, the experimentally measured binding affinity, either dissociation constant Kd or inhibition constant Ki, was manually collected from its primary literature reference. The complexes with a resolution of $\le$2.5\AA\ and with the ligand comprising merely nine common heavy atom types (C, N, O, F, P, S, Cl, Br, I) were filtered to constitute the refined set. These complexes were then clustered by protein sequence similarity with a cutoff of 90\%, and for each of the resulting clusters with at least five complexes, the three complexes with the highest, median and lowest binding affinity were selected to constitute the core set. Because of the structural diversity of the core set, it is a common practice to use the core set as a test set and the remaining complexes in the refined set as a training set.
 
 On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set (N=195) and PDBbind v2012 core set (N=201), whose experimental binding affinities span 12.56 and 9.85 pKd units, respectively. On the other hand, Cyscore was trained on a special set of 247 complexes carefully selected from the PDBbind v2012 refined set using certain criteria \cite{1372} (e.g. structural resolution \textless\ 1.8\AA, binding affinity spans 1 to 11 kcal/mol, protein sequence similarity and ligand chemical composition are different from the test set), ensuring that the training complexes are of high quality and do not overlap with any of the two test sets. In this study we used exactly the same training set and the same test sets in order to make a fair comparison to Cyscore.
 
@@ -218,11 +218,9 @@ v2013 & 592 & 592, 1184, 1776, 2367\\
 
 \subsection{Performance metrics}
 
-Prediction performance was quantified through standard deviation SD in linear correlation, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs between the measured and predicted binding affinities of the test set. These three metrics are commonly used in the community \cite{1313}, and the SD metric is essentially the same as the residual standard error (RSE) metric used in some other studies \cite{963}.
+Prediction performance was quantified through standard deviation SD in linear correlation, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs between the measured and predicted binding affinities of the test set. These metrics are commonly used in the community \cite{1313}, and the SD metric is essentially the residual standard error (RSE) metric used in some other studies \cite{963}. The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE between measured and predicted binding affinities without a linear correlation. Lower values in RMSE and SD and higher values in Rp and Rs indicate better prediction performance.
 
-The above three metrics are invariant under linear transformations (e.g. changing the intercept or coefficient values in Eq. \ref{eqn:cyscore} affects none of these metrics), so they are mainly used for comparative purpose. In some applications, however, the ultimate goal of scoring functions is to report an absolute binding affinity value as close to the measured value as possible. Hence we use a more realistic metric, the root mean square error RMSE between measured and predicted binding affinities without a linear correlation on the test set.
-
-Mathematically, equations \ref{eqn:rmse}, \ref{eqn:sdev}, \ref{eqn:pcor} and \ref{eqn:scor} show the exact expressions of the four metrics. Given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively. Lower values in RMSE and SD and higher values in Rp and Rs indicate better prediction performance.
+Mathematically, equations \ref{eqn:rmse}, \ref{eqn:sdev}, \ref{eqn:pcor} and \ref{eqn:scor} show the exact expressions of the four metrics. Given a scoring function $f$ and the features $\overrightarrow{x}^{(n)}$ describing the $n$th complex out of $N$ complexes in the test set, $p^{(n)}=f(\overrightarrow{x}^{(n)})$ is the predicted binding affinity, $\{\hat{p}^{(n)}\}$ are the fitted values from the linear model between $\{y^{(n)}\}$ and $\{p^{(n)}\}$ on the test set, whereas $\{y_r^{(n)}\}$ and $\{p_r^{(n)}\}$ are the rankings of $\{y^{(n)}\}$ and $\{p^{(n)}\}$, respectively.
 
 \begin{equation}
 RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
@@ -309,7 +307,7 @@ These results suggest that RF is capable of effectively exploiting a comprehensi
 Table \ref{tbl:cv} shows the results of the 5-fold cross validation for all the four models. The best performance was obtained on partition 2. In terms of average performance, the relative performance ranking is consistent, where RF::CyscoreVinaElem (RMSE=1.35, SD=1.35, Rp=0.738, Rs=0.738) is better than RF::CyscoreVina (RMSE=1.44, SD=1.44, Rp=0.693, Rs=0.690), which is better than RF::Cyscore (RMSE=1.59, SD=1.59, Rp=0.603, Rs=0.587), which is better than MLR::Cyscore (RMSE=1.66, SD=1.66, Rp=0.556, Rs=0.559).
 
 \begin{table}
-\caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set (N=2959) in terms of root mean square error RMSE, standard deviation SD in linear correlation, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
+\caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set (N=2959).}
 \label{tbl:cv}
 \begin{tabular}{rrrrr}
 \hline
@@ -345,7 +343,7 @@ avg & 1.44 & 1.44 & 0.693 & 0.690\\
   3 & 1.41 & 1.41 & 0.711 & 0.709\\
   4 & 1.41 & 1.41 & 0.711 & 0.722\\
   5 & 1.30 & 1.30 & 0.758 & 0.749\\
-avg & \textbf{1.35} & \textbf{1.35} & \textbf{0.738} & \textbf{0.738}\\
+avg & 1.35 & 1.35 & 0.738 & 0.738\\
 \hline
 \end{tabular}
 \end{table}
@@ -419,13 +417,11 @@ Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::Cysc
 
 These results show that RF::CyscoreVinaElem performed consistently better than Cyscore on all the three benchmarks. One can develop a much more accurate scoring function out of an existing empirical one simply by changing the regression model from MLR to RF.
 
-\subsection{Sensitivity analysis can estimate the importance of features of RF-based scoring functions}
+\subsection{Sensitivity analysis can estimate RF feature importance}
 
-The functional form of empirical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Nevertheless, one can estimate the importance of each particular feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on the OOB data can be regarded as the most important for a particular training set.
+The functional form of empirical scoring functions is straightforward, while it is implicit in RF-based scoring functions. It is therefore natural to doubt the interpretability of the latter. Nevertheless, one can estimate the importance of each feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on the OOB data can be regarded as the most important for a particular training set. Figure \ref{fig:varimp} plots the percentage of increase in mean square error (\%IncMSE) observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy (Vdw) and hydrophobic free energy (Hydrophobic) being relatively more important (\%IncMSE\textgreater 40). %Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
 
-Figure \ref{fig:varimp} plots the percentage of increase in mean square error (\%IncMSE) observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy (Vdw) and hydrophobic free energy (Hydrophobic) being relatively more important (\%IncMSE\textgreater 40). Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
-
-\begin{figure}
+\begin{figure}[ht!]
 \includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
 \caption{RF::Cyscore feature importance estimated on internal OOB data of the 1105 complexes from PDBbind v2007 refined set. The four features are hydrophobic free energy (Hydrophobic), van der Waals interaction energy (Vdw), hydrogen bond interaction energy (HBond) and ligand's conformational entropy (Ent). The \%IncMSE value of a particular feature was computed as the percentage of increase in mean square error observed in OOB prediction when that features was randomly permuted.}
 \label{fig:varimp}
