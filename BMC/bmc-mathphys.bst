@@ -13,7 +13,10 @@
 %% License, as described in lppl.txt in the base LaTeX distribution.
 %% Either version 1.0 or, at your option, any later version.
 %
-%% BibTeX programming: Linas Stonys, VTeX, Lithuania, lstonys@vtex.lt 
+%% BibTeX programming: Linas Stonys, VTeX, Lithuania, lstonys@vtex.lt
+%
+% Changes:
+% 2013-07-15 -- added XML output (taken from bmc_article.bst) v2.0
 %
 % Settings:
 % It's possible to pass few options to bibtex style via @settings reference. 
@@ -2615,8 +2618,9 @@ ITERATE {forward.pass}
 REVERSE {reverse.pass}
 
 FUNCTION {write.preambule}
-{ "\begin{thebibliography}{" number.label int.to.str$ * "}" * write$ newline$
-  "% BibTex style file: bmc-mathphys.bst (version 1.01), 2012-01-06" write$ newline$
+{ "%% BioMed_Central_Bib_Style_v1.01" write$ newline$ newline$  
+  "\begin{thebibliography}{" number.label int.to.str$ * "}" * write$ newline$
+  "% BibTex style file: bmc-mathphys.bst (version 2.0), 2013-07-15" write$ newline$
   "\ifx \bisbn   \undefined \def \bisbn  #1{ISBN #1}\fi" write$ newline$
   "\ifx \binits  \undefined \def \binits#1{#1}\fi" write$ newline$
   "\ifx \bauthor  \undefined \def \bauthor#1{#1}\fi" write$ newline$
@@ -2679,6 +2683,333 @@ FUNCTION {end.bib}
 }
 
 EXECUTE {end.bib}
+
+
+%% XML output -  done for each entry referenced in the BibTeX database 
+INTEGERS {i ll li j.int global.counter}
+STRINGS {r p q names lr lp lt ls }
+
+FUNCTION {replace}
+{ 
+  'lr :=     % replace string
+  'lp :=     % pattern 
+  'lt :=     % text to search
+  "" 'ls :=  % result string 
+  lp text.length$ 'll := % length of the search pattern
+  { lt empty$ not }
+  {  lt #1 ll substring$ lp = 
+      { ls lr * 'ls :=  
+        lt ll #1 + global.max$ substring$ 'lt := } 
+      { ls lt #1 #1 substring$ * 'ls :=  
+        lt #2 global.max$ substring$ 'lt := } 
+    if$
+  }
+  while$ 
+  ls
+}
+
+FUNCTION {strip.letters}
+{ 
+  "" 's :=
+  duplicate$ missing$
+    'pop$
+    { 
+      't := 
+       { t "" = not }
+       { % ascii '0' = 48,  '9' = 57  
+         t #1 #1 substring$ chr.to.int$ 'i :=  
+         i #47 > i #58 < and 
+           { s t #1 #1 substring$ * 's := } 
+           'skip$ 
+         if$
+         t #2 global.max$ substring$ 't :=
+       }
+       while$
+    }
+  if$
+  s
+}
+FUNCTION {output.xml}
+{ duplicate$ "" = 
+   'pop$
+   { "  " swap$ * write$ newline$ }
+ if$
+}
+
+%%
+ % markup.xml
+ %
+ % Takes 2 args text & tag {"the text " "tag"}
+ % Returns 1 string        {"<tag>the text <\tag>"} 
+%%
+FUNCTION {markup.xml}
+{ 
+  "" 'r :=  % result
+  't :=  % tag
+  duplicate$ missing$
+    'pop$
+    { 'r := }
+  if$
+  r "" = 
+    'skip$
+    { "<" t * ">" * r * "</" * t * ">" * 'r := }
+ if$
+ r
+}
+
+%% Takes 2 args - tag, string
+FUNCTION{markup.xml.title}
+{   pop$ % tag
+    duplicate$ missing$
+      'pop$
+      {
+       's := % string
+        s "\&" "&amp" replace 's := 
+        s "p" markup.xml 's :=
+        s "title" markup.xml output.xml
+      } 
+    if$
+}
+
+
+%%
+ % markup.xml.pages
+ %
+ % Takes 1 arg (pages string)
+ % seperates into <fpage> and <lpage> if 
+ %    there is a - seperator. else no lpage.
+ %
+ % need to remove others
+%%
+FUNCTION{markup.xml.pages}
+{
+  "" 'r := % fpage
+  "" 's := % lpage
+  duplicate$ missing$
+    'pop$
+    {   
+        't :=
+        t " " "" replace 't :=  % remove all spaces. pgs must be - seperated
+        { t empty$ not }
+        {  
+              t #1 #1 substring$ "-" = 
+              { 
+                t #2 global.max$ substring$ 's := 
+                "" 't :=  % break while loop
+              }{ 
+                r t #1 #1 substring$ * 'r := 
+                t #2 global.max$ substring$ 't := 
+              }
+              if$
+        }
+        while$
+    }
+    if$
+  r "fpage" markup.xml output.xml
+  s "lpage" markup.xml output.xml
+}
+
+
+%%
+ % markup.xml.names
+ %
+ % Takes 2 args
+ % tag, namefield (eg. author "au")
+ % splits fields into <fnm> and <snm>
+ % writes info 
+ % returns nothing
+%% 
+FUNCTION {markup.xml.names}
+{
+  't :=  % tag
+  "" 'r :=
+  "" 's :=
+  duplicate$ empty$
+    { pop$
+      organization missing$  
+        { institution "cnm" markup.xml 
+          "au" markup.xml "aug" markup.xml output.xml  }
+        { organization "cnm" markup.xml 
+          "au" markup.xml "aug" markup.xml output.xml  }
+      if$ }
+    {
+      "  <aug>" write$ newline$
+      'names :=               % names string
+      names num.names$ 'j.int :=  % num of names
+      #1 'i :=            % init counter
+      { i #1 j.int + < }     % while (i <= j.int)
+      {
+        "    <au>" write$
+
+        % Initial first names
+        % if first name all in capitals 
+        %  - assume is initial list of first names.
+        names i "{ff{ }}" format.name$
+          duplicate$ "u" change.case$ = 
+          { names i "{ff{ }}" format.name$ }
+          { names i "{f{}}" format.name$ }
+          if$
+        
+        % if last name but no first name use cnm; else snm
+        duplicate$ "" = 
+          { names i "{ll{ }}" format.name$ % last names space seperated. 
+            "cnm" markup.xml write$ }
+          { names i "{ll{ }}" format.name$ % last names space seperated. 
+            "snm" markup.xml write$ }
+        if$
+
+        "fnm" markup.xml write$ 
+      
+        "</au>" write$ newline$
+        i #1 + 'i :=
+      }
+      while$      
+      "  </aug>" write$ newline$
+    }
+  if$
+}
+
+
+%%
+ % markup.xml.pub
+ %
+ % Takes 4 args (school address publisher tag)
+ % prints concatenation 
+ % returns nothing
+%% 
+FUNCTION {markup.xml.pub}
+{
+  't :=    % Tag
+  "" 'p := % Publisher 
+  "" 'q := % Address
+  "" 'r := % School
+  "" 's := % Answer
+  duplicate$ missing$ 'pop$ { 'p := } if$
+  duplicate$ missing$ 'pop$ { 'q := } if$
+  duplicate$ missing$ 'pop$ { 'r := } if$
+  "" r = not     % school not empty
+    { r 's := }   % return school as publisher 
+    {             % else 
+      "" p = "" q = and % address and pub empty 
+        'skip$
+        {
+          "" q = 
+            { p 's := }         % return pub
+            { "" p =
+                { q 's := }         % return add
+                { q ": " * p * 's := }  % return add : pub
+              if$
+            }
+          if$
+        }
+      if$
+    }
+  if$
+  s t markup.xml output.xml
+}
+
+%%
+ % xml.phd
+ %
+ % Takes nothing
+ % Returns type (phd/msc) of empty string
+%%
+FUNCTION {xml.phd}
+{   
+    "phdthesis" type$ =
+    "mastersthesis" type$ = or
+    { "phdthesis" type$ =
+        { "PhD thesis" }
+        { "Master's thesis" }
+      if$
+    }
+    { type } % usually empty
+  if$ 
+}
+
+% markup.xml.edition
+%
+% edition is a numeric value. ie "2"
+% if format 2nd 1st etc.. strip letters.
+%
+FUNCTION {markup.xml.edition}
+{ pop$ pop$  %clear stack
+  edition strip.letters duplicate$ "" = 
+      { pop$ edition } 
+      'skip$ 
+  if$
+  "edition"   markup.xml  output.xml
+}
+
+
+FUNCTION{begin.bmcxmlcomment}{
+    newline$ 
+    "\newcommand{\BMCxmlcomment}[1]{}" write$ newline$
+    newline$ 
+    "\BMCxmlcomment{" write$ newline$ 
+    newline$ "<refgrp>" write$ newline$
+}
+
+FUNCTION{end.bmcxmlcomment}{ 
+    newline$ 
+    "</refgrp>" write$ newline$
+    "} % end of \BMCxmlcomment" write$ newline$
+}
+
+FUNCTION {export.xml}{ 
+  newline$
+  global.counter #1 + 'global.counter :=
+  "<bibl id=" quote$ * "B" * global.counter int.to.str$ * quote$ * ">" * 
+  write$ newline$
+%  title "\&" "&amp" replace "title" markup.xml.title     
+  title         "title"     markup.xml.title     
+  author        "aug"       markup.xml.names % org. and inst. here
+  howpublished missing$ 
+    { booktitle missing$ 
+      { journal missing$
+          { xml.phd } % <type> Phd/Msc 
+          {journal}
+        if$
+      } {booktitle}
+    if$
+    } { howpublished }
+  if$           "source"    markup.xml output.xml
+  school 
+  address  
+  publisher     "publisher" markup.xml.pub
+  editor        "editor"    markup.xml output.xml
+  edition       "edition"   markup.xml.edition     
+  series        "p"         markup.xml 
+                "title"     markup.xml 
+                "series"    markup.xml output.xml    
+  chapter       "p"         markup.xml 
+                "title"     markup.xml 
+                "section"   markup.xml output.xml    
+  % month       % ignore
+  year          "pubdate"   markup.xml output.xml    
+  
+  note missing$ 
+      { volume  "volume"    markup.xml output.xml    
+        number  "issue"     markup.xml output.xml    
+        pages               markup.xml.pages    
+        url     "url"       markup.xml output.xml }
+      { note "l" change.case$ "in press" = 
+          { "  <inpress />" write$ newline$ }
+          { volume  "volume"    markup.xml output.xml    
+            number  "issue"     markup.xml output.xml    
+            pages               markup.xml.pages    
+            url     "url"       markup.xml output.xml 
+            note    "note"      markup.xml output.xml 
+          }   
+        if$ 
+      }
+  if$
+  "</bibl>" write$ newline$
+} 
+
+EXECUTE {begin.bmcxmlcomment}
+ITERATE {export.xml}
+EXECUTE {end.bmcxmlcomment}
 
 
 
