@@ -381,45 +381,7 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 Figure \ref{fig:stat} plots the prediction performance of MLR and RF using different numbers of features and training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592). The raw values are available in the additional file stat.xlsx.
 
 \begin{figure}[hb!]
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-195-rmse.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-201-rmse.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-592-rmse.eps}
-\endminipage
-\\
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-195-sdev.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-201-sdev.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-592-sdev.eps}
-\endminipage
-\\
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-195-pcor.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-201-pcor.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-592-pcor.eps}
-\endminipage
-\\
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-195-scor.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-201-scor.eps}
-\endminipage
-\minipage{0.30\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/tst-592-scor.eps}
-\endminipage
+\includegraphics[natwidth=15in,natheight=20in,width=0.98\linewidth]{../rfcyscore/stat.pdf}
 \caption{Prediction performance of regression models MLR and RF trained with varying numbers of features and samples in terms of root mean square error RMSE (first row), standard deviation SD in linear correlation (second row), Pearson correlation coefficient Rp (third row) and Spearman correlation coefficient Rs (fourth row). Left column: PDBbind v2007 benchmark (N=195). Center column: PDBbind v2012 benchmark (N=201). Right column: PDBbind v2013 benchmark (N=592).}
 \label{fig:stat}
 \end{figure}
@@ -526,25 +488,7 @@ SYBYL::F-Score & 0.216 & 0.243 & 2.35\\
 Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 benchmark.
 
 \begin{figure}[h!]
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-195-yp.eps}
-\endminipage
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-201-yp.eps}
-\endminipage
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x4/mlr/trn-247-tst-592-yp.eps}
-\endminipage
-\\
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-1105-tst-195-yp.eps}
-\endminipage
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2696-tst-201-yp.eps}
-\endminipage
-\minipage{0.33\textwidth}
-\includegraphics[width=\linewidth]{../rfcyscore/x46/rf/trn-2367-tst-592-yp.eps}
-\endminipage
+\includegraphics[natwidth=15in,natheight=10in,width=0.98\linewidth]{../rfcyscore/cor.pdf}
 \caption{Correlation plots of predicted binding affinities against measured ones. Top row: Cyscore. Bottom row: RF::CyscoreVinaElem. Left column: PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes. Center column: PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2696 complexes. Right column: PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
 \label{fig:cor}
 \end{figure}
@@ -556,7 +500,7 @@ These results show that RF::CyscoreVinaElem performed consistently better than C
 The functional form is straightforward in empirical scoring functions, while it is implicit in RF-based scoring functions. It is therefore useful to employ the variable importance tool of RF to estimate the importance of each feature by randomly permuting its training values, and the feature leading to the largest variation in the predicted binding affinity on the OOB data can be regarded as the most important for a particular training set. Figure \ref{fig:varimp} plots the percentage of increase in mean square error (\%IncMSE) observed when each of the 4 Cyscore features used to train RF was noised up. All the 4 features turned out to be important (\%IncMSE\textgreater 20), with van der Waals interaction energy (Vdw) and hydrophobic free energy (Hydrophobic) being relatively more important (\%IncMSE\textgreater 40). %Correctly estimating variable importance can assist in a priori feature selection and in understanding ligand binding.
 
 \begin{figure}[h!]
-\includegraphics[width=\linewidth]{../rfcyscore/x4/rf/trn-1105.eps}
+\includegraphics[natwidth=7in,natheight=4in,width=\linewidth]{../rfcyscore/varimp.pdf}
 \caption{RF::Cyscore feature importance estimated on internal OOB data of the 1105 complexes from PDBbind v2007 refined set. The four features are hydrophobic free energy (Hydrophobic), van der Waals interaction energy (Vdw), hydrogen bond interaction energy (HBond) and ligand's conformational entropy (Ent). The \%IncMSE value of a particular feature was computed as the percentage of increase in mean square error observed in OOB prediction when that features was randomly permuted.}
 \label{fig:varimp}
 \end{figure}
