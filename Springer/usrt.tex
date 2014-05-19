@@ -107,9 +107,15 @@ Alignment based methods. Molecular superposition. Precise geometric comparison. 
 
 USR \cite{1379,1280} was developed. USR is independent of position and orientation, but is dependent on torsions. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR was used for deduplication in a virtual screening experiment \cite{1390} and our iSyn \cite{1381,1387} de novo ligand deisgn software. % \cite{1332} study the ability of USR as a stand-alone method to identify molecules sharing common biological activities through retrospective virtual screening experiments.
 
-Since USR was developed in 2007, there have been a few extensions to augment the method. \cite{1333} was a hybrid approach between USR and MACCS key descriptors to add structural properties to address the lack of discrimination between enantiomers as well as between compounds having similar shape but different atomic properties. \cite{1333} implemented a variant of USR with the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. It found the fourth moment was useful. Subsequent extensions CSR \cite{1334} and USR:OptIso \cite{1335} tried to tackle the lack of discrimination between chiral compounds. They both selected new centers to distinguish enantiomers, and used cross product. They differed in selecting the centroids. ElectroShape encodes electrostatics and optionally liphophilicity through additional dimensions and centroids \cite{1337,1338}. \cite{1337} the partial charge defines a fourth coordinate, with atoms being identified by points in four-dimensional space. Different implementations of partial charge affected the results significantly. USRCAT \cite{1331} identified subset atoms with the help of SMARTS patterns that are used for atom typing in the CREDO database. In the case of an empty subset, for examples if no hydrogen bond donors are found, then the corresponding elements in the moment vector will be set to zero. Nevertheless, none of the above variants are independent of torsions.
+Since USR was developed in 2007, there have been a few extensions \cite{1333,1334,1335,1337,1338,1331} to augment the method. \cite{1333} was a hybrid approach composed of USR and the topological MACCS key descriptors, which are binary in nature and encode the presence or absence of 166 predefined substructural fragments. It used the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. Random Forest algorithm was used for multi-class classification. Incorporating an additional central moment, the kurtosis, was found to significantly improved its performance. The addition of the fifth central moment, however, does not improve the performance sufficiently to justify the increased computational expense.
 
-We present USRT, the first algorithm that is invariant of torsions. In the following sections, we describe USR and USRT, their effectiveness and efficiency.
+Extensions CSR \cite{1334} and USR:OptIso \cite{1335} tried to tackle the lack of discrimination between chiral compounds (enantiomers). They both selected new centers to distinguish enantiomers, and used cross product. They differed in selecting the centroids.
+
+ElectroShape encodes electrostatics and optionally liphophilicity through additional dimensions and centroids \cite{1337,1338}. \cite{1337} the partial charge defines a fourth coordinate, with atoms being identified by points in four-dimensional space. Different implementations of partial charge affected the results significantly.
+
+USRCAT \cite{1331} identified subset atoms with the help of SMARTS patterns that are used for atom typing in the CREDO database \cite{522}, to address the lack of discrimination between compounds having similar shape but different atomic properties. In the case of an empty subset, for examples if no hydrogen bond donors are found, then the corresponding elements in the moment vector will be set to zero.
+
+Nevertheless, none of the above variants are independent of torsions. We present USRT, the first algorithm that is invariant of torsions. In the following sections, we describe USR and USRT, their effectiveness and efficiency.
 
 \section{Methods}
 
@@ -178,7 +184,7 @@ In USRT, the reference atom is chosen to be the atom connecting to the parent fr
 \centering
 \includegraphics[width=1.36\textwidth,natwidth=1904,natheight=894]{../usrt/T27Docked.png}
 \endminipage
-\caption{Two very different poses of the same ligand, which has six frames and five rotatable bonds. Top: the contents of the two poses in PDBQT format. Bottom: the two poses in ball-and-stick representation. The atoms and bonds in the same frame are rendered in the same color.}
+\caption{Two very different poses of the same ligand, which has six frames and five rotatable bonds. Top row: the contents of the two poses in PDBQT format. Bottom row: the two poses in ball-and-stick representation. The atoms and bonds in the same frame are rendered in the same color.}
 \label{fig:T27}
 \end{figure*}
 
