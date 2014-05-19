@@ -67,23 +67,24 @@ can combine with other USR variants, e.g. USRCAT.
 
 \section{Introduction}
 
-it is necessary to include more than one conformer per compound in the database, since flexible molecules can adopt different shapes, and thus the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Could have up to 292 additional conformations \cite{1280}.
+Large 3D database, ZINC \cite{532,1178}, istar \cite{1362}, 23 million.
+Large 2D database, GDB-17 \cite{1276}. Can be converted to 3D by OMEGA \cite{462} or CORINA \cite{1392}.
 
-The final step for the generation of the test database is to calculate 3D molecular conformations for each of the considered 2D chemical structures. The conformers of a particular molecule are in general geometrically distinct and have low potential energy, as conformers with high internal energy are in principle less likely to occur in Nature. This potential energy is parameterised in what is called a Molecular Mechanics Force Field. In this work, the implementation of MMFF94 [18] provided with MOE [19], a widely used Molecular Modelling software package, is used. MMFF94 has been parameterised for a wide variety of chemical systems of interest to organic and medicinal chemists using computationally derived and experimental data. The high accuracy with which these diverse data could be reproduced by MMFF94 [18] suggests its suitability for small organic molecules. an average of about 200 conformations per compound \cite{1332}.
+Having rotational and translational invariant methods, which are seen as a major advantage. the problematic requirement of aligning molecules for comparison is circumvented, as the proposed distributions are independent of the spatial orientation of database molecules.
+
+The final step for the generation of the test database is to calculate 3D molecular conformations for each of the considered 2D chemical structures. The conformers of a particular molecule are in general geometrically distinct and have low potential energy, as conformers with high internal energy are in principle less likely to occur in nature.
+
+It is necessary to include more than one conformer per compound in the database, since flexible molecules can adopt different shapes, and thus the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Could have an average of about 200 conformations per small organic molecules \cite{1332}, or up to 292 additional conformations \cite{1280}.
 
 \cite{1332} no shape method dominates when looking at each target individually, as each method is best in half of the targets. A wide range of factors collectively contribute to the large variability in performance observed across targets. First, errors in the generation of 3D conformers may impact differentially on the top ranked molecules depending on the query molecule and thus on the considered target.
 
-having rotational and translational invariant methods, which are seen as a major advantage. the problematic requirement of aligning molecules for comparison is circumvented, as the proposed distributions are independent of the spatial orientation of database molecules.
+% de novo ligand design
 
-Large 3D database, ZINC, istar, 23 million
+Given a target protein, hundreds of thousands of ligands are usually docked to find out which one has the highest binding affinity. This method is known as virtual screening. However, There are $10^{60}$ drug-like molecules \cite{1104}. the entire drug-like space may contain as many as 10 to the power of 100 molecules, so it is impossible to dock all the available ligands. The de novo ligand design strategy is emerging as a complementary method.
 
-Given a target protein, hundreds of thousands of ligands are usually docked to find out which one has the highest binding affinity. This method is known as virtual screening. However, the entire drug-like space may contain as many as 10 to the power of 100 molecules, so it is impossible to dock all the available ligands. The de novo ligand design strategy is emerging as a complementary method.
+AutoGrow \cite{466}, AutoGrow 3.0 \cite{1354}, iSyn \cite{1381,1387}. They use genetic algorithm. Operators include, mutation, addition, crossover, cutting, selection, etc. The goal is to design ligands that have higher binding affinities. The typical method is to grow an initial scaffold by adding fragments. Any of these types of operators could possibly lead to the generation of duplicate ligands.
 
-$10^{60}$ drug-like molecules \cite{1104} % Review LEA3D paper
-
-AutoGrow \cite{466}, AutoGrow 3.0 \cite{1354}, iSyn \cite{1381,1387}. They use genetic algorithm. Operators include, mutation, addition, crossover, cutting, selection, etc. Goal is to design ligands that have higher binding affinities. Typical method is to grow an initial scaffold by adding fragments. Any of these types of operators could possibly lead to the generation of duplicate ligands.
-
-In the GA operators, duplicate ligands are occasionally generated. Cumulate generation by generation, and getting sereve. Elitism and fitness proportion in GA not work. Illustrate with two figures, one from iSynMCB, one from crossover (same moieties from different parent ligands, resulting from random mixing, Swap the chemical moieties of known ligands. Link the scaffold and fragment through their respective linker hydrogen atoms).
+In the GA operators, duplicate ligands are occasionally generated due to symmetric properties of the parent ligands. Cumulate generation by generation, and the duplication phenomenon will be getting sereve, resulting in elitism and fitness proportion in GA not working properly. Illustrate with two figures, one from iSynMCB, one from crossover. same moieties from different parent ligands, resulting from random mixing, Swap the chemical moieties of known ligands. Link the scaffold and fragment through their respective linker hydrogen atoms.
 
 Selection operator done by iSyn externally calls idock \cite{1153} to evaluate the binding affinity of a population of de novo ligands. It is particularly challenging to tell if two ligands are duplicate when they are in significantly different conformations after being docked against the protein (the selection process) (Figure \ref{fig:MRV}).
 
@@ -100,14 +101,11 @@ Selection operator done by iSyn externally calls idock \cite{1153} to evaluate t
 \label{fig:MRV}
 \end{figure*}
 
-Network topology connectivity, SMILES \cite{ or InChi representation, Open Babel \cite{968}
-Line notations are linear representations of chemical structures that encode the connection table and usually the stereochemistry of a molecule as a line of text. But they do not encode shape information.
+Line notations are linear representations of chemical structures that encode the connection table and usually the stereochemistry of a molecule as a line of text. But they do not encode shape information. Considering structural topology and connectivity table, the two most widely used line notations are the SMILES (Simplified Molecular Input Line Entry System) string \cite{} and IUPAC’s InChI (International Chemistry Identifier) representation. These line notations can be easily produced by Open Babel \cite{968}.
 
 Alignment based methods. Molecular superposition. Precise geometric comparison. Computationally expensive. Similarity score is calculated as the volume overlap.
 
-\cite{1390} used USR for deduplication.
-
-In iSyn \cite{1381,1387}, we used USR \cite{1379,1280}. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR is independent of position and orientation, but is dependent on torsions.
+USR \cite{1379,1280} was developed. USR is independent of position and orientation, but is dependent on torsions. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR was used for deduplication in a virtual screening experiment \cite{1390} and our iSyn \cite{1381,1387} de novo ligand deisgn software.
 
 \cite{1332} study the ability of USR as a stand-alone method to identify molecules sharing common biological activities through retrospective virtual screening experiments.
 
@@ -121,15 +119,15 @@ USR variants include USR + MACCS \cite{1333}, Chirality CSR \cite{1334}, USR:Opt
 
 \cite{1334,1335} select new centers to distinguish enantiomers.
 
-We present USRT, the first algorithm.
-
-In the following sections, we describe USR and USRT, their execution time.
+We present USRT, the first algorithm that is invariant of torsions. In the following sections, we describe USR and USRT, their effectiveness and efficiency.
 
 \section{Methods}
 
 This section introduces USR, USRT.
 
-a new non-superposition based method for molecular shape comparison, called Ultrafast Shape Recognition (USR), has been devised with computational performance at least three orders of magnitude faster than previously existing methods. 
+\subsection{USR: Ultrafast Shape Recognition}
+
+USR \cite{1379,1280}, a new non-superposition based method for molecular shape comparison, called Ultrafast Shape Recognition (USR), has been devised with computational performance at least three orders of magnitude faster than previously existing methods. 
 
 The relative position of the atoms in the molecule is in turn completely determined by the set of all interatomic distances. This is a convenient representation, which directly eliminates any need for alignment or translation, as this set of distances is independent of molecular orientation or position.
 
@@ -137,11 +135,7 @@ the set of all interatomic distances contains more information that is needed to
 
 The goal is to find different compounds with a shape similar to that of the query, we will direct our attention to the four compounds with the highest score, instead of the four conformers with the highest score. The four conformers with the highest similarity score (top row) to the drug conformer APRD00001-1 from the DrugBank-3D database correspond to four conformations of the same compound, including the query. However, the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query.
 
-\subsection{USR: Ultrafast Shape Recognition}
-
-USR \cite{1379,1280}
-
-Four reference points, ctd: molecular centroid, cst: closest atom to ctd, fct: farthest atom to ctd, ftf: farthest atom to fct. Compute distances. Moments of these distances have semantics. For instance, the 1st, 2nd, 3rd moments of ctd capture the size, variance, skewness of the ligand, respectively. Applicable to different number of atoms. Dimension reduction: any ligand structure is mapped to a point in a 12 dimensional space. In combination with a suitable clustering algorithm, one could find clusters in a molecular database in order to select the most representative molecule of each cluster. The latter could be applied, for example, as a way to avoid repeating expensive biological tests on similar molecules.  This opens the door to the application of existing clustering algorithms to find groups of similar molecules as a way to analyse the molecular diversity of a database in terms of molecular shape. These roots are intended to provide all moments with linear space dimension, typically Å, in order to avoid differences in high order moments overshadowing the contribution to the similarity score of low order moments.
+Four reference points, ctd: molecular centroid, cst: closest atom to ctd, fct: farthest atom to ctd, ftf: farthest atom to fct. Compute distances. Moments of these distances have semantics. For instance, the 1st, 2nd, 3rd moments of ctd capture the size, variance, skewness of the ligand, respectively. Applicable to different number of atoms. Dimension reduction: any ligand structure is mapped to a point in a 12 dimensional space. In combination with a suitable clustering algorithm, one could find clusters in a molecular database in order to select the most representative molecule of each cluster. The latter could be applied, for example, as a way to avoid repeating expensive biological tests on similar molecules.  This opens the door to the application of existing clustering algorithms to find groups of similar molecules as a way to analyse the molecular diversity of a database in terms of molecular shape. These roots are intended to provide all moments with linear space dimension, typically \AA, in order to avoid differences in high order moments overshadowing the contribution to the similarity score of low order moments.
 
 Dissimilarity transformed into a normalized similarity score. (Eq \ref{eqn:usr}) Inverse monotonic function can do.
 
@@ -150,17 +144,31 @@ S_{qi}=\frac{1}{1+\frac{1}{12}\sum_{l=1}^{12}|M_l^q-M_l^i|}
 \label{eqn:usr}
 \end{equation}
 
-Extensible: reference points, moments
+USR is highly extensible: changing reference points, as was done in \cite{1334,1335}, using higher orders of moments \cite{1333}.
 
 \subsection{USRT: Ultrafast Shape Recognition with Torsions}
 
-PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. Explain the PDBQT specification (http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file).  The structure of a ligand in PDBQT format can be represented by a tree structure of frames, where a frame is the largest connected unit with no rotatable bonds. There are three types of frames: root frame, inner frame, and leaf frame. A root frame has no parent frame and has zero or more child frames. A inner frame has one parent frame and one or more child frames. A leaf frame has one parent frame and no child frames. A ligand must have a root frame, and could have inner or leaf frames.
+Ligands can be treated as flexible in PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. In PDBQT format, the structure of a ligand can be represented by a tree structure of frames, where a frame is the largest connected unit with no rotatable bonds. There are three types of frames: root frame, inner frame, and leaf frame. A root frame has no parent frame and has zero or more child frames. A inner frame has one parent frame and one or more child frames. A leaf frame has one parent frame and no child frames. A ligand must have a root frame, and could have inner or leaf frames.
 
-Ligands can be treated as flexible in AutoDock, and we use the idea of a "torsion tree" to represent the rigid and rotatable pieces. There is always one "root", and zero or more "branches". Branches can be nested. Every branch defines one rotatable bond. The torsion tree is represented in the PDBQT with the following records, and the placement of these records is important, and usually means reordering the ATOM/HETATM records:
+The idea of a torsion tree to represent the rigid and rotatable pieces. There is always one root, and zero or more branches. Branches can be nested. Every branch defines one rotatable bond. The torsion tree is represented in the PDBQT with the following records, and the placement of these records is important, and usually means reordering the ATOM/HETATM records: % http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file
 
-Figure \ref{fig:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of –π to π. 
+A ROOT record precedes the rigid part of the molecule, from which zero or more rotatable bonds may emanate.
 
-Reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first.
+The rigid root contains one or more PDBQT-style ATOM or HETATM records. These records resemble their traditional PDB counterparts, but diverge in columns 71-79 inclusive (where the first character in the line corresponds to column 1). The partial charge is stored in columns 71-76 inclusive (in \%6.3f format, i.e. right-justified, 6 characters wide, with 3 decimal places). The AutoDock atom-type is stored in columns 78-79 inclusive (in \%-2.2s format, i.e. left-justified and 2 characters wide.
+
+An ENDROOT record follows the last atom in the rigid root. The ROOT/ENDROOT block of atoms should be given first in the PDBQT file. The simplest way to treat a ligand is rigidly, and this would mean putting a ROOT record before the first ATOM/HETATM and an ENDROOT record after the last ATOM/HETATM.
+
+Sets of atoms that are moved by rotatable bonds are enclosed by BRANCH and ENDBRANCH records. These BRANCH/ENDBRANCH blocks follow the ROOT/ENDROOT block. Both BRANCH records and ENDBRANCH records should give two integers separated by spaces, which are the serial numbers of the first and second atoms involved in the rotatable bond. The BRANCH record should be followed by the ATOM/HETATM record of the second atom in the rotatable bond. It is possible to nest BRANCH/ENDBRANCH blocks; see the example below.
+
+The last atom in a branch should be followed by an ENDBRANCH record, whose serial numbers of the two atoms in the rotatable bond should match those in the corresponding BRANCH record.
+
+The last line of the PDBQT file contains a TORSDOF record, which is followed by an integer. This is the number of torsional degrees of freedom in the ligand, and is independent of the number of rotatable bonds, if any, defined by the preceding records.
+
+NOTE: the serial number is the integer in columns 7-11 inclusive of the ATOM or HETATM record; the first character in the line corresponds to column 1.
+
+Figure \ref{fig:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of -$\pi$ to $\pi$. 
+
+In USRT, the reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first atom.
 
 \begin{figure*}
 \minipage{0.5\textwidth}
@@ -186,13 +194,19 @@ Reference atom is chosen to be the atom connecting to the parent frame. It is BR
 
 Once a reference atom is determined, the next is to compute inter-atom distances and their 1st, 2nd, 3rd moments.
 
-Frames with less than 2 heavy atoms are ignored. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments.
+Frames with less than 2 heavy atoms are ignored or assigned zero. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments.
 
-\subsection{dbap (N=1,738)}
+Can incorporate connecting atoms of child branches.
 
-\subsection{All Clean (N=23,129,083)}
+\subsection{Drug Bank Approved (N=1,738)}
+
+\subsection{All Clean Subset from ZINC (N=23,129,083)}
 
 \section{Results and discussion}
+
+This section introduces effectiveness and efficiency. No ground truth.
+
+\subsection{Output}
 
 \begin{table*}
 \caption{USRT output feature vector of the nine poses of the same ligand.}
@@ -216,7 +230,13 @@ pose & output vector\\
 
 \subsection{Execution time comparison}
 
+the GNU Time utility v1.7 was used for timing.
+
+Comparable speed between USR and USRT. Compose a table of user time, system time, elapsed time, utilization.
+
 USR was claimed to be three orders of magnitude faster than ESshape3D. USR is 1,546 and 2,038 times faster than ESshape3D and Shape Signatures. USR is 14,238 times faster than ROCS, the fastest alignment-based method.
+
+These methods, including USR and USRT, can be easily parallelized at the coarse grained level of a database of ligands to compare against.
 
 \section{Software availability}
 
@@ -228,19 +248,19 @@ USR has advantages in being independent of position and orientation.
 
 We have developed USRT (Ultrafast Shape Recognition with Torsions), the first algorithm that can distinguish ligands with different torsions. USRT is computationally very fast, independent of torsions. USRT inherits advantages from USR, and is also independent of torsions, which are introduced by flexible ligand docking. It circumvents the need of aligning the molecules before testing for similarity.
 
-Output is a feature vector, which maps to a point in a high dimensional space. All existing clustering algorithms can be utilized.
+No conformers are required. the unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation. No more considerations of using bound or unbound conformations.
+
+The output of USRT is a feature vector, which maps to a point in a high dimensional space. The length of the feature vector depends on the number of rotatable bonds. This format a natural clustering: the ligands having the same number of rotatable bonds are first categoried, and then all existing clustering algorithms can be utilized.
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \cite{1362}, which has collected 23 million ligands from ZINC \cite{532,1178}.
 
-USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design. Compatible with USRCAT \cite{1331}, +MACCS \cite{1333} and possibly other USR variants \cite{1334}.
-
-No conformers are required. the unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation. No more considerations of using bound or unbound conformations.
+USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design. Compatible with USRCAT \cite{1331}, USR+MACCS \cite{1333} and possibly other USR variants \cite{1334}.
 
 The current version of USRT, 1.0.0, has some constraints: known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research. This raises the obvious question of how to compare molecules with different number of torsions.
 
 \section{Author Contributions}
 
-H.L. designed the study, implemented the software, ran the experiments, and wrote the manuscript. All authors discussed results and commented on the manuscript.
+HL designed the study, implemented the software, ran the experiments, and wrote the manuscript. KSL and MHW discussed results and commented on the manuscript.
 
 \begin{acknowledgements}
 
