@@ -107,7 +107,7 @@ Alignment based methods. Molecular superposition. Precise geometric comparison. 
 
 USR \cite{1379,1280} was developed. USR is independent of position and orientation, but is dependent on torsions. Much faster, USR finds its applications in retrospective \cite{1332} and prospective \cite{1380} virtual screening. USR was used for deduplication in a virtual screening experiment \cite{1390} and our iSyn \cite{1381,1387} de novo ligand deisgn software. % \cite{1332} study the ability of USR as a stand-alone method to identify molecules sharing common biological activities through retrospective virtual screening experiments.
 
-Since USR was developed in 2007, there have been a few extensions \cite{1333,1334,1335,1337,1338,1331} to augment the method. \cite{1333} was a hybrid approach composed of USR and the topological MACCS key descriptors, which are binary in nature and encode the presence or absence of 166 predefined substructural fragments. It used the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. Random Forest \cite{1310} was used for multi-class classification. Incorporating an additional central moment, the kurtosis, was found to significantly improved its performance. The addition of the fifth central moment, however, did not improve the performance sufficiently to justify the increased computational expense.
+Since USR was developed in 2007, there have been a few extensions \cite{1333,1334,1335,1337,1338,1331} to augment the method. \cite{1333} was a hybrid approach composed of USR and the topological MACCS key descriptors, which are binary in nature and encode the presence or absence of 166 predefined substructural fragments. It used the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. Random Forest \cite{1310} was used for multi-class classification. Incorporating an additional central moment, the kurtosis, was found to significantly improved its performance. The addition of the fifth central moment, however, does not improve the performance sufficiently to justify the increased computational expense.
 
 Extensions CSR \cite{1334} and USR:OptIso \cite{1335} tried to tackle the lack of discrimination between chiral compounds (enantiomers). They both selected new centers to distinguish enantiomers, and used cross product. They differed in selecting the centroids.
 
@@ -132,6 +132,21 @@ the set of all interatomic distances contains more information that is needed to
 The goal is to find different compounds with a shape similar to that of the query, we will direct our attention to the four compounds with the highest score, instead of the four conformers with the highest score. The four conformers with the highest similarity score (top row) to the drug conformer APRD00001-1 from the DrugBank-3D database correspond to four conformations of the same compound, including the query. However, the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query.
 
 Four reference points, ctd: molecular centroid, cst: closest atom to ctd, fct: farthest atom to ctd, ftf: farthest atom to fct. Compute distances. Moments of these distances have semantics. For instance, the 1st, 2nd, 3rd moments of ctd capture the size, variance, skewness of the ligand, respectively. Applicable to different number of atoms. Dimension reduction: any ligand structure is mapped to a point in a 12 dimensional space. In combination with a suitable clustering algorithm, one could find clusters in a molecular database in order to select the most representative molecule of each cluster. The latter could be applied, for example, as a way to avoid repeating expensive biological tests on similar molecules.  This opens the door to the application of existing clustering algorithms to find groups of similar molecules as a way to analyse the molecular diversity of a database in terms of molecular shape. These roots are intended to provide all moments with linear space dimension, typically \AA, in order to avoid differences in high order moments overshadowing the contribution to the similarity score of low order moments.
+
+\begin{equation}
+m_1=\frac{1}{N}\sum_{l=1}^{N}d_i
+\label{eqn:moment1}
+\end{equation}
+
+\begin{equation}
+m_1=\frac{1}{N}\sum_{l=1}^{N}d_i
+\label{eqn:moment2}
+\end{equation}
+
+\begin{equation}
+m_1=\frac{1}{N}\sum_{l=1}^{N}d_i
+\label{eqn:moment3}
+\end{equation}
 
 Dissimilarity transformed into a normalized similarity score. (Eq \ref{eqn:usr}) Any inverse monotonic function can do.
 
