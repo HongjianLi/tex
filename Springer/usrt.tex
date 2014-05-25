@@ -207,19 +207,19 @@ This section introduces effectiveness and efficiency. No ground truth.
 \begin{table*}
 \caption{USRT output feature vector of the nine poses of the same ligand.}
 \label{tab:T27output}
-\begin{tabular}{cc}
+\begin{tabular}{ccc}
 \hline\noalign{\smallskip}
-pose & output vector\\
+pose & USR output & USRT output\\
 \noalign{\smallskip}\hline\noalign{\smallskip}
-1 & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7861,1.0556,-0.8661)\\
-2 & (1.8338,0.9506,-0.8938,1.6926,1.0121,-0.8433,1.7862,1.0558,-0.8660)\\
-3 & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8433,1.7868,1.0559,-0.8661)\\
-4 & (1.8338,0.9506,-0.8938,1.6930,1.0123,-0.8433,1.7868,1.0561,-0.8661)\\
-5 & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7867,1.0560,-0.8660)\\
-6 & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8434,1.7870,1.0561,-0.8661)\\
-7 & (1.8338,0.9506,-0.8938,1.6930,1.0124,-0.8431,1.7867,1.0560,-0.8660)\\
-8 & (1.8338,0.9506,-0.8938,1.6927,1.0121,-0.8434,1.7861,1.0555,-0.8663)\\
-9 & (1.8338,0.9506,-0.8938,1.6925,1.0121,-0.8432,1.7868,1.0558,-0.8663)\\
+1 &  & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7861,1.0556,-0.8661)\\
+2 &  & (1.8338,0.9506,-0.8938,1.6926,1.0121,-0.8433,1.7862,1.0558,-0.8660)\\
+3 &  & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8433,1.7868,1.0559,-0.8661)\\
+4 &  & (1.8338,0.9506,-0.8938,1.6930,1.0123,-0.8433,1.7868,1.0561,-0.8661)\\
+5 &  & (1.8338,0.9506,-0.8938,1.6928,1.0122,-0.8432,1.7867,1.0560,-0.8660)\\
+6 &  & (1.8338,0.9506,-0.8938,1.6925,1.0120,-0.8434,1.7870,1.0561,-0.8661)\\
+7 &  & (1.8338,0.9506,-0.8938,1.6930,1.0124,-0.8431,1.7867,1.0560,-0.8660)\\
+8 &  & (1.8338,0.9506,-0.8938,1.6927,1.0121,-0.8434,1.7861,1.0555,-0.8663)\\
+9 &  & (1.8338,0.9506,-0.8938,1.6925,1.0121,-0.8432,1.7868,1.0558,-0.8663)\\
 \noalign{\smallskip}\hline
 \end{tabular}
 \end{table*}
@@ -250,9 +250,11 @@ The output of USRT is a feature vector, which maps to a point in a high dimensio
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \cite{1362}, which has collected 23 million ligands from ZINC \cite{532,1178}.
 
+The query ligand is opened and visualized locally. Only the USR features are transferred over network. The feature vector alone is not sufficient to recover the original query ligand, so confidentiality is ensured.
+
 USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design. Compatible with USRCAT \cite{1331}, USR+MACCS \cite{1333} and possibly other USR variants \cite{1334}.
 
-The current version of USRT, 1.0.0, has some constraints: known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research. This raises the obvious question of how to compare molecules with different number of torsions.
+The current version of USRT, 1.0.0, has some constraints: tree structure output, child frame matching, known ROOT frame, in-frame atom types, connector atom types. We will address the above limitations in future research using dynamic programming with frame insertion/deletion. This raises the obvious question of how to compare molecules with different number of torsions.
 
 \section{Author Contributions}
 
