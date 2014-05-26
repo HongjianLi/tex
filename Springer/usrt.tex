@@ -68,7 +68,7 @@ can combine with other USR variants, e.g. USRCAT.
 \section{Introduction}
 
 Large 3D database, ZINC \cite{532,1178}, istar \cite{1362}, 23 million.
-Large 2D database, GDB-17 \cite{1276}. Can be converted to 3D by OMEGA \cite{462} or CORINA \cite{1392}.
+Large 2D database, GDB-17 \cite{1276}. Can be converted to 3D by OMEGA \cite{462} or CORINA \cite{1392} or Cyndi \cite{1393,1394}.
 
 Having rotational and translational invariant methods, which are seen as a major advantage. the problematic requirement of aligning molecules for comparison is circumvented, as the proposed distributions are independent of the spatial orientation of database molecules.
 
@@ -148,6 +148,8 @@ m_1=\frac{1}{N}\sum_{l=1}^{N}d_i
 \label{eqn:moment3}
 \end{equation}
 
+USRCAT computes the third moment in a different way. Our computation avoids overflow, and thus enables the distance distributions to contain only one sample. In this case the three moments will be all zeros.
+
 Dissimilarity transformed into a normalized similarity score. (Eq \ref{eqn:usr}) Any inverse monotonic function can do.
 
 \begin{equation}
@@ -155,7 +157,13 @@ S_{qi}=\frac{1}{1+\frac{1}{12}\sum_{l=1}^{12}|M_l^q-M_l^i|}
 \label{eqn:usr}
 \end{equation}
 
+AVX instructions. Use PowerPoint to draw a diagram here to illustrate. unrolling, sub, abs, hadd.
+
 USR is highly extensible: changing reference points, as was done in \cite{1334,1335}, using higher orders of moments \cite{1333}.
+
+\subsection{USR on istar}
+
+istar \cite{1362} is our software-as-a-service platform for bioinformatics and chemoinformatics. So far some applications have been ported to istar, including idock \cite{1153} for protein-ligand docking, igrep \cite{1138} for DNA sequence matching, and iview \cite{1366} for WebGL visualization. We implemented USR on top of istar to complement protein-ligand docking.
 
 \subsection{USRT: Ultrafast Shape Recognition with Torsions}
 
@@ -239,6 +247,10 @@ pose & USR output & USRT output\\
 \end{tabular}
 \end{table*}
 
+\subsection{All Clean Subset from ZINC (N=23,129,083)}
+
+Add figures here. The figures were rendered by iview \cite{1366}.
+
 \subsection{Execution time comparison}
 
 the GNU Time utility v1.7 was used for timing.
@@ -265,7 +277,7 @@ The output of USRT is a feature vector, which maps to a point in a high dimensio
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \cite{1362}, which has collected 23 million ligands from ZINC \cite{532,1178}.
 
-The query ligand is opened and visualized locally. Only the USR features are transferred over network. The feature vector alone is not sufficient to recover the original query ligand, so confidentiality is ensured.
+The query ligand is opened and visualized locally. Only the USR features are transferred over network. The feature vector alone is not sufficient to recover the original query ligand, so confidentiality is ensured. It is therefore safe to use patented compounds as queries.
 
 USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. USRT finds its applications in de novo ligand design. Compatible with USRCAT \cite{1331}, USR+MACCS \cite{1333} and possibly other USR variants \cite{1334}.
 
