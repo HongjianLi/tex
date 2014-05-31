@@ -68,7 +68,7 @@ can combine with other USR variants, e.g. USRCAT.
 \section{Introduction}
 
 Large 3D database, ZINC \cite{532,1178}, istar \cite{1362}, 23 million.
-Large 2D database, GDB-17 \cite{1276}. Can be converted to 3D by OMEGA \cite{462} or CORINA \cite{1392} or Cyndi \cite{1393,1394}.
+Large 2D database, GDB-17 \cite{1276}. Can be converted to 3D by OMEGA \cite{462} or CORINA \cite{1392} or Cyndi \cite{1393,1394}. Freely Available Conformer Generation Methods \cite{1127}
 
 Having rotational and translational invariant methods, which are seen as a major advantage. the problematic requirement of aligning molecules for comparison is circumvented, as the proposed distributions are independent of the spatial orientation of database molecules.
 
@@ -114,6 +114,8 @@ Extensions CSR \cite{1334} and USR:OptIso \cite{1335} tried to tackle the lack o
 ElectroShape encodes electrostatics and optionally liphophilicity through additional dimensions and centroids \cite{1337,1338}. \cite{1337} the partial charge defines a fourth coordinate, with atoms being identified by points in four-dimensional space. Different implementations of partial charge affected the results significantly.
 
 USRCAT \cite{1331} identified subset atoms with the help of SMARTS patterns that are used for atom typing in the CREDO database \cite{522}, to address the lack of discrimination between compounds having similar shape but different atomic properties. In the case of an empty subset, for examples if no hydrogen bond donors are found, then the corresponding elements in the moment vector will be set to zero.
+
+UFSRAT, web server, http://opus.bch.ed.ac.uk/ufsrat/runUFSRAT.php, no visualization, input format limited to SDF
 
 Nevertheless, none of the above variants are independent of torsions. We present USRT, the first algorithm that is invariant of torsions. In the following sections, we describe USR and USRT, their effectiveness and efficiency.
 
