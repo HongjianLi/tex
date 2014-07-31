@@ -304,13 +304,13 @@ Furthermore, considering the fact that 16 classical scoring functions have alrea
 
 Likewise for the PDBbind v2012 benchmark, we used an additional training set comprising the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core set. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
 
-\subsection*{PDBbind v2013 benchmark}
+\subsection*{PDBbind v2013 round-robin benchmark}
 
 We propose a new benchmark to investigate how prediction performance of the four models changes in cross validation and with varying numbers of training samples. We used PDBbind v2013 refined set (N=2959), which is the latest version and constitutes the most comprehensive and publicly available structural dataset suitable for training scoring functions.
 
 We used 5-fold cross validation, as was used by the recently published empirical scoring function ID-Score \cite{1305}, to reduce overfitting and thus generalization errors. The entire PDBbind v2013 refined set (N=2959) was divided into five equal partitions using uniform sampling on a round-robin basis: the entire 2959 complexes were first sorted in the ascending order of their measured binding affinity, and the complexes with the 1st, 6th, 11th, etc. lowest binding affinity belonged to the first partition, the complexes with the 2nd, 7th, 12th, etc. lowest binding affinity belonged to the second partition, and so on. This partitioning method, though not completely random, has two advantages: on one hand, each partition is guaranteed to span the largest range of binding affinities and incorporates the largest structural diversity of different protein families; on the other hand, each partition is composed of a deterministic list of complexes, permitting reproducibility and comparisons in future studies. Table \ref{tbl:partitions} summarizes the statistics of the five partitions. The PDB IDs and measured binding affinities of the complexes in the five partitions are available in the Additional file 1.
 
-We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the first training set comprises partition 1 (N=592), the second training set comprises partitions 1 and 3 (N=1184), the third training set comprises partitions 1, 3 and 4 (N=1776), and the fourth training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training set size. Moreover, its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks, making this new benchmark not being a redundant duplication of the previous two benchmarks. Table \ref{tbl:benchmarks} summarizes the numbers of test and training samples for the three benchmarks.
+We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 round-robin benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the first training set comprises partition 1 (N=592), the second training set comprises partitions 1 and 3 (N=1184), the third training set comprises partitions 1, 3 and 4 (N=1776), and the fourth training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training set size. Moreover, its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks, making this new benchmark not being a redundant duplication of the previous two benchmarks. Table \ref{tbl:benchmarks} summarizes the numbers of test and training samples for the three benchmarks.
 
 \subsection*{Leave-cluster-out cross validation (LCOCV)}
 
@@ -348,11 +348,11 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 
 \section*{Results and discussion}
 
-Figure \ref{fig:stat} plots the prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem using different numbers of training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 benchmark (N=592). The raw values are available in the Additional file 3.
+Figure \ref{fig:stat} plots the prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem using different numbers of training samples on PDBbind v2007 benchmark (N=195), PDBbind v2012 benchmark (N=201) and PDBbind v2013 round-robin benchmark (N=592). The raw values are available in the Additional file 3.
 
 \subsection*{MLR::Cyscore performance does not increase with more training samples}
 
-On both PDBbind v2007 and v2012 benchmarks, MLR::Cyscore performed best when it was trained on the 247 carefully selected complexes used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 benchmark, MLR::Cyscore performance stayed flat regardless of training set sizes.
+On both PDBbind v2007 and v2012 benchmarks, MLR::Cyscore performed best when it was trained on the 247 carefully selected complexes used by Cyscore. Its performance dropped when more complexes were used for training. On PDBbind v2013 round-robin benchmark, MLR::Cyscore performance stayed flat regardless of training set sizes.
 
 These results show that MLR::Cyscore is unable to exploit large sizes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR::Cyscore actually increases the difficulty in regressing the coefficients well. Generally it would be a good idea to select the training complexes that provide the best performance on a test set, as was the case of Cyscore. However, in real applications the binding affinities of the test set are not known and unfortunately selection of training complexes is not performed blindly (i.e. without measuring performance on test set).
 
@@ -378,7 +378,7 @@ Table \ref{tbl:trn1105tst195} compares Cyscore, RF::Cyscore, RF::CyscoreVina and
 
 \subsection*{Substituting RF for MLR and incorporating more features and training samples strongly improves Cyscore}
 
-Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 benchmark.
+Figure \ref{fig:cor} compares the prediction performance of Cyscore and RF::CyscoreVinaElem, with RF::CyscoreVinaElem improving Cyscore by -0.28 in RMSE, -0.37 in SD, +0.143 in Rp and +0.111 in Rs on the PDBbind v2007 benchmark, by -0.14 in RMSE, -0.25 in SD, +0.106 in Rp and +0.093 in Rs on the PDBbind v2012 benchmark, and by -0.40 in RMSE, -0.29 in SD, +0.187 in Rp and +0.184 in Rs on the PDBbind v2013 round-robin benchmark.
 
 These results show that RF::CyscoreVinaElem performed consistently better than Cyscore on all the three benchmarks. It is important to note that, in each benchmark, both scoring functions used the same non-overlapping training and test sets. Taken together, these results show that one can develop a much more accurate scoring function out of an existing one simply by changing the regression model from MLR to RF and incorporating more structural features and training samples.
 
@@ -451,13 +451,13 @@ We gratefully acknowledge the Direct Grant from the Chinese University of Hong K
 
 \begin{figure}[h]
 %\includegraphics[natwidth=15in,natheight=20in,width=0.98\linewidth]{../rfcyscore/stat.pdf}
-\caption{\csentence{Prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem trained with varying numbers of samples.} First row: root mean square error RMSE. Second row: standard deviation SD in linear correlation. Third row: Pearson correlation coefficient Rp. Fourth row: Spearman correlation coefficient Rs. Left column: PDBbind v2007 benchmark (N=195). Center column: PDBbind v2012 benchmark (N=201). Right column: PDBbind v2013 benchmark (N=592).}
+\caption{\csentence{Prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem trained with varying numbers of samples.} First row: root mean square error RMSE. Second row: standard deviation SD in linear correlation. Third row: Pearson correlation coefficient Rp. Fourth row: Spearman correlation coefficient Rs. Left column: PDBbind v2007 benchmark (N=195). Center column: PDBbind v2012 benchmark (N=201). Right column: PDBbind v2013 round-robin benchmark (N=592).}
 \label{fig:stat}
 \end{figure}
 
 \begin{figure}[h]
 %\includegraphics[natwidth=15in,natheight=10in,width=0.98\linewidth]{../rfcyscore/cor.pdf}
-\caption{\csentence{Correlation plots of predicted binding affinities against measured ones.} Top row: Cyscore. Bottom row: RF::CyscoreVinaElem. Left column: PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes. Center column: PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2696 complexes. Right column: PDBbind v2013 benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
+\caption{\csentence{Correlation plots of predicted binding affinities against measured ones.} Top row: Cyscore. Bottom row: RF::CyscoreVinaElem. Left column: PDBbind v2007 benchmark (N=195), with RF::CyscoreVinaElem trained on 1105 complexes. Center column: PDBbind v2012 benchmark (N=201), with RF::CyscoreVinaElem trained on 2696 complexes. Right column: PDBbind v2013 round-robin benchmark (N=592), with RF::CyscoreVinaElem trained on 2367 complexes.}
 \label{fig:cor}
 \end{figure}
 
