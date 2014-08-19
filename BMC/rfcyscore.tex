@@ -42,7 +42,7 @@
 %  [linenumbers]   - put the line numbers on margins
 %  [twocolumn]
 
-\documentclass[linenumbers]{bmcart}
+\documentclass[twocolumn]{bmcart}
 
 %%% Load packages
 %\usepackage{amsthm,amsmath}
@@ -141,17 +141,13 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\address[id=aff1]{%                           % unique id
-  \orgname{Department of Computer Science and Engineering, Chinese University of Hong Kong}, % university, etc
-%  \street{Waterloo Road},                     %
-  %\postcode{}                                % post or zip code
-  \city{Hong Kong},                              % city
-  \cny{China}                                    % country
+\address[id=aff1]{
+  \orgname{Department of Computer Science and Engineering, Chinese University of Hong Kong},
+  \city{Hong Kong},
+  \cny{China}
 }
 \address[id=aff2]{
   \orgname{European Bioinformatics Institute, Wellcome Trust Genome Campus, Hinxton},
-%  \street{D\"{u}sternbrooker Weg 20},
-%  \postcode{24105}
   \city{Cambridge},
   \cny{UK}
 }
