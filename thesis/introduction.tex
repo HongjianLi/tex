@@ -1,64 +1,43 @@
 \chapter{Introduction}
 
-Drug discovery is an industrial process, an expensive and long-term business, and a wasteful game. It takes about US\$1.8 billion over 13.5 years to develop a new drug \citep{716}. Out of 30,000 compounds synthesized, only 1 (0.003\%) makes a satisfactory Return On Investment (ROI) \citep{713}. %The process of modern drug discovery typically includes target identification, hit identification, lead optimization and clinical trials. Target could be a fundamental pathological pathway, altering which should be expected to be curative or antisymptomatic. a biological target, which is any system that can potentially be modulated by a molecule to produce a beneficial effect. hits, which are compounds that have activity at a predetermined level against a target, but little else is known at this early stage. potency and selectivity versus a panel of other targets, physicochemical characteristics, drug-like properties, and absorption, distribution, metabolism, excretion and toxicity (ADMET) properties. the data on the successful candidates will then be submitted to the appropriate health authorities to get permission to conduct clinical investigations on animals and humans.
+\section{Background}
+
+Drug discovery is an expensive and long-term business. Summarized from 13 research articles published from 1980 to 2009, original estimates of the cost of drug development ranged more than 9-fold, from USD$92 million cash (USD$161 million capitalized) to USD$883.6 million cash (USD$1.8 billion capitalized) \citep{1431}. Discovering and developing a new molecular entity (NME) required 11.4 to 13.5 years using the R\&D performance productivity data from 13 large pharmaceutical companies across 2000 to 2007 \citep{716}. An recent report \citep{1427} reviewed the rates of NMEs introduction starting from 1827 through to the end of 2013, and found that two-thirds of NMEs are controlled by a handful of companies, and a growing number of NMEs are controlled by marketing organizations that have little or no internal drug discovery or development activities.
+
+Modern drug discovery process typically includes target identification, hit identification, lead optimization and clinical trials. A biological target is any system that can potentially be modulated by a molecule to produce a beneficial effect. A target could be a fundamental pathological pathway, altering which is expected to be curative or anti-symptomatic. Hits are compounds that have activity at a predetermined level against a target, but little else is known at this early stage. Leads are optimized hits that display strong potency and selectivity, physicochemical characteristics, and absorption, distribution, metabolism, excretion and toxicity (ADMET) properties. Successful candidate leads will then be submitted to the appropriate health authorities to get permission to conduct clinical investigations on animals and humans.
 
 \section{Motivation}
 
-Drug discovery via merely biological and chemical means are both cost-inefficient and time-inefficient. A computational framework for fast and accurate drug discovery is thus greatly required. However, existing tools suffer from several major problems. They 1) are commercially available only, 2) are not released under an open source license, 3) are developed by separate groups, conforming to different standards and formats, 4) require intensive and tedious configurations, 5) do not run sufficiently fast, 6) lack fruitful documentations, or even worse, 7) are declared dead immediately upon their release due to zero maintenance afterward. Therefore, we are going to address these shortcomings in this thesis.
-
-Drug discovery via biological and chemical means alone are both cost- and time-inefficient. It highlights the need for cheaper and faster method, and computer-aided drug discovery thus comes into the scene. Over recent decades, researchers have developed countless tools and utilities, and more are constantly emerging. We have surveyed those tools and utilities, and summarized the major problems they suffer from. Generally speaking, they
-\begin{enumerate}
-\item are commercially available, selling at a price that most small enterprises and academic researchers cannot afford,
-\item are proprietary, making it difficult for others to learn inner implementation techniques and locate possible bugs,
-\item conform to different standards and formats, resulting in loss of information during format conversion,
-\item require intensive and tedious configurations and lack fruitful documentations, a great obstacle for program setup,
-\item run very slowly, using old-fashioned, blocking, single-threaded, low-performance programming style,
-\item are declared dead immediately upon their initial release due to zero maintenance afterward.
-\end{enumerate}
-Therefore, we are going to address these shortcomings.
+Drug discovery is economy driven \textit{per se}. Biochemical means are both cost- and time-inefficient. This highlights the need for cheaper and faster methods, and computer-aided drug discovery (CADD) thus comes into the scene. Complementing expensive laboratory experiments with cheap computer simulations is obviously the right way to go. Robust computational frameworks are indeed highly demanded by the industry in order to automate the early phases of modern drug discovery such as target and hit identifications. Although a large amount of CADD tools have been developed over recent decades, the majority of them, unfortunately, suffer from several notable problems. These tools 1) are commercial, selling at a price that most small enterprises and academic institutions cannot afford, 2) are proprietary and closed source, making third parties difficult to study the internal implementations or locate potential bugs, 3) conform to different standards and formats, resulting in weak data portability and information loss, 4) require intensive and tedious configurations and lack a friendly user interface, a great obstacle for new users to get started, 5) run rather slowly, incapable of utilizing the multi- and many-core architectures of modern computers, or even worse, 6) are declared dead immediately upon their initial release due to zero maintenance afterwards. Therefore, we will address these shortcomings in this thesis.
 
 \section{Objective}
 
-Ultimately we aim to develop a computational framework for structure-based drug discovery with GPU acceleration, simulating the early phases of modern drug discovery process in order to save money and time. The tools of such a framework shall 1) be free to the general public, 2) be released under permissive open source licenses, 3) be designed in conformance to a uniform bioinformatics standard, 4) provide a web version based on the latest HTML5 technology, 5) run fast with multithreading and GPU acceleration, 6) supply with user manuals and API documents in detail, and 7) be constantly updated from time to time.
-
-We aim to develop a novel and concise computational framework for modern drug discovery. Our framework shall
-\begin{enumerate}
-\item be free to the general public so that everyone can obtain it,
-\item be released under permissive open source licenses so that everyone can study it,
-\item be designed in conformance to a uniform and well-accepted standard so that everyone can use it with ease,
-\item provide a SaaS (Software as a Service) platform with a responsive web site so that everyone can play with it,
-\item utilize multithreading and GPU acceleration to boost performance so that everyone can really benefit from it,
-\item track bugs, absorb user feedback, and release new versions regularly so that everyone can keep using it.
-\end{enumerate}
+We aim to develop a complete but concise CADD toolchain, and ultimately apply it to the discovery of novel drugs. Keeping several key goals in mind, we design our toolchain to 1) be freely available to the general public, 2) be released under permissive open source licenses, 3) conform to official standards, 4) provide a responsive web version, 5) run reasonably fast, and 6) track bugs and incorporate user feedback. Most importantly, we shall utilize our toolchain to discover potent drugs against certain diseases of therapeutic interest and hopefully save human lives.
 
 \section{Contributions}
 
-Simulating the early phases of modern drug discovery process by computer programs typically refers to 1) identifying a potential biological target and its binding site, 2) shortlisting a few promising compounds out of millions that are predicted to bind to the target, and 3) optimizing the candidate compounds according to potency and selectivity as well as physicochemical and drug-like properties before advancing to \textit{in vitro} wet-lab experiments and biological assays.
-
-So far, we have developed three tools for this simulation purpose, and used them together with some other existing tools to discover potential new drugs for the treatments of acquired immune deficiency syndrome (AIDS) and Alzheimer's disease (AD). The first tool, CUDAagrep, is used for fast approximate matching of DNA, which in essence directs the synthesis of proteins according to the central dogma. CUDAagrep facilitates the searching for viral DNA patterns producing viral proteins, which are probably drug targets. The second tool, idock, is used for fast predictions of both binding conformations of small compounds against given proteins and their binding affinities. idock can shortlist a few promising compounds out of millions for further clinical investigations. The third tool, igrow, is used for computational synthesis of potent ligands. igrow helps to explore a much larger chemical space for novel drugs.
+TODO: summarize contributions from following chapters: idock, istar, iview, igrow, rfscore.
 
 \section{Thesis Outline}
 
 The thesis is organized into 10 chapters as follows:
 
-Chapter 2 serves as a comprehensive literature survey on the pharmaceutical industry, the process of modern drug discovery, and drug discovery via computational means.
+Chapter 2 presents our tool idock for fast virtual screening. Compared with AutoDock Vina \citep{595}, idock obtains a speed up of 6.3x to 10.4x, resulting in a screening performance of 1.3 drug-like ligands per CPU minute. We have used idock in virtual screening tens of thousands of ligands against HIV reverse transcriptase with minimal side effects against four other human proteins for the treatment of AIDS.
 
-Chapter 3 presents our tool idock for fast virtual screening. Compared with AutoDock Vina \citep{595}, idock obtains a speed up of 6.3x to 10.4x, resulting in a screening performance of 1.3 drug-like ligands per CPU minute. We have used idock in virtual screening tens of thousands of ligands against HIV reverse transcriptase with minimal side effects against four other human proteins for the treatment of AIDS.
+Chapter 3 presents istar, our web platform for online drug discovery.
 
-Chapter 4 presents istar, our web platform for online drug discovery.
+Chapter 4 presents iview, our WebGL visualizer.
 
-Chapter 5 presents iview, our WebGL visualizer.
+Chapter 5 presents idock 3 with GPU acceleration.
 
-Chapter 6 presents idock 3 with GPU acceleration.
+Chapter 6 presents our new tool igrow for computational synthesis of potent ligands. Compared with AutoGrow \citep{466}, ligands generated by igrow retain 100 Da lower molecular weights, making them more likely to be refined into drugs. In terms of predicted binding affinity, igrow outperforms AutoGrow by around 10\%. In terms of execution time, igrow runs 30\% faster than AutoGrow on average. We have used igrow to computationally synthesize a few potent ligands for the treatments of AD and AIDS.
 
-Chapter 7 presents our new tool igrow for computational synthesis of potent ligands. Compared with AutoGrow \citep{466}, ligands generated by igrow retain 100 Da lower molecular weights, making them more likely to be refined into drugs. In terms of predicted binding affinity, igrow outperforms AutoGrow by around 10\%. In terms of execution time, igrow runs 30\% faster than AutoGrow on average. We have used igrow to computationally synthesize a few potent ligands for the treatments of AD and AIDS.
+Chapter 7 presents our real life case study of influenza A H1N1.
 
-Chapter 8 presents our real life case study of influenza A H1N1.
+Chapter 8 presents our real life case study of CCRK-related cancers.
 
-Chapter 9 presents our real life case study of CCRK-related cancers.
+Chapter 9 summarizes the thesis and outlines future directions.
 
-Chapter 10 summarizes the thesis.
-
-Appendix lists my publications.
+The appendix lists my journal and conference publications in chronological order.
 
 \chapterend
