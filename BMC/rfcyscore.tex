@@ -273,7 +273,7 @@ In this study we compare the prediction performance of two regression models MLR
 
 \subsection*{Multiple Linear Regression (MLR) with Cyscore features}
 
-Cyscore is a empirical scoring function in an additive functional form of four energetic terms, which are hydrophobic free energy $\Delta G_{hydrophobic}$, van der Waals interaction energy $\Delta G_{vdw}$, hydrogen bond interaction energy $\Delta G_{hbond}$ and ligand's conformational entropy $\Delta G_{entropy}$ (Eq. \ref{eqn:cyscore}). Their coefficients $k_h$, $k_v$, $k_b$ and $k_e$ and the intercept $C$ were obtained by MLR on 247 high-quality complexes carefully selected from PDBbind v2012 refined set. The intercept value was not reported in the original publication, but was included in this study as usual \cite{1313} in order to make a quick estimation of absolute binding affinity value, which is the ultimate goal in some real-world applications.
+Cyscore is an empirical scoring function in an additive functional form of four energetic terms, which are hydrophobic free energy $\Delta G_{hydrophobic}$, van der Waals interaction energy $\Delta G_{vdw}$, hydrogen bond interaction energy $\Delta G_{hbond}$ and ligand's conformational entropy $\Delta G_{entropy}$ (Eq. \ref{eqn:cyscore}). Their coefficients $k_h$, $k_v$, $k_b$ and $k_e$ and the intercept $C$ were obtained by MLR on 247 high-quality complexes carefully selected from PDBbind v2012 refined set. The intercept value was not reported in the original publication, but was included in this study as usual \cite{1313} in order to make a quick estimation of absolute binding affinity value, which is the ultimate goal in some real-world applications.
 
 \begin{equation}
 \Delta G_{bind} = k_h\Delta G_{hydrophobic} + k_v\Delta G_{vdw} + k_b\Delta G_{hbond} + k_e\Delta G_{entropy} + C
@@ -400,7 +400,7 @@ Moreover, classical empirical scoring functions usually rely on complicated ener
 The authors declare that they have no competing interests.
 
 \section*{Author's contributions}
-HL designed the study, ran the experiments, and wrote the manuscript. KSL, MHW and PJB discussed results and commented on the manuscript.
+HL designed the study, ran the experiments, and wrote the manuscript. KSL, MHW and PJB discussed results and commented on the manuscript. All authors read and approved the final manuscript.
 
 \section*{Acknowledgements}
 We gratefully acknowledge the Direct Grant from the Chinese University of Hong Kong, the GRF Grant (Project Reference 414413) from the Research Grants Council of Hong Kong SAR, the Inserm funding (P.J.B.), and the Medical Research Council for a Methodology Research Fellowship (Grant No. G0902106, awarded to P.J.B.). We thank Yang Cao for helping us reproduce the Cyscore results.
