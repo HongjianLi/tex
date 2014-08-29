@@ -1,12 +1,49 @@
 \chapter{idock: Protein-Ligand Docking}
 
-\section{Introduction}
+\section{Background}
 
 \citep{1397} investigate the relationship between protein flexibility and binding free energy and present some useful hints for understanding when, and to what extent, flexibility should be considered.
 \citep{1422} PubChem's BioAssay Database
 \citep{1424} ChEMBL: a large-scale bioactivity database for drug discovery
 \citep{1341} CSAR
 \citep{1376} PharmDock: a pharmacophore-based docking program
+
+Protein-ligand docking is an essential ingredient of computer-aided drug discovery. It tries to find inhibitors of viral proteins. Take the HIV virus for example (Figure \ref{fig:HIV} \citep{296}). The virus comprises several protein enzymes, which play an important role in replication. In infected cells, the viral reverse transcriptase reversely transcribes viral RNA into viral DNA. The viral integrase integrates viral DNA into human genomic DNA. The viral protease assemblies viral RNA and viral proteins into a new mature virus. If the viral proteins are inhibited, the replication cycle will be blocked. The inhibitors are typically small compounds called ligands. Protein-ligand docking therefore aims to discover inhibitory ligands of pharmaceutical protein targets of therapeutic interest.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{../idock/HIVReplicationCycle.png}
+\caption{Replication cycle of HIV/AIDS. Figure reprinted from \citep{296}.}
+\label{fig:HIV}
+\end{figure}
+
+Protein-ligand docking is a method which predicts the preferred conformation and binding affinity of a small ligand when bound to a macro protein to form a stable complex. A conformation refers to a vector of position, orientation, and torsions if any (Figure \ref{background:DegreeOfFreedom}). A binding affinity suggests how well the interactions formed between the ligand and the protein. Empirically speaking, it is the overall effect of various chemical interactions involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, stack interactions, and the like. Virtual screening can be regarded as a massive version of docking. Instead of docking one single ligand, it docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+
+\begin{figure*}
+\centering
+\subfloat[Positional degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{PositionalDOF.png}
+}
+\subfloat[Orientational degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{OrientationalDOF.png}
+}
+\subfloat[Torsional degree of freedom.]
+{
+  \includegraphics[width=0.32\linewidth]{TorsionalDOF.png}
+}
+\caption{Positional, orientational and torsional degree of freedom.}
+\label{background:DegreeOfFreedom}
+\end{figure*}
+
+Treating a docking program as a black box, its input includes the 3D structures of a protein and a ligand, while its output includes several predicted conformations and their predicted binding affinity. For the protein input, thanks to the rapid evolution of X-ray crystallography and NMR (Nuclear Magnetic Resonance) technologies, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. As of 4 Sep 2012, there are 84,381 structures in PDB. For the ligand input, the ZINC database \citep{532,1178} contains over 21 million purchasable compounds in ready-to-dock, 3D formats. The TCM@Taiwan database \citep{528} is the world's largest and most comprehensive free down small molecular database on traditional Chinese medicine. In addition, the PubChem database \citep{526} is a public repository for biological properties of small molecules, containing biological test results for more than 700,000 compounds. The PDBbind database \citep{529,530} and the CSAR NRC HiQ Set \citep{857,960} are collections of binding affinities for protein-ligand complexes with known 3D structures. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data. For the output, PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951} can be used to visualize docked conformations and plot putative interaction charts. AuPosSOM \citep{598} can be used to cluster docked conformations. BEDROC \citep{490} and SLR \citep{489} can be used as statistical metrics for docking method evaluation.
+
+Treating a docking program as a white box, it consists of two typical components, an algorithm to explore the conformational space of the ligand and the protein, and a scoring function to predict binding affinity given a conformation. Over recent decades, dozens of docking programs have been developed, such as DOCK \citep{1222}, AutoDock 4 \citep{785,596}, AutoDock Vina \citep{595}, QuickVina \citep{1193}, PLANTS \citep{610,607,779}, FITTED \citep{602}, CDOCK \citep{1224}, and CRDOCK \citep{1200}. Likewise, dozens of scoring functions have also been developed, such as RF-Score \citep{564}, SFCscore \citep{581}, LISA \citep{775}, and NNScore 2.0 \citep{977}. Refer to survey papers for a more complete list \citep{493,922} and for program comparison \citep{556,637}.
+
+Amongst a sea of docking programs, AutoDock Vina \citep{595} (hereafter Vina for short) is a competitive one. It is free and open source under Apache License 2.0. It has been shown to run faster than its predecessor AutoDock 4 \citep{596} by an order of magnitude when benchmarking on virtual screening for HIV protease inhibitors \citep{556}. Released in the second half of 2010, Vina has been cited over 400 times and adopted by a wide community of researchers. Indeed, it is intensively used in our research projects too. In Vina, the binding affinity is evaluated as free energy. The lower the free energy, the higher the binding affinity. There is a PyMOL plugin for AutoDock and Vina \citep{609}. MOLA is a bootable, self-configuring system for virtual screening using AutoDock4/Vina on computer clusters \citep{773}. VSDK is a console application system of virtual screening of small molecules using AutoDock Vina on Windows \citep{1268}. AUDocker LE is a GUI for virtual screening with AutoDock Vina on Windows \citep{1250}.
+
+In addition to pure docking program development, there is also a pool of successful case studies of using protein-ligand docking programs to discover novel and potent ligands for pharmacological proteins of therapeutic interest. To name a few, Vina was used for docking studies on the HEPT derivatives of HIV-1 reverse transcriptase \citep{843}, for side-chain residue flexibility study of VEGFR-2 (Vascular Endothelial Growth Factor Receptor 2), a known protein target for anti-angiogenic agents \citep{1084}, for identification of novel inhibitors of sirtuin 2, a NAD\textsuperscript{+}-dependent histone deacetylase enzyme \citep{1177}, and for repurposing study of FDA-approved drugs for cancer therapy in order to screen for compounds that potentially inhibit MDM2, an E3 ubiquitin ligase that polyubiquitinates p53 \citep{1230}. Such exciting success stories prove the real power of protein-ligand docking for computer-aided drug discovery.
 
 Protein-ligand docking predicts the preferred conformation and binding affinity of a small ligand when it is non-covalently bound to a specific binding site of a macro protein. Up to date, there are hundreds of docking programs \citep{493,922}. The AutoDock series is the most cited docking software in the research community. AutoDock has contributed to the discovery of several drugs, including the first clinically approved HIV integrase inhibitor \citep{1169}. Technically speaking, AutoDock is single threaded \textit{per se}. Following its initial release, several parallel implementations were developed, using either multithreading or computer cluster \citep{115,560,782}.
 
