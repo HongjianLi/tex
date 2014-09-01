@@ -72,18 +72,11 @@ Table \ref{tbl:features} lists the full features of iview.
                           & solvent accessible surface\\
                           & molecular surface\\
 \hline
- Proteins surface opacity & 1.0\\
-                          & 0.9\\
-                          & 0.8\\
-                          & 0.7\\
-                          & 0.6\\
-                          & 0.5\\
+ Proteins surface opacity & 1.0, 0.9, 0.8, 0.7, 0.6, 0.5\\
 \hline
-Protein surface wireframe & yes\\
-                          & no\\
+Protein surface wireframe & yes, no\\
 \hline
-Atom and residue labeling & yes\\
-                          & no\\
+Atom and residue labeling & yes, no\\
 \hline
    Virtual reality effect & anaglyph\\
                           & parallax barrier\\
@@ -107,7 +100,7 @@ We take as example the CCR5 chemokine receptor-HIV entry inhibitor maraviroc com
 
 \begin{figure}
 \begin{center}
-\includegraphics{../iview/ribbon.png}
+\includegraphics[width=\linewidth]{../iview/ribbon.png}
 \end{center}
 \caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex.}
 \label{fig:ribbon}
@@ -171,7 +164,7 @@ In the output phase of a docking job, it displays the user-supplied cubic box fo
 
 \section{Discussions}
 
-We developed iview with the purpose to simplify and promote the use of istar::idock. At first we tried ChemDoodle Web Components, but it had strong dependency on its server side components, whose source code we had no access to. Later we turned to GLmol, although which has been discontinued since 29 August 2012, was quite an exciting project because it gracefully built its geometric modeling and relevant functions on top of the three.js foundation, and thus greatly reduced the programming obstacles.
+We developed iview with the purpose to simplify and promote the use of istar::idock. At first we tried ChemDoodle Web Components, but it had strong dependency on its server side components, whose source code we had no access to. Later we turned to GLmol, although which has been discontinued since 29 August 2012, was quite an exciting project because it gracefully built its geometric modeling and relevant functions on top of the three.js foundation, and thus greatly reduced the programming difficulty.
 
 Based on GLmol, iview has fixed many bugs and meanwhile introduced new features. Their differences are as follows. iview supports four virtual reality effects, which GLmol lacks. iview allows users to choose a surface opacity between 1.0 and 0.5 so that users can inspect both protein surface and internal structures at the same time. iview can parse alternate atoms and reconstruct their covalent bonds, but GLmol simply ignores them. iview can identify metal ions and highlight their bonds by dashed lines. GLmol does not distinguish metal ions and displays their bonds by ordinary lines. iview supports as many as 100 atom types, from H to Fm, i.e. the first 100 atoms in the periodic table. GLmol can only recognize about 16 common atoms.
 
