@@ -18,7 +18,7 @@ A computational \textit{de novo} ligand design program helps to explore a much l
 
 Amongst the many \textit{de novo} ligand design programs, AutoGrow \citep{466} is a representative one which implements genetic algorithm to create a population of ligands. It uses Vina \citep{595} as external docking engine for the selection operator. AutoClickChem \citep{1051} is capable of performing \textit{in silico} click chemistry reactions, ensuring that chemical synthesis is fast, cheap, and comparatively easy for subsequent testing in biochemical assays. LigMerge \citep{1181} is an automated, ligand-based algorithm for systematically swapping the chemical moieties of known ligands to generate novel ligands with potentially improved potency. It has been shown to identify compounds predicted to inhibit peroxisome proliferator-activated receptor gamma, HIV reverse transcriptase, and dihydrofolate reductase with affinities higher than those of known ligands. FragVLib \citep{1247} is a free tool for performing similarity search across ligand-receptor complexes for identifying binding pockets similar to that of a target receptor of interest. The above programs are free and most are open source. They are used as baseline tools in our research projects.
 
-Drug discovery is an expensive and long-term business. It is estimated to cost US$1.8 billion over 13.5 years to develop a new drug [1]. In order to ameliorate the performance-cost ratio, complementing biological/ chemical laboratory experiments with cheap yet efficient computer simulations has become a growing trend.
+Drug discovery is an expensive and long-term business. It is estimated to cost US\$1.8 billion over 13.5 years to develop a new drug [1]. In order to ameliorate the performance-cost ratio, complementing biological/ chemical laboratory experiments with cheap yet efficient computer simulations has become a growing trend.
 
 Thanks to the increasing availability of 3D protein structures resolved by X-ray crystallography in the past few decades, there has been an explosion of algorithms for identifying, generating, and optimizing potential ligands in silico. Their applications have contributed to the development of a number of FDA-approved drugs [2], demonstrating their usefulness in real life.
 
@@ -113,14 +113,14 @@ As TbREL1 is crucial for the survival of the T. brucei parasite [19], it has bee
 
 AutoGrow 3.0 was run for 2 days and 10 hours for 17 generations, and the best resultant compound had predicted free energy of -12.7 kcal/mol.
 
-iSyn was run for 6 hours and 40 minutes for 2 generations, and the best resultant compound, 2_1314_1, had predicted free energy of -14.176 kcal/mol, with as many as 17 putative hydrogen bonds (Figure 6).
+iSyn was run for 6 hours and 40 minutes for 2 generations, and the best resultant compound, 2\_1314\_1, had predicted free energy of -14.176 kcal/mol, with as many as 17 putative hydrogen bonds (Figure 6).
 
  
-Figure 6: TbREL1 in complex of 2_1314_1.
+Figure 6: TbREL1 in complex of 2\_1314\_1.
 
-iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure 7 shows the evolutionary steps taken to produce 2_1314_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2_1314_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in log scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2_1314_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
+iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure 7 shows the evolutionary steps taken to produce 2\_1314\_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2\_1314\_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in log scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2\_1314\_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
 
-It can also be seen that its parent ligand, 2_1314, had a molecular mass of as large as 624.211 Daltons, which is unlikely to be optimized into potent drugs. Thanks to our four novel cutting operators, it got broken down and resulted in the ever best ligand. This demonstrates the helpfulness of our newly-implemented cutting operators with click chemistry support.
+It can also be seen that its parent ligand, 2\_1314, had a molecular mass of as large as 624.211 Daltons, which is unlikely to be optimized into potent drugs. Thanks to our four novel cutting operators, it got broken down and resulted in the ever best ligand. This demonstrates the helpfulness of our newly-implemented cutting operators with click chemistry support.
 
 \subsection{Example 2: inhibitors of Cyclin-Dependent Kinase 2 (PDB ID: 1JSV)}
 
@@ -136,7 +136,7 @@ Similar to the previous example, the protein in this example is also CDK2, but i
 
 iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resultant compound had predicted binding affinity of -14.071 kcal/mol, with 12 putative hydrogen bonds (Figure 9).
  
-Figure 7: The evolutionary steps taken to generate 2_1314_1.
+Figure 7: The evolutionary steps taken to generate 2\_1314\_1.
 
 Figure 8: CDK2 (PDB ID: 1JSV) in complex of the best ligand generated by iSyn.
 
@@ -156,15 +156,15 @@ iSyn is written in C++, Python, HTML5 and JavaScript. It is free and open source
 
 
 References
-[1] 	Steven M. Paul, Daniel S. Mytelka, Christopher T. Dunwiddie, Charles C. Persinger, Bernard H. Munos, Stacy R. Lindborg and Aaron L. Schacht. How to improve R&D productivity: the pharmaceutical industry's grand challenge. Nature Reviews Drug Discovery, 9(3):203-214, 2010.
+[1] 	Steven M. Paul, Daniel S. Mytelka, Christopher T. Dunwiddie, Charles C. Persinger, Bernard H. Munos, Stacy R. Lindborg and Aaron L. Schacht. How to improve R\&D productivity: the pharmaceutical industry's grand challenge. Nature Reviews Drug Discovery, 9(3):203-214, 2010.
 [2] 	Gisbert Schneider and Uli Fechner. Computer-based de novo design of drug-like molecules. Nature Reviews Drug Discovery, 4:649-663, 2005.
-[3] 	Jacob D. Durrant, Rommie E. Amaro and J. Andrew McCammon. AutoGrow: A Novel Algorithm for Protein Inhibitor Design. Chemical Biology & Drug Design, 73(2):168-178, 2009.
+[3] 	Jacob D. Durrant, Rommie E. Amaro and J. Andrew McCammon. AutoGrow: A Novel Algorithm for Protein Inhibitor Design. Chemical Biology \& Drug Design, 73(2):168-178, 2009.
 [4] 	Garrett M. Morris, Ruth Huey, William Lindstrom, Michel F. Sanner, Richard K. Belew, David S. Goodsell and Arthur J. Olson. AutoDock4 and AutoDockTools4: Automated docking with selective receptor flexibility. Journal of Computational Chemistry, 30(16):2785-2791, 2009.
 [5] 	Oleg Trott and Arthur J. Olson. AutoDock Vina: Improving the speed and accuracy of docking with a new scoring function, efficient optimization, and multithreading. Journal of Computational Chemistry, 31(2):455-461, 2010.
 [6] 	Ching-Man Tse, Hongjian Li, Kwong-Sak Leung, Kin-Hong Lee, and Man-Hon Wong. Interactive Drug Design in Virtual Reality. 15th International Conference on Information Visualisation (IV), pp.226-231, London, United Kingdom, 13-15 July 2011.
 [7] 	Jacob D. Durrant, Steffen Lindert and J. Andrew McCammon. AutoGrow 3.0: An improved algorithm for chemically tractable, semi-automated protein inhibitor design. Journal of Molecular Graphics and Modelling, 44(0):104-112, 2013.
 [8] 	Jacob D. Durrant and J. Andrew McCammon. AutoClickChem: Click Chemistry in Silico. PLoS Computational Biology, 8(3):e1002397, 2012.
-[9] 	Steffen Lindert, Jacob D. Durrant and J. Andrew McCammon. LigMerge: A Fast Algorithm to Generate Models of Novel Potential Ligands from Sets of Known Binders. Chemical Biology & Drug Design, 80(3):358-365, 2012.
+[9] 	Steffen Lindert, Jacob D. Durrant and J. Andrew McCammon. LigMerge: A Fast Algorithm to Generate Models of Novel Potential Ligands from Sets of Known Binders. Chemical Biology \& Drug Design, 80(3):358-365, 2012.
 [10] 	C.A. Lipinski, F. Lombardo, B.W. Dominy and P.J. Feeney. Experimental and computational approaches to estimate solubility and permeability in drug discovery and development settings. Advanced Drug Delivery Reviews, 46:3-26, 2001.
 [11] 	Noel O'Boyle, Michael Banck, Craig James, Chris Morley, Tim Vandermeersch and Geoffrey Hutchison. Open Babel: An open chemical toolbox. Journal of Cheminformatics, 3(1):33, 2011.
 [12] 	Hongjian Li, Kwong-Sak Leung and Man-Hon Wong. idock: A Multithreaded Virtual Screening Tool for Flexible Ligand Docking. IEEE Symposium on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB), pp.77-84, San Diego, United States, 9-12 May 2012.
