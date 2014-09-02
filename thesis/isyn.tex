@@ -30,14 +30,14 @@ We present iSyn, our WebGL-based solution for computationally synthesizing \text
 
 \section{Methods}
 
-Figure \ref{fig:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter’s sleek, intuitive and powerful HTML5 template Bootstrap, and hosted by the lightweight event-driven and non-blocking I/O model node.js. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
+Figure \ref{isyn:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter’s sleek, intuitive and powerful HTML5 template Bootstrap, and hosted by the lightweight event-driven and non-blocking I/O model node.js. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/UI.png}
 \end{center}
 \caption{iSyn user interface.}
-\label{fig:UI}
+\label{isyn:UI}
 \end{figure}
 
 In a typical workflow, the user loads a protein target of pharmaceutical interest. The WebGL canvas then automatically renders in real time the protein structure in the representation of lines. Meanwhile, the protein atom coordinates and types are sent to a separate web worker to generate \textit{ad hoc} molecular surface using the EDTSurf algorithm \citep{1297,1350} in background in order to keep the web UI responsive in all time. The protein surface, having been constructed, is automatically applied on top of the line representation. Hence, the user can clearly see the cavities, most likely ligand binding sites, on the protein surface.
@@ -78,44 +78,44 @@ iSyn uses the AutoClickChem algorithm \citep{1051} to perform addition and mutat
 
 Through the addition and mutation operators, ligands could possibly “grow” too large in terms of molecular size, and might therefore lose drug-like properties. For example, if a generated ligand has a molecular mass of over 500 Daltons, it is unlikely to be absorbed inside the human body and thus unlikely to be optimized into a potential drug. In light of this issue, we have implemented four novel cutting operators to break down oversized ligands.
 
-Ozonolysis is the cleavage of an alkene with ozone to form organic compounds where the carbon-carbon double bond is replaced by a double bond to oxygen (Figure \ref{fig:AlkeneOzonolysis}). The alkene functional group is oxidized with ozone to form aldehydes or ketones, depending on the structure of the ligand under a certain chemical environment. Through this reaction, a ligand containing a carbon-carbon double bond can be broken down into two child ligands.
+Ozonolysis is the cleavage of an alkene with ozone to form organic compounds where the carbon-carbon double bond is replaced by a double bond to oxygen (Figure \ref{isyn:AlkeneOzonolysis}). The alkene functional group is oxidized with ozone to form aldehydes or ketones, depending on the structure of the ligand under a certain chemical environment. Through this reaction, a ligand containing a carbon-carbon double bond can be broken down into two child ligands.
  
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/AlkeneOzonolysis.png}
 \end{center}
 \caption{Ozonolysis of alkene.}
-\label{fig:AlkeneOzonolysis}
+\label{isyn:AlkeneOzonolysis}
 \end{figure}
 
-Vigorous oxidation on alkene can form carbolic acid (Figure \ref{fig:AlkeneOxidation}). While oxidation of alkene gives out aldehydes or ketone, further oxidation gives out carboxylic acid and alcohol as products. Aldehyde can be easily oxidized by all sorts of oxidizing agents. As for ketone, although it has certain resistance to oxidation, it can also be oxidized to carboxylic acid by using strong oxidizing agents such as potassium manganite VII solution. Through this reaction, a ligand containing carbon-carbon double bonds can be broken down into four child ligands.
+Vigorous oxidation on alkene can form carbolic acid (Figure \ref{isyn:AlkeneOxidation}). While oxidation of alkene gives out aldehydes or ketone, further oxidation gives out carboxylic acid and alcohol as products. Aldehyde can be easily oxidized by all sorts of oxidizing agents. As for ketone, although it has certain resistance to oxidation, it can also be oxidized to carboxylic acid by using strong oxidizing agents such as potassium manganite VII solution. Through this reaction, a ligand containing carbon-carbon double bonds can be broken down into four child ligands.
  
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/AlkeneOxidation.png}
 \end{center}
 \caption{Oxidation of alkene to carboxylic acid.}
-\label{fig:AlkeneOxidation}
+\label{isyn:AlkeneOxidation}
 \end{figure}
 
-Acid Anhydrides can react with water to form carboxylic acid (Figure \ref{fig:AcidAnhydride}). An acid anhydride has two acyl groups bound to the same oxygen atom. The two acyl groups are derived from the same carboxylic acid. In reverse, the acid anhydride can be broken down into two original carboxylic acids by reacting with water. Through this reaction, a ligand containing two acyl groups bound to the same oxygen atom can be broken down into two child ligands.
+Acid Anhydrides can react with water to form carboxylic acid (Figure \ref{isyn:AcidAnhydride}). An acid anhydride has two acyl groups bound to the same oxygen atom. The two acyl groups are derived from the same carboxylic acid. In reverse, the acid anhydride can be broken down into two original carboxylic acids by reacting with water. Through this reaction, a ligand containing two acyl groups bound to the same oxygen atom can be broken down into two child ligands.
  
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/AcidAnhydride.png}
 \end{center}
 \caption{Acid anhydride to carboxylic acid.}
-\label{fig:AcidAnhydride}
+\label{isyn:AcidAnhydride}
 \end{figure}
 
-Hydrolysis of ester is the reverse of esterification (Figure \ref{fig:EsterHydrolysis}), which is a reversible reaction. The reaction is catalyzed by diluted acid, such as diluted hydrochloric acid, and is heated under reflux. As the reaction is reversible, excessive water has to be used. Under such condition, carboxylic acid and alcohol are produced. Through this reaction, a ligand containing ester groups can be broken down into two child ligands.
+Hydrolysis of ester is the reverse of esterification (Figure \ref{isyn:EsterHydrolysis}), which is a reversible reaction. The reaction is catalyzed by diluted acid, such as diluted hydrochloric acid, and is heated under reflux. As the reaction is reversible, excessive water has to be used. Under such condition, carboxylic acid and alcohol are produced. Through this reaction, a ligand containing ester groups can be broken down into two child ligands.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/EsterHydrolysis.png}
 \end{center}
 \caption{Hydrolysis of ester.}
-\label{fig:EsterHydrolysis}
+\label{isyn:EsterHydrolysis}
 \end{figure}
 
 \subsection{WebGL visualizer}
@@ -142,24 +142,24 @@ As TbREL1 is crucial for the survival of the Trypanosoma brucei parasite, it has
 
 AutoGrow 3.0 was run for 2 days and 10 hours for 17 generations, and the best resultant compound had predicted free energy of -12.7 kcal/mol.
 
-iSyn was run for 6 hours and 40 minutes for 2 generations, and the best resultant compound, 2\_1314\_1, had predicted free energy of -14.176 kcal/mol, with as many as 17 putative hydrogen bonds (Figure \ref{fig:1XDN}).
+iSyn was run for 6 hours and 40 minutes for 2 generations, and the best resultant compound, 2\_1314\_1, had predicted free energy of -14.176 kcal/mol, with as many as 17 putative hydrogen bonds (Figure \ref{isyn:1XDN}).
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/1XDN.png}
 \end{center}
 \caption{TbREL1 in complex of 2\_1314\_1.}
-\label{fig:1XDN}
+\label{isyn:1XDN}
 \end{figure}
 
-iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure \ref{fig:2_1314_1} shows the evolutionary steps taken to produce 2\_1314\_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2\_1314\_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in logarithmic scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2\_1314\_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
+iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure \ref{isyn:2_1314_1} shows the evolutionary steps taken to produce 2\_1314\_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2\_1314\_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in logarithmic scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2\_1314\_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/2_1314_1.png}
 \end{center}
 \caption{The evolutionary steps taken to generate 2\_1314\_1.}
-\label{fig:2_1314_1}
+\label{isyn:2_1314_1}
 \end{figure}
 
 It can also be seen that its parent ligand, 2\_1314, had a molecular mass of as large as 624.211 Daltons, which is unlikely to be optimized into potent drugs. Thanks to our four novel cutting operators, it got broken down and resulted in the ever best ligand. This demonstrates the helpfulness of our newly-implemented cutting operators with click chemistry support.
@@ -170,28 +170,28 @@ CDK2 is a member of the cyclin-dependent kinase family that are potential therap
 
 Likewise, a number of ligands were chosen randomly from the fragment library to act as initial ligands.
 
-iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resultant compound had predicted free energy of -11.345 kcal/mol, with 9 putative hydrogen bonds (Figure \ref{fig:1JSV}). For comparison, its starting ligand had predicted free energy of only -5.607 kcal/mol.
+iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resultant compound had predicted free energy of -11.345 kcal/mol, with 9 putative hydrogen bonds (Figure \ref{isyn:1JSV}). For comparison, its starting ligand had predicted free energy of only -5.607 kcal/mol.
 
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/1JSV.png}
 \end{center}
 \caption{CDK2 (PDB: 1JSV) in complex of the best ligand.}
-\label{fig:1JSV}
+\label{isyn:1JSV}
 \end{figure}
 
 \subsection{Example 3: inhibitors of cyclin-dependent kinase 2 (PDB: 1PXM)}
 
 Similar to the previous example, the protein in this example is also CDK2, but in a different conformation. We would like to test whether iSyn could produce consistent results given different conformations of the same protein.
 
-iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resultant compound had predicted binding affinity of -14.071 kcal/mol, with 12 putative hydrogen bonds (Figure \ref{fig:1PXM}).
+iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resultant compound had predicted binding affinity of -14.071 kcal/mol, with 12 putative hydrogen bonds (Figure \ref{isyn:1PXM}).
  
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/1PXM.png}
 \end{center}
 \caption{CDK2 (PDB: 1PXM) in complex of the best ligand.}
-\label{fig:1PXM}
+\label{isyn:1PXM}
 \end{figure}
 
 Obviously, the best ligand obtained in this example is better than the one obtained in the previous example. This could be due to several reasons. The major reason is most likely the stochastic nature of the evolutionary algorithm. Different optimization runs typically lead to different results. Another reason is the conformational differences in the protein, which could affect intermolecular binding. A third reason is the difference in the center and size of the binding site. Nevertheless, in both examples the best ligand still had predicted free energy lower than -11 kcal/mol, indicating that iSyn managed to produce very potent ligands in both cases.
