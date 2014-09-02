@@ -1,10 +1,9 @@
-\chapter{idock: accelerating protein-ligand docking}
+\chapter{idock: protein-ligand docking}
 
 \section{Abstract}
 
 \section{Introduction}
 
-\citep{1397} investigate the relationship between protein flexibility and binding free energy and present some useful hints for understanding when, and to what extent, flexibility should be considered.
 \citep{1422} PubChem's BioAssay Database
 \citep{1424} ChEMBL: a large-scale bioactivity database for drug discovery
 \citep{1341} CSAR
@@ -12,9 +11,11 @@
 
 Protein-ligand docking is an essential ingredient of computer-aided drug discovery. It tries to find inhibitors of viral proteins. Take the HIV virus for example. The virus comprises several protein enzymes, which play an important role in replication. In infected cells, the viral reverse transcriptase reversely transcribes viral RNA into viral DNA. The viral integrase integrates viral DNA into human genomic DNA. The viral protease assemblies viral RNA and viral proteins into a new mature virus. If the viral proteins are inhibited, the replication cycle will be blocked. The inhibitors are typically small compounds called ligands. Protein-ligand docking therefore aims to discover inhibitory ligands of pharmaceutical protein targets of therapeutic interest.
 
-Protein-ligand docking is a method which predicts the preferred conformation and binding affinity of a small ligand when bound to a macro protein to form a stable complex. A conformation refers to a vector of position, orientation, and torsions if any (Figure \ref{background:DegreeOfFreedom}). A binding affinity suggests how well the interactions formed between the ligand and the protein. Empirically speaking, it is the overall effect of various chemical interactions involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, stack interactions, and the like. Virtual screening can be regarded as a massive version of docking. Instead of docking one single ligand, it docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+The protein is assumed rigid in this study. \citep{1397} investigates the relationship between protein flexibility and binding free energy and present some useful hints for understanding when, and to what extent, flexibility should be considered.
 
-\begin{figure*}
+Protein-ligand docking is a method which predicts the preferred conformation and binding affinity of a small ligand when bound to a macro protein to form a stable complex. A conformation refers to a vector of position, orientation, and torsions if any (Figure \ref{idock:DOF}). A binding affinity suggests how well the interactions formed between the ligand and the protein. Empirically speaking, it is the overall effect of various chemical interactions involved, such as van der Waals force, electrostatic force, hydrogen bonding, hydrophobic interactions, stack interactions, and the like. Virtual screening can be regarded as a massive version of docking. Instead of docking one single ligand, it docks a database of drug-like ligands to a viral protein of interest, ranks them according to their predicted binding affinity, and shortlists the best ones for further investigation.
+
+\begin{figure}
 \centering
 \subfloat[Positional degree of freedom.]
 {
@@ -29,8 +30,8 @@ Protein-ligand docking is a method which predicts the preferred conformation and
   \includegraphics[width=0.32\linewidth]{../idock/TorsionalDOF.png}
 }
 \caption{Positional, orientational and torsional degree of freedom.}
-\label{background:DegreeOfFreedom}
-\end{figure*}
+\label{idock:DOF}
+\end{figure}
 
 Treating a docking program as a black box, its input includes the 3D structures of a protein and a ligand, while its output includes several predicted conformations and their predicted binding affinity. For the protein input, thanks to the rapid evolution of X-ray crystallography and NMR (Nuclear Magnetic Resonance) technologies, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. As of 4 Sep 2012, there are 84,381 structures in PDB. For the ligand input, the ZINC database \citep{532,1178} contains over 21 million purchasable compounds in ready-to-dock, 3D formats. The TCM@Taiwan database \citep{528} is the world's largest and most comprehensive free down small molecular database on traditional Chinese medicine. In addition, the PubChem database \citep{526} is a public repository for biological properties of small molecules, containing biological test results for more than 700,000 compounds. The PDBbind database \citep{529,530} and the CSAR NRC HiQ Set \citep{857,960} are collections of binding affinities for protein-ligand complexes with known 3D structures. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data. For the output, PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951} can be used to visualize docked conformations and plot putative interaction charts. AuPosSOM \citep{598} can be used to cluster docked conformations. BEDROC \citep{490} and SLR \citep{489} can be used as statistical metrics for docking method evaluation.
 
@@ -52,7 +53,7 @@ In 2011, inspired by AutoDock Vina, we developed idock 1.0 \citep{1153}, a multi
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{../idock/OutputPDBQT.png}
+%\includegraphics[width=\linewidth]{../idock/OutputPDBQT.png}
 \caption{Verbose output of idock in PDBQT format.}
 \label{idock:OutputPDBQT}
 \end{figure}
@@ -62,43 +63,49 @@ Figure \ref{idock:Flowchart} shows the overall flowchart of idock. During initia
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{../idock/Flowchart.pdf}
-\caption{Flowchart of idock.}
+\caption{idock flowchart.}
 \label{idock:Flowchart}
 \end{figure}
 
-\subsection{Scoring Function}
+\subsection{Scoring function}
 
-Both idock and Vina share exactly the same scoring function, which is made up of a conformation-dependent part and a conformation-independent part. The conformation-dependent part is a weighted sum of five terms over all the pairs of atom $i$ and atom $j$ that can move relative to each other. It is calculated from equations \eqref{eqn:e} and \eqref{eqn:eij} where $t_i$ and $t_j$ are the atom types of $i$ and $j$ respectively, and $r_{ij}$ is their interatomic distance. The five terms are calculated from equations \eqref{eqn:Gauss1} to \eqref{eqn:HBonding} where $d_{ij}$ is the surface distance calculated from equation \eqref{eqn:dij} where $R_{t_i}$ and $R_{t_j}$ are the Van der Waals radii of $t_i$ and $t_j$ respectively (Figure \ref{idock:Distance}). All the units are in \AA. The weighting coefficients and the cut off at $r_{ij}$ = 8 \AA\ of the five terms are borrowed from Vina. The optimization algorithm attempts to find the global minimum of $e$ and other low-scoring conformations, which it then ranks.
+Both idock and Vina share exactly the same scoring function, which is made up of a conformation-dependent part and a conformation-independent part. The conformation-dependent part is a weighted sum of five terms over all the pairs of atom $i$ and atom $j$ that can move relative to each other. It is calculated from equations \eqref{idock:e} and \eqref{idock:eij} where $t_i$ and $t_j$ are the atom types of $i$ and $j$ respectively, and $r_{ij}$ is their interatomic distance. The five terms are calculated from equations \eqref{idock:Gauss1} to \eqref{idock:HBonding} where $d_{ij}$ is the surface distance calculated from equation \eqref{idock:dij} where $R_{t_i}$ and $R_{t_j}$ are the Van der Waals radii of $t_i$ and $t_j$ respectively (Figure \ref{idock:Distance}). All the units are in \AA. The weighting coefficients and the cut off at $r_{ij}$ = 8 \AA\ of the five terms are borrowed from Vina. The optimization algorithm attempts to find the global minimum of $e$ and other low-scoring conformations, which it then ranks.
+
 \begin{equation}
-\label{eqn:e}
+\label{idock:e}
 e = \sum_{i < j} e_{ij}
 \end{equation}
+
 \begin{eqnarray}
-\label{eqn:eij}
+\label{idock:eij}
 e_{ij} &=& (-0.035579) * Gauss_1(t_i, t_j, r_{ij}) \nonumber \\
        &+& (-0.005156) * Gauss_2(t_i, t_j, r_{ij}) \nonumber \\
        &+& (+0.840245) * Repulsion(t_i, t_j, r_{ij}) \nonumber \\
        &+& (-0.035069) * Hydrophobic(t_i, t_j, r_{ij}) \nonumber \\
        &+& (-0.587439) * HBonding(t_i, t_j, r_{ij})
 \end{eqnarray}
+
 \begin{equation}
-\label{eqn:Gauss1}
+\label{idock:Gauss1}
 Gauss_1(t_i, t_j, r_{ij}) = e^{-(d_{ij} / 0.5)^2}
 \end{equation}
+
 \begin{equation}
-\label{eqn:Gauss2}
+\label{idock:Gauss2}
 Gauss_2(t_i, t_j, r_{ij}) = e^{-((d_{ij} - 3) / 2)^2}
 \end{equation}
+
 \begin{equation}
-\label{eqn:Repulsion}
+\label{idock:Repulsion}
 Repulsion(t_i, t_j, r_{ij}) =
 \begin{cases}
 d_{ij}^2 & \text{if } d_{ij} < 0\\
 0 &\text{if } d_{ij} \geq 0
 \end{cases}
 \end{equation}
+
 \begin{equation}
-\label{eqn:Hydrophobic}
+\label{idock:Hydrophobic}
 Hydrophobic(t_i, t_j, r_{ij}) =
 \begin{cases}
 1 & \text{if } d_{ij} \leq 0.5\\
@@ -106,8 +113,9 @@ Hydrophobic(t_i, t_j, r_{ij}) =
 0 & \text{if } d_{ij} \geq 1.5\\
 \end{cases}
 \end{equation}
+
 \begin{equation}
-\label{eqn:HBonding}
+\label{idock:HBonding}
 HBonding(t_i, t_j, r_{ij}) =
 \begin{cases}
 1 & \text{if } d_{ij} \leq -0.7\\
@@ -115,29 +123,36 @@ d_{ij} / (-0.7) & \text{if } -0.7 < d_{ij} < 0\\
 0 & \text{if } d_{ij} \geq 0\\
 \end{cases}
 \end{equation}
+
 \begin{equation}
-\label{eqn:dij}
+\label{idock:dij}
 d_{ij} = r_{ij} - (R_{t_i} + R_{t_j})
 \end{equation}
+
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{../idock/Distance.png}
 \caption{Relationship between surface distance $d_{ij}$ and interatomic distance $r_{ij}$.}
 \label{idock:Distance}
 \end{figure}
-The conformation-dependent part can be seen as the sum of intermolecular and intramolecular contributions. Hence equation \eqref{eqn:e} can be rewritten into equation \eqref{eqn:inter-intra} where $e_{inter}$ is the summation over all the heavy atoms between receptor and ligand, and $e_{intra}$ is the summation over all the 1-4 ligand heavy atoms that are separated by three consecutive covalent bonds and can move relative to each other.
+
+The conformation-dependent part can be seen as the sum of intermolecular and intramolecular contributions. Hence equation \eqref{idock:e} can be rewritten into equation \eqref{idock:inter-intra} where $e_{inter}$ is the summation over all the heavy atoms between receptor and ligand, and $e_{intra}$ is the summation over all the 1-4 ligand heavy atoms that are separated by three consecutive covalent bonds and can move relative to each other.
+
 \begin{equation}
-\label{eqn:inter-intra}
+\label{idock:inter-intra}
 e = e_{inter} + e_{intra}
 \end{equation}
-The conformation-independent part penalizes $e_{inter}$ for ligand flexibility. The predicted free energy of the $k$th conformation for output, denoted as $e'_k$, is calculated from equation \eqref{eqn:FlexibilityPenalty} where $k$ is the subscript for conformation, $e_k$ is the conformation-dependent score of the $k$th conformation calculated from equation \eqref{eqn:e}, $e_{intra,1}$ is the $e_{intra}$ of the first, i.e. lowest-scoring conformation, $N_{ActTors}$ is the number of active torsions and $N_{InactTors}$ is the number of inactive torsions of the ligand. Note that $e_{intra,1}$, rather than $e_{intra,k}$, acts as subtrahend in order to preserve the ranking.
+
+The conformation-independent part penalizes $e_{inter}$ for ligand flexibility. The predicted free energy of the $k$th conformation for output, denoted as $e'_k$, is calculated from equation \eqref{idock:FlexibilityPenalty} where $k$ is the subscript for conformation, $e_k$ is the conformation-dependent score of the $k$th conformation calculated from equation \eqref{idock:e}, $e_{intra,1}$ is the $e_{intra}$ of the first, i.e. lowest-scoring conformation, $N_{ActTors}$ is the number of active torsions and $N_{InactTors}$ is the number of inactive torsions of the ligand. Note that $e_{intra,1}$, rather than $e_{intra,k}$, acts as subtrahend in order to preserve the ranking.
+
 \begin{equation}
-\label{eqn:FlexibilityPenalty}
+\label{idock:FlexibilityPenalty}
 e'_k = \frac{e_k - e_{intra,1}}{1 + 0.05846 * (N_{ActTors} + 0.5 * N_{InactTors})}
 \end{equation}
-The value of $e_{ij}$ is basically a function of three variables, namely $t_i$, $t_j$, and $r_{ij}$. These three variables have both a known lower bound and a known upper bound, so it is possible to precalculate the scoring function. Since there are 17 atom types implemented in idock, the pair of $t_i$ and $t_j$ can have 153 (=17*18/2) different combinations. Since $r_{ij}$ is cut off at 8 \AA, idock uniformly samples 16,384 points in range [0, 8] to turn the continuous domain into a concrete domain, resulting in an average absolute error of merely 0.002 kcal/mol. During program initialization, idock precalculates $e_{ij}$ from equation \eqref{eqn:eij} for 153*16384 possible combinations of $t_i$, $t_j$, and $r_{ij}$. During optimization, idock approximates the true value of $e_{ij}$ by direct assignment rather than linear interpolation for faster evaluation of $e_{ij}$ at the cost of a little bit longer precalculation time and a bit more memory storage.
 
-\subsection{Grid Maps}
+The value of $e_{ij}$ is basically a function of three variables, namely $t_i$, $t_j$, and $r_{ij}$. These three variables have both a known lower bound and a known upper bound, so it is possible to precalculate the scoring function. Since there are 17 atom types implemented in idock, the pair of $t_i$ and $t_j$ can have 153 (=17*18/2) different combinations. Since $r_{ij}$ is cut off at 8 \AA, idock uniformly samples 16,384 points in range [0, 8] to turn the continuous domain into a concrete domain, resulting in an average absolute error of merely 0.002 kcal/mol. During program initialization, idock precalculates $e_{ij}$ from equation \eqref{idock:eij} for 153*16384 possible combinations of $t_i$, $t_j$, and $r_{ij}$. During optimization, idock approximates the true value of $e_{ij}$ by direct assignment rather than linear interpolation for faster evaluation of $e_{ij}$ at the cost of a little bit longer precalculation time and a bit more memory storage.
+
+\subsection{Grid maps}
 
 In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of atom type \textit{t} is constructed by placing virtual probe atoms of atom type \textit{t} along the X, Y, Z dimensions of the search box at a certain granularity (Figure \ref{idock:GridMap}). The $e_{inter}$ value of these probe atoms are precalculated, so the $e_{inter}$ value of a ligand heavy atom can be approximated in some way. In Vina, the grid map granularity is hard coded to be 0.375 \AA, and the approximation is done by linear interpolation of the 8 corner probe atoms of the residing subbox. This kind of interpolation involves reading of 8 $e_{inter}$ values, computation of 3 $\alpha$ values, 12 floating-point subtractions, 24 floating-point multiplications, and 7 floating-point additions, which turned out to be a performance bottleneck when we profiled Vina. In contrast, idock exposes grid map granularity as an optional program argument with a tuned default value of 0.15625 \AA. Likewise, due to a higher density of probe atoms, idock substitutes direct assignment for linear interpolation for much faster evaluation of $e_{inter}$ at the cost of longer precalculation time and larger memory storage. Therefore, the creation of grid maps is carried out on the fly only when necessary and abstracted into parallel tasks, which are then distributed to the thread pool for concurrent execution.
 
@@ -148,19 +163,19 @@ In order to fast evaluate $e_{inter}$, grid maps are often built. A grid map of 
 \label{idock:GridMap}
 \end{figure}
 
-\subsection{Optimization Algorithm}
+\subsection{Optimization algorithm}
 
 Both idock and Vina use Monte Carlo algorithm for global optimization and Broyden-Fletcher-Goldfarb-Shanno (BFGS) \cite{786} Quasi-Newton method for local optimization. A succession of steps consisting of a mutation and a BFGS local optimization are taken, with each step being accepted according to the Metropolis criterion (Figure \ref{idock:MonteCarlo}, modified from \cite{493}). These steps are repeated over \textit{N} iterations, where \textit{N} correlates to the complexity of the ligand regarding number of heavy atoms and number of torsions. BFGS approximates the inverse Hessian matrix of the scoring function. It uses not only the value of the scoring function but also its gradient, which are the derivatives of the scoring function with respect to the position and orientation of the ligand, and the torsions for the active rotatable bonds in the ligand. A BFGS iteration derives a descent direction from the approximate inverse Hessian matrix, derives a step length along the descent direction by line search, and updates the approximation of inverse Hessian matrix. Both programs achieve multithreading by concurrently running multiple independent Monte Carlo tasks starting from random initial conformations.
 
 Though both programs share similar optimization algorithms, their implementations differ. Compared with Vina, the Monte Carlo iterations in idock are far fewer and the BFGS iterations are more. On one hand, the fewer number of Monte Carlo iterations is compensated by a larger number of parallel Monte Carlo tasks, which is 64 by default in idock compared to 8 in Vina, guaranteeing better conformational diversity and higher CPU utilization on multi-core computers. On the other hand, the stopping criterion of BFGS local optimization does not depend on an estimated number of iterations, which is the case in Vina, but depends on the outcome of line search. The BFGS local optimization stops if and only if no appropriate step length can be obtained by line search, thus increasing the probability of finding optimal local minimums.
 
-\subsection{Native Support of Virtual Screening}
+\subsection{Native support of virtual screening}
 
 Vina is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatly parsing the same receptor and creating the same grid maps, thus degrading performance.
 
-idock supports virtual screening in a native manner. It docks a directory of ligands instead of a single ligand, and reuses receptor and grid maps (Note the loop in the flowchart). Given a very large amount of ligands to dock, idock indirectly supports two-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
+idock supports virtual screening in a native manner. It docks a directory of ligands instead of a single ligand, and reuses receptor and grid maps (note the loop in the flowchart). Given a very large amount of ligands to dock, idock indirectly supports two-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
 
-\subsection{Detection of Inactive Torsions}
+\subsection{Detection of inactive torsions}
 
 idock automatically detects and deactivates inactive torsions, which are presented and activated in the input file in pdbqt format but have no impact on the overall scoring, such as \textemdash{OH} and \textemdash{NH$_2$}, because they only rotate the hydrogens. Figure \ref{idock:InactiveTorsions} shows an example ligand which contains 4 active torsions defined by the python script \textit{prepare\_ligand4.py} provided by AutoDock Tools \cite{785,596}. Two of them, highlighted in yellow, only rotate hydrogens and thus have no contributions to the scoring. They are re-classified as inactive torsions and deactivated while being parsed in idock. This kind of automatic detection and deactivation of inactive torsions reduces the torsional degrees of freedom to optimize in the local optimization step, leading to easier finding of local minimums.
 
@@ -171,7 +186,7 @@ idock automatically detects and deactivates inactive torsions, which are present
 \label{idock:InactiveTorsions}
 \end{figure}
 
-\subsection{Miscellaneous Improvements}
+\subsection{Miscellaneous improvements}
 
 idock implements a lightweight thread pool in order to reuse threads and maintain a high CPU utilization throughout the entire screening procedure. During program initialization, idock creates a thread pool of $N$ threads, where $N$ is the number of CPU cores automatically detected, or can be specified by user via a command line argument. When idle, the threads sleep. When tasks arrive, the threads compete for tasks. The thread that completes its current task will automatically fetch a pending one to execute until all are done. Synchronization is implemented to ensure the full completeness of tasks and availability of results. The task here is an abstract concept in programming sense and can be instantiated either as scoring function tasks, grid map tasks or Monte Carlo tasks. To be exact, the thread pool in fact parallelizes the precalculation of scoring function, the creation of grid maps, and the execution of Monte Carlo tasks.
 
@@ -181,7 +196,7 @@ idock supports reading and writing compressed ligand files with in gzip/bzip2 fo
 
 Both idock and Vina support 16 common chemical elements, which are H (hydrogen), C (carbon), N (nitrogen), O (oxygen), F (fluorine), Mg (magnesium), P (phosphorus), S (sulfur), Cl (chlorine), Ca (calcium), Mn (manganese), Fe (iron), Zn (zinc), Se (selenium), Br (bromine), and I (iodine). idock adds 9 additional elements, which are Na (sodium), K (potassium), Co (cobalt), Ni (nickel), Cu (copper), Sr (strontium), Cd (cadmium), Hg (mercury), and As (arsenic). Hence idock supports as many as 25 chemical elements, covering the majority of ligand atom types (Figure \ref{idock:ChemicalElements}). % Untested feature
 
-idock outputs verbose information to docked PDBQT files, including total free energy normalized by torsional degree of freedom (Equation \eqref{eqn:FlexibilityPenalty}), total free energy, inter-ligand free energy, intra-ligand free energy, putative hydrogen bonds, and per-atom inter-ligand free energy (Figure \ref{idock:OutputPDBQT}). The normalized total free energy is used in ligand ranking. The output of total free energy, inter-ligand free energy and intra-ligand free energy provides an alternative ranking option using derived efficiency indexes \citep{335,336,337}. The per-atom inter-ligand free energy facilitates interaction hotspot determination, and helps improving potency by altering certain chemical moieties while retaining those critical for binding.
+idock outputs verbose information to docked PDBQT files, including total free energy normalized by torsional degree of freedom (Equation \eqref{idock:FlexibilityPenalty}), total free energy, inter-ligand free energy, intra-ligand free energy, putative hydrogen bonds, and per-atom inter-ligand free energy (Figure \ref{idock:OutputPDBQT}). The normalized total free energy is used in ligand ranking. The output of total free energy, inter-ligand free energy and intra-ligand free energy provides an alternative ranking option using derived efficiency indexes \citep{335,336,337}. The per-atom inter-ligand free energy facilitates interaction hotspot determination, and helps improving potency by altering certain chemical moieties while retaining those critical for binding.
 
 idock extracts the above records from docked PDBQT files, sorts them in the ascending order of normalized total free energy, and writes them to a CSV (Comma-Separated Vector) file for subsequent analysis (Figure \ref{idock:OutputCSV}). Users can derive their own efficiency indexes \citep{335,336,337} and re-sort the records for their particular applications.
 
@@ -197,7 +212,7 @@ We have developed idock for protein-ligand docking, inheriting from Vina the acc
 
 In Vina's official forum, there are tremendous requests for the support for virtual screening. The development of idock perfectly complements Vina. idock has built-in support for virtual screening. It searches for ligands in a user-specified folder and docks them one by one. It reuses threads and grid maps across multiple ligands. idock has very similar input and output arguments as Vina, so it should be quite easy for existing Vina users to transit to idock. Vina supports flexible receptor docking by rotating flexible side-chains. However, at the moment we have not yet implemented flexible receptor docking, which has been proved helpful in some cases \citep{1084}, so users who need this kind of docking should refer to Vina.
 
-We performed large-scale protein-ligand docking with idock, and noticed that the high-rank ligands were usually those comparatively rigid ligands with few active torsions. Such phenomenon can be explained by equation \eqref{eqn:FlexibilityPenalty}. Fewer active torsions imply smaller denominator, or larger value in other words. We are considering replacing free energy by some ligand efficiency indexes \citep{335,336,337} for ranking.
+We performed large-scale protein-ligand docking with idock, and noticed that the high-rank ligands were usually those comparatively rigid ligands with few active torsions. Such phenomenon can be explained by equation \eqref{idock:FlexibilityPenalty}. Fewer active torsions imply smaller denominator, or larger value in other words. We are considering replacing free energy by some ligand efficiency indexes \citep{335,336,337} for ranking.
 
 \section{Availability}
 
@@ -205,7 +220,7 @@ idock is free and open source under Apache License 2.0. Precompiled executables 
 
 idock supports Linux and Windows, and can be easily extended to support Mac OS X, FreeBSD and Solaris. Accompanying with idock are 13 ready-to-use docking examples, a doxygen file for generating API documentations.
 
-\section{Future Works}
+\section{Future works}
 
 \citep{1401} GASPRNG: GPU accelerated scalable parallel random number generator library using CUDA
 
@@ -217,66 +232,66 @@ As of October 2012, NVIDIA’s latest GPU architecture is codenamed ``Kepler" wi
 
 From the hardware perspective, the GK104-based GeForce GTX 680 GPU features 3.09 TFLOPS single-precision computing power and 128 GFLOPS double-precision computing power, 2GB GDDR5 memory with a bandwidth of 192GB/s, and a TDP (Thermal Design Power) of 195W.
 
-Figure \ref{GPU:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GTX 680, which consists of 4 GPCs (Graphics Processing Clusters), each having a dedicated raster engine and 2 SMX (next-generation Streaming Multiprocessors) units. With a total of 8 SMX units, the GeForce GTX 680 has 1536 CUDA cores.
+Figure \ref{idock:GeForceGTX680BlockDiagram} shows the block diagram of GeForce GTX 680, which consists of 4 GPCs (Graphics Processing Clusters), each having a dedicated raster engine and 2 SMX (next-generation Streaming Multiprocessors) units. With a total of 8 SMX units, the GeForce GTX 680 has 1536 CUDA cores.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{GPU/GeForceGTX680BlockDiagram.png}
+%\includegraphics[width=\linewidth]{GPU/GeForceGTX680BlockDiagram.png}
 \caption{NVIDIA GeForce GTX680 block diagram. Source: NVIDIA.}
-\label{GPU:GeForceGTX680BlockDiagram}
+\label{idock:GeForceGTX680BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64KB of configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
+Figure \ref{idock:GeForceGTX680SMX} shows the block diagram of GK104 SMX unit, which features 192 IEEE 754-2008 compliant single-precision CUDA cores, 32 SFUs (Special Function Units), 4 warp schedulers, 8 instruction dispatch units, and 64KB of configurable shared memory / L1 cache. Each CUDA core has fully pipelined floating-point and integer arithmetic logic units, while the SFUs handle fast approximate transcendental and graphics interpolation instructions.
 
 The SMX schedules threads in groups of 32 parallel threads called warps. The 4 warp schedulers allow 4 warps to be issued and executed concurrently. Each warp scheduler is capable of dispatching 2 instructions per warp every clock in order to feed the execution resources of SMX.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{GPU/GeForceGTX680SMX.png}
+%\includegraphics[width=\linewidth]{GPU/GeForceGTX680SMX.png}
 \caption{NVIDIA GeForce GTX680 SMX. Source: NVIDIA.}
-\label{GPU:GeForceGTX680SMX}
+\label{idock:GeForceGTX680SMX}
 \end{figure}
 
 From the software perspective, the GeForce GTX 680 supports CUDA (Compute United Device Architecture), and thus can execute programs written in C, C++, Fortran, and other languages. A CUDA program invokes functions called kernels that execute across parallel CUDA threads, which are organized into thread blocks and grids of thread blocks. The hierarchy of CUDA threads maps to the hierarchy of CUDA cores on the GPU; a GPU executes one or more grids; an SMX executes one or more thread blocks; and CUDA cores and other execution units in the SMX execute thread instructions from kernel compilation.
 
-Figure \ref{GPU:CUDAMemoryHierarchy} shows the CUDA hierarchy of threads, blocks and grids, and their corresponding memory space. A CUDA thread within a thread block maintains a program counter and executes an instance of the kernel. It has a per-thread private memory space used for register spills, function calls, and C automatic array variables. A thread block is a set of concurrently executing threads that can cooperate among themselves through barrier synchronization and shared memory. It has a per-block shared memory space used for inter-thread communication, data sharing, and result sharing. A grid is an array of thread blocks that execute the same kernel, read inputs from global memory, write results to global memory, and synchronize between dependent kernel calls. Grids share results in global memory after kernel-wide synchronization.
+Figure \ref{idock:CUDAMemoryHierarchy} shows the CUDA hierarchy of threads, blocks and grids, and their corresponding memory space. A CUDA thread within a thread block maintains a program counter and executes an instance of the kernel. It has a per-thread private memory space used for register spills, function calls, and C automatic array variables. A thread block is a set of concurrently executing threads that can cooperate among themselves through barrier synchronization and shared memory. It has a per-block shared memory space used for inter-thread communication, data sharing, and result sharing. A grid is an array of thread blocks that execute the same kernel, read inputs from global memory, write results to global memory, and synchronize between dependent kernel calls. Grids share results in global memory after kernel-wide synchronization.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{GPU/CUDAMemoryHierarchy.png}
+%\includegraphics[width=\linewidth]{GPU/CUDAMemoryHierarchy.png}
 \caption{CUDA hierarchy of threads, blocks, and grids, with corresponding per-thread private, per-block shared, and per-application global memory spaces. Source: NVIDIA.}
-\label{GPU:CUDAMemoryHierarchy}
+\label{idock:CUDAMemoryHierarchy}
 \end{figure}
 
 \subsection{AMD Tahiti and OpenCL}
 
 From the hardware perspective, the Tahiti-based Radeon HD 7970 GPU features 3.79 TFLOPS single-precision computing power and 947 GFLOPS double-precision computing power, 3GB GDDR5 memory with a bandwidth of 264GB/s, and a TDP of 250W.
 
-Figure \ref{GPU:RadeonHD7970BlockDiagram} shows the block diagram of Radeon HD 7970, which consists of 32 GCN (Graphics Core Next) cores, each heaving 64 stream processors, translating to a total of 2048 stream processors.
+Figure \ref{idock:RadeonHD7970BlockDiagram} shows the block diagram of Radeon HD 7970, which consists of 32 GCN (Graphics Core Next) cores, each heaving 64 stream processors, translating to a total of 2048 stream processors.
 
 \begin{figure}[t]
 \centering
-%\includegraphics[width=\textwidth]{GPU/RadeonHD7970BlockDiagram.jpg}
+%\includegraphics[width=\linewidth]{GPU/RadeonHD7970BlockDiagram.jpg}
 \caption{AMD Radeon HD 7970 block diagram. Source: AMD.}
-\label{GPU:RadeonHD7970BlockDiagram}
+\label{idock:RadeonHD7970BlockDiagram}
 \end{figure}
 
-Figure \ref{GPU:RadeonHD7970GCN} shows the block diagram of GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB of LDS (Local Data Share), and 16KB of L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
+Figure \ref{idock:RadeonHD7970GCN} shows the block diagram of GCN core, which features a scheduler, 4 SIMD-16 vector units, 4 64KB vector registers, a single scalar unit, 64KB of LDS (Local Data Share), and 16KB of L1 cache. The GCN core schedules threads in groups of 16 parallel threads called wavefronts. The 4 SIMD-16 vector units are capable of not only processing 4 wavefronts in 4 clock cycles, equivalent to one wavefront per cycle, but also handling special functions like transcendentals at a rate of 4 operations per clock cycle. The scalar unit assists with flow control and handles address generation for pointers. The L1 cache has an aggregate bandwidth of about 2 TB/s.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{GPU/RadeonHD7970GCN.png}
+%\includegraphics[width=\linewidth]{GPU/RadeonHD7970GCN.png}
 \caption{AMD Radeon HD 7970 GCN. Source: AMD.}
-\label{GPU:RadeonHD7970GCN}
+\label{idock:RadeonHD7970GCN}
 \end{figure}
 
-Figure \ref{GPU:RadeonHD7970CacheHierarchy} shows the cache hierarchy of Radeon HD 7970. A group of 4 GCN cores shares a 16KB instruction cache and a 32KB scalar data cache. The GDS (Global Data Share) enables L1 cache synchronization across all the GCN cores, which communicate over a shared bus to 6 128KB L2 cache partitions, each associated with a 64-bit dual-channel memory controllers, for a total of 768KB of L2 cache. The L2 cache can transfer nearly 710GB/s at 925MHz.
+Figure \ref{idock:RadeonHD7970CacheHierarchy} shows the cache hierarchy of Radeon HD 7970. A group of 4 GCN cores shares a 16KB instruction cache and a 32KB scalar data cache. The GDS (Global Data Share) enables L1 cache synchronization across all the GCN cores, which communicate over a shared bus to 6 128KB L2 cache partitions, each associated with a 64-bit dual-channel memory controllers, for a total of 768KB of L2 cache. The L2 cache can transfer nearly 710GB/s at 925MHz.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\textwidth]{GPU/RadeonHD7970CacheHierarchy.jpg}
+%\includegraphics[width=\linewidth]{GPU/RadeonHD7970CacheHierarchy.jpg}
 \caption{AMD Radeon HD 7970 cache hierarchy. Source: AMD.}
-\label{GPU:RadeonHD7970CacheHierarchy}
+\label{idock:RadeonHD7970CacheHierarchy}
 \end{figure}
 
 From the software perspective, the Radeon HD 7970 supports OpenCL (Open Computing Language) 1.2, and thus can execute programs written in C. There is a C++ wrapper for OpenCL 1.1. An OpenCL program invokes functions called kernels that execute across parallel work-items, which are organized into work-groups. The hierarchy of work-items maps to the hierarchy of stream processors on the GPU; a GPU executes one or more kernels; a GCN core executes one or more work-groups; and stream processors execute work-item instructions from kernel compilation.
