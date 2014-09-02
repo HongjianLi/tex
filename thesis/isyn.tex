@@ -6,7 +6,7 @@ Generating \textit{de novo} ligands from molecular fragments can eliminate the d
 
 We present iSyn, a WebGL-based tool for interactive FBDD. It features an evolutionary algorithm that automatically designs novel ligands with drug-like properties and synthetic feasibility using click chemistry. iSyn interfaces with our popular and fast molecular docking engine idock, substantially reducing the evaluation and ranking time of drug candidates. Inspired by our user friendly and high-performance WebGL visualizer iview, our iSyn also implements a tailor-made interactive visualizer to aid novel drug design. To illustrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from Trypanosoma brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression. Results show that iSyn managed to significantly enhance the predicted binding affinity of the best generated ligand by more than 3 orders of magnitude in potency.
 
-Our iSyn can effectively generate promising compounds with desired potency and molecular weight, and eventually supplement the efforts of medicinal chemists in drug discovery research. iSyn is freely available at http://istar.cse.cuhk.edu.hk/iSyn.tgz.
+iSyn can effectively generate promising compounds with desired potency and molecular mass, and eventually supplement the efforts of medicinal chemists in drug discovery research. iSyn is freely available at http://istar.cse.cuhk.edu.hk/iSyn.tgz.
 
 This was a collaborative project with Chun Ho Chan and Hei Lun Cheung from Department of Computer Science and Engineering, Chinese University of Hong Kong. It was published in the proceedings of the \textit{2014 Conference Companion on Genetic and Evolutionary Computation Companion (GECCO)} in 2014 \citep{1409} and in the proceedings of the \textit{18th International Conference on Information Visualisation (IV)} in 2014 \citep{1387}.
 
@@ -26,7 +26,7 @@ In 2013, AutoGrow 3.0 \citep{1354} was developed to mainly tackle the synthetic 
 
 However, there are few cutting reactions in AutoGrow 3.0, which could probably lead to the synthesis of compounds that are too large to absorb by human body. Although it implements Lipinski's Rule of Fives \citep{169} to maintain drug-like properties, generated ligands that violate the rules are simply discarded without further decomposition into small moieties. Moreover, it produces a bunch of new ligands in each generation, and relies on AutoDock Vina \citep{595} to evaluate their predicted binding affinity. The docking efficiency starts to become unacceptable when too many ligands are sampled, prohibiting any more exhaustive approaches. Furthermore, the execution of AutoGrow 3.0 depends on a large set of third-party software including MGLTools \citep{596}, Open Babel \citep{968}, AutoDock Vina \citep{595} and NumPy/SciPy. This highly coupled dependency and the lack of an easy-to-use user interface hinder its pragmatic applications for novices.
 
-We present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. iSyn interfaces with our popular and fast protein-ligand docking engine idock \citep{1153}, which is available as a service at http://istar.cse.cuhk.edu.hk/idock \citep{1362}, greatly reducing the time required for computational evaluations of generated ligands by an order of magnitude \citep{1362} as compared to AutoDock Vina \citep{595}, and thus permitting large-scale executions and exhaustive searching. Most importantly, based on our hardware accelerated WebGL visualizer iview \citep{1366} for protein-ligand complex, our iSyn also features a specific variant of iview in order to compose a user friendly interface as well as to inspect intermolecular interactions and aid novel drug design.
+We present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. iSyn interfaces with our popular and fast protein-ligand docking engine idock \citep{1153}, available as a service at http://istar.cse.cuhk.edu.hk/idock \citep{1362}, greatly reducing the time required for computational evaluations of generated ligands by an order of magnitude \citep{1362} as compared to AutoDock Vina \citep{595}, and thus permitting large-scale executions and exhaustive searching. Most importantly, based on our hardware accelerated WebGL visualizer iview \citep{1366} for protein-ligand complex, our iSyn also features a specific variant of iview in order to compose a user friendly interface as well as to inspect intermolecular interactions and aid novel drug design.
 
 \section{Methods}
 
@@ -52,7 +52,7 @@ In the panel beneath the submit button, a number of buttons are dynamically crea
 
 The UI also supports exporting the canvas view to a production-quality image in PNG format via a button. In this way the user can easily capture the canvas without any auxiliary third-party tools.
 
-\subsection{Evolutionary Algorithm}
+\subsection{Evolutionary algorithm}
 
 In the first generation, multiple types of click chemistry reactions and structural modifications are applied to the initial ligands selected from the fragment library to synthesize new ligands. The generated ligands are then all fed to our popular and fast docking engine idock \citep{1153} to predict their preferred conformations as bound to the protein target, and to prioritize them in the ascending order of their predicted free energy, which reflects the binding affinity. The lower the free energy, the higher the binding affinity. Their conversion factor is derived in \citep{1362}. An extensive benchmark on 12 diverse proteins \citep{1362} has shown that our idock \citep{1153} runs 8.69 to 37.51 times faster than the state-of-the-art AutoDock Vina \citep{595} docking software. The utilization of idock by iSyn promotes the feasibility of large-scale \textit{de novo} drug design and evaluation \textit{in silico}.
 
@@ -60,21 +60,21 @@ The free energy values predicted and sorted by idock are piped to a spreadsheet 
 
 The evolutionary algorithm either iterates for a number of generations specified by the user, or gets terminated in case of no significant improvement over previous generations.
 
-\subsection{Click Chemistry Reaction Rules}
+\subsection{Click chemistry reaction rules}
 
 In iSyn there are four types of operators: addition, mutation, crossover and cutting. They all conform to the requirements of click chemistry. Therefore, the ligands output from iSyn are guaranteed to be chemically synthesizable, making iSyn really pragmatic for medicinal chemistry and computer-aided drug discovery.
 
 The crossover operators are invoked before the addition and mutation operators, while the cutting operators are called at last in order to prevent the generated ligands from becoming oversized.
 
-\subsubsection{Crossover Reactions}
+\subsubsection{Crossover reactions}
 
 iSyn uses the LigMerge algorithm \citep{1181} to perform crossover reactions. Crossover is done by finding the largest common substructure of two parent ligands and matching the different parts of their fragments attached to that common substructure at each common atom, thereby generating multiple child compounds.
 
-\subsubsection{Addition and Mutation Reactions}
+\subsubsection{Addition and mutation reactions}
 
 iSyn uses the AutoClickChem algorithm \citep{1051} to perform addition and mutation reactions. The algorithm consists of 30 click chemistry reactions for different functional groups in the reactants, e.g. azide-alkyne and 1,3-dipolar cycloaddition. In order to enumerate the feasibility of performing a particular reaction, ligands are first classified according to their functional groups such as amine, alcohol, azide, etc.
 
-\subsubsection{Cutting Reactions}
+\subsubsection{Cutting reactions}
 
 Through the addition and mutation operators, ligands could possibly “grow” too large in terms of molecular size, and might therefore lose drug-like properties. For example, if a generated ligand has a molecular mass of over 500 Daltons, it is unlikely to be absorbed inside the human body and thus unlikely to be optimized into a potential drug. In light of this issue, we have implemented four novel cutting operators to break down oversized ligands.
 
@@ -118,7 +118,7 @@ Hydrolysis of ester is the reverse of esterification (Figure \ref{fig:EsterHydro
 \label{fig:EsterHydrolysis}
 \end{figure}
 
-\subsection{WebGL Visualizer}
+\subsection{WebGL visualizer}
 
 Perhaps the most vital difference that distinguishes iSyn apart from many other FBDD tools is the availability of a WebGL visualizer, which is not only user friendly, but also of high performance. Unlike Java applet-based visualizers that require Java installation and depend on software rendering which is slow on large display areas and prevents detailed inspection of the structure, iSyn’s WebGL visualizer is refactored from our iview \citep{1366} using three.js as its primary 3D engine with anti-aliasing support, and benefits from GPU hardware acceleration. Because of no dependency on any third-party browser plugins, our visualizer demonstrates excellent portability and usability.
 
@@ -128,7 +128,7 @@ The visualizer supports certain kinds of user interactions including rotation, t
 
 It is noteworthy to point out that iSyn performs all sorts of parsing and rendering in the client browser, ensuring the data privacy and confidentiality are retained.
 
-\section{Results and Discussion}
+\section{Results and discussion}
 
 To demonstrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from Trypanosoma brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression.
 
@@ -152,7 +152,7 @@ iSyn was run for 6 hours and 40 minutes for 2 generations, and the best resultan
 \label{fig:1XDN}
 \end{figure}
 
-iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure \ref{fig:2_1314_1} shows the evolutionary steps taken to produce 2\_1314\_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2\_1314\_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in log scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2\_1314\_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
+iSyn is capable of tracking the synthetic path of child ligands from their ancestors. Figure \ref{fig:2_1314_1} shows the evolutionary steps taken to produce 2\_1314\_1, whose starting ligand had predicted free energy of -9.671 kcal/mol. After 2 generations, the best ligand 2\_1314\_1 had 4.505 kcal/mol lower predicted free energy. Since the value is in logarithmic scale, it effectively translates to 2016 fold increase in drug potency. In other words, a small concentration of the 2\_1314\_1 molecule would be sufficient to modulate the biological function of the TbREL1 target.
 
 \begin{figure}
 \begin{center}
@@ -164,7 +164,7 @@ iSyn is capable of tracking the synthetic path of child ligands from their ances
 
 It can also be seen that its parent ligand, 2\_1314, had a molecular mass of as large as 624.211 Daltons, which is unlikely to be optimized into potent drugs. Thanks to our four novel cutting operators, it got broken down and resulted in the ever best ligand. This demonstrates the helpfulness of our newly-implemented cutting operators with click chemistry support.
 
-\subsection{Example 2: inhibitors of Cyclin-Dependent Kinase 2 (PDB: 1JSV)}
+\subsection{Example 2: inhibitors of cyclin-dependent kinase 2 (PDB: 1JSV)}
 
 CDK2 is a member of the cyclin-dependent kinase family that are potential therapeutic targets for oncology. Inhibition of CDK2 may represent a therapeutic strategy for prevention of many cell cycle related diseases.
 
@@ -176,11 +176,11 @@ iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resulta
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/1JSV.png}
 \end{center}
-\caption{CDK2 (PDB: 1JSV) in complex of the best ligand generated by iSyn.}
+\caption{CDK2 (PDB: 1JSV) in complex of the best ligand.}
 \label{fig:1JSV}
 \end{figure}
 
-\subsection{Example 3: inhibitors of Cyclin-Dependent Kinase 2 (PDB: 1PXM)}
+\subsection{Example 3: inhibitors of cyclin-dependent kinase 2 (PDB: 1PXM)}
 
 Similar to the previous example, the protein in this example is also CDK2, but in a different conformation. We would like to test whether iSyn could produce consistent results given different conformations of the same protein.
 
@@ -190,7 +190,7 @@ iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resulta
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/1PXM.png}
 \end{center}
-\caption{CDK2 (PDB: 1PXM) in complex of the best ligand generated by iSyn.}
+\caption{CDK2 (PDB: 1PXM) in complex of the best ligand.}
 \label{fig:1PXM}
 \end{figure}
 
@@ -206,10 +206,10 @@ In this study we present iSyn, our WebGL-based solution for computationally synt
 
 iSyn is written in C++, Python, HTML5 and JavaScript. It is free and open source, available at http://istar.cse.cuhk.edu.hk/iSyn.tgz. It has been tested successfully on both Linux and Windows.
 
-\section{Future Works}
+\section{Future works}
 
-There are some major weak points about iSyn, though. iSyn requires ligands in PDB format to perform the genetic operators, but it requires PDBQT format to perform docking and scoring. So every generated ligand must undergo PDB-to-PDBQT conversion, which incurs substantial overhead. Moreover, one user recently found a bug in iSyn that after a cutting reaction, iSyn discarded the large fragment and retained the small one, which was then subsequently discarded again.
+There are some major weak points about iSyn, though. iSyn requires ligands in PDB format to perform the genetic operators, but it requires PDBQT format to perform docking and scoring. So every generated ligand must undergo PDB-to-PDBQT conversion, which incurs substantial overhead. Moreover, one user recently found a bug in iSyn that after a cutting reaction, iSyn discarded the large fragment and retained the small one, which was subsequently discarded again.
 
-We are developing a new project called igrow to permit direct manipulation of ligands in PDBQT format. A further attempt is to incorporate igrow into idock to better speed up the docking process.
+We are developing a new project called igrow to directly manipulate ligands in PDBQT format. A further attempt would be to incorporate igrow into idock to better speed up the docking process.
 
 \chapterend
