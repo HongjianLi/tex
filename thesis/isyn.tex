@@ -1,10 +1,10 @@
-\chapter{iSyn: \textit{In Silico} fragment-based drug design}
+\chapter{iSyn: \textit{in silico} fragment-based drug design}
 
 \section{Abstract}
 
 Generating \textit{de novo} ligands from molecular fragments can eliminate the diversity limit of compound repositories and lead to the discovery of novel drugs. State-of-the-art fragment-based drug design (FBDD) tools tend to produce oversized compounds with only moderate potency. Worse, these tools require a long execution time in days.
 
-We present iSyn, a WebGL-based tool for interactive FBDD. It features an evolutionary algorithm that automatically designs novel ligands with drug-like properties and synthetic feasibility using click chemistry. iSyn interfaces with our popular and fast molecular docking engine idock, substantially reducing the evaluation and ranking time of drug candidates. Inspired by our user friendly and high-performance WebGL visualizer iview, our iSyn also implements a tailor-made interactive visualizer to aid novel drug design. To illustrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from T. brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression. Results show that iSyn managed to significantly enhance the predicted binding affinity of the best generated ligand by more than 3 orders of magnitude in potency.
+We present iSyn, a WebGL-based tool for interactive FBDD. It features an evolutionary algorithm that automatically designs novel ligands with drug-like properties and synthetic feasibility using click chemistry. iSyn interfaces with our popular and fast molecular docking engine idock, substantially reducing the evaluation and ranking time of drug candidates. Inspired by our user friendly and high-performance WebGL visualizer iview, our iSyn also implements a tailor-made interactive visualizer to aid novel drug design. To illustrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from Trypanosoma brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression. Results show that iSyn managed to significantly enhance the predicted binding affinity of the best generated ligand by more than 3 orders of magnitude in potency.
 
 Our iSyn can effectively generate promising compounds with desired potency and molecular weight, and eventually supplement the efforts of medicinal chemists in drug discovery research. iSyn is freely available at http://istar.cse.cuhk.edu.hk/iSyn.tgz.
 
@@ -26,11 +26,11 @@ In 2013, AutoGrow 3.0 \citep{1354} was developed to mainly tackle the synthetic 
 
 However, there are few cutting reactions in AutoGrow 3.0, which could probably lead to the synthesis of compounds that are too large to absorb by human body. Although it implements Lipinski's Rule of Fives \citep{169} to maintain drug-like properties, generated ligands that violate the rules are simply discarded without further decomposition into small moieties. Moreover, it produces a bunch of new ligands in each generation, and relies on AutoDock Vina \citep{595} to evaluate their predicted binding affinity. The docking efficiency starts to become unacceptable when too many ligands are sampled, prohibiting any more exhaustive approaches. Furthermore, the execution of AutoGrow 3.0 depends on a large set of third-party software including MGLTools \citep{596}, Open Babel \citep{968}, AutoDock Vina \citep{595} and NumPy/SciPy. This highly coupled dependency and the lack of an easy-to-use user interface hinder its pragmatic applications for novices.
 
-In this paper we present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. iSyn interfaces with our popular and fast protein-ligand docking engine idock \citep{1153}, which is available as a service at http://istar.cse.cuhk.edu.hk/idock \citep{1362}, greatly reducing the time required for computational evaluations of generated ligands by an order of magnitude \citep{1362} as compared to AutoDock Vina \citep{595}, and thus permitting large-scale executions and exhaustive searching. Most importantly, based on our hardware accelerated WebGL visualizer iview \citep{1366} for protein-ligand complex, our iSyn also features a specific variant of iview in order to compose a user friendly interface as well as to inspect intermolecular interactions and aid novel drug design.
+We present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. iSyn interfaces with our popular and fast protein-ligand docking engine idock \citep{1153}, which is available as a service at http://istar.cse.cuhk.edu.hk/idock \citep{1362}, greatly reducing the time required for computational evaluations of generated ligands by an order of magnitude \citep{1362} as compared to AutoDock Vina \citep{595}, and thus permitting large-scale executions and exhaustive searching. Most importantly, based on our hardware accelerated WebGL visualizer iview \citep{1366} for protein-ligand complex, our iSyn also features a specific variant of iview in order to compose a user friendly interface as well as to inspect intermolecular interactions and aid novel drug design.
 
 \section{Methods}
 
-Figure \ref{fig:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter’s sleek, intuitive and powerful HTML5 template Bootstrap and hosted by the lightweight node.js, an event-driven and non-blocking I/O model. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
+Figure \ref{fig:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter’s sleek, intuitive and powerful HTML5 template Bootstrap, and hosted by the lightweight event-driven and non-blocking I/O model node.js. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
 
 \begin{figure}
 \begin{center}
@@ -40,7 +40,7 @@ Figure \ref{fig:UI} shows the overall user interface of iSyn. The UI is refactor
 \label{fig:UI}
 \end{figure}
 
-In a typical workflow, the user loads a protein target of pharmaceutical interest. The WebGL canvas then automatically renders in real time the protein structure in the representation of lines. Meanwhile, the protein atom coordinates and types are sent to a separate web worker to generate ad hoc molecular surface using the EDTSurf algorithm \citep{1297,1350} in background in order to keep the web UI responsive in all time. The protein surface, having been constructed, is automatically applied on top of the lines. Hence, the user can clearly see the cavities, most likely ligand binding sites, on the protein surface.
+In a typical workflow, the user loads a protein target of pharmaceutical interest. The WebGL canvas then automatically renders in real time the protein structure in the representation of lines. Meanwhile, the protein atom coordinates and types are sent to a separate web worker to generate \textit{ad hoc} molecular surface using the EDTSurf algorithm \citep{1297,1350} in background in order to keep the web UI responsive in all time. The protein surface, having been constructed, is automatically applied on top of the line representation. Hence, the user can clearly see the cavities, most likely ligand binding sites, on the protein surface.
 
 The user can then supply the necessary parameters to run iSyn, such as the center and size of the search space, the number of generations of the evolutionary algorithm, a boolean value indicating whether to use the fragment library that accompanies AutoGrow 3.0, and a brief description of the job. The search space is rendered as a dashed cubic box in green. When the user adjusts the values in the input fields, the box is automatically updates accordingly in real time to reflect the actual position. For those optional parameters, we have set up default values so that even novices can get started easily.
 
@@ -54,7 +54,7 @@ The UI also supports exporting the canvas view to a production-quality image in 
 
 \subsection{Evolutionary Algorithm}
 
-In the first generation, multiple kinds of click chemistry reactions and structural modifications are applied to the initial ligands selected from the fragment library to synthesize new ligands. The generated ligands are then all fed to our popular and fast docking engine idock \citep{1153} to predict their preferred conformations as bound to the protein target, and to prioritize them in the ascending order of their predicted free energy, which reflects the binding affinity. The lower the free energy, the higher the binding affinity. Their conversion factor is derived in \citep{1362}. An extensive benchmark on 12 diverse proteins \citep{1362} has shown that our idock \citep{1153} runs 8.69 to 37.51 times faster than the state-of-the-art AutoDock Vina \citep{595} docking software. The utilization of idock inside iSyn promotes the feasibility of large-scale \textit{de novo} drug design and evaluation in silico.
+In the first generation, multiple types of click chemistry reactions and structural modifications are applied to the initial ligands selected from the fragment library to synthesize new ligands. The generated ligands are then all fed to our popular and fast docking engine idock \citep{1153} to predict their preferred conformations as bound to the protein target, and to prioritize them in the ascending order of their predicted free energy, which reflects the binding affinity. The lower the free energy, the higher the binding affinity. Their conversion factor is derived in \citep{1362}. An extensive benchmark on 12 diverse proteins \citep{1362} has shown that our idock \citep{1153} runs 8.69 to 37.51 times faster than the state-of-the-art AutoDock Vina \citep{595} docking software. The utilization of idock by iSyn promotes the feasibility of large-scale \textit{de novo} drug design and evaluation \textit{in silico}.
 
 The free energy values predicted and sorted by idock are piped to a spreadsheet file in CSV format, which is subsequently parsed by iSyn to retrieve those best ligands with the lowest predicted free energy, i.e. those ligands with the highest predicted binding affinity. These best ligands in the current generation directly survive into the next generation, and constitute part of the founding ligands. Another part comes from a random selection of the remaining ligands, with the selection probability being proportional to the fitness of a ligand, i.e. its predicted free energy in the case of docking. Our hybrid method, which is essentially a smart combination of the greedy algorithm and the fitness proportionate algorithm, realizes elitism on one hand, while circumvents the risk of over fitting on the other hand.
 
@@ -88,7 +88,7 @@ Ozonolysis is the cleavage of an alkene with ozone to form organic compounds whe
 \label{fig:AlkeneOzonolysis}
 \end{figure}
 
-Vigorous oxidation on alkene can form carbolic acid (Figure \ref{fig:AlkeneOxidation}). While oxidation of alkene gives out aldehydes or ketone, further oxidation gives out carboxylic acid and alcohol as products. Aldehyde can be easily oxidized by all sorts of oxidizing agents. As for ketone, although it has certain resistance to oxidation, it can also be oxidized to carboxylic acid by using strong oxidizing agents such as potassium manganite (VII) solution. Through this reaction, a ligand containing carbon-carbon double bonds can be broken down into four child ligands.
+Vigorous oxidation on alkene can form carbolic acid (Figure \ref{fig:AlkeneOxidation}). While oxidation of alkene gives out aldehydes or ketone, further oxidation gives out carboxylic acid and alcohol as products. Aldehyde can be easily oxidized by all sorts of oxidizing agents. As for ketone, although it has certain resistance to oxidation, it can also be oxidized to carboxylic acid by using strong oxidizing agents such as potassium manganite VII solution. Through this reaction, a ligand containing carbon-carbon double bonds can be broken down into four child ligands.
  
 \begin{figure}
 \begin{center}
@@ -120,7 +120,7 @@ Hydrolysis of ester is the reverse of esterification (Figure \ref{fig:EsterHydro
 
 \subsection{WebGL Visualizer}
 
-Perhaps the most vital difference that distinguishes iSyn apart from many other \textit{de novo} drug design tools is the availability of a WebGL visualizer, which is not only user friendly, but also of high performance. Unlike Java applet-based visualizers that require Java installation and depend on software rendering which is slow on large display areas and prevents detailed inspection of the structure, iSyn’s WebGL visualizer is refactored from our iview \citep{1366} using three.js as its primary 3D engine with antialiasing support, and benefits from GPU hardware acceleration. Because of no dependency on any third-party browser plugins, our visualizer demonstrates excellent portability and usability.
+Perhaps the most vital difference that distinguishes iSyn apart from many other FBDD tools is the availability of a WebGL visualizer, which is not only user friendly, but also of high performance. Unlike Java applet-based visualizers that require Java installation and depend on software rendering which is slow on large display areas and prevents detailed inspection of the structure, iSyn’s WebGL visualizer is refactored from our iview \citep{1366} using three.js as its primary 3D engine with anti-aliasing support, and benefits from GPU hardware acceleration. Because of no dependency on any third-party browser plugins, our visualizer demonstrates excellent portability and usability.
 
 The visualizer uses EDTSurf \citep{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface. Note that molecular surface is indeed solvent excluded surface, but EDTSurf uses different ways to derive them.
 
@@ -130,11 +130,11 @@ It is noteworthy to point out that iSyn performs all sorts of parsing and render
 
 \section{Results and Discussion}
 
-To demonstrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from T. brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression.
+To demonstrate the utility of iSyn in generating novel ligands ex nihilo, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from Trypanosoma brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression.
 
 We evaluated and compared our iSyn and the state-of-the-art AutoGrow 3.0 from the perspectives of the lowest predicted free energy obtained and the program execution time on a Linux server equipped with 2 Xeon E5-2670 @ 2.6GHz and 128GB ECC DDR3.
 
-\subsection{Example 1: inhibitors of T. brucei RNA editing ligase 1 (PDB: 1XDN)}
+\subsection{Example 1: inhibitors of Trypanosoma brucei RNA editing ligase 1 (PDB: 1XDN)}
 
 As TbREL1 is crucial for the survival of the Trypanosoma brucei parasite, it has been the target of several drug discovery projects over recent years.
 
@@ -198,9 +198,9 @@ Obviously, the best ligand obtained in this example is better than the one obtai
 
 \section{Conclusions}
 
-Drug discovery is a highly demanding industry. In recent decades the maturity of computational tools that aid the identification and optimization of novel potent compounds has driven the transformation from wet experiments to dry simulations in a cost- and time-efficient manner.
+Although \textit{in silico} fragment-based drug design (FBDD) represents a promising approach to complement structure-based virtual screening, few FBDD tools show satisfactory performance in terms of achieved potency and computational resources.
 
-In this paper we present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. Various test cases have proved its strength in finding candidate drug compounds within a reasonable time. We hope that the iSyn can pragmatically assist medicinal chemists in optimizing candidate compounds and designing novel drugs.
+In this study we present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. Various test cases on TbREL1 and CDK2 have proved its strength in finding candidate drug compounds within a reasonable time. We hope that the iSyn can pragmatically assist medicinal chemists in optimizing candidate compounds and designing novel drugs.
 
 \section{Availability}
 
@@ -208,7 +208,8 @@ iSyn is written in C++, Python, HTML5 and JavaScript. It is free and open source
 
 \section{Future Works}
 
-There are some major weak points about iSyn.
-%igrow
+There are some major weak points about iSyn, though. iSyn requires ligands in PDB format to perform the genetic operators, but it requires PDBQT format to perform docking and scoring. So every generated ligand must undergo PDB-to-PDBQT conversion, which incurs substantial overhead. Moreover, one user recently found a bug in iSyn that after a cutting reaction, iSyn discarded the large fragment and retained the small one, which was then subsequently discarded again.
+
+We are developing a new project called igrow to permit direct manipulation of ligands in PDBQT format. A further attempt is to incorporate igrow into idock to better speed up the docking process.
 
 \chapterend
