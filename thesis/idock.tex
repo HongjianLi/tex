@@ -2,6 +2,10 @@
 
 \section{Abstract}
 
+AutoDock Vina is a competitive protein-ligand docking tool well known for its fast execution and high accuracy. Nevertheless, when docking a massive number of ligands, Vina has to be run multiple times, repeating receptor parsing and grid maps building over and over again. There are tremendous requests for revising Vina to reuse precalculated data and incorporate built-in support for virtual screening. Hence we developed idock, inheriting from AutoDock Vina the accurate scoring function and the efficient optimization algorithm, and significantly improving the fundamental implementation and numerical model for even faster execution. idock achieves a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average. idock is free and open source, available at https://GitHub.com/HongjianLi/idock.
+
+This project was published in the proceedings of the \textit{2012 IEEE Symposium on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB)} on 9 May 2012 \citep{1153}.
+
 \section{Introduction}
 
 \citep{1422} PubChem's BioAssay Database
@@ -9,7 +13,7 @@
 \citep{1341} CSAR
 \citep{1376} PharmDock: a pharmacophore-based docking program
 
-Protein-ligand docking is an essential ingredient of computer-aided drug discovery. It tries to find inhibitors of viral proteins. Take the HIV virus for example. The virus comprises several protein enzymes, which play an important role in replication. In infected cells, the viral reverse transcriptase reversely transcribes viral RNA into viral DNA. The viral integrase integrates viral DNA into human genomic DNA. The viral protease assemblies viral RNA and viral proteins into a new mature virus. If the viral proteins are inhibited, the replication cycle will be blocked. The inhibitors are typically small compounds called ligands. Protein-ligand docking therefore aims to discover inhibitory ligands of pharmaceutical protein targets of therapeutic interest.
+Protein-ligand docking is an essential ingredient of computer-aided drug discovery. It tries to find inhibitors of viral proteins. Take the HIV virus for example. The virus comprises several protein enzymes, which play an important role in replication. In infected cells, the viral reverse transcriptase reversely transcribes viral RNA into viral DNA. The viral integrase integrates viral DNA into human genomic DNA. The viral protease assemblies viral RNA and viral proteins into a new mature virus. If the viral proteins are inhibited, the replication cycle will be blocked. The inhibitors are typically small compounds called ligands. Protein-ligand docking therefore aims to discover inhibitory ligands of pharmaceutical protein targets of therapeutic interest. %prospective vs retrospective
 
 The protein is assumed rigid in this study. \citep{1397} investigates the relationship between protein flexibility and binding free energy and present some useful hints for understanding when, and to what extent, flexibility should be considered.
 
@@ -29,9 +33,11 @@ Protein-ligand docking is a method which predicts the preferred conformation and
 {
   \includegraphics[width=0.32\linewidth]{../idock/TorsionalDOF.png}
 }
-\caption{Positional, orientational and torsional degree of freedom.}
+\caption{Conformational degree of freedom.}
 \label{idock:DOF}
 \end{figure}
+
+%y=f(x,y,z,q0,q1,q2,q3,t1,t2,...,tn)
 
 Treating a docking program as a black box, its input includes the 3D structures of a protein and a ligand, while its output includes several predicted conformations and their predicted binding affinity. For the protein input, thanks to the rapid evolution of X-ray crystallography and NMR (Nuclear Magnetic Resonance) technologies, more and more 3D structures of biological macromolecules at atomic level have been revealed and deposited into the world's largest repository PDB (Protein Data Bank) \citep{540,537}. As of 4 Sep 2012, there are 84,381 structures in PDB. For the ligand input, the ZINC database \citep{532,1178} contains over 21 million purchasable compounds in ready-to-dock, 3D formats. The TCM@Taiwan database \citep{528} is the world's largest and most comprehensive free down small molecular database on traditional Chinese medicine. In addition, the PubChem database \citep{526} is a public repository for biological properties of small molecules, containing biological test results for more than 700,000 compounds. The PDBbind database \citep{529,530} and the CSAR NRC HiQ Set \citep{857,960} are collections of binding affinities for protein-ligand complexes with known 3D structures. The refined set of PDBbind v2011 and the two sets of CSAR NRC HiQ Set 24Sept2010 comprise 2,455 and 343 protein-ligand complexes respectively, with experimentally determined binding affinity data. For the output, PyMOL \citep{1221}, Chimera \citep{1219}, VMD \citep{1220}, AutoDockTools4 \citep{596}, ViewDock TDW \citep{559}, PoseView \citep{748} and LigPlot+ \citep{951} can be used to visualize docked conformations and plot putative interaction charts. AuPosSOM \citep{598} can be used to cluster docked conformations. BEDROC \citep{490} and SLR \citep{489} can be used as statistical metrics for docking method evaluation.
 
@@ -57,6 +63,26 @@ In 2011, inspired by AutoDock Vina, we developed idock 1.0 \citep{1153}, a multi
 \caption{Verbose output of idock in PDBQT format.}
 \label{idock:OutputPDBQT}
 \end{figure}
+
+Ligands can be treated as flexible in PDBQT format, used by AutoDock series \cite{597,596}, Vina \cite{595}, idock \cite{1153}, QVina \cite{1193}. In PDBQT format, the structure of a ligand can be represented by a tree structure of frames, where a frame is the largest connected unit with no rotatable bonds. There are three types of frames: root frame, inner frame, and leaf frame. A root frame has no parent frame and has zero or more child frames. A inner frame has one parent frame and one or more child frames. A leaf frame has one parent frame and no child frames. A ligand must have a root frame, and could have inner or leaf frames.
+
+The idea of a torsion tree to represent the rigid and rotatable pieces. There is always one root, and zero or more branches. Branches can be nested. Every branch defines one rotatable bond. The torsion tree is represented in the PDBQT with the following records, and the placement of these records is important, and usually means reordering the ATOM/HETATM records: % http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file
+
+A ROOT record precedes the rigid part of the molecule, from which zero or more rotatable bonds may emanate.
+
+The rigid root contains one or more PDBQT-style ATOM or HETATM records. These records resemble their traditional PDB counterparts, but diverge in columns 71-79 inclusive (where the first character in the line corresponds to column 1). The partial charge is stored in columns 71-76 inclusive (in \%6.3f format, i.e. right-justified, 6 characters wide, with 3 decimal places). The AutoDock atom-type is stored in columns 78-79 inclusive (in \%-2.2s format, i.e. left-justified and 2 characters wide.
+
+An ENDROOT record follows the last atom in the rigid root. The ROOT/ENDROOT block of atoms should be given first in the PDBQT file. The simplest way to treat a ligand is rigidly, and this would mean putting a ROOT record before the first ATOM/HETATM and an ENDROOT record after the last ATOM/HETATM.
+
+Sets of atoms that are moved by rotatable bonds are enclosed by BRANCH and ENDBRANCH records. These BRANCH/ENDBRANCH blocks follow the ROOT/ENDROOT block. Both BRANCH records and ENDBRANCH records should give two integers separated by spaces, which are the serial numbers of the first and second atoms involved in the rotatable bond. The BRANCH record should be followed by the ATOM/HETATM record of the second atom in the rotatable bond. It is possible to nest BRANCH/ENDBRANCH blocks; see the example below.
+
+The last atom in a branch should be followed by an ENDBRANCH record, whose serial numbers of the two atoms in the rotatable bond should match those in the corresponding BRANCH record.
+
+The last line of the PDBQT file contains a TORSDOF record, which is followed by an integer. This is the number of torsional degrees of freedom in the ligand, and is independent of the number of rotatable bonds, if any, defined by the preceding records.
+
+The serial number is the integer in columns 7-11 inclusive of the ATOM or HETATM record; the first character in the line corresponds to column 1.
+
+\subsection{Flowchart}
 
 Figure \ref{idock:Flowchart} shows the overall flowchart of idock. During initialization, idock precalculates the scoring function for all possible combinations of atom type pairs and interatomic distances. It parses the receptor and determines the atom types with the aid of residue sequence, and creates a thread pool to hold reusable threads. Then it enters a loop and fetches a ligand from a user-specified input folder to perform docking. It parses the ligand and determines the atom types with the aid of branch information, and meanwhile automatically detects and deactivates inactive torsions. It builds grid maps of granularity 0.15625 \AA\ by default on the fly by multithreading, and distributes multiple independent Monte Carlo tasks to the thread pool for concurrent execution. Then it merges the conformations from separate threads and clusters them with RMSD 2.0 \AA, and dumps them to the user-specified output folder and displays the predicted free energy on screen. It proceeds with the next ligand automatically until all are docked. Finally it destroys the thread pool and releases memory resources.
 
