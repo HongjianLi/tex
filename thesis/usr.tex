@@ -1,34 +1,32 @@
-\chapter{USR: ultrafast shape recognition}
+\chapter{istar::USR: ultrafast shape recognition}
 
 \section{Abstract}
+
+Finding structurally similar compounds to a query ligand has been an important but daunting problem for a long time.
 
 This is an ongoing collaborative project with Pedro J. Ballester from European Bioinformatics Institute, Cambridge, United Kingdom.
 
 \section{Introduction}
 
-Introduce ligand similarity search, with applications of finding structurally similar ligands, identifying target proteins. \citep{1402} Ligand-based in silico target fishing can be used to identify the potential interacting target of bioactive ligands, which is useful for understanding the polypharmacology and safety profile of existing drugs. (Given approved drugs, find their new protein targets)
+Molecular shape has been widely acknowledged as a key factor for biological activity and thus is regarded as a very important pattern for which to search. Searching the molecular database for compounds that most closely resemble the shape of a given query molecule, be it a known inhibitor of a target protein, a natural product, or even a patented compound, finds pragmatic applications in ligand-based virtual screening \citep{1332,1380} and target fishing \citep{1408,1402}. Therefore molecular similarity search assists in discovering structurally novel active compounds, or in identifying potential interacting target of bioactive ligands, which is useful for understanding the polypharmacology and safety profile of existing drugs. Furthermore, this approach can be extended to other scientific disciplines such as designing content-based Internet search engines for 3D geometrical objects or performing similarity comparisons between proteins \citep{1280}.
 
-Introduce classifications: alignment based methods. Molecular superposition. Precise geometric comparison. Computationally expensive. Similarity score is calculated as the volume overlap.
+The molecular shape similarity can be quantified by methods based on structural alignment \citep{1440,887,1439} or shape recognition \citep{1379,1338,1331}. Structural alignment is also known as molecular superposition and requires precise geometric comparison which is often computationally intensive. Shape recognition, on the other hand, encodes shape information into a numerical feature vector, which can be subsequently used to compute a similarity score between two molecules very efficiently.% \citep{} Bioactive molecules: perfectly shaped for their target
 
-Line notations are linear representations of chemical structures that encode the connection table and usually the stereochemistry of a molecule as a line of text. But they do not encode shape information. Considering structural topology and connectivity table, the two most widely used line notations are the SMILES (Simplified Molecular Input Line Entry System) string \citep{} and IUPAC’s InChI (International Chemistry Identifier) representation. These line notations can be easily produced by Open Babel \citep{968}.
+USR (Ultrafast Shape Recognition) \citep{1379} was the very first non-superposition method for molecular shape comparison, and demonstrated superior computational performance at least three orders of magnitude faster than previously existing alignment-based methods. USR has another major advantage of being invariant to spatial orientation and translation, and hence circumvents the problematic requirement of aligning molecules. USR defines the shape of a molecule independently and for every molecule uses a fixed set of 12 descriptors derived from the first 3 statistical moments of distributions of interatomic distances between atoms and 4 selected centroids. The latter ensures that every molecule will have a unique location in the 12-dimensional chemical space spanned by the used descriptors, and consequently enables finding and visualizing clusters of molecules with similar shape \citep{1280}. The ability of USR as a standalone method was studied to identify molecules sharing common biological activities through retrospective \citep{1332} and prospective \citep{1380} virtual screening experiments. USR was also used for deduplication in a virtual screening experiment \citep{1390} and our iSyn \citep{1381,1387} \textit{de novo} ligand deisgn software.
 
-\citep{1407} the 3D shape of molecules plays an important role when binding to a target. Therefore, the ligands of a protein often display similarity in their shape. This similarity can be quantified by methods based on structural alignment (ChemMapper: a versatile web server for exploring pharmacology and chemical structure association based on molecular 3D similarity method; 887; Rapid shape-based ligand alignment and virtual screening method based on atom/feature-pair similarities and volume overlap scoring) or shape recognition \citep{1379,1332} (Bioactive molecules: perfectly shaped for their target. Mol. Inform., 30, 677–688).
+Since USR was developed in 2007, there have been quite a few extensions \citep{1333,1334,1335,1337,1338,1331} to augment the method. \citep{1333} presented a hybrid approach composed of USR and the topological MACCS key descriptors, which are binary in nature and encode the presence or absence of 166 predefined structural fragments. It used the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. Random Forest \citep{1310} was used for multi-class classification. Incorporating an additional central moment, the kurtosis, was found to significantly improved its performance. The addition of the fifth central moment, however, did not improve the performance sufficiently to justify the increased computational expense.
 
-USR \citep{1379,1280} was developed. USR is independent of position and orientation, but is dependent on torsions. Much faster, USR finds its applications in retrospective \citep{1332} and prospective \citep{1380} virtual screening. USR was used for deduplication in a virtual screening experiment \citep{1390} and our iSyn \citep{1381,1387} de novo ligand deisgn software. % \citep{1332} study the ability of USR as a stand-alone method to identify molecules sharing common biological activities through retrospective virtual screening experiments.
+UFSRAT \citep{1436}, web server, http://opus.bch.ed.ac.uk/ufsrat/, no visualization, input format limited to SDF, several database, the largest one has 4,853,000 conformers. overall geometric, hydrophobic and electrostatic shape. Reference points were calculated for each subset.
 
-USR \citep{1379,1280}, a new non-superposition based method for molecular shape comparison, called Ultrafast Shape Recognition (USR), has been devised with computational performance at least three orders of magnitude faster than previously existing methods. USR was claimed to be three orders of magnitude faster than ESshape3D. USR is 1,546 and 2,038 times faster than ESshape3D and Shape Signatures. USR is 14,238 times faster than ROCS, the fastest alignment-based method.
+CSR \citep{1334} and USR:OptIso \citep{1335} attempted to tackle the lack of discrimination between chiral compounds. Their novel idea was to position the centroids in such a way that it clearly distinguishes between enantiomers, i.e. optical isomers. They both used cross product because it is an operator that transforms equivariantly under rotations and translations, but not under reflections. The two methods differed in selecting the new centroid and in replacing or supplementing the new optical isomerism descriptor \citep{1335}. CSR \citep{1334} was tested on the DUD (Directory of Decoys) dataset \citep{87}, where a significant improvement in enrichment was found over USR. USR:OptIso \citep{1335} was shown to be helpful for analyzing molecules with stereogenic centers, atropisomerism, and in the clustering of conformers generated by systematic bond-rotation.
 
-Since USR was developed in 2007, there have been a few extensions \citep{1333,1334,1335,1337,1338,1331} to augment the method. \citep{1333} was a hybrid approach composed of USR and the topological MACCS key descriptors, which are binary in nature and encode the presence or absence of 166 predefined substructural fragments. It used the first four unbalanced moments of each distribution of atomic distances and incorporated additional chemical information through 2D structural similarity. Random Forest \citep{1310} was used for multi-class classification. Incorporating an additional central moment, the kurtosis, was found to significantly improved its performance. The addition of the fifth central moment, however, does not improve the performance sufficiently to justify the increased computational expense.
+ElectroShape \citep{1337,1338} extends the CSR method by encoding electrostatics and optionally liphophilicity through additional dimensions and centroids. In \citep{1337}, the partial charge was represented as a fourth coordinate, with atoms being identified by points in four-dimensional space. ElectroShape was validated using release 2 of the DUD dataset \citep{87}, and showed a near doubling in enrichment over USR and CSR. Different implementations of partial charge were also revealed to affect the enrichment performance significantly. The addition of a fourth statistical moment, as was done in \citep{1333}, improved USR and CSR but not ElectroShape, suggesting that adding extra information might not necessarily improve enrichment but could dilute the information already included. In \citep{1338}, ElectroShape was further extended by using atomic lipophilicity as an additional molecular property, with atoms being identified by points in five-dimensional space. This version of ElectroShape showed a clear improvement in performance, indicating that adding extra independent atomic properties makes shape-based enrichments even better.
 
-Extensions CSR \citep{1334} and USR:OptIso \citep{1335} tried to tackle the lack of discrimination between chiral compounds (enantiomers). They both selected new centers to distinguish enantiomers, and used cross product. They differed in selecting the centroids.
+\citep{1437} EDULISS a small-molecule database with data-mining and pharmacophore searching capabilities. Draw a query structure using the moelcule editor (JME) http://eduliss.bch.ed.ac.uk/
+\citep{1435} Structure-based and ligand-based virtual screening of novel methyltransferase inhibitors of the dengue virus
 
-ElectroShape encodes electrostatics and optionally liphophilicity through additional dimensions and centroids \citep{1337,1338}. \citep{1337} the partial charge defines a fourth coordinate, with atoms being identified by points in four-dimensional space. Different implementations of partial charge affected the results significantly.
-
-USRCAT \citep{1331} identified subset atoms with the help of SMARTS patterns that are used for atom typing in the CREDO database \citep{522}, to address the lack of discrimination between compounds having similar shape but different atomic properties. In the case of an empty subset, for examples if no hydrogen bond donors are found, then the corresponding elements in the moment vector will be set to zero.
-
-UFSRAT \citep{1436}, web server, http://opus.bch.ed.ac.uk/ufsrat/, no visualization, input format limited to SDF, several database, the largest one has 4,853,000 conformers. overall geometric, hydrophobic and electrostatic shape
-
-\citep{1437} EDULISS a small-molecule database with data-mining and pharmacophore searching capabilities. Draw a query structure using the moelcule editor (JME)
+USRCAT \citep{1331} addressed the lack of discrimination between compounds having similar shape but distinct pharmacophoric
+features by identifying five subsets of atoms with the help of the SMARTS patterns used for atom typing in the CREDO database \citep{522}. The five subsets were chosen to be all, hydrophobic, aromatic, hydrogen bond donor or acceptor atoms. Unlike UFSRAT \citep{1436}, the four reference points derived from all atom coordinates were used to calculate the distributions for the subset moments to improve screening performance. USRCAT was shown to outperform the traditional USR method in a retrospective virtual screening benchmark with the DUD-E dataset \citep{1185}.
 
 \citep{1407} Shaping the interaction landscape of bioactive molecules
 \citep{1407} Using a reference set of 224 412 molecules active on 1700 human proteins, we show that accurate target prediction can be achieved by combining different measures of chemical similarity based on both chemical structure and molecular shape.
@@ -36,11 +34,9 @@ UFSRAT \citep{1436}, web server, http://opus.bch.ed.ac.uk/ufsrat/, no visualizat
 
 Large 2D database, GDB-17 \citep{1276}. Can be converted to 3D by OMEGA \citep{462} or CORINA \citep{1392} or Cyndi \citep{1393,1394} or CONCORD \citep{}. Freely Available Conformer Generation Methods \citep{1127} BALLOON, CONFAB, FROG2, and RDKIT
 
-Having rotational and translational invariant methods, which are seen as a major advantage. the problematic requirement of aligning molecules for comparison is circumvented, as the proposed distributions are independent of the spatial orientation of database molecules.
+It is necessary to include more than one conformer per compound in the database, since flexible molecules can adopt different shapes, and thus the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Could have an average of about 200 conformations per small organic molecules \citep{1332}, or up to 292 additional conformations \citep{1280}.
 
 The final step for the generation of the test database is to calculate 3D molecular conformations for each of the considered 2D chemical structures. The conformers of a particular molecule are in general geometrically distinct and have low potential energy, as conformers with high internal energy are in principle less likely to occur in nature.
-
-It is necessary to include more than one conformer per compound in the database, since flexible molecules can adopt different shapes, and thus the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Could have an average of about 200 conformations per small organic molecules \citep{1332}, or up to 292 additional conformations \citep{1280}.
 
 \begin{figure}
 \centering
@@ -59,6 +55,8 @@ It is necessary to include more than one conformer per compound in the database,
 \citep{1332} no shape method dominates when looking at each target individually, as each method is best in half of the targets. A wide range of factors collectively contribute to the large variability in performance observed across targets. First, errors in the generation of 3D conformers may impact differentially on the top ranked molecules depending on the query molecule and thus on the considered target.
 
 Compared to other existing approaches \citep{1333,1334,1335,1337,1338,1331}, istar::USR has several distinctive features. First, it uses both USR and USRCAT. USR has an successful prospective application. USRCAT has an successful retrospective application. Second, it database has 23 million ZINC compounds. Third, it supports multiple queries in one job.
+
+We choose USR \citep{1379} and USRCAT \citep{1331} because they have demonstrated pragmatic usefulness in prospective and retrospective virtual screening experiments, respectively.
 
 \section{Methods}
 
@@ -101,6 +99,7 @@ USR is highly extensible: changing reference points, as was done in \citep{1334,
 \subsection{USRCAT: ultrafast shape recognition with CREDO atom types}
 
 Atoms are partitions into subsets.
+In the case of an empty subset, for examples if no hydrogen bond donors are found, then the corresponding elements in the moment vector will be set to zero.
 
 \subsection{USR on istar}
 
@@ -110,12 +109,14 @@ Parallelized at the coarse grained level of a database of ligands to compare aga
 
 AVX (Advanced Vector Extensions) instructions. Use PowerPoint to draw a diagram here to illustrate. unrolling, sub, abs, hadd.
 
-\subsection{All Clean Subset from ZINC (N=23,129,083)}
+All Clean Subset from ZINC (N=23,129,083)
 
 Large 3D database, ZINC \citep{532,1178}, istar \citep{1362}, 23 million.
 Like in istar::idock, we used the same database, for prospective screening.
 Add figures here. The figures were rendered by iview \citep{1366}.
 We will use RDKit to generate conformers \citep{1127} Freely Available Conformer Generation Methods: How Good Are They?
+
+Time analysis: t = n(tq+ts)
 
 \section{Conclusions}
 
