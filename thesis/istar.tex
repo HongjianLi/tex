@@ -374,11 +374,6 @@ idock &  0.85 &  0.22 &  1.38 &  0.36 &  2.58 &  0.67\\
 \end{flushleft}
 \end{table}
 
-%\subsection{Enrichment Benchmark}
-%Consider three basic cases related to the “early recognition” problem. (1) half of the actives are retrieved at the very beginning of the rank-ordered list and the other half at the end; (2) the actives are randomly distributed all across the ranks; (3) all of the actives are retrieved in the middle of the list. In all three cases, the ROC metric is 1/2 when, in terms of the “early recognition”, case 1 is clearly better than case 2, which is also significantly better than case 3.
-%Despite the increasing numbers of performance evaluations of ranking methods in the context of VS, there is still no consensus on the metrics used to analyze the results. Area under the curve metrics such as ROC are not suited to the “early recognition” problem. Metrics such as the area under the accumulation curve, the average rank, and the area under the ROC curve dramatically fail to discriminate among three trivial cases outlined in the Introduction that must be correctly ranked by any metric intended to be usefully applied to VS.
-%BEDROC was proposed \cite{490}. An $\alpha$ value of 20 contributes to 80\% of the total BEDROC score at 8\% of the ordered rank list, it is thus suggested as a reasonable choice for a VS evaluation.
-
 \section{Discussion}
 
 Docking is the computational method that investigates how a ligand binds to a protein, and predicts their binding affinity. Hence docking is useful in elaborating inter-molecular interactions and enhancing the potency and selectivity of binding in subsequent phases of the drug discovery process.
@@ -458,5 +453,13 @@ We thank Professor John J. Irwin for granting us permission to use ZINC \cite{53
 \item We shall limit the number of top hits for download to 1000 ligands from a single job.
 \item We shall update our ligands when ZINC data is updated so that users can benefit from the most current ligand data.
 \end{enumerate}
+
+\section{Future works}
+
+Consider three basic cases related to the “early recognition” problem. (1) half of the actives are retrieved at the very beginning of the rank-ordered list and the other half at the end; (2) the actives are randomly distributed all across the ranks; (3) all of the actives are retrieved in the middle of the list. In all three cases, the ROC metric is 1/2 when, in terms of the “early recognition”, case 1 is clearly better than case 2, which is also significantly better than case 3.
+
+Despite the increasing numbers of performance evaluations of ranking methods in the context of VS, there is still no consensus on the metrics used to analyze the results. Area under the curve metrics such as ROC are not suited to the “early recognition” problem. Metrics such as the area under the accumulation curve, the average rank, and the area under the ROC curve dramatically fail to discriminate among three trivial cases outlined in the Introduction that must be correctly ranked by any metric intended to be usefully applied to VS.
+
+BEDROC was proposed \cite{490}. An $\alpha$ value of 20 contributes to 80\% of the total BEDROC score at 8\% of the ordered rank list, it is thus suggested as a reasonable choice for a VS evaluation.
 
 \chapterend
