@@ -37,9 +37,9 @@ In this project we aim to provide an istar-based \citep{1362} web server for lar
 
 USR is based on the observation that the shape of a molecule is uniquely determined by the relative position of its atoms, which is in turn determined by the set of all interatomic distances. This convenient representation is independent of molecular orientation or position, and thus eliminates any need for alignment or translation. The interatomic distances are heavily constrained by the forces that hold the atoms together, and hence they contain more than sufficient information to accurately describe molecular shape. So it is possible to use a set of all atomic distances from a small number of strategic reference locations uniquely defined in every molecule and meanwhile retain the discriminative power necessary to distinguish between molecules.
 
-The four reference locations are selected to be the molecular centroid (ctd), the closest atom to ctd (cst), the farthest atom to ctd (fct), and the farthest atom to fct (ftf). These locations represent the centre of the molecule and its extremes, and thus are well separated. Therefore molecular shape is described by four distributions of atomic distances, where the number of atomic distances is proportional to the number of atoms. In order to compare molecules with different number of atoms, the first three moments of these distributions are computed and used to encode shape information instead. These moments have semantics indeed. For instance, the 1st, 2nd and 3rd moments of distribution of atomic distances to the molecular centroid (ctd) capture the size, variance and skewness of the molecule, respectively. Selecting the first three moments provides an excellent compromise between the efficiency and the effectiveness of the method. Finally the shape similarity score of two molecules is calculated through the sum of least absolute differences of their respective moments.
+The four reference locations are selected to be the molecular centroid (ctd), the closest atom to ctd (cst), the farthest atom to ctd (fct), and the farthest atom to fct (ftf). These locations represent the centre of the molecule and its extremes, and thus are well separated. In this way molecular shape is described by four distributions of atomic distances, where the number of atomic distances is proportional to the number of atoms. In order to compare molecules with different number of atoms, the first three moments of these distributions are computed and used to encode shape information instead. These moments have semantics indeed. For instance, the 1st, 2nd and 3rd moments of distribution of atomic distances to the molecular centroid (ctd) capture the size, variance and skewness of the molecule, respectively. Selecting the first three moments provides an excellent compromise between the efficiency and the effectiveness of the method. Finally the shape similarity score of two molecules is calculated through the sum of least absolute differences of their respective moments.
 
-In this study the first three moments are computed in the same way as ElectroShape \citep{1337} does, which is slightly different than the way used in some other studies \citep{1379,1332,1380,1331}. Mathematically, for a distribution of atomic distances ${d_i}_{i=1}^n$ to a reference location, the first three moments are semantically the mean, the standard deviation, and the cube root of the third central moment, respectively. Their exact equations are shown in \eqref{usr:moment1,usr:moment2,usr:moment3}. The roots are intended to provide all moments with linear space dimension in \AA, unlike the skewness, for instance, which is unitless. This computation allows the distributions to contain only one sample, in which case the 2nd and 3rd moments will be zeros.
+In this study the first three moments are computed in the same way as ElectroShape \citep{1337} does, which is slightly different than the way used in some other studies \citep{1379,1332,1380,1331}. Mathematically, for a distribution of atomic distances $\{d_i\}_{i=1}^n$ to a reference location, the first three moments are semantically the mean, the standard deviation, and the cube root of the third central moment, respectively. Their exact expressions are shown in equations \eqref{usr:moment1}, \eqref{usr:moment2} and \eqref{usr:moment3}. The roots are intended to provide all moments with linear space dimension in \AA, unlike the skewness, for instance, which is unitless. This computation allows the distributions to contain only one sample, in which case the 2nd and 3rd moments will be zeros.
 
 \begin{equation}
 m_1=\frac{1}{n}\sum_{i=1}^{n}{d_i}
@@ -47,12 +47,12 @@ m_1=\frac{1}{n}\sum_{i=1}^{n}{d_i}
 \end{equation}
 
 \begin{equation}
-m_2=\sqrt[2]{\frac{1}{n}\sum_{i=1}^{n}{d_i-m_1}}
+m_2=\sqrt[2]{\frac{1}{n}\sum_{i=1}^{n}{(d_i-m_1)^2}}
 \label{usr:moment2}
 \end{equation}
 
 \begin{equation}
-m_3=\sqrt[3]{\frac{1}{n}\sum_{i=1}^{n}{d_i-m_1}}
+m_3=\sqrt[3]{\frac{1}{n}\sum_{i=1}^{n}{(d_i-m_1)^3}}
 \label{usr:moment3}
 \end{equation}
 
