@@ -56,10 +56,10 @@ In this study the first three moments are computed in the same way as ElectroSha
 \label{usr:moment3}
 \end{equation}
 
-After a molecule is encoded into a 12-element numerical moment vector $\mathbf M=(\mu_1^{ctd}, \mu_2^{ctd}, \mu_3^{ctd}, \mu_1^{cst}, \mu_2^{cst}, \mu_3^{cst}, \mu_1^{fct}, \mu_2^{fct}, \mu_3^{fct}, \mu_1^{ftf}, \mu_2^{ftf}, \mu_3^{ftf})$, the dissimilarity score of two molecules $\mathbf M^i$ and $\mathbf M^j$ can be defined as the sum of least absolute differences of their respective moments, much like the city block distance. Thereafter, this dissimilarity is monotonically inverted so as to transform it into a normalized similarity score using equation \eqref{usr:usrscore}), where the minimum shape similarity is represented by score 0 and the maximum similarity by score 1. Any other inverse monotonic function can do this transformation if it preserves the ranking order.
+After a molecule is encoded into a 12-element numerical moment vector $\mathbf M=(\mu_1^{ctd}, \mu_2^{ctd}, \mu_3^{ctd}, \mu_1^{cst}, \mu_2^{cst}, \mu_3^{cst}, \mu_1^{fct}, \mu_2^{fct}, \mu_3^{fct}, \mu_1^{ftf}, \mu_2^{ftf}, \mu_3^{ftf})$, the dissimilarity score of two molecules $\mathbf M^i$ and $\mathbf M^j$ can be defined as the sum of least absolute differences of their respective moments, much like the city block distance. Thereafter, this dissimilarity is monotonically inverted so as to transform it into a normalized similarity score using equation \eqref{usr:usrscore}, where the minimum shape similarity is represented by score 0 and the maximum similarity by score 1. Any other inverse monotonic function can do this transformation if it preserves the ranking order.
 
 \begin{equation}
-S(\mathbf M^i, \mathbf M^j)=\frac{1}{1+\frac{1}{12}\sum_{k=1}^{12}|\mathbf M_k^i-\mathbf M_k^j|}
+S(\mathbf M^i, \mathbf M^j)=(1+\frac{1}{12}\sum_{k=1}^{12}|\mathbf M_k^i-\mathbf M_k^j|)^{-1}
 \label{usr:usrscore}
 \end{equation}
 
