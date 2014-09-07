@@ -39,21 +39,28 @@ USR is based on the observation that the shape of a molecule is uniquely determi
 
 The four reference locations are selected to be the molecular centroid (ctd), the closest atom to ctd (cst), the farthest atom to ctd (fct), and the farthest atom to fct (ftf). These locations represent the centre of the molecule and its extremes, and thus are well separated. In this way molecular shape is described by four distributions of atomic distances, where the number of atomic distances is proportional to the number of atoms. In order to compare molecules with different number of atoms, the first three moments of these distributions are computed and used to encode shape information instead. These moments have semantics indeed. For instance, the 1st, 2nd and 3rd moments of distribution of atomic distances to the molecular centroid (ctd) capture the size, variance and skewness of the molecule, respectively. Selecting the first three moments provides an excellent compromise between the efficiency and the effectiveness of the method. Finally the shape similarity score of two molecules is calculated through the sum of least absolute differences of their respective moments.
 
-In this study the first three moments are computed in the same way as ElectroShape \citep{1337} does, which is slightly different than the way used in some other studies \citep{1379,1332,1380,1331}. Mathematically, for a distribution of atomic distances $\{d_i\}_{i=1}^n$ to a reference location, the first three moments are semantically the mean, the standard deviation, and the cube root of the third central moment, respectively. Their exact expressions are shown in equations \eqref{usr:moment1}, \eqref{usr:moment2} and \eqref{usr:moment3}. The roots are intended to provide all moments with linear space dimension in \AA, unlike the skewness, for instance, which is unitless. This computation allows the distributions to contain only one sample, in which case the 2nd and 3rd moments will be zeros.
+In this study the first three moments are computed in the same way as ElectroShape \citep{1337} does, which is slightly different than the way used in some other studies \citep{1379,1332,1380,1331}. Mathematically, for a distribution of atomic distances $\{d_k\}_{k=1}^n$ to one of the four reference locations (ctd, cst, fct, ftf), where $n$ is the number of atoms, the first three moments are semantically the mean, the standard deviation, and the cube root of the third central moment, respectively. Their exact expressions are shown in equations \eqref{usr:moment1}, \eqref{usr:moment2} and \eqref{usr:moment3}. The roots are intended to provide all moments with linear space dimension in \AA, unlike the skewness, for instance, which is unitless. This computation allows the distributions to contain only one sample, in which case the 2nd and 3rd moments will be zeros.
 
 \begin{equation}
-\mu_1=\frac{1}{n}\sum_{i=1}^{n}{d_i}
+\mu_1=\frac{1}{n}\sum_{k=1}^{n}{d_k}
 \label{usr:moment1}
 \end{equation}
 
 \begin{equation}
-\mu_2=\sqrt[2]{\frac{1}{n}\sum_{i=1}^{n}{(d_i-\mu_1)^2}}
+\mu_2=\sqrt[2]{\frac{1}{n}\sum_{k=1}^{n}{(d_k-\mu_1)^2}}
 \label{usr:moment2}
 \end{equation}
 
 \begin{equation}
-\mu_3=\sqrt[3]{\frac{1}{n}\sum_{i=1}^{n}{(d_i-\mu_1)^3}}
+\mu_3=\sqrt[3]{\frac{1}{n}\sum_{k=1}^{n}{(d_k-\mu_1)^3}}
 \label{usr:moment3}
+\end{equation}
+
+After a molecule is encoded into a 12-element moment vector $\mathbf M=(\mu_1^ctd, \mu_2^ctd, \mu_3^ctd, \mu_1^cst, \mu_2^cst, \mu_3^cst, \mu_1^fct, \mu_2^fct, \mu_3^fct, \mu_1^ftf, \mu_2^ftf, \mu_3^ftf)$, the dissimilarity score of two molecules $\mathbf M^i$ and $\mathbf M^j$ can be defined as the sum of least absolute differences of their respective moments, much like the city block distance. Thereafter, this dissimilarity is monotonically inverted so as to transform it into a normalized similarity score using equation \eqref{usr:usrscore}), where the minimum shape similarity is represented by score 0 and the maximum similarity by score 1. Any other inverse monotonic function can do this transformation if it preserves the ranking order.
+
+\begin{equation}
+S_{ij}=\frac{1}{1+\frac{1}{12}\sum_{k=1}^{12}|M_k^i-M_k^j|}
+\label{usr:usrscore}
 \end{equation}
 
 USR \citep{1379} is highly extensible via positioning reference locations \citep{1334,1335}, incorporating higher orders of moments \citep{1333,1337}, expanding coordinate dimensions \citep{1337,1338}, mixing chemical component similarity \citep{1333,1407,1408}, or subdividing atoms into subsets \citep{1436,1331}. USRCAT \citep{1331} extends USR \citep{1379} by separately identifying five pharmacophoric subsets of atoms, which are heavy, hydrophobic, aromatic, hydrogen bond acceptor or donor atoms. Consequently the resulting moment vector is expanded from 12 descriptors to 60. In the case of an empty subset, for examples if no hydrogen bond donors are found, the corresponding elements in the moment vector are set to zero. The four reference locations are uniformly derived from heavy atom coordinates and are thus meaningful with respect to the overall shape of a molecule.
@@ -64,13 +71,26 @@ Like in istar::idock for prospective virtual screening, we used the same databas
 
 It is necessary to include more than one conformer per compound in the database since flexible molecules can adopt different shapes. Hence the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Each small organic molecule could have an average of about 200 conformations \citep{1332}, or up to 292 conformations \citep{1280}. The conformers of a particular molecule are in general geometrically distinct and have low potential energy, as conformers with high internal energy are in principle less likely to occur in nature.
 
-There are numerous 2D-to-3D conversion tools that can generate 3D molecular conformations from a considered 2D chemical structure, such as Cyndi \citep{1393,1394} and OMEGA \citep{462}. A study \citep{1127} examined the performance of four freely available small molecule conformer generation tools, Balloon \citep{1442}, Confab \citep{1443}, Frog2 \citep{1444}, and RDKit (http://www.rdkit.org/), alongside a commercial tool, MOE (http://www.chemcomp.com/), and found that RDKit and Confab were statistically better than other methods at generating low RMSD (Root Mean Square Deviation) conformers to the known structure, and RDKit resulted as the second fastest method after Frog2. The study also developed a postprocessing algorithm to build a diverse and representative set of conformers to enhance the performance of RDKit. Therefore to generate conformers in this study we will use RDKit in combination with the postprocessing algorithm.% Also mention the C++ version rather than Python. RDKit has the constraint of not generating new conformers that have a large RMSD to existing conformers, so postprocessing is required, as suggested in \citep{1127}.
+There are numerous 2D-to-3D conversion tools that can generate 3D molecular conformations from a considered 2D chemical structure, such as Cyndi \citep{1393,1394} and OMEGA \citep{462}. A study \citep{1127} examined the performance of four freely available small molecule conformer generation tools, Balloon \citep{1442}, Confab \citep{1443}, Frog2 \citep{1444}, and RDKit (http://www.rdkit.org/), alongside a commercial tool, MOE (http://www.chemcomp.com/), and found that RDKit and Confab were statistically better than other methods at generating low RMSD (Root Mean Square Deviation) conformers to the known structure, and RDKit resulted as the second fastest method after Frog2. The positive results for RDKit in terms of accuracy and speed make it a valid free alternative to commercial, closed source, proprietary software.
+
+However, even though the conformers generated by RDKit can be ensured to be at least a certain RMSD threshold apart from each other by setting an appropriate parameter, they are not guaranteed to be of low energy, so it is suggested by the manual to energy minimize them using RDKit’s implementation of the Universal Force Field (UFF). After energy minimization, unfortunately, many conformers could again become similar to each other with RMSD below the threshold. To resolve this conformational diversity problem, the study \citep{1127} also developed a postprocessing algorithm to discriminate and keep only conformers which are both energy minimized and a certain RMSD threshold apart. In combination with RDKit and the postprocessing algorithm, one can build a diverse and representative set of conformers.
+
+Due to the superior accuracy and speed of RDKit, in this study we use RDKit together with the postprocessing algorithm to generate conformers. Specifically, we use RDKit 2014.03.1 and program against its C++ API instead of directly using the example Python script. Like in \citep{1127}, the RMSD threshold is also set to 0.5\AA.
+
+%The rmsd between the experimental structures and conformers generated by each tool were calculated using OBFIT, or the RDKit python script.
 
 Several levels of parallelism: multiple database ligands, multiple query ligands, multiple features.
 
 Parallelized at the coarse grained level of a database of ligands to compare against.
 
-AVX (Advanced Vector Extensions) instructions. Use PowerPoint to draw a diagram here to illustrate. unrolling, sub, abs, hadd.
+AVX (Advanced Vector Extensions) instructions, 256 bit. AVX2 512 bit. Use PowerPoint to draw a diagram here to illustrate. unrolling, load, sub, abs (andnot), hadd (horizontal add). Moments are in double type, 64bit, so each time can process four elements in the moment vector.
+double s = 0;
+for (size_t i = 0; i < qn; i += 4) // qn = 12 for USR, qn = 60 for USRCAT
+{
+	const auto m256a = _mm256_andnot_pd(m256s, _mm256_sub_pd(_mm256_load_pd(&q[i]), _mm256_load_pd(&l[i])));
+	_mm256_stream_pd(a.data(), _mm256_hadd_pd(m256a, m256a));
+	s += a[0] + a[2];
+}
 
 Time analysis: t = n(tq+ts)
 
