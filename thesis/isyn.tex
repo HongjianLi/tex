@@ -54,9 +54,9 @@ The UI also supports exporting the canvas view to a production-quality image in 
 
 \subsection{Evolutionary algorithm}
 
-In the first generation, multiple types of click chemistry reactions and structural modifications are applied to the initial ligands selected from the fragment library to synthesize new ligands. The generated ligands are then all fed to our popular and fast docking engine idock \citep{1153} to predict their preferred conformations as bound to the protein target, and to prioritize them in the ascending order of their predicted free energy, which reflects the binding affinity. The lower the free energy, the higher the binding affinity. Their conversion factor is derived in \citep{1362}. An extensive benchmark on 12 diverse proteins \citep{1362} has shown that our idock \citep{1153} runs 8.69 to 37.51 times faster than the state-of-the-art AutoDock Vina \citep{595} docking software. The utilization of idock by iSyn promotes the feasibility of large-scale \textit{de novo} drug design and evaluation \textit{in silico}.
+In the first generation, multiple types of click chemistry reactions and structural modifications are applied to the initial ligands selected from the fragment library to synthesize new ligands, where possible duplicates are detected and removed using the USR (Ultrafast Shape Recognition) algorithm \citep{1379}. The generated ligands are then all fed to our popular and fast docking engine idock \citep{1153} to predict their preferred conformations as bound to the protein target, and to prioritize them in the ascending order of their predicted free energy, which reflects the binding affinity. The lower the free energy, the higher the binding affinity. Their conversion factor is derived in \citep{1362}. An extensive benchmark on 12 diverse proteins \citep{1362} has shown that our idock \citep{1153} runs 8.69 to 37.51 times faster than the state-of-the-art AutoDock Vina \citep{595} docking software. The utilization of idock by iSyn promotes the feasibility of large-scale \textit{de novo} drug design and evaluation \textit{in silico}.
 
-The free energy values predicted and sorted by idock are piped to a spreadsheet file in CSV format, which is subsequently parsed by iSyn to retrieve those best ligands with the lowest predicted free energy, i.e. those ligands with the highest predicted binding affinity. These best ligands in the current generation directly survive into the next generation, and constitute part of the founding ligands. Another part comes from a random selection of the remaining ligands, with the selection probability being proportional to the fitness of a ligand, i.e. its predicted free energy in the case of docking. Our hybrid method, which is essentially a smart combination of the greedy algorithm and the fitness proportionate algorithm, realizes elitism on one hand, while circumvents the risk of over fitting on the other hand.
+The free energy values predicted and sorted by idock are piped to a spreadsheet file in CSV format, which is subsequently parsed by iSyn to retrieve those best ligands with the lowest predicted free energy, i.e. those ligands with the highest predicted binding affinity. To increase the binding affinity prediction accuracy, iSyn provides an alternative option to rescore the docked conformations using our unpublished new version of RF-Score \citep{564}. Then the best ligands in the current generation directly survive into the next generation, and constitute part of the founding ligands. Another part comes from a random selection of the remaining ligands, with the selection probability being proportional to the fitness of a ligand, i.e. its predicted free energy in the case of docking. Our hybrid method, which is essentially a smart combination of the greedy algorithm and the fitness proportionate algorithm, realizes elitism on one hand, while circumvents the risk of over fitting on the other hand.
 
 The evolutionary algorithm either iterates for a number of generations specified by the user, or gets terminated in case of no significant improvement over previous generations.
 
@@ -164,6 +164,16 @@ iSyn is capable of tracking the synthetic path of child ligands from their ances
 
 It can also be seen that its parent ligand, 2\_1314, had a molecular mass of as large as 624.211 Daltons, which is unlikely to be optimized into potent drugs. Thanks to our four novel cutting operators, it got broken down and resulted in the ever best ligand. This demonstrates the helpfulness of our newly-implemented cutting operators with click chemistry support.
 
+In another run of iSyn with the same target, 20,392 initial ligands from the MW250 subset were used as input. iSyn was run for 2 days and 4 hours for 3 generations, and the best resultant compound, Gen2\_m24517, had predicted free energy of -15.393 kcal/mol. This indicates that iSyn was able to generate even better ligands when more generations were achieved. Figure \ref{isyn:Gen2_m24517} shows the evolutionary steps taken to generate Gen2\_m24517.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{../isyn/Gen2_m24517.png}
+\end{center}
+\caption{The evolutionary steps taken to generate Gen2\_m24517.}
+\label{isyn:Gen2_m24517}
+\end{figure}
+
 \subsection{Example 2: inhibitors of cyclin-dependent kinase 2 (PDB: 1JSV)}
 
 CDK2 is a member of the cyclin-dependent kinase family that are potential therapeutic targets for oncology. Inhibition of CDK2 may represent a therapeutic strategy for prevention of many cell cycle related diseases.
@@ -200,7 +210,7 @@ Obviously, the best ligand obtained in this example is better than the one obtai
 
 Although \textit{in silico} fragment-based drug design (FBDD) represents a promising approach to complement structure-based virtual screening, few FBDD tools show satisfactory performance in terms of achieved potency and computational resources.
 
-In this study we present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. Various test cases on TbREL1 and CDK2 have proved its strength in finding candidate drug compounds within a reasonable time. We hope that the iSyn can pragmatically assist medicinal chemists in optimizing candidate compounds and designing novel drugs.
+In this study we present iSyn, our WebGL-based solution for computationally synthesizing \textit{de novo} drug compounds with click chemistry support plus additional cutting reactions. iSyn is a methodological mixture of ligand duplication by USR \citep{1379}, four new cutting reactions, efficient docking by idock \citep{1153}, accurate rescoring by RF-Score-v3, fitness proportionate selection and intelligent termination in genetic algorithm, and WebGL visualization with molecular surface. Various test cases on TbREL1 and CDK2 have proved its strength in finding candidate drug compounds within a reasonable time. We hope that the iSyn can pragmatically assist medicinal chemists in optimizing candidate compounds and designing novel drugs.
 
 \section{Availability}
 
