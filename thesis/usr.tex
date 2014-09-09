@@ -2,7 +2,9 @@
 
 \section{Abstract}
 
-Finding structurally similar compounds to a query ligand has been an important but daunting problem for a long time.
+Finding compounds structurally similar to a query ligand has been an important but daunting problem for a long time. The USR (Ultrafast Shape Recognition) algorithm represents a whole new alignment-free method that encodes the shape information semantically and permits superfast screening of a large molecular database. A few extensions to USR improve the original method from various perspectives and three of some, UFSRAT, EDULISS and SwissTargetPrediction, are also available as web servers. However, UFSRAT and EDULISS are unable to discriminate between long, chain-like molecules, and their calculated distributions are not meaningful when some pharmacophoric features are rarer than others. SwissTargetPrediction uses a small bioactive compound database and is not generally for prospective virtual screening purposes.
+
+We propose a pragmatic implementation of USR and its USRCAT (USR with Credo Atom Types) extension based on our istar web platform. We use a huge molecular database of more than 230 million diverse and representative conformers, and exploits three levels of parallelism with a novel implementation of sum of absolute different using AVX (Advanced Vector Extensions) to accelerate job execution. Our istar::USR supports multiple query ligands in SDF, MOL2, XYZ, PDB or PDBQT formats, and interfaces with our iview WebGL visualizer for interactive visualization of high-score hits. istar::USR is freely available at http://istar.cse.cuhk.edu.hk/usr.
 
 This is an ongoing collaborative project with Pedro J. Ballester from European Bioinformatics Institute, Cambridge, United Kingdom.
 
@@ -130,7 +132,11 @@ AVX are extensions to the x86 instruction set and expands the width of the SIMD 
 \label{usr:AVX}
 \end{figure}
 
-Our client side UI (User Interface) supports SDF, MOL2, XYZ, PDB and PDBQT formats for the input query. This is an advantage over the UFSRAT \citep{1436} web server, where the input format of query ligand is limited to SDF only. Moreover, our daemon supports multiple query ligands in a single job, another advantage over the UFSRAT \citep{1436} and the EDULISS \citep{1437} web servers.
+Our daemon supports multiple query ligands in either SDF, MOL2, XYZ, PDB or PDBQT formats in one single job. Moreover, our client side user interface features our iview \citep{1366} WebGL visualizer to realize interactive visualization of high-score hits.
+
+\section{Results}
+
+No results are available at the moment because the proposed system is yet to be implemented.
 
 \section{Conclusions}
 
@@ -138,7 +144,9 @@ USR has advantages in being independent of position and orientation.
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \citep{1362}, which has collected 23 million ligands from ZINC \citep{532,1178}.
 
-the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query. Three levels of parallelisms are implemented. AVX instructions. Diverse input formats and iview visualization.
+the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query. Three levels of parallelisms are implemented. We present a novel AVX implementation of sum of absolute differences in order to calculate the USR or USRCAT scores between two moment vectors. Diverse input formats and iview visualization.
+
+Our implementation of USR and USRCAT on istar is advantageous over other similar web servers such as UFSRAT \citep{1436}, EDULISS \citep{1437}, and SwissTargetPrediction \citep{1408} in terms of functionality and usability. It supports SDF, MOL2, XYZ, PDB and PDBQT formats for the input query. This is an advantage over the UFSRAT \citep{1436} web server, where the input format of query ligand is limited to SDF only. Moreover, our daemon supports multiple query ligands in a single job.
 
 \section{Availability}
 
