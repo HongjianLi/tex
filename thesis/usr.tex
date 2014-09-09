@@ -140,13 +140,17 @@ No results are available at the moment because the proposed system is yet to be 
 
 \section{Conclusions}
 
-USR has advantages in being independent of position and orientation.
+Searching for compounds that resemble the shape of a given query molecule is a widely seen yet daunting problem in ligand-based virtual screening \citep{1332,1380} and macromolecular target prediction \citep{1407,1408,1402}. The USR-like methods \citep{1379,1338,1331} represent an entirely new class of non-superposition algorithms that effectively capture the molecular shape information independent of spatial position and orientation. They circumvent the requirement of structural alignment and demonstrate outstanding computational efficiency with respect to superposition-based methods \citep{1440,887,1439}.
 
-Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \citep{1362}, which has collected 23 million ligands from ZINC \citep{532,1178}.
+In this study we briefly review the traditional USR method \citep{1379} and its various extensions \citep{1333,1436,1437,1334,1335,1337,1338,1331,1407,1408}, as well as their applications, both retrospective \citep{1332,1331} and prospective \citep{1380}. We highlight the pros and cons of three web servers \citep{1436,1437,1408} which use USR variants as their underlying methods. Consequently, to address the existing constraints, we propose our pragmatic implementation of USR \citep{1379} and USRCAT \citep{1331} on istar \citep{1362} and explain its methodological advancement in terms of functionality, usability, and efficiency.
 
-the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query. Three levels of parallelisms are implemented. We present a novel AVX implementation of sum of absolute differences in order to calculate the USR or USRCAT scores between two moment vectors. Diverse input formats and iview visualization.
+First and foremost, our molecular database is populated with more than 230 million diverse and representative conformers of 23 million small molecules that are collected from the ZINC database \citep{532,1178} and thus possibly commercially available to purchase for subsequent biological assays. The reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query. We use RDKit and the postprocessing algorithm suggested in \citep{1127} for the conformer generation task.
 
-Our implementation of USR and USRCAT on istar is advantageous over other similar web servers such as UFSRAT \citep{1436}, EDULISS \citep{1437}, and SwissTargetPrediction \citep{1408} in terms of functionality and usability. It supports SDF, MOL2, XYZ, PDB and PDBQT formats for the input query. This is an advantage over the UFSRAT \citep{1436} web server, where the input format of query ligand is limited to SDF only. Moreover, our daemon supports multiple query ligands in a single job.
+Second, we estimate the storage size of all descriptors across the entire database, and suggest two approaches, i.e. preloading all descriptors at once and loading them chunk by chunk, and analyze their theoretical execution time. Based on the time analysis, we propose to exploit three levels of parallelism, which map multiple jobs to multiple servers, multiple queries to multiple CPU cores, and multiple descriptors to multiple registers, respectively, in order to fully utilize all available computational resources to accelerate job execution. Notably, we describe a novel AVX implementation of sum of absolute differences to calculate the USR or USRCAT scores between two moment vectors.
+
+Furthermore, our implementation of USR and USRCAT, denoted as istar::USR for short, supports multiple query ligands in SDF, MOL2, XYZ, PDB and PDBQT formats. It also features our iview WebGL visualizer to aid result interpretation in an interactive manner.
+
+We believe our istar::USR web service for ligand-based virtual screening purpose can perfectly supplement our istar::idock web service for structure-based virtual screening purpose.
 
 \section{Availability}
 
