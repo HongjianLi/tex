@@ -99,14 +99,19 @@ Due to the superior accuracy and speed of RDKit, in this study we use RDKit toge
 
 After generating approximately 10 conformers on average for each molecule, the database will contain 230 million conformers, each of which has a USRCAT moment vector of 60 elements of double precision floating point type, which requires 64 bits, or 8 bytes for storage. This sums up to $8B*60*230M=108GB$ for the size of the USRCAT descriptors of all conformers in the entire database.
 
-To enable fast screening, it is possible to preload all descriptors into memory given a server with sufficient capacity of memory. Mathematically, suppose $t_r$ is the reading time of a moment vector of a conformer in the database, $t_s$ is the scoring time of two moment vectors, $n_{conf}$ is the number of conformers in the database, $n_{query}$ is the number of query ligands of a single job, and $n_{job}$ is the number of jobs, the total screening time $t$ would be
+On one hand, given a server with sufficient capacity of memory, it is possible to preload all descriptors to enable fast screening. Mathematically, suppose $t_r$ is the reading time of a moment vector of a conformer in the database, $t_s$ is the scoring time of two moment vectors, $n_{conf}$ is the number of conformers in the database, $n_{query}$ is the number of query ligands of a single job, and $n_{job}$ is the number of jobs, the total screening time $t$ would be
 
 \begin{equation}
-t=t_r*n_{conf}
-\label{usr:usrscore}
+t=t_r\cdot n_{conf}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
+\label{usr:time0}
 \end{equation}
 
-is prohibitive on computers nowadays. So have to be chunk by chunk. Suppose in a job there are n conformers but only c<<n fit in the memory, and there are $q$ query ligands. The way to do this using a single core is to loop n/c times, each time preloading a different chunk with c conformers and then making the q queries on this chunk storing all IDs above the similarity threshold. After the loop, hits are merged from each chunk. total time $t=t_r+q\cdot t_s$ but if you preload all for each query $t=q(t_r+t_s)$ with $t_r$ (reading descriptors time) and $t_s$ (screening conformers time).
+On the other hand, on a server with insufficient memory to preload all descriptors, it is possible to load the descriptors chunk by chunk whenever a new job gets executed. Suppose only $m_{conf} << n_{conf}$ moment vectors fit in the memory. The chunk-by-chunk approach is to loop for $n_{conf}/m_{conf}$ times, each time loading a different chunk with $m_{conf}$ moment vectors and then making the $n_{query}$ queries on this chunk. In this way, the total screening time $t$ would be
+
+\begin{equation}
+t=(t_r\cdot m_{conf}+t_s\cdot m_{conf}\cdot n_{query})\cdot(n_{conf}/m_{conf})\cdot n_{job}=t_r\cdot n_{conf}\cdot n_{job}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
+\label{usr:time1}
+\end{equation}
 
 Several levels of parallelism: multiple database ligands, multiple query ligands, multiple features.
 
