@@ -91,7 +91,7 @@ n_{gen}=
 \begin{cases}
  50 & \text{if } n_{rot} \leq 7\\
 200 & \text{if } 8 \leq n_{rot} \leq 12\\
-330 & \text{if } otherwise\\
+330 & \text{otherwise}\\
 \end{cases}
 \end{equation}
 
@@ -108,10 +108,11 @@ t=t_r\cdot n_{conf}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
 
 On the other hand, on a server with insufficient memory to preload all descriptors, it is possible to load the descriptors chunk by chunk whenever a new job gets executed. Suppose only $m_{conf} << n_{conf}$ moment vectors fit in the memory. The chunk-by-chunk approach is to loop for $n_{conf}/m_{conf}$ times, each time loading a different chunk with $m_{conf}$ moment vectors and then making the $n_{query}$ queries on this chunk. In this way, the total screening time $t$ would be
 
-\begin{equation}
-t=(t_r\cdot m_{conf}+t_s\cdot m_{conf}\cdot n_{query})\cdot(n_{conf}/m_{conf})\cdot n_{job}=t_r\cdot n_{conf}\cdot n_{job}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
+\begin{eqnarray}
+t&=(t_r\cdot m_{conf}+t_s\cdot m_{conf}\cdot n_{query})\cdot(n_{conf}/m_{conf})\cdot n_{job}\nonumber\\
+ &=t_r\cdot n_{conf}\cdot n_{job}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
 \label{usr:time1}
-\end{equation}
+\end{eqnarray}
 
 Several levels of parallelism: multiple database ligands, multiple query ligands, multiple features.
 
