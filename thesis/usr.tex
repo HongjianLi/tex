@@ -93,15 +93,15 @@ Several levels of parallelism: multiple database ligands, multiple query ligands
 
 Parallelized at the coarse grained level of a database of ligands to compare against.
 
-AVX (Advanced Vector Extensions) instructions, 256 bit. AVX2 512 bit. Use PowerPoint to draw a diagram here to illustrate. unrolling, load, sub, abs (andnot), hadd (horizontal add). Moments are in double type, 64bit, so each time can process four elements in the moment vector.
+AVX (Advanced Vector Extensions) instructions, 256 bit. AVX2 512 bit. Use PowerPoint to draw a diagram here to illustrate. unrolling, load, sub, abs (andnot), hadd (horizontal add). Moments are in double type, 64bit, so each time can process four elements in the moment vector. Unrolling results in a longer sequence of instructions but faster execution due to the circumvention of the use of a loop iterator. Unrolling times depend on qn=12 or 60, USR or USRCAT.
 
-%double s = 0;
-%for (size_t i = 0; i < qn; i += 4) // qn = 12 for USR, qn = 60 for USRCAT
-%{
-%	const auto m256a = _mm256_andnot_pd(m256s, _mm256_sub_pd(_mm256_load_pd(&q[i]), _mm256_load_pd(&l[i])));
-%	_mm256_stream_pd(a.data(), _mm256_hadd_pd(m256a, m256a));
-%	s += a[0] + a[2];
-%}
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{../usr/AVX.png}
+\end{center}
+\caption{AVX instructions used to compute USR/USRCAT scores.}
+\label{usr:AVX}
+\end{figure}
 
 Unlike the UFSRAT \citep{1436} web server where the input format of query ligand is limited to SDF, our istar-based web server supports SDF, MOL2, XYZ, PDB, PDBQT.
 
@@ -111,7 +111,7 @@ USR has advantages in being independent of position and orientation.
 
 Emphasize computational efficiency, 3 orders of magnitude faster than ESshape3D, and applicable to large-scale ligand database like istar \citep{1362}, which has collected 23 million ligands from ZINC \citep{532,1178}.
 
-the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query.
+the reason why a database is populated with multiple conformers of each flexible compound is to reduce the possibility of missing compounds with similar shape to the query. Three levels of parallelisms are implemented. AVX instructions. Diverse input formats and iview visualization.
 
 \section{Availability}
 
