@@ -158,11 +158,11 @@ istar::USR is free and open source under Apache License 2.0. It is available at 
 
 \section{Future works}
 
-USR is independent of position and orientation, but is dependent on torsions. Nevertheless, none of the above variants are independent of torsions. We present USRT, the first algorithm that is invariant of torsions. In the following sections, we describe USR and USRT, their effectiveness and efficiency.
+Although USR is independent of position and orientation, it is dependent on torsions. Unfortunately, none of the surveyed USR variants are invariant of torsions, either.
 
-We present the first algorithm that can distinguish ligands with different torsions. We call it USRT (Ultrafast Shape Recognition with Torsions). In USRT, the reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first atom.
+We present USRT (Ultrafast Shape Recognition with Torsions), the first USR-like algorithm that can distinguish ligands with different torsions. One of its biggest applications is the circumvention of conformer generation, and thus greatly saves storage. No conformers are required. The unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation, but no more considerations of using bound or unbound conformations are required by using USRT. USRT is a general method that can be applied to various drug design applications, including \textit{de novo} ligand deduplication and clustering.
 
-Figure \ref{usr:T27} shows two conformations with different torsions. This is a rotatable bond. This branch can rotate along the rotatable bond and flip to the right hand side. A torsion is the rotating angle, so it is in the range of -$\pi$ to $\pi$. 
+Figure \ref{usr:T27} shows two conformations with different torsions. In USRT, the reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first atom.
 
 \begin{figure}
 \minipage{0.5\textwidth}
@@ -186,13 +186,11 @@ Figure \ref{usr:T27} shows two conformations with different torsions. This is a 
 \label{usr:T27}
 \end{figure}
 
-Once a reference atom is determined, the next is to compute inter-atom distances and their 1st, 2nd, 3rd moments. The output of USRT is a feature vector, which maps to a point in a high dimensional space. The length of the feature vector depends on the number of rotatable bonds. This format a natural clustering: the ligands having the same number of rotatable bonds are first categorized, and then all existing clustering algorithms can be utilized.
+The length of the feature vector depends on the number of frames.
 
-USRT inherits advantages from USR, like being ultrafast and extensible. It circumvents the need of aligning the molecules before testing for similarity. Compatible with USRCAT \citep{1331}, USR+MACCS \citep{1333} and possibly other USR variants \citep{1334}. can combine with other USR variants, e.g. USRCAT.
+USRT inherits advantages from USR, like being ultrafast and extensible. It circumvents the need of aligning the molecules before testing for similarity. Compatible with USR+MACCS \citep{1333}, USRCAT \citep{1331} and possibly other USR variants \citep{1334} for combined use.
 
-USRT is a general method that can be applied to various drug design applications, including de novo ligand deduplication and clustering. No conformers are required. the unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation. No more considerations of using bound or unbound conformations.
-
-Although very promising, major problems are: tree structure output, child frame matching, known ROOT frame, in-frame atom types, connector atom types. This raises the obvious question of how to compare molecules with different number of torsions, which are introduced by flexible ligand docking. Frames with less than 2 heavy atoms are ignored or assigned zero. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments. Can incorporate connecting atoms of child branches. We will address the above limitations in future research using dynamic programming with frame insertion/deletion.
+Although very promising, major problems are: tree structure output, child frame matching, known ROOT frame, in-frame atom types, connector atom types. This raises the obvious question of how to compare molecules with different number of torsions, which are introduced by flexible ligand docking. Frames with less than 2 heavy atoms are ignored or assigned zero. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments. Can incorporate connecting atoms of child branches. We will address the above limitations in future research using dynamic programming with frame insertion and deletion.
 
 Restrict protein and ligands atoms to be those within the binding site. Use USR variants to cluster binding sites of all proteins from PDB or PDBbind. So the discovery of inhibitors of a protein can borrow knowledge from the inhibitors of another protein that has a similar binding site interaction patterns.
 
