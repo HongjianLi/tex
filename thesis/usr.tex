@@ -158,37 +158,42 @@ istar::USR is free and open source under Apache License 2.0. It is available at 
 
 \section{Future works}
 
-Although USR is independent of position and orientation, it is dependent on torsions. Unfortunately, none of the surveyed USR variants are invariant of torsions, either.
+Although USR is advantageous in being independent of position and orientation, it is dependent on torsions. Likewise, none of the surveyed USR extensions are invariant of torsions. Therefore multiple conformers must be generated for each ligand in a large database in order to represent conformational diversity to some extent. The more conformers that are to generate, the higher degree of conformational space that will be covered. So there is a tradeoff between database storage size and conformational diversity exhaustiveness.
 
-We present USRT (Ultrafast Shape Recognition with Torsions), the first USR-like algorithm that can distinguish ligands with different torsions. One of its biggest applications is the circumvention of conformer generation, and thus greatly saves storage. No conformers are required. The unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation, but no more considerations of using bound or unbound conformations are required by using USRT. USRT is a general method that can be applied to various drug design applications, including \textit{de novo} ligand deduplication and clustering.
+We present USRT (Ultrafast Shape Recognition with Torsions), the first USR-like algorithm that can identify different conformations from the same ligand. In other words, different conformers generated from the same ligand will result in identical USRT descriptors. This is a huge advantage of USRT because it circumvents the task of conformer generation for a large database, leading to greatly reduced storage requirement. Moreover, it covers the entire conformational space that all conformations of a ligand can represent.
+
+One of its biggest applications is the circumvention of conformer generation, No conformers are required. The unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation, but no more considerations of using bound or unbound conformations are required by using USRT. USRT is a general method that can be applied to various drug design applications, including \textit{de novo} ligand deduplication and clustering.
 
 Figure \ref{usr:T27} shows two conformations with different torsions. In USRT, the reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first atom.
 
 \begin{figure}
-\minipage{0.5\textwidth}
 \centering
-\includegraphics[width=1.36\textwidth,natwidth=1899,natheight=2350]{../usrt/T27CrystalPDBQT.png}
-\endminipage
-\minipage{0.5\textwidth}
-\centering
-\includegraphics[width=1.36\textwidth,natwidth=1899,natheight=2350]{../usrt/T27DockedPDBQT.png}
-\endminipage
+\subfloat[]
+{
+  \includegraphics[width=0.48\linewidth]{../usrt/T27CrystalPDBQT.png}
+}
+\subfloat[]
+{
+  \includegraphics[width=0.48\linewidth]{../usrt/T27DockedPDBQT.png}
+}
 \\
-\minipage{0.5\textwidth}
-\centering
-\includegraphics[width=1.36\textwidth,natwidth=1904,natheight=894]{../usrt/T27Crystal.png}
-\endminipage
-\minipage{0.5\textwidth}
-\centering
-\includegraphics[width=1.36\textwidth,natwidth=1904,natheight=894]{../usrt/T27Docked.png}
-\endminipage
+\subfloat[]
+{
+  \includegraphics[width=0.48\linewidth]{../usrt/T27Crystal.png}
+}
+\subfloat[]
+{
+  \includegraphics[width=0.48\linewidth]{../usrt/T27Docked.png}
+}
 \caption{Two very different poses of the same ligand, which has six frames and five rotatable bonds. Top row: the contents of the two poses in PDBQT format. Bottom row: the two poses in ball-and-stick representation. The atoms and bonds in the same frame are rendered in the same color.}
 \label{usr:T27}
 \end{figure}
 
-The length of the feature vector depends on the number of frames.
+The length of the feature vector is proportional to the number of frames.
 
 USRT inherits advantages from USR, like being ultrafast and extensible. It circumvents the need of aligning the molecules before testing for similarity. Compatible with USR+MACCS \citep{1333}, USRCAT \citep{1331} and possibly other USR variants \citep{1334} for combined use.
+
+Apart from the circumvention of conformer generation, another application of USRT is to detect ligand duplication, which is seen in \textit{de novo} fragment-based drug design tools such as our iSyn \citep{1409,1387}.
 
 Although very promising, major problems are: tree structure output, child frame matching, known ROOT frame, in-frame atom types, connector atom types. This raises the obvious question of how to compare molecules with different number of torsions, which are introduced by flexible ligand docking. Frames with less than 2 heavy atoms are ignored or assigned zero. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments. Can incorporate connecting atoms of child branches. We will address the above limitations in future research using dynamic programming with frame insertion and deletion.
 
