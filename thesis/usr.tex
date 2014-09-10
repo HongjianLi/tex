@@ -160,43 +160,37 @@ istar::USR is free and open source under Apache License 2.0. It is available at 
 
 Although USR is advantageous in being independent of position and orientation, it is dependent on torsions. Likewise, none of the surveyed USR extensions are invariant of torsions. Therefore multiple conformers must be generated for each ligand in a large database in order to represent conformational diversity to some extent. The more conformers that are to generate, the higher degree of conformational space that will be covered. So there is a tradeoff between database storage size and conformational diversity exhaustiveness.
 
-We present USRT (Ultrafast Shape Recognition with Torsions), the first USR-like algorithm that can identify different conformations from the same ligand. In other words, different conformers generated from the same ligand will result in identical USRT descriptors. This is a huge advantage of USRT because it circumvents the task of conformer generation for a large database, leading to greatly reduced storage requirement. Moreover, it covers the entire conformational space that all conformations of a ligand can represent.
+We present USRT (Ultrafast Shape Recognition with Torsions), the first USR-like algorithm that can identify different conformations from the same ligand. In other words, different conformers generated from the same ligand will result in identical USRT descriptors. This is a huge advantage of USRT because it circumvents the task of conformer generation for a large database, leading to greatly reduced storage requirement. Moreover, it covers the entire conformational space representable by all conformations of a ligand. Since no conformer generation is required, there are no more considerations of whether to use the bound or unbound conformations of a bioactive molecule even though the two conformations could be in principle significantly different. Apart from the circumvention of conformer generation, other applications of USRT include duplicate ligand detection in virtual screening campaigns \citep{1390} or in \textit{de novo} fragment-based drug design \citep{1409,1387}, and ligand clustering \citep{1280,1332}.
 
-One of its biggest applications is the circumvention of conformer generation, No conformers are required. The unbound bioactive conformation could be in principle significantly different from the corresponding bound conformation, but no more considerations of using bound or unbound conformations are required by using USRT. USRT is a general method that can be applied to various drug design applications, including \textit{de novo} ligand deduplication and clustering.
-
-Figure \ref{usr:T27} shows two conformations with different torsions. In USRT, the reference atom is chosen to be the atom connecting to the parent frame. It is BRANCH X Y, and is often the first of the current frame. For the ROOT frame, it is the first atom.
+The methodological idea of USRT is quite straightforward. Compared to UFSRAT \citep{1436} and USRCAT \citep{1331}, instead of subdividing atoms into subsets according to pharmacophoric properties, USRT subdivides atoms into subsets according to rigid frames that are connected via rotatable bonds. Figure \ref{usr:T27} illustrates two conformations of the same ligand with different torsions. The ligand has five rotatable bonds and six frames. The atoms and bonds in the same frame are rendered in the same color. For each frame, the only reference atom is chosen to be the atom connecting to the parent frame, i.e. the Y atom in the line of "BRANCH X Y". It is always the first atom of the current frame if the PDBQT file is produced by AutoDockTools4 \citep{596}. For the root frame where there is no parent frame, the only reference atom is simply chosen to be the first atom. Next, the atomic distance distributions are computed between the atoms of the current frame and the corresponding reference atom. In this way, the relative positional information within a rigid frame is captured regardless of the torsions introduced by, for example, flexible ligand docking. The remaining steps are the same. The first three moments are calculated from the atomic distance distribution of each frame.
 
 \begin{figure}
 \centering
-\subfloat[]
+\subfloat[PDBQT contents of the 1st conformation.]
 {
   \includegraphics[width=0.48\linewidth]{../usrt/T27CrystalPDBQT.png}
 }
-\subfloat[]
+\subfloat[PDBQT contents of the 2nd conformation.]
 {
   \includegraphics[width=0.48\linewidth]{../usrt/T27DockedPDBQT.png}
 }
 \\
-\subfloat[]
+\subfloat[Structure of the 1st conformation.]
 {
   \includegraphics[width=0.48\linewidth]{../usrt/T27Crystal.png}
 }
-\subfloat[]
+\subfloat[Structure of the 2nd conformation.]
 {
   \includegraphics[width=0.48\linewidth]{../usrt/T27Docked.png}
 }
-\caption{Two very different poses of the same ligand, which has six frames and five rotatable bonds. Top row: the contents of the two poses in PDBQT format. Bottom row: the two poses in ball-and-stick representation. The atoms and bonds in the same frame are rendered in the same color.}
+\caption{Two conformations of the same ligand.}
 \label{usr:T27}
 \end{figure}
 
-The length of the feature vector is proportional to the number of frames.
+Like other USR extensions, USRT also inherits the major advantages from USR such as being ultrafast and extensible, and avoiding the need of aligning molecules before testing for similarity. USRT can be possibly combined with other USR variants \citep{1333,1338,1331} for different applications.
 
-USRT inherits advantages from USR, like being ultrafast and extensible. It circumvents the need of aligning the molecules before testing for similarity. Compatible with USR+MACCS \citep{1333}, USRCAT \citep{1331} and possibly other USR variants \citep{1334} for combined use.
+Although USRT seems very attractive, there are some major problems to solve before USRT becomes practically useful. The length of the resulting moment vector is proportional to the number of frames, which is a variable. This raises the obvious question of how to compare molecules with different numbers of rotatable bonds. One possible solution is to output the descriptors in a tree structure rather than in a linear vector, and uses dynamic programming with frame insertion and deletion and molecular connectivity to construct a mapping between the frames of the two molecules being compared. In another issue, some frames are -CH3, -NH2 or -OH where there is only one heavy atom. In this case the calculated moments are meaningless. One possible solution is to incorporate the connecting atoms of child frames into the calculation of the atomic distance distribution of the current frame.
 
-Apart from the circumvention of conformer generation, another application of USRT is to detect ligand duplication, which is seen in \textit{de novo} fragment-based drug design tools such as our iSyn \citep{1409,1387}.
-
-Although very promising, major problems are: tree structure output, child frame matching, known ROOT frame, in-frame atom types, connector atom types. This raises the obvious question of how to compare molecules with different number of torsions, which are introduced by flexible ligand docking. Frames with less than 2 heavy atoms are ignored or assigned zero. Could be inactive frames like -CH3, -NH2 or -OH. Cannot compute 2nd and 3rd moments. Can incorporate connecting atoms of child branches. We will address the above limitations in future research using dynamic programming with frame insertion and deletion.
-
-Restrict protein and ligands atoms to be those within the binding site. Use USR variants to cluster binding sites of all proteins from PDB or PDBbind. So the discovery of inhibitors of a protein can borrow knowledge from the inhibitors of another protein that has a similar binding site interaction patterns.
+In addition to the USRT development, another future work is to base on USRCAT \citep{1331} but expand the atom set to also incorporate protein atoms within the binding site, with protein-ligand complex data from PDB \citep{540,537} or PDBbind \citep{529,530,1426}. Apparently the application is no longer for ligand-based virtual screening, but for characterizing and clustering intermolecular binding patterns in terms of shape. In this way, to discover inhibitors of a target protein, we can borrow knowledge from the another well-known protein-ligand complex that has similar binding site interaction patterns.
 
 \chapterend
