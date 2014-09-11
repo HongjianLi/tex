@@ -2,15 +2,17 @@
 
 \section{Abstract}
 
-Protein-ligand docking is a key computational method in the design of starting points for the drug discovery process. We are motivated by the desire to automate large-scale docking using our popular docking engine idock and thus have developed a publicly-accessible web platform called istar. Without tedious software installation, users can submit jobs using our website. Our istar website supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) visualizing ligand conformations and outputting free energy and ligand efficiency predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchase, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 17,224,424 ligands from the All Clean subset of the ZINC database, and revamped our docking engine idock to version 2.0, further improving docking speed and accuracy, and integrating RF-Score as an alternative rescoring function. To compare idock 2.0 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a rescoring benchmark and a redocking benchmark on the 2,897 and 343 protein-ligand complexes of PDBbind v2012 refined set and CSAR NRC HiQ Set 24Sept2010 respectively, and an execution time benchmark on 12 diverse proteins and 3,000 ligands of different molecular weight. Results show that, under various scenarios, idock achieves comparable success rates while outperforming AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times. When evaluated on the PDBbind v2012 core set, our istar platform combining with RF-Score manages to reproduce Pearson's correlation coefficient and Spearman's correlation coefficient of as high as 0.855 and 0.859 respectively between the experimental binding affinity and the predicted binding affinity of the docked conformation. istar::idock is freely available at http://istar.cse.cuhk.edu.hk/idock.
+Protein-ligand docking is a key computational method in the design of starting points for the drug discovery process. Performing large-scale docking requires tedious configurations of necessary tools and preparations of mandatory materials. Although a few online docking platforms exist, they neither support fine-grained ligand selection based on molecular properties, nor be able to monitor job progress in real time. They also lack convenient visualization of docking results and straightforward output of compound suppliers.
+
+We are motivated by the desire to automate large-scale docking using our popular docking engine idock and thus have developed a publicly accessible web platform called istar. Without tedious software installation, users can submit jobs using our website. Our istar website supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) visualizing ligand conformations and outputting free energy predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchase, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 23,129,083 ligands from the All Clean subset of the ZINC database, and revamped our docking engine idock to version 2.1.3, further improving docking speed and accuracy, and integrating RF-Score as an alternative rescoring function. To compare idock 2.1.3 with the state-of-the-art AutoDock Vina 1.1.2, we have carried out a rescoring benchmark and a redocking benchmark on the 2,897 and 343 protein-ligand complexes of PDBbind v2012 refined set and CSAR NRC HiQ Set 24Sept2010 respectively, and an execution time benchmark on 12 diverse proteins and 3,000 ligands of different molecular weight. Results show that, under various scenarios, idock achieves comparable success rates while outperforming AutoDock Vina in terms of docking speed by at least 8.69 times and at most 37.51 times. When evaluated on the PDBbind v2012 core set, our istar platform combining with RF-Score manages to reproduce Pearson and Spearman correlation coefficients of as high as 0.855 and 0.859, respectively, between the experimental binding affinity and the predicted binding affinity of the docked conformation. istar::idock is freely available at http://istar.cse.cuhk.edu.hk/idock.
 
 This was a collaborative project with Pedro J. Ballester from European Bioinformatics Institute, Cambridge, United Kingdom. It was published in \textit{PLoS ONE} on 24 January 2014 \citep{1362}.
 
 \section{Introduction}
 
-Protein-ligand docking predicts the preferred conformation and binding affinity of a small ligand as non-covalently bound to the specific binding site of a protein. Docking can therefore be used not only to determine whether a ligand binds, but also to understand how it binds. The latter is subsequently important to improve the potency and selectivity of binding. To date, there are hundreds of docking programs \citep{493,922}. The AutoDock series \citep{597,596,595} is the most cited docking software in the research community, with over 5,000 citations according to Google Scholar. AutoDock has contributed to the discovery of several drugs, including the first clinically approved HIV integrase inhibitor \citep{1169}. Following its initial release, several parallel implementations were developed using either multithreading or computer cluster \citep{115,560,782}.
+Protein-ligand docking predicts the preferred conformation and binding affinity of a small ligand as non-covalently bound to the specific binding site of a protein. Docking can therefore be used not only to determine whether a ligand binds, but also to understand how it binds. The latter is subsequently important to improve the potency and selectivity of binding. To date, there are hundreds of docking tools \citep{493,922}. The AutoDock series \citep{597,596,595} is the most cited docking software in the research community, with over 5,000 citations according to Google Scholar. AutoDock contributed to the discovery of several drugs, including the first clinically approved HIV integrase inhibitor \citep{1169}. Following its initial release, several parallel implementations were developed using either multithreading or computer cluster \citep{115,560,782}.%TODO: update AutoDock series citations according to Google Scholar.
 
-In 2009, AutoDock Vina \citep{595} was released. As the successor of AutoDock 4 \citep{596}, AutoDock Vina significantly improves the average accuracy of the binding mode predictions while running two orders of magnitude faster with multithreading \citep{595}. It was compared to AutoDock 4 on selecting active compounds against HIV protease, and was recommended for docking large molecules \citep{556}. Its functionality of semi-flexible protein docking by enabling flexibility of side-chain residues was evaluated on VEGFR-2 \citep{1084}. To further facilitate the usage of AutoDock Vina, auxiliary tools were subsequently developed, including a PyMOL \citep{1221} plugin for program settings and visualization \citep{609}, a bootable operating system for computer clusters \citep{773}, a console application for virtual screening on Windows \citep{1268}, and a GUI for virtual screening on Windows \citep{1250}.
+In 2009, AutoDock Vina \citep{595} was released. As the successor of AutoDock 4 \citep{596}, AutoDock Vina significantly improves the average accuracy of the binding mode predictions while running two orders of magnitude faster with multithreading \citep{595}. It was compared to AutoDock 4 on selecting active compounds against HIV protease, and was recommended for docking large molecules \citep{556}. Its functionality of semi-flexible protein docking by enabling flexibility of side-chain residues was evaluated on VEGFR-2 \citep{1084}. To further facilitate the usage of AutoDock Vina, auxiliary tools were subsequently developed, including a PyMOL (http://www.pymol.org) plugin for program settings and visualization \citep{609}, a bootable operating system for computer clusters \citep{773}, a console application for virtual screening on Windows \citep{1268}, and a GUI for virtual screening on Windows \citep{1250}.
 
 In 2011, inspired by AutoDock Vina, we developed idock 1.0 \citep{1153}, a multithreaded virtual screening tool for flexible ligand docking. idock introduces plenty of innovations, such as caching receptor and grid maps in memory to permit efficient large-scale docking, revised numerical model for much faster energy approximation, and capability of automatic detection of inactive torsions for dimensionality reduction. When benchmarked on docking 10,928 drug-like ligands against HIV reverse transcriptase, idock 1.0 achieved a speedup of 3.3 in terms of CPU time and a speedup of 7.5 in terms of elapsed time on average compared to AutoDock Vina, making idock one of the fastest docking software.
 
@@ -31,7 +33,7 @@ Up to date, several SaaS platforms for protein-ligand docking or \textit{de novo
 
 In the following four subsections, we introduce our fast docking engine idock, our accurate rescoring function RF-Score, our modern web platform istar, and our experimental settings.
 
-\subsection{Docking Engine idock}
+\subsection{Docking engine idock}
 
 The input to idock includes a rigid receptor, a set of flexible ligands, and a cubic box, which is used to restrict the conformational space to a particular binding site of the receptor. The output from idock includes predicted conformations and their predicted binding affinity.
 
@@ -119,7 +121,7 @@ idock introduces a novel feature that can automatically detect and deactivate ce
 
 idock encapsulates many more improvements. Please refer to its change log for a complete list of new features and bugfixes.
 
-\subsection{Scoring Function RF-Score}
+\subsection{Scoring function RF-Score}
 
 RF-Score \citep{564} is a member of a new class of scoring functions that use non-parametric machine learning approach to predict binding affinity in an entirely data-driven manner. RF-Score has been rigorously shown \citep{564,908} to perform better than 16 classical scoring functions in ranking protein-ligand complexes according to predicted binding affinity. It has also been shown to be useful in the discovery of new molecular scaffolds in antibacterial hit identification \citep{1281}.
 
@@ -158,13 +160,13 @@ Equation \eqref{eqn4} transforms the predicted free energy output by idock in $k
 ConsensusScore = 0.5 \times (-0.73349480509 \cdot idockScore + RFScore)
 \end{equation}
 
-\subsection{Web Platform istar}
+\subsection{Web platform istar}
 
 Figure S1 shows the overall architecture of istar. On our istar website, the first section displays summary of existing jobs and the second section allows new job submission. A job comprises compulsory fields and optional fields. Compulsory fields include a receptor in PDB format, a search space defined by a cubic box, a brief description about the job, and an email to receive completion notification. Optional fields include nine ligand filtering conditions. The nine ligand filtering conditions are molecular weight, partition coefficient xlogP, apolar desolvation, polar desolvation, number of hydrogen bond donors, number of hydrogen bond acceptors, topological polar surface area tPSA, net charge, and number of rotatable bonds. These nine molecular descriptors are directly retrieved from our data source, i.e. the ZINC database \citep{532,1178}, in which the nine descriptors are already precalculated. Note that although molecular mass in Dalton unit may be a more appropriate descriptor than molecular weight in g/mol unit, we stick to the latter in order to maintain consistency with ZINC, in which the g/mol unit is used for molecular weight.
 
 Figure S1. The overall architecture of istar. There are five major components: a website, a web server, a database management system, several workstations, and a network file system. Under typical circumstances, a user browses our website and submits a job. The web server first validates user input and then saves it into the database. Several workstations keep running daemons in the background, fetching jobs from the database and performing protein-ligand docking. Upon completion, they send a notification email to the user and write the result to the network file system, which is cached as static content by the web server. The user again browses our website to download result or monitor job progress. Our web server also supports REST API for developers to program against. Instructions on how to use the REST API can be found at http://istar.cse.cuhk.edu.hk/idock.
 
-We have collected 17,224,424 ligands at pH 7 in mol2 format from versions 2012-04-26 and 2013-01-10 of the All Clean subset the ZINC database \citep{532,1178} with explicit permission of its major developer and maintainer. The All Clean subset is constituted by applying strict filtering rules (http://blaster.docking.org/filtering), e.g. aldehydes and thiols have been removed. We have then converted the entire 17 million ligands in batch into PDBQT format as used by idock and the AutoDock series. The huge number of 17 million ligands should be sufficient in most cases. In case users need to screen their own ligand libraries, at present we recommend them run idock locally on their computers. We may consider allowing users to upload customized ligand libraries under certain constraints in future releases of istar.
+We have collected 23,129,083 ligands at pH 7 in mol2 format from versions 2012-04-26 and 2013-01-10 of the All Clean subset the ZINC database \citep{532,1178} with explicit permission of its major developer and maintainer. The All Clean subset is constituted by applying strict filtering rules (http://blaster.docking.org/filtering), e.g. aldehydes and thiols have been removed. We have then converted the entire 17 million ligands in batch into PDBQT format as used by idock and the AutoDock series. The huge number of 17 million ligands should be sufficient in most cases. In case users need to screen their own ligand libraries, at present we recommend them run idock locally on their computers. We may consider allowing users to upload customized ligand libraries under certain constraints in future releases of istar.
 
 istar supports ligand selection by desired molecular properties in a fine-grained manner and previewing the number of ligands to dock in real time (Figure S2). Users can move the nine sliders to filter ligands in the form of closed intervals. Only the ligands satisfying all the nine filtering conditions will be docked. Because of the relationship of logical and, in order to nullify a specific filtering condition, one may expand its closed interval to cover the entire possible range. We have set up default values of the lower and upper bounds of the nine molecular properties for novices to get started easily.
 
@@ -180,7 +182,7 @@ Figure S4. istar writes verbose output to file in PDBQT format. The first three 
 
 At the moment, we have deployed a machine with Intel Xeon W3520 @ 2.66 GHz and 8GB DDR3 SDRAM to run the web server, and two identical virtual machines with Intel Xeon E5620 @ 2.40 GHz and 8GB DDR3 SDRAM to run the idock daemons, resulting in a docking speed of about one second per ligand. We have mounted a 2TB hard disk into our network file system to store docking jobs and results.
 
-\subsection{Experimental Settings}
+\subsection{Experimental settings}
 
 We evaluated and compared idock x86\_64 v2.0 and AutoDock Vina x86 v1.1.2 from the perspectives of rescoring, redocking and execution time on three datasets, which are PDBbind \citep{529,530}, CSAR \citep{857,960} and ZINC \citep{532,1178}.
 
@@ -204,7 +206,7 @@ The three benchmarks were carried out on desktop computers with Intel Core i5-24
 
 \section{Results}
 
-\subsection{Rescoring Benchmark}
+\subsection{Rescoring benchmark}
 
 Table \ref{ScoringFunctionComparison} compares 21 scoring functions on the PDBbind v2007 core set ($N$ = 195). RF-Score \citep{564}, ID-Score \citep{1305}, SVR-Score \citep{1295} and X-Score \citep{573} are the only scoring functions whose training set do not overlap with the PDBbind v2007 core set. In terms of both Pearson's correlation coefficient and standard deviation, RF-Score performed the best, while AutoDock Vina and idock ranked 7th and 8th respectively, already outperforming the majority of commercial scoring functions.
 
@@ -226,7 +228,7 @@ Figure \ref{PDBbind2012Correlations} plots the pairwise correlations amongst exp
 \label{CSAR2010Correlations}
 \end{figure}
 
-\subsection{Redocking Benchmark}
+\subsection{Redocking benchmark}
 
 Figures S5, S6, S7 and S8 visualize the redocking results of four protein-ligand complexes selected from the PDBbind v2012 refined set. Table \ref{SuccessRate} shows the success rates of idock and AutoDock Vina under various conditions regarding the $RMSD$ values between the crystal and docked conformations. Given a redocking case, $RMSD_i (i = 1,2,...,9)$ refers to the $RMSD$ value between the crystal conformation and the $i$th docked conformation, i.e. the one with the $i$th highest predicted binding affinity, while $RMSD_{min}$ refers to the $RMSD$ value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum $RMSD$ value. $RMSD_{min} = \displaystyle\min_{i}RMSD_i\ (i = 1,2,...,9)$. The condition $RMSD_1$ = $RMSD_{min}$ therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on the CSAR NRC HiQ Set 24Sept2010 are consistently higher than the PDBbind v2012 and v2011 refined sets, probably because the scoring function performs well on carefully refined structures. Using a RMSD value of 2.0\AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand as the first conformation in over half of the cases, without any manual tweaking of the protein model.
 
@@ -316,7 +318,7 @@ From the perspective of prospective docking, Figure \ref{pK-idockConf1idock} sho
 \label{VinaConf1RMSD-idockConf1RMSD}
 \end{figure}
 
-\subsection{Execution Time Benchmark}
+\subsection{Execution time benchmark}
 
 Table \ref{ExecutionTime} compares the CPU time and elapsed time of AutoDock Vina and idock. The execution time varied a lot from protein to protein and from molecular weight set to molecular weight set. In conclusion, idock outperformed AutoDock Vina by at least 8.69 times and at most 37.51 times, making idock particularly ideal for large-scale docking, as is the case of istar.
 
@@ -437,7 +439,7 @@ Due to limited budget, we cannot offer as much hardware resource as DOCK Blaster
 
 istar \citep{1362} is our software-as-a-service platform for bioinformatics and chemoinformatics. So far some applications have been ported to istar, including idock \citep{1153} for protein-ligand docking, igrep \citep{1138} for DNA sequence matching, and iview \citep{1366} for WebGL visualization. We implemented USR on top of istar to complement protein-ligand docking.
 
-Cite Google Analytics results: countries, page visits.
+TODO: cite Google Analytics results: countries, page visits. cite user's comments from gmail.
 
 \section{Availability}
 
