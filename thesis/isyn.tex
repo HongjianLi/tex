@@ -6,9 +6,9 @@ Generating \textit{de novo} ligands from molecular fragments can eliminate the d
 
 We present iSyn, a WebGL-based tool for interactive FBDD. It features an evolutionary algorithm that automatically designs novel ligands with drug-like properties and synthetic feasibility using click chemistry. iSyn interfaces with our popular and fast molecular docking engine idock, substantially reducing the evaluation and ranking time of drug candidates. Inspired by our user friendly and high-performance WebGL visualizer iview, our iSyn also implements a tailor-made interactive visualizer to aid novel drug design. To illustrate the utility of iSyn in generating novel ligands \textit{ex nihilo}, we designed predicted inhibitors of two important drug targets, which are RNA editing ligase 1 (REL1) from Trypanosoma brucei, the etiological agent of African sleeping sickness, and cyclin-dependent kinase 2 (CDK2), a positive regulator of eukaryotic cell cycle progression. Results show that iSyn managed to significantly enhance the predicted binding affinity of the best generated ligand by more than 3 orders of magnitude in potency.
 
-iSyn can effectively generate promising compounds with desired potency and molecular mass, and eventually supplement the efforts of medicinal chemists in drug discovery research. iSyn is freely available at http://istar.cse.cuhk.edu.hk/iSyn.tgz.
+iSyn can effectively generate promising compounds with desired potency and molecular mass, and hopefully supplement the efforts of medicinal chemists. iSyn is freely available at http://istar.cse.cuhk.edu.hk/iSyn.tgz.
 
-This was a collaborative project with Chun Ho Chan and Hei Lun Cheung from Department of Computer Science and Engineering, Chinese University of Hong Kong. It was published in the proceedings of the \textit{2014 Conference Companion on Genetic and Evolutionary Computation Companion (GECCO)} on 12 July 2014 \citep{1409} and in the proceedings of the \textit{18th International Conference on Information Visualisation (IV)} on 15 July 2014 \citep{1387}.
+This was a collaborative project with Chun Ho Chan and Hei Lun Cheung from Department of Computer Science and Engineering, Chinese University of Hong Kong. It was published in the \textit{Proceedings of the 2014 Conference Companion on Genetic and Evolutionary Computation Companion (GECCO)} on 12 July 2014 \citep{1409} and in the \textit{Proceedings of the 18th International Conference on Information Visualisation (IV)} on 15 July 2014 \citep{1387}.
 
 \section{Introduction}
 
@@ -189,8 +189,6 @@ iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resulta
 \caption{CDK2 (PDB: 1JSV) in complex of the best ligand.}
 \label{isyn:1JSV}
 \end{figure}
-
-\subsection{Inhibitors of cyclin-dependent kinase 2 (PDB: )}
 
 In another run of iSyn with the same target, PDB entry 1PXM was used. We would like to test whether iSyn could produce consistent results given different PDB entries of the same protein.
 
