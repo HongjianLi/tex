@@ -71,11 +71,11 @@ USR \citep{1379} is highly extensible via positioning reference locations \citep
 
 \begin{eqnarray}
 S(\mathbf M^i, \mathbf M^j)=(1
-&+&ow\cdot\frac{1}{12}\sum_{k= 1}^{12}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
-&+&hw\cdot\frac{1}{12}\sum_{k=13}^{24}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
-&+&rw\cdot\frac{1}{12}\sum_{k=25}^{36}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
-&+&aw\cdot\frac{1}{12}\sum_{k=37}^{48}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
-&+&dw\cdot\frac{1}{12}\sum_{k=49}^{60}|\mathbf M_k^i-\mathbf M_k^j|)^{-1}\in[0, 1]
+&+&ow\times\frac{1}{12}\sum_{k= 1}^{12}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
+&+&hw\times\frac{1}{12}\sum_{k=13}^{24}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
+&+&rw\times\frac{1}{12}\sum_{k=25}^{36}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
+&+&aw\times\frac{1}{12}\sum_{k=37}^{48}|\mathbf M_k^i-\mathbf M_k^j|\nonumber\\
+&+&dw\times\frac{1}{12}\sum_{k=49}^{60}|\mathbf M_k^i-\mathbf M_k^j|)^{-1}\in[0, 1]
 \label{usr:usrcatscore}
 \end{eqnarray}
 
@@ -106,15 +106,15 @@ After generating approximately 10 conformers on average for each molecule, the d
 On one hand, given a server with sufficient capacity of memory, it is possible to preload all descriptors to enable fast screening. Mathematically, suppose $t_r$ is the reading time of a moment vector of a conformer in the database, $t_s$ is the scoring time of two moment vectors, $n_{conf}$ is the number of conformers in the database, $n_{query}$ is the number of query ligands of a single job, and $n_{job}$ is the number of jobs, the total screening time $t$ would be
 
 \begin{equation}
-t=t_r\cdot n_{conf}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
+t=t_r\times n_{conf}+t_s\times n_{conf}\times n_{query}\times n_{job}
 \label{usr:time0}
 \end{equation}
 
 On the other hand, on a server with insufficient memory to preload all descriptors, it is possible to load the descriptors chunk by chunk whenever a new job gets executed. Suppose only $m_{conf} << n_{conf}$ moment vectors fit in the memory. The chunk-by-chunk approach is to loop for $n_{conf}/m_{conf}$ times, each time loading a different chunk with $m_{conf}$ moment vectors and then making the $n_{query}$ queries on this chunk. In this way, the total screening time $t$ would be
 
 \begin{eqnarray}
-t&=&(t_r\cdot m_{conf}+t_s\cdot m_{conf}\cdot n_{query})\cdot(n_{conf}/m_{conf})\cdot n_{job}\nonumber\\
- &=&t_r\cdot n_{conf}\cdot n_{job}+t_s\cdot n_{conf}\cdot n_{query}\cdot n_{job}
+t&=&(t_r\times m_{conf}+t_s\times m_{conf}\times n_{query})\times(n_{conf}/m_{conf})\times n_{job}\nonumber\\
+ &=&t_r\times n_{conf}\times n_{job}+t_s\times n_{conf}\times n_{query}\times n_{job}
 \label{usr:time1}
 \end{eqnarray}
 
@@ -132,7 +132,7 @@ AVX are extensions to the x86 instruction set and expand the width of the SIMD (
 \label{usr:AVX}
 \end{figure}
 
-Our daemon supports multiple query ligands in either SDF, MOL2, XYZ, PDB or PDBQT formats in one single job. Moreover, our client side user interface features our iview \citep{1366} WebGL visualizer to realize interactive visualization of high-score hits.
+Our daemon supports multiple query ligands in either SDF, MOL2, XYZ, PDB or PDBQT formats in one single job. Sample files in these formats are provided. Moreover, our client side user interface features our iview \citep{1366} WebGL visualizer to realize interactive visualization of high-score hits.
 
 \section{Results}
 
