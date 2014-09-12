@@ -1,4 +1,4 @@
-\chapter{iSyn: \textit{in silico} fragment-based drug design}
+\chapter{iSyn: fragment-based drug design}
 
 \section{Abstract}
 
@@ -134,11 +134,11 @@ To demonstrate the utility of iSyn in generating novel ligands \textit{ex nihilo
 
 We evaluated and compared our iSyn and the state-of-the-art AutoGrow 3.0 from the perspectives of the lowest predicted free energy obtained and the program execution time on a Linux server equipped with 2 Xeon E5-2670 @ 2.6GHz and 128GB ECC DDR3.
 
-\subsection{Example 1: inhibitors of Trypanosoma brucei RNA editing ligase 1 (PDB: 1XDN)}
+\subsection{Inhibitors of Trypanosoma brucei RNA editing ligase 1}
 
 As TbREL1 is crucial for the survival of the Trypanosoma brucei parasite, it has been the target of several drug discovery projects over recent years.
 
-75 initial ligands were chosen as input from the MW250 subset of the AutoGrow 3.0 fragment library by randomly picking 5 fragments from each of the 15 categories.
+PDB entry 1XDN was used. 75 initial ligands were chosen as input from the MW250 subset of the AutoGrow 3.0 fragment library by randomly picking 5 fragments from each of the 15 categories.
 
 AutoGrow 3.0 was run for 2 days and 10 hours for 17 generations, and the best resultant compound had predicted free energy of -12.7 kcal/mol.
 
@@ -174,11 +174,11 @@ In another run of iSyn with the same target, 20,392 initial ligands from the MW2
 \label{isyn:Gen2_m24517}
 \end{figure}
 
-\subsection{Example 2: inhibitors of cyclin-dependent kinase 2 (PDB: 1JSV)}
+\subsection{Inhibitors of cyclin-dependent kinase 2}
 
 CDK2 is a member of the cyclin-dependent kinase family that are potential therapeutic targets for oncology. Inhibition of CDK2 may represent a therapeutic strategy for prevention of many cell cycle related diseases.
 
-Likewise, a number of ligands were chosen randomly from the fragment library to act as initial ligands.
+PDB entry 1JSV was used. Likewise, a number of ligands were chosen randomly from the fragment library to act as initial ligands.
 
 iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resultant compound had predicted free energy of -11.345 kcal/mol, with 9 putative hydrogen bonds (Figure \ref{isyn:1JSV}). For comparison, its starting ligand had predicted free energy of only -5.607 kcal/mol.
 
@@ -190,9 +190,9 @@ iSyn was run for 11 hours and 20 minutes for 4 generations, and the best resulta
 \label{isyn:1JSV}
 \end{figure}
 
-\subsection{Example 3: inhibitors of cyclin-dependent kinase 2 (PDB: 1PXM)}
+\subsection{Inhibitors of cyclin-dependent kinase 2 (PDB: )}
 
-Similar to the previous example, the protein in this example is also CDK2, but in a different conformation. We would like to test whether iSyn could produce consistent results given different conformations of the same protein.
+In another run of iSyn with the same target, PDB entry 1PXM was used. We would like to test whether iSyn could produce consistent results given different PDB entries of the same protein.
 
 iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resultant compound had predicted binding affinity of -14.071 kcal/mol, with 12 putative hydrogen bonds (Figure \ref{isyn:1PXM}).
  
@@ -204,7 +204,7 @@ iSyn was run for 14 hours and 30 minutes for 5 generations, and the best resulta
 \label{isyn:1PXM}
 \end{figure}
 
-Obviously, the best ligand obtained in this example is better than the one obtained in the previous example. This could be due to several reasons. The major reason is most likely the stochastic nature of the evolutionary algorithm. Different optimization runs typically lead to different results. Another reason is the conformational differences in the protein, which could affect intermolecular binding. A third reason is the difference in the center and size of the binding site. Nevertheless, in both examples the best ligand still had predicted free energy lower than -11 kcal/mol, indicating that iSyn managed to produce very potent ligands in both cases.
+Obviously, the best ligand obtained in this example is better than the one obtained in the previous example. This could be due to several reasons. The major reason is most likely the stochastic nature of the evolutionary algorithm. Different optimization runs typically lead to different results. Another reason is the possible conformational differences in the two protein-ligand complex entries, which could affect intermolecular binding. A third reason is the difference in the center and size of the binding site. Nevertheless, in both examples the best ligand still had predicted free energy lower than -11 kcal/mol, indicating that iSyn managed to produce very potent ligands in both cases.
 
 \section{Conclusions}
 
