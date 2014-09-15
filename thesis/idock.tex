@@ -42,6 +42,17 @@ Although Vina is popular and competitive and well known for its fast execution a
 
 \section{Methods}
 
+\subsection{Flowchart}
+
+Figure \ref{idock:Flowchart} shows the overall flowchart of idock. During initialization, idock precalculates the scoring function for all possible combinations of atom type pairs and interatomic distances. It parses the receptor and determines the atom types with the aid of residue sequence, and creates a thread pool to hold reusable threads. Then it enters a loop and fetches a ligand from a user-specified input folder to perform docking. It parses the ligand and determines the atom types with the aid of branch information, and meanwhile automatically detects and deactivates inactive torsions. It builds grid maps of granularity 0.15625 \AA\ by default on the fly by multithreading, and distributes multiple independent Monte Carlo tasks to the thread pool for concurrent execution. Then it merges the conformations from separate threads and clusters them with RMSD 2.0 \AA, and dumps them to the user-specified output folder and displays the predicted free energy on screen. It proceeds with the next ligand automatically until all are docked. Finally it destroys the thread pool and releases memory resources.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../idock/Flowchart.pdf}
+\caption{idock flowchart.}
+\label{idock:Flowchart}
+\end{figure}
+
 \subsection{PDBQT specification}
 
 PDBQT is the protein and ligand input and output format used by AutoDock \citep{597,596}, Vina \citep{595}, idock \citep{1153}, and QuickVina \citep{1193}. Its official definition is at http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file. In PDBQT format (Figure \ref{idock:PDBQT}), ligands can be treated as flexible with the idea of a torsion tree to represent the rigid and rotatable pieces. There is always one root, and zero or more branches. Branches can be nested. Every branch defines a rotatable bond.
@@ -85,21 +96,17 @@ In the root or any branch, the atomic positions are relative to each atom becaus
 
 Once the conformation of the root or a branch is determined, the orientation of a child branch can be derived by that of the parent branch and a torsion, which is essentially the rotating angle along the connecting rotatable bond and is thus in the range of –π to π. The position of the reference atom of the child branch (the Y atom) is fixed relative to the first atom involved in the connecting rotatable bond (the X atom) and is invariant of the torsion applied. Therefore, the conformation of a child branch can be uniquely identified by the conformation of its parent branch and a torsion value. Eventually in a cascade way, the conformation of a flexible ligand can be modeled by the conformation of the root and a set of torsion values as many as the number of rotatable bonds.
 
-Mathematically, a ligand conformation can be modeled by a numerical vector $c=(x, y, z, q_0, q_1, q_2, q_3, t_1, t_2, ..., t_n)$, where $(x, y, z)$ represents the position of the reference atom (the first atom) of the root, $(q_0, q_1, q_2, q_3)$ represents the orientation of the root, with $q_0^2+q_1^2+q_2^2+q_3^2=1$, and $(t_1, t_2, ..., t_n)$ represents the torsions of all child branches, with $n$ being the number of rotatable bonds and $t_i\in[-\pi, \pi]$ for $i\in[1, n]$. The conformational degree of freedom is at least 6, 3 from the position and 3 from the orientation. Nowadays modern drugs usually have 4 or more torsions, so the conformational degree of freedom is generally at least 10.
-
-\subsection{Flowchart}
-
-Figure \ref{idock:Flowchart} shows the overall flowchart of idock. During initialization, idock precalculates the scoring function for all possible combinations of atom type pairs and interatomic distances. It parses the receptor and determines the atom types with the aid of residue sequence, and creates a thread pool to hold reusable threads. Then it enters a loop and fetches a ligand from a user-specified input folder to perform docking. It parses the ligand and determines the atom types with the aid of branch information, and meanwhile automatically detects and deactivates inactive torsions. It builds grid maps of granularity 0.15625 \AA\ by default on the fly by multithreading, and distributes multiple independent Monte Carlo tasks to the thread pool for concurrent execution. Then it merges the conformations from separate threads and clusters them with RMSD 2.0 \AA, and dumps them to the user-specified output folder and displays the predicted free energy on screen. It proceeds with the next ligand automatically until all are docked. Finally it destroys the thread pool and releases memory resources.
-
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{../idock/Flowchart.pdf}
-\caption{idock flowchart.}
-\label{idock:Flowchart}
-\end{figure}
+Mathematically, a ligand conformation can be modeled by a numerical vector $\mathbf c=(x, y, z, q_0, q_1, q_2, q_3, t_1, t_2, ..., t_n)$, where $(x, y, z)$ represents the position of the reference atom (the first atom) of the root, $(q_0, q_1, q_2, q_3)$ represents the orientation of the root, with $q_0^2+q_1^2+q_2^2+q_3^2=1$, and $(t_1, t_2, ..., t_n)$ represents the torsions of all child branches, with $n$ being the number of rotatable bonds and $t_i\in[-\pi, \pi]$ for $i\in[1, n]$. The conformational degree of freedom is at least 6, 3 from the position and 3 from the orientation. Nowadays modern drugs usually have 4 or more torsions, so the conformational degree of freedom is generally at least 10.
 
 \subsection{Scoring function}
-% In Vina, the binding affinity is evaluated as free energy. The lower the free energy, the higher the binding affinity.
+
+The scoring function estimates the binding affinity given a conformation (equation \eqref{idock:f}). The binding affinity is expressed in terms of free energy. The lower the free energy, the higher the binding affinity.
+
+\begin{equation}
+\label{idock:f}
+e = f(\mathbf c) = f(x, y, z, q_0, q_1, q_2, q_3, t_1, t_2, ..., t_n)
+\end{equation}
+
 Both idock and Vina share exactly the same scoring function, which is made up of a conformation-dependent part and a conformation-independent part. The conformation-dependent part is a weighted sum of five terms over all the pairs of atom $i$ and atom $j$ that can move relative to each other. It is calculated from equations \eqref{idock:e} and \eqref{idock:eij} where $t_i$ and $t_j$ are the atom types of $i$ and $j$ respectively, and $r_{ij}$ is their interatomic distance. The five terms are calculated from equations \eqref{idock:Gauss1} to \eqref{idock:HBonding} where $d_{ij}$ is the surface distance calculated from equation \eqref{idock:dij} where $R_{t_i}$ and $R_{t_j}$ are the Van der Waals radii of $t_i$ and $t_j$ respectively (Figure \ref{idock:Distance}). All the units are in \AA. The weighting coefficients and the cut off at $r_{ij}$ = 8 \AA\ of the five terms are borrowed from Vina. The optimization algorithm attempts to find the global minimum of $e$ and other low-scoring conformations, which it then ranks.
 
 \begin{equation}
