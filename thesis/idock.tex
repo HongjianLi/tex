@@ -218,7 +218,7 @@ Though both programs share similar optimization algorithms, their implementation
 
 Vina is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatedly parsing the same protein and creating the same grid maps, thus degrading performance.
 
-idock supports virtual screening in a native manner. It docks a directory of ligands instead of a single ligand, and reuses protein and grid maps (note the loop in the flowchart in Figure \req{idock:Flowchart}). Given a very large amount of ligands to dock, idock indirectly supports two-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. This can be done by setting the grid map granularity to a coarse value and setting the maximum number of output conformations to zero. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
+idock supports virtual screening in a native manner. It docks a directory of ligands instead of a single ligand, and reuses protein and grid maps (note the loop in the flowchart in Figure \ref{idock:Flowchart}). Given a very large amount of ligands to dock, idock indirectly supports two-phase virtual screening via two consecutive runs. In the first run, idock performs coarse but fast virtual screening without writing any conformations to file, aiming to quickly shortlist a few candidate compounds. This can be done by setting the grid map granularity to a coarse value and setting the maximum number of output conformations to zero. In the second run, idock performs fine but slow virtual screening with a significantly larger number of Monte Carlo tasks per ligand, writing as many conformations to file as possible and aiming to refine the predicted free energy as well as predicted conformation of candidate compounds. Such a 2-phase docking methodology can remarkably reduce overall execution time while avoiding the risk of filtering out potentially promising compounds, controlling the false negative rate at an acceptable level.
 
 \subsection{Detection of inactive torsions}
 
@@ -264,7 +264,7 @@ However, clinical feedback reveals that TDF exhibits strong side effects, causin
 
 \begin{table}
 \centering
-\begin{tabular*}
+\begin{tabular}
 {rcc}
 \toprule
 & Scitegic ECFP4 fingerprint & Daylight fingerprint\\
@@ -274,7 +274,7 @@ HIV RT inhibitor & 1.00 & 1.00 \\
    ADA inhibitor & 0.42 & 0.75 \\
    PNP inhibitor & 0.51 & 0.76 \\
 \bottomrule
-\end{tabular*}
+\end{tabular}
 \caption{Tanimoto coefficients between TDF and the inhibitors of HIV RT, SAHH, ADA, and PNP using the Scitegic ECFP4 and Daylight fingerprints through the SEA database \citep{380}.}
 \label{idock:TanimotoCoefficients}
 \end{table}
