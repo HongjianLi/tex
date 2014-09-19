@@ -167,71 +167,211 @@ These results suggest that RF is capable of effectively exploiting a comprehensi
 
 Table \ref{rfcyscore:cv} shows the results of 5-fold cross validation for all the four models on the five partitions of PDBbind v2013 refined set (N=2959). The best performance was obtained on partition 2. In terms of average performance, the relative performance ranking is consistent, where RF::CyscoreVinaElem (RMSE=1.35, SD=1.35, Rp=0.738, Rs=0.738) is better than RF::CyscoreVina (RMSE=1.44, SD=1.44, Rp=0.693, Rs=0.690), which is better than RF::Cyscore (RMSE=1.59, SD=1.59, Rp=0.603, Rs=0.587), which is better than MLR::Cyscore (RMSE=1.66, SD=1.66, Rp=0.556, Rs=0.559).
 
-\begin{sidewaystable}
+\begin{table}
 \caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set.}
 \label{rfcyscore:cv}
-\begin{tabular}{rrrrrrrrrrrrrrrrrr}
+\begin{tabular}{rrrrrr}
 \hline
-&&\multicolumn{4}{c}{MLR::Cyscore} & \multicolumn{4}{c}{RF::Cyscore} & \multicolumn{4}{c}{RF::CyscoreVina} & \multicolumn{4}{c}{RF::CyscoreVinaElem}\\
-\# & N & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs\\
+\# & N & RMSE & SD & Rp & Rs\\
 \hline
-  1 & 592 & 1.66 & 1.66 & 0.560 & 0.555 & 1.60 & 1.60 & 0.601 & 0.588 & 1.41 & 1.41 & 0.708 & 0.709 & 1.33 & 1.33 & 0.748 & 0.746\\
-  2 & 592 & 1.62 & 1.62 & 0.589 & 0.600 & 1.51 & 1.51 & 0.657 & 0.641 & 1.38 & 1.37 & 0.730 & 0.725 & 1.30 & 1.29 & 0.764 & 0.766\\
-  3 & 592 & 1.69 & 1.70 & 0.531 & 0.529 & 1.66 & 1.66 & 0.561 & 0.545 & 1.49 & 1.49 & 0.668 & 0.665 & 1.41 & 1.41 & 0.711 & 0.709\\
-  4 & 592 & 1.68 & 1.68 & 0.542 & 0.557 & 1.63 & 1.63 & 0.580 & 0.576 & 1.51 & 1.51 & 0.657 & 0.661 & 1.41 & 1.41 & 0.711 & 0.722\\
-  5 & 591 & 1.65 & 1.65 & 0.559 & 0.553 & 1.57 & 1.57 & 0.615 & 0.586 & 1.42 & 1.42 & 0.701 & 0.692 & 1.30 & 1.30 & 0.758 & 0.749\\
-avg &     & 1.66 & 1.66 & 0.556 & 0.559 & 1.59 & 1.59 & 0.603 & 0.587 & 1.44 & 1.44 & 0.693 & 0.690 & 1.35 & 1.35 & 0.738 & 0.738\\
+\multicolumn{6}{c}{MLR::Cyscore}\\
+  1 & 592 & 1.66 & 1.66 & 0.560 & 0.555\\
+  2 & 592 & 1.62 & 1.62 & 0.589 & 0.600\\
+  3 & 592 & 1.69 & 1.70 & 0.531 & 0.529\\
+  4 & 592 & 1.68 & 1.68 & 0.542 & 0.557\\
+  5 & 591 & 1.65 & 1.65 & 0.559 & 0.553\\
+avg &     & 1.66 & 1.66 & 0.556 & 0.559\\
+\hline
+\multicolumn{6}{c}{RF::Cyscore}\\
+  1 & 592 & 1.60 & 1.60 & 0.601 & 0.588\\
+  2 & 592 & 1.51 & 1.51 & 0.657 & 0.641\\
+  3 & 592 & 1.66 & 1.66 & 0.561 & 0.545\\
+  4 & 592 & 1.63 & 1.63 & 0.580 & 0.576\\
+  5 & 591 & 1.57 & 1.57 & 0.615 & 0.586\\
+avg &     & 1.59 & 1.59 & 0.603 & 0.587\\
+\hline
+\multicolumn{6}{c}{RF::CyscoreVina}\\
+  1 & 592 & 1.41 & 1.41 & 0.708 & 0.709\\
+  2 & 592 & 1.38 & 1.37 & 0.730 & 0.725\\
+  3 & 592 & 1.49 & 1.49 & 0.668 & 0.665\\
+  4 & 592 & 1.51 & 1.51 & 0.657 & 0.661\\
+  5 & 591 & 1.42 & 1.42 & 0.701 & 0.692\\
+avg &     & 1.44 & 1.44 & 0.693 & 0.690\\
+\hline
+\multicolumn{6}{c}{RF::CyscoreVinaElem}\\
+  1 & 592 & 1.33 & 1.33 & 0.748 & 0.746\\
+  2 & 592 & 1.30 & 1.29 & 0.764 & 0.766\\
+  3 & 592 & 1.41 & 1.41 & 0.711 & 0.709\\
+  4 & 592 & 1.41 & 1.41 & 0.711 & 0.722\\
+  5 & 591 & 1.30 & 1.30 & 0.758 & 0.749\\
+avg &     & 1.35 & 1.35 & 0.738 & 0.738\\
 \hline
 \end{tabular}
-\end{sidewaystable}
+\end{table}
 
 \subsection{Leave-cluster-out cross validation leads to unrealistically low performance}
 
-Table \ref{rfcyscore:lcocv} shows the results of leave-cluster-out cross validation (LCOCV) for all the four models. Not unexpectedly, the observed performance is very heterogeneous across the different protein families. These results indeed agree with the LCOCV results of six other scoring functions from previous studies \citep{774,1414,1194,1410,1347,1415}. By analyzing the LCOCV statistics of all these ten scoring functions, we found that they all performed well in certain clusters (e.g. trypsin and $\beta$-secretase I) and poorly in some other clusters (e.g. HIV protease and factor Xa). The reasons for the large spread of performance across the different clusters are manifold, and a comprehensive analysis for each protein family would be beyond the scope of this study. As pointed out in \citep{1347}, eliminating all the HIV protease complexes leads to an imbalance between the training and test sets because HIV protease inhibitors are on average much larger than the ligands of the other targets. This illustrates that the LCOCV results should not be directly interpreted as performance measures on particular protein families. Moreover, the limited size of many clusters and the small range of measured binding affinity values therein make a satisfactory prediction of the ranking rather challenging.
+Tables \ref{rfcyscore:lcocv1}, \ref{rfcyscore:lcocv2}, \ref{rfcyscore:lcocv3} and \ref{rfcyscore:lcocv4} show the results of leave-cluster-out cross validation (LCOCV) for all the four models on the 23 protein families (A to W) and 3 multi-family (X to Z) clusters of PDBbind v2009 refined set. Not unexpectedly, the observed performance is very heterogeneous across the different protein families. These results indeed agree with the LCOCV results of six other scoring functions from previous studies \citep{774,1414,1194,1410,1347,1415}. By analyzing the LCOCV statistics of all these ten scoring functions, we found that they all performed well in certain clusters (e.g. trypsin and $\beta$-secretase I) and poorly in some other clusters (e.g. HIV protease and factor Xa). The reasons for the large spread of performance across the different clusters are manifold, and a comprehensive analysis for each protein family would be beyond the scope of this study. As pointed out in \citep{1347}, eliminating all the HIV protease complexes leads to an imbalance between the training and test sets because HIV protease inhibitors are on average much larger than the ligands of the other targets. This illustrates that the LCOCV results should not be directly interpreted as performance measures on particular protein families. Moreover, the limited size of many clusters and the small range of measured binding affinity values therein make a satisfactory prediction of the ranking rather challenging.
 
-\begin{sidewaystable}
-\caption{Leave-cluster-out cross validation results of the four models on the 23 protein families (A to W) and 3 multi-family (X to Z) clusters of PDBbind v2009 refined set (N=1740) in terms of root mean square error RMSE, standard deviation SD in linear correlation, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs.}
-\label{rfcyscore:lcocv}
-\begin{tabular}{lcrrrrrrrrrrrrrrrrr}
+\begin{table}
+\caption{Leave-cluster-out cross validation results of MLR::Cyscore.}
+\label{rfcyscore:lcocv1}
+\begin{tabular}{lcrrrrr}
 \hline
-&&&\multicolumn{4}{c}{MLR::Cyscore} & \multicolumn{4}{c}{RF::Cyscore} & \multicolumn{4}{c}{RF::CyscoreVina} & \multicolumn{4}{c}{RF::CyscoreVinaElem}\\
-cluster name & cluster & N & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs & RMSE & SD & Rp & Rs\\
+cluster name & cluster & N & RMSE & SD & Rp & Rs\\
 \hline
-HIV protease                   & A & 188 & 1.65 & 1.53 & 0.259 & 0.216 & 1.70 & 1.51 & 0.310 & 0.201 & 1.76 & 1.56 & 0.182 & 0.105 & 1.77 & 1.56 & 0.166 & 0.129\\
-trypsin                        & B &  74 & 1.24 & 1.11 & 0.612 & 0.695 & 1.10 & 1.11 & 0.610 & 0.636 & 0.96 & 0.97 & 0.723 & 0.700 & 0.93 & 0.93 & 0.751 & 0.715\\
-carbonic anhydrase             & C &  57 & 2.47 & 1.35 & 0.473 & 0.343 & 2.44 & 1.43 & 0.368 & 0.264 & 2.60 & 1.37 & 0.448 & 0.372 & 2.33 & 1.35 & 0.481 & 0.234\\
-thrombin                       & D &  53 & 1.52 & 1.40 & 0.702 & 0.676 & 1.50 & 1.44 & 0.680 & 0.611 & 1.47 & 1.45 & 0.675 & 0.675 & 1.46 & 1.40 & 0.699 & 0.680\\
-protein tyrosine phosphatase   & E &  32 & 1.23 & 1.06 & 0.411 & 0.313 & 1.30 & 1.10 & 0.338 & 0.268 & 1.36 & 0.98 & 0.538 & 0.542 & 1.23 & 0.89 & 0.643 & 0.615\\
-factor Xa                      & F &  32 & 1.18 & 0.96 & 0.604 & 0.634 & 1.54 & 1.13 & 0.367 & 0.356 & 1.53 & 1.02 & 0.533 & 0.498 & 1.61 & 1.07 & 0.470 & 0.470\\
-urokinase                      & G &  29 & 1.15 & 1.14 & 0.643 & 0.602 & 1.10 & 1.14 & 0.642 & 0.645 & 1.25 & 1.27 & 0.516 & 0.436 & 1.05 & 1.06 & 0.699 & 0.624\\
-different similar transporters & H &  29 & 0.96 & 0.96 & 0.285 & 0.122 & 1.27 & 0.99 & 0.056 &-0.040 & 1.10 & 0.98 & 0.188 & 0.077 & 1.01 & 0.93 & 0.354 & 0.123\\
-c-AMP dependent kinase         & I &  17 & 1.32 & 1.15 & 0.537 & 0.537 & 1.16 & 1.11 & 0.582 & 0.602 & 0.94 & 0.91 & 0.748 & 0.664 & 1.06 & 0.91 & 0.747 & 0.644\\
-$\beta$-glucosidase            & J &  17 & 1.03 & 0.78 & 0.383 & 0.316 & 1.04 & 0.76 & 0.444 & 0.365 & 0.92 & 0.72 & 0.518 & 0.443 & 1.05 & 0.68 & 0.597 & 0.649\\
-antibodies                     & K &  16 & 1.41 & 1.43 & 0.693 & 0.706 & 1.67 & 1.76 & 0.455 & 0.466 & 1.47 & 1.51 & 0.645 & 0.643 & 1.36 & 1.33 & 0.739 & 0.777\\
-casein kinase II               & L &  16 & 0.75 & 0.58 & 0.538 & 0.358 & 0.76 & 0.58 & 0.535 & 0.330 & 0.90 & 0.60 & 0.493 & 0.322 & 0.97 & 0.61 & 0.454 & 0.309\\
-ribonuclease                   & M &  15 & 1.12 & 1.20 & 0.230 & 0.340 & 1.07 & 1.06 & 0.505 & 0.281 & 1.11 & 0.99 & 0.595 & 0.481 & 1.23 & 1.03 & 0.551 & 0.493\\
-thermolysin                    & N &  14 & 1.15 & 1.14 & 0.680 & 0.635 & 0.98 & 1.03 & 0.748 & 0.648 & 1.04 & 1.12 & 0.696 & 0.565 & 0.97 & 1.05 & 0.738 & 0.636\\
-CDK2 kinase                    & O &  13 & 1.06 & 0.80 & 0.841 & 0.812 & 1.14 & 1.01 & 0.733 & 0.817 & 1.14 & 1.02 & 0.729 & 0.661 & 1.12 & 1.14 & 0.640 & 0.525\\
-glutamate receptor 2           & P &  13 & 1.08 & 0.85 & 0.070 & 0.096 & 1.09 & 0.85 & 0.120 & 0.097 & 1.08 & 0.85 & 0.116 & 0.121 & 1.00 & 0.84 & 0.123 & 0.016\\
-P38 kinase                     & Q &  13 & 0.55 & 0.57 & 0.834 & 0.896 & 0.76 & 0.66 & 0.762 & 0.757 & 0.95 & 0.62 & 0.799 & 0.764 & 0.59 & 0.51 & 0.870 & 0.896\\
-$\beta$-secretase I            & R &  12 & 1.44 & 1.33 & 0.892 & 0.725 & 1.57 & 1.51 & 0.858 & 0.620 & 1.54 & 1.51 & 0.860 & 0.687 & 1.43 & 1.31 & 0.895 & 0.687\\
-tRNA-guanine transglycosylase  & S &  12 & 0.90 & 0.95 & 0.463 & 0.544 & 1.06 & 1.04 & 0.212 & 0.375 & 0.87 & 0.95 & 0.457 & 0.403 & 0.87 & 0.95 & 0.457 & 0.522\\
-endothiapepsin                 & T &  11 & 1.18 & 1.30 & 0.435 & 0.215 & 1.28 & 1.35 & 0.358 & 0.210 & 1.35 & 1.36 & 0.345 & 0.215 & 1.36 & 1.27 & 0.480 & 0.210\\
-$\alpha$-mannosidase 2         & U &  10 & 1.67 & 1.63 &-0.004 & 0.248 & 1.65 & 1.62 & 0.116 & 0.188 & 1.73 & 1.62 & 0.089 & 0.176 & 1.83 & 1.63 & 0.053 & 0.103\\
-carboxypeptidase A             & V &  10 & 2.13 & 1.99 & 0.479 & 0.523 & 1.90 & 1.89 & 0.556 & 0.370 & 1.82 & 1.76 & 0.632 & 0.467 & 1.77 & 1.54 & 0.734 & 0.685\\
-penicillopepsin                & W &  10 & 1.71 & 1.87 & 0.339 & 0.188 & 1.78 & 1.94 & 0.236 & 0.188 & 1.81 & 1.96 & 0.183 & 0.030 & 1.91 & 1.99 & 0.078 &-0.030\\
-families with 4-9 complexes    & X & 386 & 1.73 & 1.71 & 0.500 & 0.577 & 1.61 & 1.60 & 0.587 & 0.598 & 1.58 & 1.56 & 0.610 & 0.612 & 1.54 & 1.53 & 0.630 & 0.632\\
-families with 2-3 complexes    & Y & 340 & 1.64 & 1.64 & 0.510 & 0.495 & 1.64 & 1.63 & 0.522 & 0.505 & 1.55 & 1.55 & 0.583 & 0.580 & 1.51 & 1.52 & 0.608 & 0.595\\
-singletons                     & Z & 321 & 1.76 & 1.74 & 0.407 & 0.417 & 1.81 & 1.75 & 0.397 & 0.395 & 1.70 & 1.68 & 0.476 & 0.467 & 1.67 & 1.65 & 0.503 & 0.507\\
-average                        &   &     & 1.35 & 1.24 & 0.493 & 0.470 & 1.38 & 1.27 & 0.465 & 0.414 & 1.37 & 1.23 & 0.515 & 0.450 & 1.33 & 1.18 & 0.545 & 0.479\\
-standard deviation             &   &     & 0.41 & 0.38 & 0.216 & 0.217 & 0.38 & 0.37 & 0.209 & 0.212 & 0.39 & 0.36 & 0.211 & 0.211 & 0.39 & 0.35 & 0.228 & 0.251\\
+HIV protease                   & A & 188 & 1.65 & 1.53 & 0.259 & 0.216\\
+trypsin                        & B &  74 & 1.24 & 1.11 & 0.612 & 0.695\\
+carbonic anhydrase             & C &  57 & 2.47 & 1.35 & 0.473 & 0.343\\
+thrombin                       & D &  53 & 1.52 & 1.40 & 0.702 & 0.676\\
+protein tyrosine phosphatase   & E &  32 & 1.23 & 1.06 & 0.411 & 0.313\\
+factor Xa                      & F &  32 & 1.18 & 0.96 & 0.604 & 0.634\\
+urokinase                      & G &  29 & 1.15 & 1.14 & 0.643 & 0.602\\
+different similar transporters & H &  29 & 0.96 & 0.96 & 0.285 & 0.122\\
+c-AMP dependent kinase         & I &  17 & 1.32 & 1.15 & 0.537 & 0.537\\
+$\beta$-glucosidase            & J &  17 & 1.03 & 0.78 & 0.383 & 0.316\\
+antibodies                     & K &  16 & 1.41 & 1.43 & 0.693 & 0.706\\
+casein kinase II               & L &  16 & 0.75 & 0.58 & 0.538 & 0.358\\
+ribonuclease                   & M &  15 & 1.12 & 1.20 & 0.230 & 0.340\\
+thermolysin                    & N &  14 & 1.15 & 1.14 & 0.680 & 0.635\\
+CDK2 kinase                    & O &  13 & 1.06 & 0.80 & 0.841 & 0.812\\
+glutamate receptor 2           & P &  13 & 1.08 & 0.85 & 0.070 & 0.096\\
+P38 kinase                     & Q &  13 & 0.55 & 0.57 & 0.834 & 0.896\\
+$\beta$-secretase I            & R &  12 & 1.44 & 1.33 & 0.892 & 0.725\\
+tRNA-guanine transglycosylase  & S &  12 & 0.90 & 0.95 & 0.463 & 0.544\\
+endothiapepsin                 & T &  11 & 1.18 & 1.30 & 0.435 & 0.215\\
+$\alpha$-mannosidase 2         & U &  10 & 1.67 & 1.63 &-0.004 & 0.248\\
+carboxypeptidase A             & V &  10 & 2.13 & 1.99 & 0.479 & 0.523\\
+penicillopepsin                & W &  10 & 1.71 & 1.87 & 0.339 & 0.188\\
+families with 4-9 complexes    & X & 386 & 1.73 & 1.71 & 0.500 & 0.577\\
+families with 2-3 complexes    & Y & 340 & 1.64 & 1.64 & 0.510 & 0.495\\
+singletons                     & Z & 321 & 1.76 & 1.74 & 0.407 & 0.417\\
+average                        &   &     & 1.35 & 1.24 & 0.493 & 0.470\\
+standard deviation             &   &     & 0.41 & 0.38 & 0.216 & 0.217\\
 \hline
 \end{tabular}
-\end{sidewaystable}
+\end{table}
+
+\begin{table}
+\caption{Leave-cluster-out cross validation results of RF::Cyscore.}
+\label{rfcyscore:lcocv2}
+\begin{tabular}{lcrrrrr}
+\hline
+cluster name & cluster & N & RMSE & SD & Rp & Rs\\
+\hline
+HIV protease                   & A & 188 & 1.70 & 1.51 & 0.310 & 0.201\\
+trypsin                        & B &  74 & 1.10 & 1.11 & 0.610 & 0.636\\
+carbonic anhydrase             & C &  57 & 2.44 & 1.43 & 0.368 & 0.264\\
+thrombin                       & D &  53 & 1.50 & 1.44 & 0.680 & 0.611\\
+protein tyrosine phosphatase   & E &  32 & 1.30 & 1.10 & 0.338 & 0.268\\
+factor Xa                      & F &  32 & 1.54 & 1.13 & 0.367 & 0.356\\
+urokinase                      & G &  29 & 1.10 & 1.14 & 0.642 & 0.645\\
+different similar transporters & H &  29 & 1.27 & 0.99 & 0.056 &-0.040\\
+c-AMP dependent kinase         & I &  17 & 1.16 & 1.11 & 0.582 & 0.602\\
+$\beta$-glucosidase            & J &  17 & 1.04 & 0.76 & 0.444 & 0.365\\
+antibodies                     & K &  16 & 1.67 & 1.76 & 0.455 & 0.466\\
+casein kinase II               & L &  16 & 0.76 & 0.58 & 0.535 & 0.330\\
+ribonuclease                   & M &  15 & 1.07 & 1.06 & 0.505 & 0.281\\
+thermolysin                    & N &  14 & 0.98 & 1.03 & 0.748 & 0.648\\
+CDK2 kinase                    & O &  13 & 1.14 & 1.01 & 0.733 & 0.817\\
+glutamate receptor 2           & P &  13 & 1.09 & 0.85 & 0.120 & 0.097\\
+P38 kinase                     & Q &  13 & 0.76 & 0.66 & 0.762 & 0.757\\
+$\beta$-secretase I            & R &  12 & 1.57 & 1.51 & 0.858 & 0.620\\
+tRNA-guanine transglycosylase  & S &  12 & 1.06 & 1.04 & 0.212 & 0.375\\
+endothiapepsin                 & T &  11 & 1.28 & 1.35 & 0.358 & 0.210\\
+$\alpha$-mannosidase 2         & U &  10 & 1.65 & 1.62 & 0.116 & 0.188\\
+carboxypeptidase A             & V &  10 & 1.90 & 1.89 & 0.556 & 0.370\\
+penicillopepsin                & W &  10 & 1.78 & 1.94 & 0.236 & 0.188\\
+families with 4-9 complexes    & X & 386 & 1.61 & 1.60 & 0.587 & 0.598\\
+families with 2-3 complexes    & Y & 340 & 1.64 & 1.63 & 0.522 & 0.505\\
+singletons                     & Z & 321 & 1.81 & 1.75 & 0.397 & 0.395\\
+average                        &   &     & 1.38 & 1.27 & 0.465 & 0.414\\
+standard deviation             &   &     & 0.38 & 0.37 & 0.209 & 0.212\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Leave-cluster-out cross validation results of RF::CyscoreVina.}
+\label{rfcyscore:lcocv3}
+\begin{tabular}{lcrrrrr}
+\hline
+cluster name & cluster & N & RMSE & SD & Rp & Rs\\
+\hline
+HIV protease                   & A & 188 & 1.76 & 1.56 & 0.182 & 0.105\\
+trypsin                        & B &  74 & 0.96 & 0.97 & 0.723 & 0.700\\
+carbonic anhydrase             & C &  57 & 2.60 & 1.37 & 0.448 & 0.372\\
+thrombin                       & D &  53 & 1.47 & 1.45 & 0.675 & 0.675\\
+protein tyrosine phosphatase   & E &  32 & 1.36 & 0.98 & 0.538 & 0.542\\
+factor Xa                      & F &  32 & 1.53 & 1.02 & 0.533 & 0.498\\
+urokinase                      & G &  29 & 1.25 & 1.27 & 0.516 & 0.436\\
+different similar transporters & H &  29 & 1.10 & 0.98 & 0.188 & 0.077\\
+c-AMP dependent kinase         & I &  17 & 0.94 & 0.91 & 0.748 & 0.664\\
+$\beta$-glucosidase            & J &  17 & 0.92 & 0.72 & 0.518 & 0.443\\
+antibodies                     & K &  16 & 1.47 & 1.51 & 0.645 & 0.643\\
+casein kinase II               & L &  16 & 0.90 & 0.60 & 0.493 & 0.322\\
+ribonuclease                   & M &  15 & 1.11 & 0.99 & 0.595 & 0.481\\
+thermolysin                    & N &  14 & 1.04 & 1.12 & 0.696 & 0.565\\
+CDK2 kinase                    & O &  13 & 1.14 & 1.02 & 0.729 & 0.661\\
+glutamate receptor 2           & P &  13 & 1.08 & 0.85 & 0.116 & 0.121\\
+P38 kinase                     & Q &  13 & 0.95 & 0.62 & 0.799 & 0.764\\
+$\beta$-secretase I            & R &  12 & 1.54 & 1.51 & 0.860 & 0.687\\
+tRNA-guanine transglycosylase  & S &  12 & 0.87 & 0.95 & 0.457 & 0.403\\
+endothiapepsin                 & T &  11 & 1.35 & 1.36 & 0.345 & 0.215\\
+$\alpha$-mannosidase 2         & U &  10 & 1.73 & 1.62 & 0.089 & 0.176\\
+carboxypeptidase A             & V &  10 & 1.82 & 1.76 & 0.632 & 0.467\\
+penicillopepsin                & W &  10 & 1.81 & 1.96 & 0.183 & 0.030\\
+families with 4-9 complexes    & X & 386 & 1.58 & 1.56 & 0.610 & 0.612\\
+families with 2-3 complexes    & Y & 340 & 1.55 & 1.55 & 0.583 & 0.580\\
+singletons                     & Z & 321 & 1.70 & 1.68 & 0.476 & 0.467\\
+average                        &   &     & 1.37 & 1.23 & 0.515 & 0.450\\
+standard deviation             &   &     & 0.39 & 0.36 & 0.211 & 0.211\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{Leave-cluster-out cross validation results of RF::CyscoreVinaElem.}
+\label{rfcyscore:lcocv4}
+\begin{tabular}{lcrrrrr}
+\hline
+cluster name & cluster & N & RMSE & SD & Rp & Rs\\
+\hline
+HIV protease                   & A & 188 & 1.77 & 1.56 & 0.166 & 0.129\\
+trypsin                        & B &  74 & 0.93 & 0.93 & 0.751 & 0.715\\
+carbonic anhydrase             & C &  57 & 2.33 & 1.35 & 0.481 & 0.234\\
+thrombin                       & D &  53 & 1.46 & 1.40 & 0.699 & 0.680\\
+protein tyrosine phosphatase   & E &  32 & 1.23 & 0.89 & 0.643 & 0.615\\
+factor Xa                      & F &  32 & 1.61 & 1.07 & 0.470 & 0.470\\
+urokinase                      & G &  29 & 1.05 & 1.06 & 0.699 & 0.624\\
+different similar transporters & H &  29 & 1.01 & 0.93 & 0.354 & 0.123\\
+c-AMP dependent kinase         & I &  17 & 1.06 & 0.91 & 0.747 & 0.644\\
+$\beta$-glucosidase            & J &  17 & 1.05 & 0.68 & 0.597 & 0.649\\
+antibodies                     & K &  16 & 1.36 & 1.33 & 0.739 & 0.777\\
+casein kinase II               & L &  16 & 0.97 & 0.61 & 0.454 & 0.309\\
+ribonuclease                   & M &  15 & 1.23 & 1.03 & 0.551 & 0.493\\
+thermolysin                    & N &  14 & 0.97 & 1.05 & 0.738 & 0.636\\
+CDK2 kinase                    & O &  13 & 1.12 & 1.14 & 0.640 & 0.525\\
+glutamate receptor 2           & P &  13 & 1.00 & 0.84 & 0.123 & 0.016\\
+P38 kinase                     & Q &  13 & 0.59 & 0.51 & 0.870 & 0.896\\
+$\beta$-secretase I            & R &  12 & 1.43 & 1.31 & 0.895 & 0.687\\
+tRNA-guanine transglycosylase  & S &  12 & 0.87 & 0.95 & 0.457 & 0.522\\
+endothiapepsin                 & T &  11 & 1.36 & 1.27 & 0.480 & 0.210\\
+$\alpha$-mannosidase 2         & U &  10 & 1.83 & 1.63 & 0.053 & 0.103\\
+carboxypeptidase A             & V &  10 & 1.77 & 1.54 & 0.734 & 0.685\\
+penicillopepsin                & W &  10 & 1.91 & 1.99 & 0.078 &-0.030\\
+families with 4-9 complexes    & X & 386 & 1.54 & 1.53 & 0.630 & 0.632\\
+families with 2-3 complexes    & Y & 340 & 1.51 & 1.52 & 0.608 & 0.595\\
+singletons                     & Z & 321 & 1.67 & 1.65 & 0.503 & 0.507\\
+average                        &   &     & 1.33 & 1.18 & 0.545 & 0.479\\
+standard deviation             &   &     & 0.39 & 0.35 & 0.228 & 0.251\\
+\hline
+\end{tabular}
+\end{table}
 
 While results on standard cross validation might be too optimistic, results on leave-cluster-out cross validation might be too pessimistic. Here we want to emphasize that LCOCV is only suitable for estimating the performance of a generic scoring function on a truly new target protein that does not belong to a cluster represented by any of the proteins in the training set, but this constitutes a very uncommon scenario in real-life applications because it is rare for a target protein not to have high sequence similarity to any other protein in a diverse and large training set. In fact, such type of complexes should never be eliminated from a training set. Instead, the training set composition should reflect as closely as possible the actual complexes on which the scoring function is to be applied. Consequently, LCOCV is not appropriate to evaluate generic scoring functions, as previously argued \citep{908}.
 
-\subsection{Machine-learning scoring functions are significantly more accurate than classical scoring functions with fixed functional forms}
+\subsection{Machine-learning scoring functions are significantly more accurate than classical scoring functions}
 
 Table \ref{rfcyscore:trn1105tst195} compares Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem against 21 other scoring functions on PDBbind v2007 core set (N=195). The scoring functions are sorted in the descending order of Rp. RF::CyscoreVinaElem performs best in terms of Rp, Rs and SD. The statistics for the other 21 scoring functions are collected from \citep{1362,1370,1347}. It is worth noting that the top four scoring functions are all trained with RF.
 
