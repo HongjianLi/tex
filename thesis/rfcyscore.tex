@@ -119,7 +119,13 @@ Leave-cluster-out cross validation (LCOCV) \citep{774}, in contrast to standard 
 
 So far LCOCV has been applied to the assessment of six scoring functions, which are RF-Score \citep{774,1194,1410}, ddPLAT+MOE \citep{1414}, CScore \citep{1194}, B2Bscore \citep{1410}, SFCscoreRF \citep{1347} and the work of Ross et al. \citep{1415}.
 
-For the purpose of comparison to other scoring functions, PDBbind v2009 refined set (N=1741) was used in this study to perform LCOCV. The 1xr8 entry in cluster X was discarded because its ligand is far away from its protein, thereby leaving 1740 complexes. The PDB IDs and measured binding affinities of the complexes in the 23 protein families (A to W) and the 3 multi-family clusters (X to Z) are available in the Additional file 2.
+For the purpose of comparison to other scoring functions, PDBbind v2009 refined set (N=1741) was used in this study to perform LCOCV. The 1xr8 entry in cluster X was discarded because its ligand is far away from its protein, thereby leaving 1740 complexes. Figure \ref{rfcyscore:lcocv} plots the binding affinity distribution of pKd values of the 26 clusters.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{../rfcyscore/cv.pdf}
+\caption{Histograms of pKd values of the 26 clusters of PDBbind v2009 refined set.}
+\label{rfcyscore:lcocv}
+\end{figure}
 
 \subsection{Performance metrics}
 
@@ -149,7 +155,7 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 
 \section{Results and discussion}
 
-Figure \ref{rfcyscore:stat} plots the prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem using different numbers of training samples. First row: root mean square error RMSE. Second row: standard deviation SD in linear correlation. Third row: Pearson correlation coefficient Rp. Fourth row: Spearman correlation coefficient Rs. Left column: PDBbind v2007 benchmark (N=195). Center column: PDBbind v2012 benchmark (N=201). Right column: PDBbind v2013 round-robin benchmark (N=592).% The raw values are available in the Additional file 3.
+Figure \ref{rfcyscore:stat} plots the prediction performance of MLR::Cyscore, RF::Cyscore, RF::CyscoreVina and RF::CyscoreVinaElem using different numbers of training samples. First row: root mean square error RMSE. Second row: standard deviation SD in linear correlation. Third row: Pearson correlation coefficient Rp. Fourth row: Spearman correlation coefficient Rs. Left column: PDBbind v2007 benchmark (N=195). Center column: PDBbind v2012 benchmark (N=201). Right column: PDBbind v2013 round-robin benchmark (N=592).
 
 \begin{figure}
 \includegraphics[width=\linewidth]{../rfcyscore/stat.pdf}
