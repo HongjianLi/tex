@@ -67,13 +67,13 @@ On one hand, Cyscore was tested on two independent sets: PDBbind v2007 core set 
 
 Furthermore, considering the fact that 16 classical scoring functions have already been evaluated \citep{1313} on PDBbind v2007 core set and the top performing of them (e.g. X-Score) were trained on the remaining 1105 complexes in PDBbind v2007 refined set, we also used these 1105 complexes as another training set to permit a direct comparison. Using predefined training and test sets, where other scoring functions had previously been trained and tested, has the advantage of reducing the risk of using a benchmark complementary to one particular scoring function.
 
-Likewise for the PDBbind v2012 benchmark, we used an additional training set comprising the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core set. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set. % TODO: motivate why three sets (core07,core12,ref13\ref12) and say something about bias in using core07 and core12.
+Likewise for the PDBbind v2012 benchmark, we used an extra training set comprising the complexes in PDBbind v2012 refined set excluding those in PDBbind v2012 core set. This led to a total of 2696 complexes. By construction, this training set does not overlap with the test set.
 
 \subsection{PDBbind v2013 round-robin benchmark}
 
 We propose a new benchmark to investigate how prediction performance of the four models changes in cross validation and with varying numbers of training samples. We used PDBbind v2013 refined set (N=2959), which is the latest version and constitutes the most comprehensive and publicly available structural dataset suitable for training scoring functions.
 
-We used 5-fold cross validation, as was used by the recently published empirical scoring function ID-Score \citep{1305}, to reduce overfitting and thus generalization errors. The entire PDBbind v2013 refined set (N=2959) was divided into five equal partitions using uniform sampling on a round-robin basis: the entire 2959 complexes were first sorted in the ascending order of their measured binding affinity, and the complexes with the 1st, 6th, 11th, etc. lowest binding affinity belonged to the first partition, the complexes with the 2nd, 7th, 12th, etc. lowest binding affinity belonged to the second partition, and so on. This partitioning method, though not completely random, has two advantages: on one hand, each partition is guaranteed to span the largest range of binding affinities and incorporates the largest structural diversity of different protein families; on the other hand, each partition is composed of a deterministic list of complexes, permitting reproducibility and comparisons in future studies. Table \ref{rfcyscore:partitions} summarizes the statistics of the five partitions. The PDB IDs and measured binding affinities of the complexes in the five partitions are available in the Additional file 1.
+We used 5-fold cross validation, as was used by the recently published empirical scoring function ID-Score \citep{1305}, to reduce overfitting and thus generalization errors. The entire PDBbind v2013 refined set (N=2959) was divided into five equal partitions using uniform sampling on a round-robin basis: the entire 2959 complexes were first sorted in the ascending order of their measured binding affinity, and the complexes with the 1st, 6th, 11th, etc. lowest binding affinity belonged to the first partition, the complexes with the 2nd, 7th, 12th, etc. lowest binding affinity belonged to the second partition, and so on. This partitioning method, though not completely random, has two advantages: on one hand, each partition is guaranteed to span the largest range of binding affinities and incorporates the largest structural diversity of different protein families; on the other hand, each partition is composed of a deterministic list of complexes, permitting reproducibility and comparisons in future studies. Table \ref{rfcyscore:partitions} summarizes the statistics of the five partitions. Figure \ref{rfcyscore:cv} plots the binding affinity distribution of pKd values of the five partitions.
 
 \begin{table}
 \caption{The statistics of the five partitions of PDBbind v2013 refined set.}
@@ -90,6 +90,12 @@ We used 5-fold cross validation, as was used by the recently published empirical
 \hline
 \end{tabular}
 \end{table}
+
+\begin{figure}
+\includegraphics[width=\linewidth]{../rfcyscore/cv.pdf}
+\caption{Histograms of pKd values of the five partitions of PDBbind v2013 refined set.}
+\label{rfcyscore:cv}
+\end{figure}
 
 We then used the partition on which the best performance was obtained (It turned out to be partition 2 (N=592). See the Results section.) as the test set in PDBbind v2013 round-robin benchmark, and used the remaining four partitions (1, 3, 4, 5) to construct four training sets of incremental sizes: the first training set comprises partition 1 (N=592), the second training set comprises partitions 1 and 3 (N=1184), the third training set comprises partitions 1, 3 and 4 (N=1776), and the fourth training set comprises partitions 1, 3, 4 and 5 (N=2367). Therefore this new benchmark provides a way to study how prediction performance varies with training set size. Moreover, its test set has a significantly larger number of complexes (N=592) compared to PDBbind v2007 (N=195) and v2012 (N=201) benchmarks, making this new benchmark not being a redundant duplication of the previous two benchmarks. Table \ref{rfcyscore:benchmarks} summarizes the numbers of test and training samples for the three benchmarks.
 
@@ -165,11 +171,11 @@ These results suggest that RF is capable of effectively exploiting a comprehensi
 
 \subsection{RF models perform consistently well in cross validation}
 
-Table \ref{rfcyscore:cv} shows the results of 5-fold cross validation for all the four models on the five partitions of PDBbind v2013 refined set (N=2959). The best performance was obtained on partition 2. In terms of average performance, the relative performance ranking is consistent, where RF::CyscoreVinaElem (RMSE=1.35, SD=1.35, Rp=0.738, Rs=0.738) is better than RF::CyscoreVina (RMSE=1.44, SD=1.44, Rp=0.693, Rs=0.690), which is better than RF::Cyscore (RMSE=1.59, SD=1.59, Rp=0.603, Rs=0.587), which is better than MLR::Cyscore (RMSE=1.66, SD=1.66, Rp=0.556, Rs=0.559).
+Table \ref{rfcyscore:cv-stat} shows the results of 5-fold cross validation for all the four models on the five partitions of PDBbind v2013 refined set (N=2959). The best performance was obtained on partition 2. In terms of average performance, the relative performance ranking is consistent, where RF::CyscoreVinaElem (RMSE=1.35, SD=1.35, Rp=0.738, Rs=0.738) is better than RF::CyscoreVina (RMSE=1.44, SD=1.44, Rp=0.693, Rs=0.690), which is better than RF::Cyscore (RMSE=1.59, SD=1.59, Rp=0.603, Rs=0.587), which is better than MLR::Cyscore (RMSE=1.66, SD=1.66, Rp=0.556, Rs=0.559).
 
 \begin{table}
 \caption{Cross validation results of the four models on the five partitions of PDBbind v2013 refined set.}
-\label{rfcyscore:cv}
+\label{rfcyscore:cv-stat}
 \begin{tabular}{rrrrrr}
 \hline
 \# & N & RMSE & SD & Rp & Rs\\
