@@ -161,10 +161,10 @@ Next, partition 5 from Table \ref{rfscore3:partitions} is used to provide furthe
 
 \subsection{Machine-learning SFs are remarkably more accurate than empirical SFs}
 
-Table \ref{rfscore3:trn1105tst195} compares the performance of RF::VinaElem against that of 21 classical SFs and two sample baselines. Section 2.5 specifies the latter as well as some other classical SFs that only reported some of the performance measures, which hence cannot be included in the full comparison in Table \ref{rfscore3:trn1105tst195}: DSX\textsuperscript{CSD}::All \citep{1460} (Rp=0.609) and HotLig \citep{1459} (Rs=0.609).
+Table \ref{rfscore3:trn1105tst195} compares the performance of RF::VinaElem against that of 21 classical SFs and two sample baselines. NHA is the performance of a linear regression model with the number of heavy atoms of the ligand as only variable that serves as a performance baseline and MWT is second baseline that uses the molecular weight of the ligand instead of NHA as the variable. Some other classical SFs that only reported some of the performance measures, which hence cannot be included in the full comparison in Table \ref{rfscore3:trn1105tst195}: DSX\textsuperscript{CSD}::All \citep{1460} (Rp=0.609) and HotLig \citep{1459} (Rs=0.609).
 
 \begin{table}
-\caption{Performance of 22 SFs on the PDBbind benchmark as measured by Pearson's correlation coefficient (Rp), Spearman's correlation coefficient (Rs) and standard deviation (SD) of the difference between predicted and measured binding affinity. In addition, NHA is the performance of a linear regression model with the number of heavy atoms of the ligand as only variable that serves as a performance baseline and MWT is second baseline that uses the molecular weight of the ligand instead of NHA as the variable.}
+\caption{Performance of 22 scoring functions on the PDBbind benchmark.}
 \label{rfscore3:trn1105tst195}
 \begin{tabular}{lrrr}
 \hline
@@ -209,7 +209,7 @@ While it has been claimed \citep{1372} that empirical SFs have similar accuracy 
 
 \subsection{Improvement of AutoDock Vina using RF}
 
-RF::VinaElem is the result of two improvements over Vina: using RF on the six Vina features to circumvent the need of a functional form (model 3) and combining the latter with an expanded set of features (i.e. model 4 using the 36 RF-Score features added to the six from Vina). Figure \ref{rfscore3:partition1stat} shows their performance on PDBbind benchmark, with RF::VinaElem greatly improving Vina by -0.90 in RMSE, -0.57 in SD, +0.249 in Rp and +0.190 in Rs. A linear regression model with molecular weight of the ligand as only variable was trained and tested on the sets and obtained RMSE=2.16, SD=2.17, Rp=0.418 and Rs=0.496.
+RF::VinaElem is the result of two improvements over Vina: using RF on the six Vina features to circumvent the need of a functional form (model 3) and combining the latter with an expanded set of features (i.e. model 4 using the 36 RF-Score features added to the six from Vina). Figure \ref{rfscore3:partition1stat} shows their performance on PDBbind benchmark (partition 1 in Table \ref{rfscore3:partitions}), with RF::VinaElem greatly improving Vina by -0.90 in RMSE, -0.57 in SD, +0.249 in Rp and +0.190 in Rs. A linear regression model with molecular weight of the ligand as only variable was trained and tested on the sets and obtained RMSE=2.16, SD=2.17, Rp=0.418 and Rs=0.496.
 
 \begin{figure}
 \centering
@@ -221,11 +221,11 @@ RF::VinaElem is the result of two improvements over Vina: using RF on the six Vi
 {
   \includegraphics[width=0.48\linewidth]{../rfscore3/model-4-set-1-pdbbind-2007-tst-yp.pdf}
 }
-\caption{Performance on the 195 test set complexes in the PDBbind benchmark (partition 1 in Table \ref{rfscore3:partitions}).}
+\caption{Performance on the 195 test set complexes in the PDBbind benchmark.}
 \label{rfscore3:partition1stat}
 \end{figure}
 
-Figure \ref{rfscore3:partition5stat} shows their performance on the 2013 blind benchmark, with RF::VinaElem also achieving a substantial improvement over Vina of -0.86 in RMSE, -0.37 in SD, +0.280 in Rp and +0.245 in Rs. While there is a significant decrease in performance for both SFs with respect to the PDBbind benchmark (compare Figures \ref{rfscore3:partition1stat} and \ref{rfscore3:partition5stat}), the relative performance of both SFs is similar on both benchmarks as it was anticipated \citep{908}. A linear regression model with molecular weight of the ligand as only variable was trained and tested on the sets and obtained RMSE=1.90, SD=1.90, Rp=0.269 and Rs=0.330.
+Figure \ref{rfscore3:partition5stat} shows their performance on the 2013 blind benchmark (partition 5 in Table \ref{rfscore3:partitions}), with RF::VinaElem also achieving a substantial improvement over Vina of -0.86 in RMSE, -0.37 in SD, +0.280 in Rp and +0.245 in Rs. While there is a significant decrease in performance for both SFs with respect to the PDBbind benchmark (compare Figures \ref{rfscore3:partition1stat} and \ref{rfscore3:partition5stat}), the relative performance of both SFs is similar on both benchmarks as it was anticipated \citep{908}. A linear regression model with molecular weight of the ligand as only variable was trained and tested on the sets and obtained RMSE=1.90, SD=1.90, Rp=0.269 and Rs=0.330.
 
 \begin{figure}
 \centering
@@ -237,7 +237,7 @@ Figure \ref{rfscore3:partition5stat} shows their performance on the 2013 blind b
 {
   \includegraphics[width=0.48\linewidth]{../rfscore3/model-4-set-2-pdbbind-2012-tst-yp.pdf}
 }
-\caption{Performance on the 382 test set complexes in the 2013 blind benchmark (partition 5 in Table \ref{rfscore3:partitions}).}
+\caption{Performance on the 382 test set complexes in the 2013 blind benchmark.}
 \label{rfscore3:partition5stat}
 \end{figure}
 
@@ -254,7 +254,7 @@ Figure \ref{rfscore3:partitions2345SD} shows how the SD error in predicting pKd 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{../rfscore3/set-2-tst-sdev-boxplot.pdf}
-\caption{SD error in predicting binding affinities of the 382 new complexes in 2013 using the four SFs and four training sets formed by the complexes known in 2002, 2007, 2010 and 2012.}
+\caption{SD error in predicting binding affinities of the 382 new complexes in 2013 using the four scoring functions and four training sets formed by the complexes known in 2002, 2007, 2010 and 2012.}
 \label{rfscore3:partitions2345SD}
 \end{figure}
 
@@ -272,7 +272,7 @@ Figure \ref{rfscore3:partitions2345RsRp} shows the correlations with binding aff
 {
   \includegraphics[width=0.48\linewidth]{../rfscore3/set-2-tst-pcor-boxplot.pdf}
 }
-\caption{Spearman rank-correlations (left plot) and Pearson correlations (right plot) with measured binding affinity on the 382 new complexes in 2013 using the same four SFs and training sets as in Figure 6.}
+\caption{Correlations with measured binding affinity on the 382 new complexes in 2013 using the same four scoring functions and training sets formed by the complexes known in 2002, 2007, 2010 and 2012.}
 \label{rfscore3:partitions2345RsRp}
 \end{figure}
 
