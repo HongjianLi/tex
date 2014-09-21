@@ -92,7 +92,7 @@ This is the model described in the previous section with an expanded set of feat
 
 \begin{equation}
 \label{rfscore3:x_ij}
-x_{ij}=\sum_(k=1)^(K_j)\sum_(l=1)^(L_i)H(d_{cutoff}-d_{kl})   \mathbf x=\{x_{ij}\}\in N^36
+x_{ij}=\sum_{k=1}^{K_j}\sum_{l=1}^{L_i}H(d_{cutoff}-d_{kl})   \mathbf x=\{x_{ij}\}\in N^36
 \end{equation}
 
 where $d_{kl}$ is the Euclidean distance between the $k$th protein atom of type $j$ and the $l$th ligand atom of type $i$ calculated from a structure; $K_j$ is the total number of protein atoms of type $j$ and $L_i$ is the total number of ligand atoms of type $i$ in the considered complex; $H$ is the Heaviside step function that counts contacts within a $d_{cutoff}$ neighbourhood. Full details on RF-Score features are available at \citep{564}.
@@ -103,12 +103,12 @@ Using a predefined training and test sets, where other SFs had previously been t
 
 \begin{equation}
 \label{rfscore3:D_train}
-D_{train}=\{y_i,\mathbf x_i\}_{i=1}^1105
+D_{train}=\{y_i,\mathbf x_i\}_{i=1}^{1105}
 \end{equation}
 
 \begin{equation}
 \label{rfscore3:D_test}
-D_{test}=\{y_i,\mathbf x_i\}_{i=1106}^1300
+D_{test}=\{y_i,\mathbf x_i\}_{i=1106}^{1300}
 \end{equation}
 
 \begin{equation}
@@ -129,11 +129,11 @@ We propose a new benchmark mimicking a blind test to provide a more realistic va
 \hline
 Partition & Training set & N & Test set & N\\
 \hline
-1 & refined07\\core07 & 1105 & core07               & 195\\
-2 & refined02         &  792 & refined13\\refined12 & 382\\
-3 & refined07         & 1300 & refined13\\refined12 & 382\\
-4 & refined10         & 2059 & refined13\\refined12 & 382\\
-5 & refined12         & 2897 & refined13\\refined12 & 382\\
+1 & refined07$\backslash$core07 & 1105 & core07               & 195\\
+2 & refined02         &  792 & refined13$\backslash$refined12 & 382\\
+3 & refined07         & 1300 & refined13$\backslash$refined12 & 382\\
+4 & refined10         & 2059 & refined13$\backslash$refined12 & 382\\
+5 & refined12         & 2897 & refined13$\backslash$refined12 & 382\\
 \hline
 \end{tabular}
 \end{table}
