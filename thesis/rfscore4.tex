@@ -1,4 +1,4 @@
-\chapter{RF-Score-v4: impact of pose generation error}
+\chapter{RF-Score-v4: pose generation error}
 
 \section{Abstract}
 
@@ -8,15 +8,34 @@ This was a collaborative project with Pedro J. Ballester from Cancer Research Ce
 
 To avoid confounding factors introduced by pose generation, these studies on scoring accuracy are carried out on data consisting of large sets of X-ray structures of protein-ligand complexes. However, scoring of the docked poses of a molecule is required in those cases where the experimentally-determined pose is not available.
 
-In this paper, we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is more suitable for predicting the near-native pose (i.e. the most similar docked pose to the co-crystallised pose). The numerical experiments will be performed with AutoDock Vina [7], as the classical scoring function, and RF-Score [2] as the machine-learning scoring function. Investigating the generalisation of these results to other non-parametric machine learning techniques previously applied to this problem, such as SVR in [8], is out of the scope of this study, although expected to yield similar outcomes.
+In this paper, we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is more suitable for predicting the near-native pose (i.e. the most similar docked pose to the co-crystallised pose). The numerical experiments will be performed with AutoDock Vina \citep{595}, as the classical scoring function, and RF-Score \citep{564} as the machine-learning scoring function. Investigating the generalisation of these results to other non-parametric machine learning techniques previously applied to this problem, such as SVR in \citep{1295}, is out of the scope of this study, although expected to yield similar outcomes.
 
 \section{Methods}
 
-Four models, same as the previous chapter, except: 1) 11 features, Vina math expression, 2) MLR::Vina w6 range.
+Four models are very similar to those described in the previous chapter. Here we only highlight the differences.
+
+\subsection{Model 1 - AutoDock Vina}
+
+11 features, Vina math expression
+
+\subsection{Model 2 - MLR::Vina}
+
+MLR::Vina w6 range.
+
+\subsection{Model 3 - RF::Vina}
+
+\subsection{Model 4 - RF::VinaElem}
+
+\subsection{The PDBbind benchmark}
+
+\subsection{The 2013 blind benchmark}
+
+\subsection{Performance measures}
+
 
 \subsection{Experimental design}
 
-Each of the 1300 co-crystallised ligands is redocked into the binding site of its target protein using Vina. For each molecule, this results in a maximum number of nine docked poses. The Root-Mean Square Deviation (RMSD) quantifies how different the 3D geometry of the redocked pose is from the corresponding co-crystallised pose of the same ligand molecule (i.e. the pose generation error). Because we aim at investigating the impact of pose generation error on the prediction of binding affinity, a second test set is defined where each of the 195 complexes has its ligand re-docked and its binding affinity predicted by scoring functions trained on the 1105 crystal structures. As a baseline, these scoring functions are also tested on the co-crystallised ligands of the same 195 complexes.
+Each of the 1300 co-crystallised ligands is redocked into the binding site of its target protein using Vina. For each molecule, this results in a maximum number of nine docked poses. The Root Mean Square Deviation (RMSD) quantifies how different the 3D geometry of the redocked pose is from the corresponding co-crystallised pose of the same ligand molecule (i.e. the pose generation error). Because we aim at investigating the impact of pose generation error on the prediction of binding affinity, a second test set is defined where each of the 195 complexes has its ligand re-docked and its binding affinity predicted by scoring functions trained on the 1105 crystal structures. As a baseline, these scoring functions are also tested on the co-crystallised ligands of the same 195 complexes.
 
 \section{Results}
 
@@ -66,7 +85,7 @@ Next, we assess the ability of each scoring function to predict the near-native 
 
 \section{Conclusions}
 
-This study has demonstrated that errors in pose generation generally introduce a small error in the accuracy of scoring. Furthermore, RF::VinaElem obtained the highest performance on this test set in the common scenario where one has to predict the binding affinity of docked poses instead of those for co-crystallised poses (usually because a crystal structure of the ligand is not available). Nevertheless, we observed that the presented machine-learning scoring functions do not perform well at predicting the near native pose of a ligand. In the future, we intend to investigate scoring functions tailored to this related problem.
+This study has demonstrated that errors in pose generation generally introduce a small error in the accuracy of scoring. Furthermore, RF::VinaElem obtained the highest performance on this test set in the common scenario where one has to predict the binding affinity of docked poses instead of those for co-crystallised poses, usually because a crystal structure of the ligand is not available. Nevertheless, we observed that the presented machine-learning scoring functions do not perform well at predicting the near native pose of a ligand. In the future, we intend to investigate scoring functions tailored to this related problem.
 
 \section{Future works}
 
