@@ -79,7 +79,7 @@ $e_1$ is the predicted free energy of binding reported by the Vina software when
 
 This is a multiple linear regression (MLR) model using the six unweighted Vina terms as features. The use of MLR as the regression model implies an additive functional form and hence MLR::Vina is a classical scoring function. It adopts the philosophy of empirical scoring functions.
 
-In order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining five weights. Specifically, we sampled 101 values for $w_6$ from 0 to 1 with a step size of 0.01, and interesting we found that the $w_6$ values of the best models were always between 0.005 and 0.020. Then we again sampled 16 values for $w_6$ in this range with step size 0.001, and used the best of them in terms of the lowest RMSE (Root Mean Square Error) on the training set.
+In order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining five weights. Specifically, we sampled 101 values for $w_6$ from 0 to 1 with a step size of 0.01. Interesting we found that the $w_6$ values of the best models were always between 0.005 and 0.020. Then we again sampled 16 values for $w_6$ in this range with step size 0.001, and used the best of them in terms of the lowest RMSE (Root Mean Square Error) on the training set.
 
 \subsection{Model 3 - RF::Vina}
 
@@ -93,7 +93,7 @@ Here we built a RF model with the six Vina features using the default number of 
 
 This is the model described in the previous subsection with an expanded set of 42 features once the 36 RF-Score features are added to the six Vina features. For a given random seed, a RF for each mtry value from 1 to 42 was built and that with the lowest RMSE on OOB data was selected as the scoring function. Like in the training process of model 3, the same ten seeds were used.
 
-Briefly, to calculate RF-Score features, atom types were selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered, the sparser the resulting features will be. Therefore, we selected a minimal set of atom types by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions.
+To calculate RF-Score features, atom types were selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered, the sparser the resulting features will be. Therefore, we selected a minimal set of atom types by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions.
 
 RF-Score features are defined as the occurrence count of intermolecular contacts between elemental atom types $i$ and $j$, as shown in equations \eqref{rfscore3:x_ij} and \eqref{rfscore3:x}, where $d_{kl}$ is the Euclidean distance between the $k$th protein atom of type $j$ and the $l$th ligand atom of type $i$ calculated from a structure; $K_j$ is the total number of protein atoms of type $j$ ($\#\{j\}=9$) and $L_i$ is the total number of ligand atoms of type $i$ ($\#\{i\}=4$) in the considered complex; $H$ is the Heaviside step function that counts contacts within a $d_{cutoff}$ neighbourhood. For example, $x_{7,8}$ is the number of occurrences of protein oxygen atoms hypothetically interacting with ligand nitrogen atoms within a chosen neighbourhood. Full details on RF-Score features are available at \citep{564,1295}.
 
@@ -347,7 +347,7 @@ As usual, e.g. \citep{1313}, the performance of generic scoring functions has be
 
 \section{Availability}
 
-RF-Score-v3 is free and open source. The source code is available at. The precompiled x64 executables for Linux and Windows are available at http://istar.cse.cuhk.edu.hk/rf-score-3.tgz, together with a README file for operating instructions.
+RF-Score-v3 is free and open source. The source code is available at https://github.com/HongjianLi/RF-Score. The precompiled x64 executables for Linux and Windows are available at http://istar.cse.cuhk.edu.hk/rf-score-3.tgz, together with a README file for operating instructions.
 
 \section{Future works}
 
