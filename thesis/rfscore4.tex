@@ -6,9 +6,11 @@ This was a collaborative project with Pedro J. Ballester from Cancer Research Ce
 
 \section{Introduction}
 
-To avoid confounding factors introduced by pose generation, these studies on scoring accuracy are carried out on data consisting of large sets of X-ray structures of protein-ligand complexes. However, scoring of the docked poses of a molecule is required in those cases where the experimentally-determined pose is not available.
+Protein-ligand docking predicts the binding conformation (pose) of a ligand when bound to a target protein to form a stable complex, as well as their binding affinity. The former process is known as pose generation and the latter is known as scoring. There have been quite some studies \citep{1432,1433} on scoring crystal complexes. These studies only concentrate on crystal complexes in order to avoid confounding factors introduced by pose generation, therefore their methods and conclusions are only applicable to scoring crystal complexes. However, scoring of the docked poses of a molecule is required in some cases where the experimentally determined pose is not available. This is the common case in prospective virtual screening, such as our istar web service.
 
-In this paper, we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is more suitable for predicting the near-native pose (i.e. the most similar docked pose to the co-crystallised pose). The numerical experiments will be performed with AutoDock Vina \citep{595}, as the classical scoring function, and RF-Score \citep{564} as the machine-learning scoring function. Investigating the generalisation of these results to other non-parametric machine learning techniques previously applied to this problem, such as SVR in \citep{1295}, is out of the scope of this study, although expected to yield similar outcomes.
+Here we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is more suitable for predicting the near-native pose (i.e. the most similar docked pose to the co-crystallised pose).
+
+The numerical experiments were performed with AutoDock Vina \citep{595} as the classical scoring function because it is one of the most popular docking software, and RF-Score \citep{564} as the machine-learning scoring function. Investigating the generalisation of these results to other non-parametric machine learning techniques previously applied to this problem, such as SVR in \citep{1295}, is out of the scope of this study, although expected to yield similar outcomes.
 
 \section{Methods}
 
@@ -20,15 +22,19 @@ Four models are very similar to those described in the previous chapter. Here we
 
 \subsection{Model 2 - MLR::Vina}
 
-MLR::Vina w6 range.
+For model 2, the sampling range for wNrot is extended to [0.000 to 0.030] with a step size of 0.001 because of more variability.
 
 \subsection{Model 3 - RF::Vina}
+
+For models 3 and 4, the mtry values are exhausted from 1 to the number of features.
 
 \subsection{Model 4 - RF::VinaElem}
 
 \subsection{The PDBbind benchmark}
 
 \subsection{The 2013 blind benchmark}
+
+In the v2010 refined set, the 2rio protein contains Sr atoms and the 2ov4 protein contains Cs atoms, which cannot be recognized by Vina. Therefore this training set has N=2059-2=2057 complexes.
 
 \subsection{Performance measures}
 
@@ -39,7 +45,55 @@ Each of the 1300 co-crystallised ligands is redocked into the binding site of it
 
 \section{Results}
 
-It is noteworthy that, in redocked poses, Vina achieved a relatively small pose generation error in the test set (52\% of the ligands had a docked pose with RMSD < 2\AA). In terms of scoring accuracy, performance is measured as the Root Mean Square Error (RMSE), Pearson’s correlation coefficient (Rp) and the Spearman’s rank-correlation coefficient (Rs) between measured and predicted binding affinity. Figure 1 shows the performance of the four scoring functions when tested on co-crystallised poses and redocked poses of the same complexes. These results show that pose generation error introduces a small degradation in the ability to rank-order complexes according to predicted binding affinity in all scoring functions (see Rs plot). In terms of scoring power (Rp and RMSE), RF-based scoring functions performs slightly worse on docked poses (models 3-4). In contrast, those assuming a functional form do slightly better on docked poses (models 1-2). The latter is likely to be due to the fact that docked poses are by construction optima of the objective function spanned by the Vina score, which may favour prediction of docked poses over unoptimised co-crystallised ligands. On the other hand, it is remarkable that the best scoring function, RF::VinaElem, achieves the highest performance in the literature on this test set in the more common application of re-scoring docked poses. Importantly, since models 1 and 3 use the same features and are trained on the same data, RF::Vina performs much better at predicting binding affinity than the widely-used Vina while having the same applicability domain.
+It is noteworthy that, in redocked poses, Vina achieved a relatively small pose generation error in the test set (52\% of the ligands had a docked pose with RMSD < 2\AA). In terms of scoring accuracy, performance is measured as the Root Mean Square Error (RMSE), Pearson’s correlation coefficient (Rp) and the Spearman’s rank-correlation coefficient (Rs) between measured and predicted binding affinity. Figure \ref{rfscore4:set-1-pdbbind-2007-trn-1} shows the performance of the four scoring functions when tested on co-crystallised poses and redocked poses of the same complexes. These results show that pose generation error introduces a small degradation in the ability to rank-order complexes according to predicted binding affinity in all scoring functions (see Rs plot). In terms of scoring power (Rp and RMSE), RF-based scoring functions performs slightly worse on docked poses (models 3-4). In contrast, those assuming a functional form do slightly better on docked poses (models 1-2). The latter is likely to be due to the fact that docked poses are by construction optima of the objective function spanned by the Vina score, which may favour prediction of docked poses over unoptimised co-crystallised ligands. On the other hand, it is remarkable that the best scoring function, RF::VinaElem, achieves the highest performance in the literature on this test set in the more common application of re-scoring docked poses. Importantly, since models 1 and 3 use the same features and are trained on the same data, RF::Vina performs much better at predicting binding affinity than the widely-used Vina while having the same applicability domain.
+
+\begin{table}
+\caption{Models 2,3,4 trained on docked poses performed better than those trained on crystal poses.}
+\label{rfscore4:set-1-pdbbind-2007}
+\begin{tabular}{cccrrrr}
+\hline
+Model & Training & Test & RMSE & SD & Rp & Rs\\
+\hline
+1 & Crystal & Crystal & 2.41 & 1.99 & 0.554 & 0.608\\
+2 & Crystal & Crystal & 1.88 & 1.85 & 0.630 & 0.680\\
+3 & Crystal & Crystal & 1.66 & 1.59 & 0.744 & 0.752\\
+4 & Crystal & Crystal & 1.52 & 1.42 & 0.803 & 0.799\\
+\hline
+1 & Crystal & Docked  & 2.02 & 1.99 & 0.557 & 0.597\\
+2 & Crystal & Docked  & 1.90 & 1.87 & 0.622 & 0.670\\
+3 & Crystal & Docked  & 1.76 & 1.72 & 0.693 & 0.710\\
+4 & Crystal & Docked  & 1.60 & 1.52 & 0.772 & 0.771\\
+\hline
+2 & Docked  & Docked  & 1.86 & 1.83 & 0.640 & 0.667\\
+3 & Docked  & Docked  & 1.69 & 1.63 & 0.730 & 0.730\\
+4 & Docked  & Docked  & 1.55 & 1.45 & 0.795 & 0.789\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}
+\caption{219/382=57\% of the ligands had a redocked pose with RMSD < 2.0\AA.}
+\label{rfscore4:set-2-pdbbind-2012}
+\begin{tabular}{cccrrrr}
+\hline
+Model & Training & Test & RMSE & SD & Rp & Rs\\
+\hline
+1 & Crystal & Crystal & 2.30 & 1.81 & 0.406 & 0.414\\
+2 & Crystal & Crystal & 1.67 & 1.67 & 0.535 & 0.521\\
+3 & Crystal & Crystal & 1.54 & 1.54 & 0.629 & 0.593\\
+4 & Crystal & Crystal & 1.43 & 1.43 & 0.689 & 0.662\\
+\hline
+1 & Crystal & Docked  & 1.87 & 1.78 & 0.437 & 0.432\\
+2 & Crystal & Docked  & 1.70 & 1.69 & 0.520 & 0.505\\
+3 & Crystal & Docked  & 1.61 & 1.60 & 0.585 & 0.549\\
+4 & Crystal & Docked  & 1.49 & 1.49 & 0.656 & 0.633\\
+\hline
+2 & Docked  & Docked  & 1.68 & 1.68 & 0.524 & 0.509\\
+3 & Docked  & Docked  & 1.59 & 1.59 & 0.594 & 0.553\\
+4 & Docked  & Docked  & 1.47 & 1.48 & 0.665 & 0.643\\
+\hline
+\end{tabular}
+\end{table}
 
 \begin{figure}
 \centering
@@ -82,6 +136,21 @@ It is noteworthy that, in redocked poses, Vina achieved a relatively small pose 
 \end{figure}
 
 Next, we assess the ability of each scoring function to predict the near-native pose of a molecule as bound to a target (see Table 1). Interestingly, results show that the least accurate predictor of binding strength in this study (Vina) is the best at predicting which docked pose is geometrically the closest to the co-crystallised pose. In contrast, the presented machine-learning scoring functions, while excelling at binding affinity prediction, perform much worse than Vina at native pose prediction. This suggests that these two tasks, binding affinity prediction and native pose prediction, cannot be optimally covered by a single scoring function.
+
+\begin{table}
+\caption{Near-native pose prediction.}
+\label{rfscore4:nearnative}
+\begin{tabular}{ccccc}
+\hline
+Model & \# & \% & \# & \%\\
+\hline
+1 & 94 & 48 & 208 & 54\\
+2 & 59 & 30 & 142 & 37\\
+3 & 53 & 27 & 119 & 31\\
+4 & 59 & 30 & 141 & 37\\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Conclusions}
 
