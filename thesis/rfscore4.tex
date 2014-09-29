@@ -158,7 +158,7 @@ Fifth, regardless of the training or test schemes, model 4 consistently outperfo
 Next, we assessed the ability of each of the four models to predict the near-native pose from the up to nine docked poses output by Vina (Table \ref{rfscore4:near-native}). In other words, we would like to see if a model could correctly assign the best score to the particular docked pose having the lowest RMSD to the crystal pose out of at most nine docked poses. Interestingly, results show that Vina, although being the least accurate predictor of binding strength, turned out to be the best at predicting which docked pose is geometrically the closest to the crystal pose. This is probably due to the fact that, as explained previously, the best-scoring docked pose was resulted from optimization of Vina's scoring function during redocking. In contrast, the presented machine-learning scoring functions, while excelling at binding affinity prediction, performed much worse than Vina at native pose prediction. This indicates that these two tasks, binding affinity prediction and native pose prediction, cannot be optimally covered by a single scoring function.
 
 \begin{table}
-\caption{Near-native pose prediction.}
+\caption{Performance of the four models in near-native pose prediction.}
 \label{rfscore4:near-native}
 \begin{tabular}{ccccc}
 \hline
