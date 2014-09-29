@@ -2,42 +2,58 @@
 
 \section{Abstract}
 
+In prospective virtual screening, accurate prediction of binding affinity of docked poses is crucial for ranking compounds. However, many existing studies focus on scoring crystal complexes only, without considering the impact of pose generation error. Therefore the high accuracy claimed in those studies would potentially lead to degradation of predictive performance when their methods are applied to scoring docked poses.
+
+In this study we investigate the impact of pose generation error on the predictive performance of both classical and machine-learning scoring functions. We also study their capability of predicting the near-native pose that is most conformationally closest to the crystal pose. Our results show that pose generation error affects the accuracy of scoring functions, which is well anticipated. To minimize this negative impact, re-training the scoring functions on docked poses instead of crystal poses can be a straightforward solution. On the other hand, we find that although machine-learning scoring functions are generally good at binding affinity prediction, they do not perform as well as classical scoring functions on native pose prediction. This indicates that predictions of binding affinity and native pose are two different tasks and no single scoring function performs optimally for both tasks.
+
 This was a collaborative project with Pedro J. Ballester from Cancer Research Center of Marseille, Marseille, France. It was published in the \textit{Proceedings of the 11th International Meeting on Computational Intelligence Methods for Bioinformatics and Biostatistics (CIBB)} on 26 June 2014 \citep{1434}.
 
 \section{Introduction}
 
-Protein-ligand docking predicts the binding conformation (pose) of a ligand when bound to a target protein to form a stable complex, as well as their binding affinity. The former process is known as pose generation and the latter is known as scoring. There have been quite some studies \citep{1432,1433} on scoring crystal complexes. These studies only concentrate on crystal complexes in order to avoid confounding factors introduced by pose generation, therefore their methods and conclusions are only applicable to scoring crystal complexes. However, scoring of the docked poses of a molecule is required in some cases where the experimentally determined pose is not available. This is the common case in prospective virtual screening, such as our istar web service.
+Protein-ligand docking predicts the binding conformation (pose) of a ligand when bound to a target protein to form a stable complex, as well as their binding affinity. The former process is known as pose generation and the latter is known as scoring. There have been quite some studies \citep{1432,1433} on scoring crystal complexes. These studies only concentrate on crystal complexes in order to avoid confounding factors introduced by pose generation, therefore their methods and conclusions are only applicable to scoring crystal complexes. However, scoring of the docked poses of a molecule is required when the experimentally determined pose is not available. This is the common case in prospective virtual screening, such as our istar web service. Hence accurate prediction of binding affinity of a docked pose can be practically meaningful in sorting candidate compounds in a database.
 
-Here we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is more suitable for predicting the near-native pose (i.e. the most similar docked pose to the co-crystallised pose).
+Here we study the impact of pose generation error on classical and machine-learning scoring functions. Furthermore, we investigate which of these scoring functions is the most suitable for predicting the near-native pose, i.e. the docked pose most similar to the crystal pose. This kind of capability is referred to as ``docking power" in some other studies \citep{1411}.
 
-The numerical experiments were performed with AutoDock Vina \citep{595} as the classical scoring function because it is one of the most popular docking software, and RF-Score \citep{564} as the machine-learning scoring function. Investigating the generalisation of these results to other non-parametric machine learning techniques previously applied to this problem, such as SVR in \citep{1295}, is out of the scope of this study, although expected to yield similar outcomes.
+This study can be regarded as an extension to the previous chapter \citep{1433}. The same models, materials and metrics were reused, with some slight adjustments specificially for the purpose of this study. Likewise, the numerical experiments were performed with AutoDock Vina \citep{595} as the classical scoring function because it is one of the most popular docking software, and RF-Score \citep{564} as the machine-learning scoring function because it has been vigorously studied in multiple aspects \citep{1281,1362,1370}. It is out of the scope of this study to investigate the generalization of the results to other machine learning methods such as support vector regression, but we expect them to yield similar conclusions.
 
 \section{Methods}
 
-Four models are very similar to those described in the previous chapter. Here we only highlight the differences.
+We reused the four models, the two benchmarks, and the four performance measures described in the previous chapter. Here we only highlight the differences that were made particularly for investigating the imapct of pose generation error. For this purpose, new experiments were designed to generate and measure docked poses.
 
 \subsection{Model 1 - AutoDock Vina}
 
-11 features, Vina math expression
+Vina's score for the $k$th pose of a molecule is given by the predicted free energy of binding to the target protein and computed in Vina as:
+
+\begin{equation}
+\label{rfscore4:e_k}
+e_k=\frac{e_{k,inter}+e_{k,intra}-e_{1,intra}}{1+w_6N_{rot}}
+\end{equation}
+
+Unlike the previous chapter, where $k=1$ because only the crystal pose was considered, in this study we aim at docked poses and thus $k$ can be an arbitrary value. Therefore $e_{k,intra}$ and $e_{1,intra}$ cannot be cancelled out. As a result, five more features from $e_{k,intra}$ were incorporated in models 2, 3 and 4, constituting a feature vector of 11 elements.
 
 \subsection{Model 2 - MLR::Vina}
 
-For model 2, the sampling range for wNrot is extended to [0.000 to 0.030] with a step size of 0.001 because of more variability.
+This is a multiple linear regression (MLR) model using the 11 unweighted Vina terms as features. Similarly, in order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining ten weights. The sampling range for $w_6$ was extended to [0.000 to 0.030] with a step size of 0.001 because of more variability when multiple docked poses were considered.
 
 \subsection{Model 3 - RF::Vina}
 
-For models 3 and 4, the mtry values are exhausted from 1 to the number of features.
+This is a random forest (RF) model with the 11 Vina features using the default 500 trees and mtry values from 1 to 11. The selected model was the one that provided the lowest RMSE on the OOB (Out of Bag) data.
 
 \subsection{Model 4 - RF::VinaElem}
 
+This is an extension to RF::Vina and incorporates the 36 RF-Score features. Hence, it was built with 47 features.
+
 \subsection{The PDBbind benchmark}
+
+We reused the PDBbind v2007 benchmark because the four models have been evaluated on it in the previous chapter, permitting a direct comparison. Briefly, the test set comprises 195 diverse complexes with measured binding affinities spanning more than 12 orders of magnitude, whereas the training set comprises 1105 non-overlapping complexes.
 
 \subsection{The 2013 blind benchmark}
 
-In the v2010 refined set, the 2rio protein contains Sr atoms and the 2ov4 protein contains Cs atoms, which cannot be recognized by Vina. Therefore this training set has N=2059-2=2057 complexes.
+We reused the PDBbind v2013 blind benchmark because the four models have been evaluated on it in the previous chapter, allowing a direct comparison. Briefly, the test set comprises 382 complexes newly added in the 2013 release, whereas the four training sets comprise 792, 1300, 2057 and 2897 complexes from PDBbind v2002, v2007, v2010 and v2012 refined sets, respectively. Note that in the v2010 refined set, the 2rio protein contains Sr atoms and the 2ov4 protein contains Cs atoms, which cannot be recognized by Vina. Therefore this training set has N=2059-2=2057 complexes.%whereas the training set comprises 2897 complexes from PDBbind v2012 refined set.
 
 \subsection{Performance measures}
 
+We reused the four performance measures: root mean square error RMSE, standard deviation SD, Pearson correlation coefficient Rp and Spearman correlation coefficient Rs between predicted and measured binding affinity. Note that RMSE was not calculated in a linear correlation, while SD was.
 
 \subsection{Experimental design}
 
