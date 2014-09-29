@@ -49,7 +49,7 @@ We reused the PDBbind v2007 benchmark because the four models have been evaluate
 
 \subsection{The 2013 blind benchmark}
 
-We reused the PDBbind v2013 blind benchmark because the four models have been evaluated on it in the previous chapter, allowing a direct comparison. Briefly, the test set comprises 382 complexes newly added in the 2013 release, whereas the four training sets comprise 792, 1300, 2057 and 2897 complexes from PDBbind v2002, v2007, v2010 and v2012 refined sets, respectively. Note that in the v2010 refined set, the 2rio protein contains Sr atoms and the 2ov4 protein contains Cs atoms, which cannot be recognized by Vina. Therefore this training set has N=2059-2=2057 complexes.%whereas the training set comprises 2897 complexes from PDBbind v2012 refined set.
+We reused the PDBbind v2013 blind benchmark because the four models have been evaluated on it in the previous chapter, allowing a direct comparison. Briefly, the test set comprises 382 complexes newly added in the 2013 release, whereas the training set comprises 2897 complexes from PDBbind v2012 refined set.
 
 \subsection{Performance measures}
 
@@ -57,14 +57,18 @@ We reused the four performance measures: root mean square error RMSE, standard d
 
 \subsection{Experimental design}
 
-Each of the 1300 co-crystallised ligands is redocked into the binding site of its target protein using Vina. For each molecule, this results in a maximum number of nine docked poses. The Root Mean Square Deviation (RMSD) quantifies how different the 3D geometry of the redocked pose is from the corresponding co-crystallised pose of the same ligand molecule (i.e. the pose generation error). Because we aim at investigating the impact of pose generation error on the prediction of binding affinity, a second test set is defined where each of the 195 complexes has its ligand re-docked and its binding affinity predicted by scoring functions trained on the 1105 crystal structures. As a baseline, these scoring functions are also tested on the co-crystallised ligands of the same 195 complexes.
+To generate docked pose, each ligand in the two benchmarks was docked into the binding site of its target protein using Vina. This process is known as redocking. The search space was defined first by finding the smallest cubic box that covers the entire ligand and then by extending the box in X, Y, Z dimensions by 10\AA \citep{1362}. Redocking a ligand resulted in up to nine docked poses. We used root mean square deviation (RMSD) to quantify the pose generation error, i.e. how different the 3D geometry of the redocked pose is from the corresponding crystal pose of the same ligand molecule. A RMSD value of 2\AA\ is often used as a publicly accepted positive control for correct bound structure prediction. We trained the four models on both crystal and docked poses, and tested them also on both crystal and docked poses.
 
 \section{Results}
 
-It is noteworthy that, in redocked poses, Vina achieved a relatively small pose generation error in the test set (52\% of the ligands had a docked pose with RMSD < 2\AA). In terms of scoring accuracy, performance is measured as the Root Mean Square Error (RMSE), Pearson’s correlation coefficient (Rp) and the Spearman’s rank-correlation coefficient (Rs) between measured and predicted binding affinity. Figure \ref{rfscore4:set-1-pdbbind-2007-trn-1} shows the performance of the four scoring functions when tested on co-crystallised poses and redocked poses of the same complexes. These results show that pose generation error introduces a small degradation in the ability to rank-order complexes according to predicted binding affinity in all scoring functions (see Rs plot). In terms of scoring power (Rp and RMSE), RF-based scoring functions performs slightly worse on docked poses (models 3-4). In contrast, those assuming a functional form do slightly better on docked poses (models 1-2). The latter is likely to be due to the fact that docked poses are by construction optima of the objective function spanned by the Vina score, which may favour prediction of docked poses over unoptimised co-crystallised ligands. On the other hand, it is remarkable that the best scoring function, RF::VinaElem, achieves the highest performance in the literature on this test set in the more common application of re-scoring docked poses. Importantly, since models 1 and 3 use the same features and are trained on the same data, RF::Vina performs much better at predicting binding affinity than the widely-used Vina while having the same applicability domain.
+After redocking by Vina, 101 out of the 195 ligands (52\%) in the PDBbind v2007 benchmark and 219 out of the 382 ligands (57\%) in the PDBbind v2013 blind benchmark had their best-scoring docked pose with RMSD < 2\AA. When all the docked poses (up to nine) were considered, these redocking success rates increased to 76\% and 81\$, respectively. These results are consistent with those obtained in \citep{1362}, where Vina managed to predict a conformation sufficiently close to that of the co-crystallized ligand as the first conformation in over half of the cases.
+
+Tables \ref{rfscore4:set-1-pdbbind-2007} and \ref{rfscore4:set-2-pdbbind-2012} enumerate the predictive performance of the four models trained on crystal and docked poses and tested also on crystal and docked poses on the PDBbind v2007 benchmark and the PDBbind v2013 blind benchmark, respectively. Figures \ref{rfscore4:set-1-pdbbind-2007-trn-1} and \ref{rfscore4:set-2-pdbbind-2012-trn-1} plot the same results graphically.
+
+These results show that pose generation error introduces a small degradation in the ability to rank-order complexes according to predicted binding affinity in all scoring functions (see Rs plot). In terms of scoring power (Rp and RMSE), RF-based scoring functions performs slightly worse on docked poses (models 3-4). In contrast, those assuming a functional form do slightly better on docked poses (models 1-2). The latter is likely to be due to the fact that docked poses are by construction optima of the objective function spanned by the Vina score, which may favour prediction of docked poses over unoptimised crystal ligands. On the other hand, it is remarkable that the best scoring function, RF::VinaElem, achieves the highest performance in the literature on this test set in the more common application of re-scoring docked poses. Importantly, since models 1 and 3 use the same features and are trained on the same data, RF::Vina performs much better at predicting binding affinity than the widely-used Vina while having the same applicability domain.
 
 \begin{table}
-\caption{Models 2,3,4 trained on docked poses performed better than those trained on crystal poses.}
+\caption{Performance of the models trained on crystal and docked poses and tested also on crystal and docked poses on the PDBbind v2007 benchmark.}
 \label{rfscore4:set-1-pdbbind-2007}
 \begin{tabular}{cccrrrr}
 \hline
@@ -75,10 +79,14 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 3 & Crystal & Crystal & 1.66 & 1.59 & 0.744 & 0.752\\
 4 & Crystal & Crystal & 1.52 & 1.42 & 0.803 & 0.799\\
 \hline
-1 & Crystal & Docked  & 2.02 & 1.99 & 0.557 & 0.597\\
+1 & Crystal & Docked  & 2.02 & 1.98 & 0.557 & 0.597\\
 2 & Crystal & Docked  & 1.90 & 1.87 & 0.622 & 0.670\\
 3 & Crystal & Docked  & 1.76 & 1.72 & 0.693 & 0.710\\
 4 & Crystal & Docked  & 1.60 & 1.52 & 0.772 & 0.771\\
+\hline
+2 & Docked  & Crystal & 1.91 & 1.88 & 0.618 & 0.648\\
+3 & Docked  & Crystal & 1.74 & 1.69 & 0.705 & 0.716\\
+4 & Docked  & Crystal & 1.58 & 1.45 & 0.794 & 0.790\\
 \hline
 2 & Docked  & Docked  & 1.86 & 1.83 & 0.640 & 0.667\\
 3 & Docked  & Docked  & 1.69 & 1.63 & 0.730 & 0.730\\
@@ -88,7 +96,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \end{table}
 
 \begin{table}
-\caption{219/382=57\% of the ligands had a redocked pose with RMSD < 2.0\AA.}
+\caption{Performance of the models trained on crystal and docked poses and tested also on crystal and docked poses on the PDBbind v2013 blind benchmark.}
 \label{rfscore4:set-2-pdbbind-2012}
 \begin{tabular}{cccrrrr}
 \hline
@@ -104,6 +112,10 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 3 & Crystal & Docked  & 1.61 & 1.60 & 0.585 & 0.549\\
 4 & Crystal & Docked  & 1.49 & 1.49 & 0.656 & 0.633\\
 \hline
+2 & Docked  & Crystal & 1.69 & 1.69 & 0.521 & 0.509\\
+3 & Docked  & Crystal & 1.62 & 1.61 & 0.580 & 0.560\\
+4 & Docked  & Crystal & 1.48 & 1.47 & 0.669 & 0.650\\
+\hline
 2 & Docked  & Docked  & 1.68 & 1.68 & 0.524 & 0.509\\
 3 & Docked  & Docked  & 1.59 & 1.59 & 0.594 & 0.553\\
 4 & Docked  & Docked  & 1.47 & 1.48 & 0.665 & 0.643\\
@@ -117,7 +129,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-1-sdev-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-1-pcor-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-1-scor-boxplot.pdf}}
-\caption{Performance of each scoring function on the PDBbind v2007 core set test set with co-crystallised ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
+\caption{Performance of each scoring function on the PDBbind v2007 core set test set with crystal ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
 \label{rfscore4:set-1-pdbbind-2007-trn-1}
 \end{figure}
 
@@ -127,7 +139,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-1-sdev-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-1-pcor-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-1-scor-boxplot.pdf}}
-\caption{Performance of each scoring function on the PDBbind blind benchmark test set with co-crystallised ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
+\caption{Performance of each scoring function on the PDBbind blind benchmark test set with crystal ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
 \label{rfscore4:set-2-pdbbind-2012-trn-1}
 \end{figure}
 
@@ -137,7 +149,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-2-sdev-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-2-pcor-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-1-pdbbind-2007-trn-2-scor-boxplot.pdf}}
-\caption{Performance of each scoring function on the PDBbind v2007 core set test set with co-crystallised ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
+\caption{Performance of each scoring function on the PDBbind v2007 core set test set with crystal ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
 \label{rfscore4:set-1-pdbbind-2007-trn-2}
 \end{figure}
 
@@ -147,15 +159,15 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-2-sdev-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-2-pcor-boxplot.pdf}}
 \subfloat{\includegraphics[width=0.24\linewidth]{../rfscore4/set-2-pdbbind-2012-trn-2-scor-boxplot.pdf}}
-\caption{Performance of each scoring function on the PDBbind blind benchmark test set with co-crystallised ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
+\caption{Performance of each scoring function on the PDBbind blind benchmark test set with crystal ligands (left of each plot) and the set of complexes with the re-docked ligand with the lowest Vina score instead (right).}
 \label{rfscore4:set-2-pdbbind-2012-trn-2}
 \end{figure}
 
-Next, we assess the ability of each scoring function to predict the near-native pose of a molecule as bound to a target (see Table 1). Interestingly, results show that the least accurate predictor of binding strength in this study (Vina) is the best at predicting which docked pose is geometrically the closest to the co-crystallised pose. In contrast, the presented machine-learning scoring functions, while excelling at binding affinity prediction, perform much worse than Vina at native pose prediction. This suggests that these two tasks, binding affinity prediction and native pose prediction, cannot be optimally covered by a single scoring function.
+Next, we assess the ability of each scoring function to predict the near-native pose of a molecule as bound to a target (see Table 1). Interestingly, results show that the least accurate predictor of binding strength in this study (Vina) is the best at predicting which docked pose is geometrically the closest to the crystal pose. In contrast, the presented machine-learning scoring functions, while excelling at binding affinity prediction, perform much worse than Vina at native pose prediction. This suggests that these two tasks, binding affinity prediction and native pose prediction, cannot be optimally covered by a single scoring function.
 
 \begin{table}
 \caption{Near-native pose prediction.}
-\label{rfscore4:nearnative}
+\label{rfscore4:near-native}
 \begin{tabular}{ccccc}
 \hline
 Model & \# & \% & \# & \%\\
@@ -170,7 +182,7 @@ Model & \# & \% & \# & \%\\
 
 \section{Conclusions}
 
-This study has demonstrated that errors in pose generation generally introduce a small error in the accuracy of scoring. Furthermore, RF::VinaElem obtained the highest performance on this test set in the common scenario where one has to predict the binding affinity of docked poses instead of those for co-crystallised poses, usually because a crystal structure of the ligand is not available. Nevertheless, we observed that the presented machine-learning scoring functions do not perform well at predicting the near native pose of a ligand. In the future, we intend to investigate scoring functions tailored to this related problem.
+This study has demonstrated that errors in pose generation generally introduce a small error in the accuracy of scoring. Furthermore, RF::VinaElem obtained the highest performance on this test set in the common scenario where one has to predict the binding affinity of docked poses instead of those for crystal poses, usually because a crystal structure of the ligand is not available. Nevertheless, we observed that the presented machine-learning scoring functions do not perform well at predicting the near native pose of a ligand. In the future, we intend to investigate scoring functions tailored to this related problem.
 
 \section{Future works}
 
