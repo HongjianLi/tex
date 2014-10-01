@@ -451,4 +451,8 @@ We have demonstrated that the multiple linear regression (MLR) model used in man
 
 Classical empirical scoring functions typically rely on complicated energetic contributions that must be carefully devised from intermolecular interactions, whereas RF-based scoring functions can also effectively exploit features as simple as occurrence count of intermolecular contacts. It has also been shown in a previous study that functional group contributions in protein-ligand binding are non-additive. This means novel features can be difficult to be incorporated into an existing MLR model. In this study we have shown that using more structural features appropriately can also substantially boost the predictive accuracy of RF, as can be seen in the comparison between RF::CyscoreVinaElem and RF::Cyscore. This further stresses the importance of substituting RF for MLR in scoring function development.
 
+\section{Future works}
+
+The PHOENIX \citep{576} scoring function uses calorimetry data to decompose the change of binding free energy into change of enthalpy and change of entropy. It is an empirical scoring function that uses shape and volume descriptors to independently model enthalpic and entropic contributions. It is interesting to see how the predictive performance changes if RF is utilized for regression.
+
 \chapterend
