@@ -76,7 +76,7 @@ iSyn uses the AutoClickChem algorithm \citep{1051} to perform addition and mutat
 
 \subsubsection{Cutting reactions}
 
-Through the addition and mutation operators, ligands could possibly “grow” too large in terms of molecular size, and might therefore lose drug-like properties. For example, if a generated ligand has a molecular mass of over 500 Daltons, it is unlikely to be absorbed inside the human body and thus unlikely to be optimized into a potential drug. In light of this issue, we have implemented four novel cutting operators to break down oversized ligands.
+Through the addition and mutation operators, ligands could possibly ``grow” too large in terms of molecular size, and might therefore lose drug-like properties. For example, if a generated ligand has a molecular mass of over 500 Daltons, it is unlikely to be absorbed inside the human body and thus unlikely to be optimized into a potential drug. In light of this issue, we have implemented four novel cutting operators to break down oversized ligands.
 
 Ozonolysis is the cleavage of an alkene with ozone to form organic compounds where the carbon-carbon double bond is replaced by a double bond to oxygen (Figure \ref{isyn:AlkeneOzonolysis}). The alkene functional group is oxidized with ozone to form aldehydes or ketones, depending on the structure of the ligand under a certain chemical environment. Through this reaction, a ligand containing a carbon-carbon double bond can be broken down into two child ligands.
  
@@ -98,14 +98,14 @@ Vigorous oxidation on alkene can form carbolic acid (Figure \ref{isyn:AlkeneOxid
 \label{isyn:AlkeneOxidation}
 \end{figure}
 
-Acid Anhydrides can react with water to form carboxylic acid (Figure \ref{isyn:AcidAnhydride}). An acid anhydride has two acyl groups bound to the same oxygen atom. The two acyl groups are derived from the same carboxylic acid. In reverse, the acid anhydride can be broken down into two original carboxylic acids by reacting with water. Through this reaction, a ligand containing two acyl groups bound to the same oxygen atom can be broken down into two child ligands.
+Acid anhydrides can react with water to form carboxylic acid (Figure \ref{isyn:AcidAnhydrideReaction}). An acid anhydride has two acyl groups bound to the same oxygen atom. The two acyl groups are derived from the same carboxylic acid. In reverse, the acid anhydride can be broken down into two original carboxylic acids by reacting with water. Through this reaction, a ligand containing two acyl groups bound to the same oxygen atom can be broken down into two child ligands.
  
 \begin{figure}
 \begin{center}
-\includegraphics[width=\linewidth]{../isyn/AcidAnhydride.png}
+\includegraphics[width=\linewidth]{../isyn/AcidAnhydrideReaction.png}
 \end{center}
 \caption{Acid anhydride to carboxylic acid.}
-\label{isyn:AcidAnhydride}
+\label{isyn:AcidAnhydrideReaction}
 \end{figure}
 
 Hydrolysis of ester is the reverse of esterification (Figure \ref{isyn:EsterHydrolysis}), which is a reversible reaction. The reaction is catalyzed by diluted acid, such as diluted hydrochloric acid, and is heated under reflux. As the reaction is reversible, excessive water has to be used. Under such condition, carboxylic acid and alcohol are produced. Through this reaction, a ligand containing ester groups can be broken down into two child ligands.
