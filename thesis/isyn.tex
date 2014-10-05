@@ -30,7 +30,7 @@ We present iSyn, our WebGL-based solution for computationally synthesizing \text
 
 \section{Methods}
 
-Figure \ref{isyn:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter’s sleek, intuitive and powerful HTML5 template Bootstrap, and hosted by the lightweight event-driven and non-blocking I/O model node.js. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
+Figure \ref{isyn:UI} shows the overall user interface of iSyn. The UI is refactored from Twitter's sleek, intuitive and powerful HTML5 template Bootstrap, and hosted by the lightweight event-driven and non-blocking I/O model node.js. The UI comprises, from top to bottom, a logo, a protein input field, a WebGL canvas, some parameter input fields, a summary panel, some usage instructions, and an export button.
 
 \begin{figure}
 \begin{center}
@@ -99,7 +99,7 @@ Vigorous oxidation on alkene can form carbolic acid (Figure \ref{isyn:AlkeneOxid
 \end{figure}
 
 Acid anhydrides can react with water to form carboxylic acid (Figure \ref{isyn:AcidAnhydrideReaction}). An acid anhydride has two acyl groups bound to the same oxygen atom. The two acyl groups are derived from the same carboxylic acid. In reverse, the acid anhydride can be broken down into two original carboxylic acids by reacting with water. Through this reaction, a ligand containing two acyl groups bound to the same oxygen atom can be broken down into two child ligands.
- 
+
 \begin{figure}
 \begin{center}
 \includegraphics[width=\linewidth]{../isyn/AcidAnhydrideReaction.png}
@@ -120,7 +120,7 @@ Hydrolysis of ester is the reverse of esterification (Figure \ref{isyn:EsterHydr
 
 \subsection{WebGL visualizer}
 
-Perhaps the most vital difference that distinguishes iSyn apart from many other FBDD tools is the availability of a WebGL visualizer, which is not only user friendly, but also of high performance. Unlike Java applet-based visualizers that require Java installation and depend on software rendering which is slow on large display areas and prevents detailed inspection of the structure, iSyn’s WebGL visualizer is refactored from our iview \citep{1366} using three.js as its primary 3D engine with anti-aliasing support, and benefits from GPU hardware acceleration. Because of no dependency on any third-party browser plugins, our visualizer demonstrates excellent portability and usability.
+Perhaps the most vital difference that distinguishes iSyn apart from many other FBDD tools is the availability of a WebGL visualizer, which is not only user friendly, but also of high performance. Unlike Java applet-based visualizers that require Java installation and depend on software rendering which is slow on large display areas and prevents detailed inspection of the structure, iSyn's WebGL visualizer is refactored from our iview \citep{1366} using three.js as its primary 3D engine with anti-aliasing support, and benefits from GPU hardware acceleration. Because of no dependency on any third-party browser plugins, our visualizer demonstrates excellent portability and usability.
 
 The visualizer uses EDTSurf \citep{1297,1350}, an fast algorithm to generating triangulated macromolecular surfaces by Euclidean distance transform, to construct and render in real time four representations of protein surface, namely Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface. Note that molecular surface is indeed solvent excluded surface, but EDTSurf uses different ways to derive them.
 
