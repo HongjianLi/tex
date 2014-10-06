@@ -8,7 +8,7 @@ We developed idock, which inherits from AutoDock Vina the accurate scoring funct
 
 This project was published in the \textit{Proceedings of the 2012 IEEE Symposium on Computational Intelligence in Bioinformatics and Computational Biology (CIBCB)} on 9 May 2012 \citep{1153}.
 
-\section{Introduction}
+\section{Background}
 
 Over recent decades, there has been a continual increase in the number of new therapeutic targets available for drug design. Advances in crystallography and nuclear magnetic resonance spectroscopy have revealed substantial structural details of proteins and protein–ligand complexes. The structures of biological macromolecules at atomic level are being routinely resolved and deposited into the world's largest and freely accessible repository called Protein Data Bank (PDB) \citep{539,537}. Meanwhile, the biological activity data of small molecules are also being regularly collected into public databases such as ChEMBL \citep{1424} and PubChem \citep{1422}. As of 15 Sep 2014, there are 103,199 structures in PDB, 1,638,394 compounds records in ChEMBL and 1,112,090 bioassays in PubChem. The rapid evolution of structure resolving techniques and the availability of structural and bioactivity resources highly catalyze the development of protein-ligand docking methods for structure-based virtual screening. Very often, the target protein is a viral enzyme of interest, and the small organic ligands that are predicted to inhibit the viral enzyme are what we want to discover.
 
@@ -40,7 +40,13 @@ Amongst a sea of docking programs, AutoDock Vina \citep{595} (hereafter Vina for
 
 Vina has become increasingly attractive thanks to a series of success stories by third parties. To name a few, Vina was used for 1) docking studies on the HEPT derivatives of HIV-1 reverse transcriptase \citep{843}, 2) for side-chain residue flexibility study of VEGFR-2 (Vascular Endothelial Growth Factor Receptor 2), which is a known protein target for anti-angiogenic agents \citep{1084}, 3) for identification of novel inhibitors of sirtuin 2, which is a NAD\textsuperscript{+}-dependent histone deacetylase enzyme \citep{1177}, and 4) for repurposing study of FDA-approved drugs for cancer therapy in order to screen for compounds that potentially inhibit MDM2, which an E3 ubiquitin ligase that polyubiquitinates p53 \citep{1230}. Such exciting success stories prove the real power of protein-ligand docking, Vina in particular, for computer-aided drug discovery.
 
-Although Vina is popular and competitive and well known for its fast execution and high accuracy, it is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatedly parsing the same protein and creating the same internal data structures such as grid maps. There are enormous requests from the community for modifying and recompiling Vina to make it support virtual screening in a superfast manner by reusing protein data and grid maps. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock. Moreover, we incorporated quite many implementation tricks to further speedup idock. Lastly, we utilized idock to attempt to address a real life drug discovery problem.
+\section{Motivation}
+
+Although Vina is popular and competitive and well known for its fast execution and high accuracy, it is optimized for single-ligand docking rather than virtual screening. When it comes to docking a large pool of ligands, Vina has to be invoked multiple times, repeatedly parsing the same protein and creating the same internal data structures such as grid maps. There are enormous requests from the community for modifying and recompiling Vina to make it support virtual screening in a superfast manner by reusing protein data and grid maps. We were motivated by the desire to provide built-in support for virtual screening and therefore developed idock.
+
+\section{Objective}
+
+We interpreted the source code of Vina, and rewrote it in our own programming style so as to implement advanced features in idock freely without constraints. Our major goal was to significantly increase the docking speed without sacrificing the docking accuracy. To achieve this goal, we revised the underlying numerical approximation model, and implemented a novel feature to reduce the dimensionality of variables to be optimized. We incorporated a large amount of C++11 implementation tricks to speedup idock. Meanwhile, we decided to extend the software availability to support more chemical elements and more operating systems. Lastly, we utilized idock to attempt to address a real life drug discovery problem.
 
 \section{Methods}
 

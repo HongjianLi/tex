@@ -10,7 +10,7 @@ In conclusion, machine-learning scoring functions are fundamentally different fr
 
 This was a collaborative project with Pedro J. Ballester from Cancer Research Center of Marseille, Marseille, France. It was published in \textit{BMC Bioinformatics} on 27 August 2014 \citep{1432}. Notably, this article has been tagged ``Highly accessed" by the journal, indicating that it may be of broad interest in the community.
 
-\section{Introduction}
+\section{Background}
 
 Protein-ligand docking is a computational tool that predicts how a ligand binds to a target protein and their binding affinity. Therefore docking is useful in elucidating intermolecular interactions and enhancing the potency and selectivity of binding in subsequent phases of the modern drug design process. Docking has a wide variety of pragmatic and successful applications in structure-based virtual screening \citep{1383}, drug repurposing \citep{1384}, lead compound optimization \citep{1385}, protein cavity identification \citep{1217}, and protein function prediction \citep{1386}.
 
@@ -22,7 +22,13 @@ Cyscore \citep{1372}, a recently published empirical scoring function, assumed t
 
 A recent study on a congeneric series of thrombin inhibitors concluded that free energy contributions to ligand binding at the molecular level are non-additive \citep{1416}, therefore the modelling assumption of additivity models is error prone. Recent years have seen a growing number of new developments of machine-learning scoring functions, with RF-Score \citep{564} being the first that introduced a large improvement over classical approaches. RF-Score, as its name suggests, uses Random Forest (RF) \citep{1309} to implicitly learn the functional form in an completely data-driven manner, and thus circumvents the modelling assumption imposed by previous scoring functions. RF-Score was shown to significantly outperform 16 classical scoring functions when evaluated on the commonly-used PDBbind v2007 benchmark \citep{564}. Despite being a recent development, RF-Score has already been successfully used to discover a large number of innovative binders against antibacterial DHQase2 targets \citep{1281}. For the purpose of prospective virtual screening, RF-Score-v3 has now been incorporated into istar \citep{1362}, our large-scale online docking service available at http://istar.cse.cuhk.edu.hk/idock. A number of subsequent machine-learning scoring functions have also shown large improvements over classical approaches. These include, but are not limited to, NNScore \citep{977}, SVR-KB and SVR-EP \citep{963}, CScore \citep{1194}, B2Bscore \citep{1410}, SFCscoreRF \citep{1347}, and ID-Score \citep{1305}.
 
-In this study we compare the predictive performance of two regression models MLR and RF (to be exact, random forest regression rather than classification), and investigate their application conditions and interpretability in various contexts.
+\section{Motivation}
+
+Despite the superior performance of RF-Score, its generalization power has not yet been evaluated under standard cross validation and leave-cluster-out cross validation \citep{774}. It would be interesting to see if substituting RF for MLR can improve the predictive performance of a classical scoring function with a fixed functional form.
+
+\section{Objective}
+
+In this study we compare the predictive performance of two regression models MLR and RF when trained with varying numbers of structural features and training samples, and investigate their application conditions and interpretability in various contexts.
 
 \section{Methods}
 
