@@ -100,54 +100,78 @@ Atom and residue labeling & yes, no\\
 \end{tabular}
 \end{table}
 
-We take as an example the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex (PDB: 4MBS) \citep{1348}. Figures in this section can be reproduced at http://istar.cse.cuhk.edu.hk/iview/?4MBS. Figure \ref{iview:ribbon} shows the human CCR5 secondary structure rendered as ribbon, and the marketed HIV drug maraviroc rendered as sphere.
+We take as an example the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex (PDB: 4MBS) \citep{1348}. Figures in this section can be reproduced at http://istar.cse.cuhk.edu.hk/iview/?4MBS.
+
+Figure \ref{iview:color} shows the complex in six common coloring schemes, with the protein secondary structure shown in ribbon representation. When the protein is colored by chain, users can clearly see that the protein is a dimer consisting of two polypeptides. When the protein is colored by secondary structure, users can clearly see which segments are alpha helices and which segments are beta sheets. When the protein is colored by B factor, which is also known as temperature facto used to describe the displacement of the atomic positions from an average value, users can clearly see the amino acids in warm colors are flexible.
 
 \begin{figure}
-\begin{center}
-\includegraphics[width=\linewidth]{../iview/ribbon.png}
-\end{center}
-\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex, with default settings.}
-\label{iview:ribbon}
+\centering
+\subfloat[By spectrum.]{\includegraphics[width=0.48\linewidth]{../iview/color-spectrum.png}}
+\subfloat[By chain.]{\includegraphics[width=0.48\linewidth]{../iview/color-chain.png}}
+\\
+\subfloat[By secondary structure.]{\includegraphics[width=0.48\linewidth]{../iview/color-secondarystructure.png}}
+\subfloat[By B factor.]{\includegraphics[width=0.48\linewidth]{../iview/color-bfactor.png}}
+\\
+\subfloat[By residue.]{\includegraphics[width=0.48\linewidth]{../iview/color-residue.png}}
+\subfloat[By atom.]{\includegraphics[width=0.48\linewidth]{../iview/color-atom.png}}
+\caption{Coloring schemes.}
+\label{iview:color}
 \end{figure}
 
-Figure \ref{iview:anaglyph} shows the anaglyph effect in a virtual reality environment. The anaglyph effect encodes each eye's image using filters of chromatically opposite colors to achieve stereoscopic 3D effect. When users wear a spectacle with special filters on both sides, each of the two differently filtered colored images reaches one eye, revealing an integrated stereoscopic image. The disparity between two superimposed molecules creates a perception of depth, leading to visually more appealing identification of intermolecular interactions.
- 
+Figure \ref{iview:secondarystructure} shows the protein secondary structure in four other representations besides ribbon, under the coloring scheme by secondary structure. In the representation of cylinder and plate, alpha helices are rendered as cylinders and beta sheets are rendered as plates. In the representation of C alpha trace, the alpha carbon atoms of consecutive amino acids are connected by lines. In the representation of B factor tube, the B factor value is reflected by the thickness of the tube.
+
 \begin{figure}
-\begin{center}
-\includegraphics[width=\linewidth]{../iview/anaglyph.png}
-\end{center}
-\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex, with anaglyph effect enabled.}
-\label{iview:anaglyph}
+\centering
+\subfloat[Strand.]{\includegraphics[width=0.48\linewidth]{../iview/secondarystructure-strand.png}}
+\subfloat[Cylinder \& plate.]{\includegraphics[width=0.48\linewidth]{../iview/secondarystructure-cylinderplate.png}}
+\\
+\subfloat[C alpha trace.]{\includegraphics[width=0.48\linewidth]{../iview/secondarystructure-calpha.png}}
+\subfloat[B factor tube.]{\includegraphics[width=0.48\linewidth]{../iview/secondarystructure-bfactor.png}}
+\caption{Secondary structure representations.}
+\label{iview:secondarystructure}
 \end{figure}
 
-Figures \ref{iview:parallaxbarrier} illustrates the parallax barrier effect. A parallax barrier is a device placed in front of a LCD (Liquid Crystal Display) to permit a stereoscopic or multiscopic image without 3D glasses. The device is composed of a layer of material with precision slits, enabling each eye to see a different set of pixels and thus creating a sense of depth through parallax.
+Figure \ref{iview:surface} shows the protein surface in four common representations colored by atom types, with opacity set to 1.0, i.e. zero transparency. These surfaces were constructed by our JavaScript implementation of the EDTSurf algorithm \citep{1297,1350}. Note that molecular surface is equivalently the solvent excluded surface, but EDTSurf uses different ways to derive them. It can be clearly seen that the asymmetric unit is composed of two complexes, and the protein forms a deep allosteric cavity where the ligand is buried.
 
 \begin{figure}
-\begin{center}
-\includegraphics[width=\linewidth]{../iview/parallaxbarrier.png}
-\end{center}
-\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex, with parallax barrier effect enabled.}
-\label{iview:parallaxbarrier}
-\end{figure}
-
-Figure \ref{iview:oculusrift} illustrates the oculus rift effect. The cculus rift is a virtual reality head-mounted device, which features a high-speed inertial measurement unit and a LCD display, visible via dual lenses positioned over the eyes to provide a 90 degrees horizontal and 110 degrees vertical stereoscopic 3D perspective.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=\linewidth]{../iview/oculusrift.png}
-\end{center}
-\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex, with oculus rift effect enabled.}
-\label{iview:oculusrift}
-\end{figure}
-
-Figure \ref{iview:surface} shows the protein surface generated by our JavaScript implementation of the EDTSurf algorithm \citep{1297,1350}. The human CCR5 is rendered as molecular surface colored by chain. The marketed HIV drug maraviroc is rendered as stick colored by chain. It can be clearly seen that the asymmetric unit is composed of two complexes, and the CCR5 forms a deep allosteric cavity where maraviroc is buried.
-
-\begin{figure}
-\begin{center}
-\includegraphics[width=\linewidth]{../iview/surface.png}
-\end{center}
-\caption{iview rendering of the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex, with protein molecular surface enabled.}
+\centering
+\subfloat[Van der Waals surface.]{\includegraphics[width=0.48\linewidth]{../iview/surface-vdw.png}}
+\subfloat[Solvent excluded surface.]{\includegraphics[width=0.48\linewidth]{../iview/surface-ses.png}}
+\\
+\subfloat[Solvent accessible surface.]{\includegraphics[width=0.48\linewidth]{../iview/surface-sas.png}}
+\subfloat[Molecular surface.]{\includegraphics[width=0.48\linewidth]{../iview/surface-ms.png}}
+\caption{Protein surface representations.}
 \label{iview:surface}
+\end{figure}
+
+Figure \ref{iview:opacity} shows the protein in molecular surface representation in different degrees of opacity, with protein atoms also shown in line representation. When the surface is rendered with transparency to some extent, users can simultaneously inspect the surface and the surrounding amino acids at atomic level.
+
+\begin{figure}
+\centering
+\subfloat[0.9]{\includegraphics[width=0.48\linewidth]{../iview/opacity-0.9.png}}
+\subfloat[0.8]{\includegraphics[width=0.48\linewidth]{../iview/opacity-0.8.png}}
+\\
+\subfloat[0.7]{\includegraphics[width=0.48\linewidth]{../iview/opacity-0.7.png}}
+\subfloat[0.6]{\includegraphics[width=0.48\linewidth]{../iview/opacity-0.6.png}}
+\caption{Protein surface opacity.}
+\label{iview:opacity}
+\end{figure}
+
+Figure \ref{iview:effect} illustrates the four effects in a virtual reality environment. The anaglyph effect encodes each eye's image using filters of chromatically opposite colors to achieve stereoscopic 3D effect. When users wear a spectacle with special filters on both sides, each of the two differently filtered colored images reaches one eye, revealing an integrated stereoscopic image. The disparity between two superimposed molecules creates a perception of depth, leading to visually more appealing identification of intermolecular interactions.
+
+A parallax barrier is a device placed in front of a LCD (Liquid Crystal Display) to permit a stereoscopic or multiscopic image without 3D glasses. The device is composed of a layer of material with precision slits, enabling each eye to see a different set of pixels and thus creating a sense of depth through parallax.
+
+The cculus rift is a virtual reality head-mounted device, which features a high-speed inertial measurement unit and a LCD display, visible via dual lenses positioned over the eyes to provide a 90 degrees horizontal and 110 degrees vertical stereoscopic 3D perspective.
+
+\begin{figure}
+\centering
+\subfloat[Anaglyph]{\includegraphics[width=0.48\linewidth]{../iview/effect-anaglyph.png}}
+\subfloat[Parallax barrier]{\includegraphics[width=0.48\linewidth]{../iview/effect-parallaxbarrier.png}}
+\\
+\subfloat[Oculus Rift]{\includegraphics[width=0.48\linewidth]{../iview/effect-oculusrift.png}}
+\subfloat[Stereo]{\includegraphics[width=0.48\linewidth]{../iview/effect-stereo.png}}
+\caption{Virtual reality effects.}
+\label{iview:effect}
 \end{figure}
 
 \section{Application}
