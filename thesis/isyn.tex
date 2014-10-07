@@ -224,6 +224,6 @@ iSyn is written in C++, Python, HTML5 and JavaScript. It is free and open source
 
 There are some major weak points about iSyn, though. iSyn requires ligands in PDB format to perform the genetic operators, but it requires PDBQT format to perform docking and scoring. So every generated ligand must undergo PDB-to-PDBQT conversion, which incurs substantial overhead. Moreover, one user recently found a bug in iSyn that after a cutting reaction, iSyn discarded the large fragment and retained the small one, which was subsequently discarded again.
 
-We are developing a new project called igrow to directly manipulate ligands in PDBQT format. A further attempt would be to incorporate igrow into idock to better speed up the docking process.
+We are developing a new project called igrow to directly manipulate ligands in PDBQT format. A further attempt would be to incorporate igrow into idock to better speed up the docking process. It is also inspiring to design multitarget ligands \citep{366,1497}.
 
 \chapterend
