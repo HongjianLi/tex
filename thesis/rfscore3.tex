@@ -29,7 +29,7 @@ Recently, machine-learning scoring functions have been shown \citep{564} to be m
 
 Machine-learning scoring functions have been misclassified as knowledge-based scoring functions \citep{1373,1372} or empirical scoring functions \citep{1305}, but these are fundamentally different from either type because of not imposing a fixed functional form on the relationship between structural and binding data. This distinction between machine-learning and classical scoring functions has important consequences in practice, as it will be analysed.
 
-Despite being a recent development, there are already successful prospective applications of machine-learning scoring functions. RF-Score \citep{564} has recently been used \citep{1281} to discover a large number of innovative binders of antibacterial DHQase2 targets. To facilitate its use, RF-Score  has now been incorporated into a user-friendly large-scale docking web server for prospective virtual screening, available at http://istar.cse.cuhk.edu.hk/idock \citep{1362}. On the other hand, a machine-learning scoring function called MD-SVR has been generated and applied \citep{1452} to guiding the optimisation of known Akt1 kinase inhibitors. The derivatives highlighted by MD-SVR were synthesised and all of them exhibited moderate to good inhibitory activities.
+Despite being a recent development, there are already successful prospective applications of machine-learning scoring functions. RF-Score \citep{564} has recently been used \citep{1281} to discover a large number of innovative binders of antibacterial DHQase2 targets. To facilitate its use, RF-Score has now been incorporated into a user-friendly large-scale docking web server for prospective virtual screening, available at http://istar.cse.cuhk.edu.hk/idock \citep{1362}. On the other hand, a machine-learning scoring function called MD-SVR has been generated and applied \citep{1452} to guiding the optimisation of known Akt1 kinase inhibitors. The derivatives highlighted by MD-SVR were synthesised and all of them exhibited moderate to good inhibitory activities.
 
 \section{Motivation}
 
@@ -226,7 +226,30 @@ Both the linear (model 2) and nonlinear (model 1) optimisation approaches to tra
 
 \subsection{Incorporating ligand properties increases performance further}
 
-$N_{rot}$, unlike the remaining five fixed Vina features, which encode properties of the protein-ligand complex, is exclusively a property of the ligand. It is the number of rotatable bonds, effectively an estimation of the flexibility of the ligand. When model 3 was run with five features (all but $N_{rot}$), test set error increased from a best RMSE of 1.67 to 1.74, and Rs correlation dropped from 0.739 to 0.706 on the PDBbind benchmark. This result shows that it is advantageous to add $N_{rot}$ as a model feature. More broadly, this suggests that incorporating ligand properties into the model, such as those that are routinely used in ligand-based QSAR models, may enhance performance further. Likewise, features encoding protein properties could also extend the capabilities of generic scoring functions.
+The $N_{rot}$ feature, unlike the remaining five fixed Vina features, which encode properties of the protein-ligand complex, is exclusively a property of the ligand. It is the number of rotatable bonds, effectively an estimation of the flexibility of the ligand. When model 3 was run with five features (all but $N_{rot}$), test set error increased from a best RMSE of 1.67 to 1.74, and Rs correlation dropped from 0.741 to 0.706 on the PDBbind benchmark, as shown in Figure \ref{rfscore3:models-3-and-5}. Similar performance degradation was also observed on the PDBbind v2013 blind benchmark. This result shows that it is advantageous to add $N_{rot}$ as a model feature. More broadly, this suggests that incorporating ligand properties into the model, such as those that are routinely used in ligand-based QSAR models, may enhance performance further. Likewise, features encoding protein properties could also extend the capabilities of generic scoring functions.
+
+\begin{figure}
+\centering
+\subfloat[RF::Vina with $N_{rot}$ on v2007.]
+{
+  \includegraphics[width=0.48\linewidth]{../rfscore3/model-3-set-1-pdbbind-2007-tst-yp.pdf}
+}
+\subfloat[RF::Vina without $N_{rot}$ on v2007.]
+{
+  \includegraphics[width=0.48\linewidth]{../rfscore3/model-5-set-1-pdbbind-2007-tst-yp.pdf}
+}
+\\
+\subfloat[RF::Vina with $N_{rot}$ on v2013.]
+{
+  \includegraphics[width=0.48\linewidth]{../rfscore3/model-3-set-2-pdbbind-2012-tst-yp.pdf}
+}
+\subfloat[RF::Vina without $N_{rot}$ on v2013.]
+{
+  \includegraphics[width=0.48\linewidth]{../rfscore3/model-5-set-2-pdbbind-2012-tst-yp.pdf}
+}
+\caption{Performance of RF::Vina including and excluding the $N_{rot}$ feature on the PDBbind v2007 and v2013 blind benchmarks.}
+\label{rfscore3:models-3-and-5}
+\end{figure}
 
 \subsection{The impact of overfitting on RF performance}
 
