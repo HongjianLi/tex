@@ -173,7 +173,7 @@ Figure \ref{rfcyscore:stat} plots the predictive performance of MLR::Cyscore, RF
 
 On both PDBbind v2007 and v2012 benchmarks, MLR::Cyscore performed best when it was trained on the 247 carefully selected complexes used by Cyscore \citep{1372}. Its performance dropped when more complexes were used for training. On PDBbind v2013 round-robin benchmark, MLR::Cyscore performance stayed nearly flat regardless of training set sizes.
 
-These results show that MLR::Cyscore cannot exploit large sizes of structural data given only a small set of sophisticated features. Feeding more training samples to MLR::Cyscore actually increases the difficulty in regressing the coefficients well. Generally it would be a good idea to select the training complexes that provide the best performance on a test set, as was the case of Cyscore. But in real applications the binding affinities of the test set are not known and unfortunately selection of training complexes is not performed blindly without measuring performance on test set.
+These results show that MLR::Cyscore cannot exploit large sets of structural data given only a small set of sophisticated features. Feeding more training samples to MLR::Cyscore actually increases the difficulty in regressing the coefficients well. Generally it would be a good idea to select the training complexes that provide the best performance on a test set, as was the case of Cyscore. But in real applications the binding affinities of the test set are not known and unfortunately selection of training complexes is not performed blindly without measuring performance on test set.
 
 \subsection{RF performance increases with more structural features and training samples}
 
