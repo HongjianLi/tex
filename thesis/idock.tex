@@ -538,7 +538,7 @@ idock has built-in support for virtual screening. It searches for ligands in a u
 
 Although the methodology of docking has advanced rapidly, there are still some major challenges yet to be solved \citep{493}. These include the appropriate considerations of protein flexibility upon ligand binding, water molecules critical to the binding \citep{1343,970,1489}, metal ions in the binding site, etc. The protein is implicitly assumed rigid in this study. Another study \citep{1397} investigates the relationship between protein flexibility and binding free energy and presents some useful hints for understanding when, and to what extent, flexibility should be considered. Vina supports flexible protein docking, which has been proven helpful in some cases \citep{1084}, by rotating flexible side-chains. However, in idock we have not yet implemented flexible protein docking. Users who need this kind of docking should refer to Vina at the moment.
 
-In the application example, we have shown that the docking scores can be used to discriminate between the proteins to which a ligand binds and the non-binding proteins. This approach has recently been applied to the prediction of adverse drug reactions \citep{1563}.
+In the application example, we have shown that the docking scores can be used to discriminate between the proteins to which a ligand binds and the non-binding proteins. This approach has recently been applied to the prediction of adverse drug reactions \citep{1563}. The TarFisDock web server \citep{1580} in conjunction with the PDTD database \citep{1581} facilitates the identification of drug targets of small molecules via a similar approach of docking and ranking.
 
 \section{Conclusions}
 
@@ -556,6 +556,6 @@ Porting idock to GPU (Graphics Processing Unit) using CUDA and OpenCL is one of 
 
 On a different issue, well-studied proteins often have multiple crystallographically determined structures. How to appropriately perform ensemble docking \citep{966,547,1128} remains a challenge. Likewise, how to perform multiple ligand simultaneous docking (MLSD) \citep{869,1292} is also an interesting topic of great potential. Heuristic modeling of torsion angle preferences \citep{1306,1537} and ligand flexibility \citep{1533} can remarkably reduce the optimization space.
 
-%\citep{1536} PLIC: protein–ligand interaction clusters.
+%\citep{1536} PLIC: protein-ligand interaction clusters
 
 \chapterend
