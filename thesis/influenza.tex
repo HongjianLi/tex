@@ -152,7 +152,7 @@ We aimed at the discovery of anti-influenza small molecules. We performed struct
 
 \section{Methods}
 
-We downloaded the X-ray crystallographic structures of NP trimer (PDB ID: 2IQH) \citep{1140}, PA\textsubscript{C} in complex with PB1\textsubscript{N} (PDB ID: 2ZNL) \citep{1141}, and PB2\textsubscript{cap} in complex with m\textsuperscript{7}GTP (PDB ID: 2VQZ) \citep{1192}. For the 2IQH NP trimer structure, we retained chain A only and removed chains B and C. For the 2ZNL PA\textsubscript{C}-PB1\textsubscript{N} structure, we retained PA\textsubscript{C} only and removed PB1\textsubscript{N}. For the 2VQZ PB2\textsubscript{cap}-m\textsuperscript{7}GTP structure, we retained PB2 chain A only and removed PB2 chains B, D, E, F, and m\textsuperscript{7}GTP. Table \ref{influenza:SearchSpace} lists the centers and sizes of the docking space of the three structures.
+We downloaded the X-ray crystallographic structures of NP trimer (PDB ID: 2IQH) \citep{1140}, PA\textsubscript{C} in complex with PB1\textsubscript{N} (PDB ID: 2ZNL) \citep{1141}, and PB2\textsubscript{cap} in complex with m\textsuperscript{7}GTP (PDB ID: 2VQZ) \citep{1192}. For the 2IQH NP trimer structure, only chain A was retained and chains B and C were removed. For the 2ZNL PA\textsubscript{C}-PB1\textsubscript{N} structure, only PA\textsubscript{C} was retained and PB1\textsubscript{N} was removed. For the 2VQZ PB2\textsubscript{cap}-m\textsuperscript{7}GTP structure, only PB2 chain A was retained and PB2 chains B, D, E, F, and m\textsuperscript{7}GTP were removed. Table \ref{influenza:SearchSpace} lists the centers and sizes of the docking space of the three structures.
 
 \begin{table}
 \caption{Search space defined for docking the 2IQH, 2ZNL and 2VQZ structures.}
@@ -168,7 +168,9 @@ PDB ID & center\_x & center\_y & center\_z & size\_x & size\_y & size\_z\\
 \end{tabular}
 \end{table}
 
-We collected 273,880 compounds from the Specs catalog of the ZINC database \citep{532,1178}. We chose the Specs compounds because they are readily available and commercially cheap. We then executed idock v2.1.3 with a grid map granularity of 0.08\AA.
+We collected 273,880 compounds from version 2013-02-19 of the Specs catalog of the ZINC database \citep{532,1178}. The Specs compounds were chosen because they are readily available and commercially cheap.
+
+We then executed idock v2.1.3 with a grid map granularity of 0.08\AA. Each compound was docked against the specified binding site of each of the three viral proteins, and was subsequently ranked according to the predicted idock score in kcal/mol units.
 
 \section{Results}
 
@@ -179,9 +181,9 @@ Table \ref{influenza:2IQH-Hits} lists
 \begin{table}
 \caption{Top ligands .}
 \label{influenza:2IQH-Hits}
-\begin{tabular}{cc}
+\begin{tabular}{ccccl}
 \hline
-ZINC ID & idock score (kcal/mol) & RF-Score-v3 (pKd)\\
+ZINC ID & idock score (kcal/mol) & RF-Score-v3 (pKd) & Molecular weight (g/mol) & SMILES\\
 \hline
 \hline
 \end{tabular}
