@@ -10,4 +10,5 @@
 *.dvi
 *.ps
 *.html
+*.png
 */*.bib
