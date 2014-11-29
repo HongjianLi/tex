@@ -179,7 +179,7 @@ We then executed idock v2.1.3 \citep{1362} with a grid map granularity of 0.08\A
 
 \subsection{Nucleoprotein (NP)}
 
-Table \ref{influenza:2IQH-Hits-10} lists the top hits targeting at the NP tail-loop binding groove. The best idock score obtained was -15.78 kcal/mol, which translates to K\textsubscript{d} = 2.66 pM. The best RF-Score-v3 obtained was 9.79 pKd, which translates to K\textsubscript{d} = 0.16 nM.
+Table \ref{influenza:2IQH-Hits-10} lists the top hits targeting at the NP tail-loop binding groove. The best idock score obtained was -15.78 kcal/mol, which translates to K\textsubscript{d} = 2.66 pM (picomolar). The best RF-Score-v3 obtained was 9.79 pKd, which translates to K\textsubscript{d} = 0.16 nM (nanomolar).
 
 \begin{table}
 \caption{Predicted top ten NP-tail-loop-binding-groove-targeted compounds ranked by idock score (top half) and RF-Score-v3 (bottom half).}
@@ -416,9 +416,23 @@ Figure \ref{influenza:2VQZ-Hits-4} visualizes the predicted structures of PB2\te
 
 \section{Discussion}
 
-NP, PAC top hits have higher scores, probably because of their large binding site. idock score in pM, RF-Score-v3 in nM.
+For the top hits in all the three docking cases, the binding affinities predicted by idock are generally at pM level, whereas those predicted by RF-Score-v3 are generally at nM level. This means idock tends to estimate a significantly higher binding affinity for a top hit than RF-Score-v3 does. The top hits of NP and PA\textsubscript{C} have significantly higher binding affinities than those of PB2\textsubscript{cap} on average, probably because the chosen binding sites of NP and PA\textsubscript{C} are remarkably larger in volume, as can be seen in Table \ref{influenza:SearchSpace}. In contrast, the PB2\textsubscript{cap} binding site locates at the protein surface and constitutes a shallow pocket. Apparently a larger binding site permits a more comprehensive exploration of conformational flexibility of the ligand.
 
-Duplicate top compound. In each of the three cases, there is no duplicate compound in both the top ten idock and the top ten RF-Score-v3. ZINC08453194 is in top ten of 2IQH, 2ZNL and 2VQZ by idock score. ZINC08439610 is in top ten of 2ZNL and 2VQZ by RF-Score-v3. Discuss Nrot
+In each of the three docking cases, there is no duplicate compound in both the top ten hits ranked by idock score and the top ten hits ranked by RF-Score-v3. This suggests the two scores tend to prioritize compounds differently. However, interestingly, ZINC08453194 appears in the idock top ten lists across all the three cases, and ZINC08439610 appears in the RF-Score-v3 top ten lists across the cases of PA\textsubscript{C} and PB2\textsubscript{cap}. Their structures are shown in Figure \ref{influenza:dup}. Discuss Nrot.
+
+\begin{figure}
+\centering
+\subfloat[ZINC08453194.]
+{
+  \includegraphics[width=0.48\linewidth]{../influenza/ZINC08453194.png}
+}
+\subfloat[ZINC08439610.]
+{
+  \includegraphics[width=0.48\linewidth]{../influenza/ZINC08439610.png}
+}
+\caption{Duplicate top hits across docking cases.}
+\label{influenza:dup}
+\end{figure}
 
 \section{Conclusions}
 
