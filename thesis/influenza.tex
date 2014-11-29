@@ -418,15 +418,15 @@ Figure \ref{influenza:2VQZ-Hits-4} visualizes the predicted structures of PB2\te
 
 For the top hits in all the three docking cases, the binding affinities predicted by idock are generally at pM level, whereas those predicted by RF-Score-v3 are generally at nM level. This means idock tends to estimate a significantly higher binding affinity for a top hit than RF-Score-v3 does. The top hits of NP and PA\textsubscript{C} have significantly higher binding affinities than those of PB2\textsubscript{cap} on average, probably because the chosen binding sites of NP and PA\textsubscript{C} are remarkably larger in volume, as can be seen in Table \ref{influenza:SearchSpace}. In contrast, the PB2\textsubscript{cap} binding site locates at the protein surface and constitutes a shallow pocket. Apparently a larger binding site permits a more comprehensive exploration of conformational flexibility of the ligand.
 
-In each of the three docking cases, there is no duplicate compound in both the top ten hits ranked by idock score and the top ten hits ranked by RF-Score-v3. This suggests the two scores tend to prioritize compounds differently. However, interestingly, ZINC08453194 appears in the idock top ten lists across all the three cases, and ZINC08439610 appears in the RF-Score-v3 top ten lists across the cases of PA\textsubscript{C} and PB2\textsubscript{cap}. Their structures are shown in Figure \ref{influenza:dup}. Discuss Nrot.
+In each of the three docking cases, there is no duplicate compound in both the top ten hits ranked by idock score and the top ten hits ranked by RF-Score-v3. This suggests the two scores tend to prioritize compounds differently. However, interestingly, ZINC08453194 appears in the idock top ten lists across all the three cases, and ZINC08439610 appears in the RF-Score-v3 top ten lists across the cases of PA\textsubscript{C} and PB2\textsubscript{cap}. Their chemical structures are shown in Figure \ref{influenza:dup}. A certain type of scoring function seems to favor some certain atom types. ZINC08453194 contains mostly carbon atoms and five oxygen atoms, while ZINC08439610 contains mostly carbon atoms and six nitrogen atoms. Besides, looking at the quasi-linear formula to calculate idock score \citep{595,1153,1362}, the number of rotatable bonds, denoted as N\textsubscript{rot}, is in the denominator so as to penalize ligand flexibility, therefore idock score also favors ligands that have few rotatable bonds, such as ZINC08453194 which has just one rotatable bond. Taken together, these indicate that some particular ligand-only properties already guarantee that the ligand will be ranked high when docking against certain types of proteins.
 
 \begin{figure}
 \centering
-\subfloat[ZINC08453194.]
+\subfloat[ZINC08453194 appears in the idock top ten lists across the docking cases of NP, PA\textsubscript{C} and PB2\textsubscript{cap}.]
 {
   \includegraphics[width=0.48\linewidth]{../influenza/ZINC08453194.png}
 }
-\subfloat[ZINC08439610.]
+\subfloat[ZINC08439610 appears in the RF-Score-v3 top ten lists across the docking cases of PA\textsubscript{C} and PB2\textsubscript{cap}.]
 {
   \includegraphics[width=0.48\linewidth]{../influenza/ZINC08439610.png}
 }
@@ -436,18 +436,18 @@ In each of the three docking cases, there is no duplicate compound in both the t
 
 \section{Conclusions}
 
-Treatment of seasonal and pandemic influenza is currently limited by the availability of only few drugs that are challenged by emergence of drug-resistant mutants.
+Treatment of seasonal and pandemic influenza is currently limited by the availability of only few drugs that are challenged by emergence of drug-resistant mutants. In this study, we target at novel binding sites of three viral proteins, namely the tail-loop binding domain of NP, the PB1-binding domain of PA, and the cap-binding domain of PB2, and report the top hits obtained from structure-based virtual screening of 273,880 cheaply available compounds from Specs using idock \citep{1153,1362} as the molecular docking tool as well as iview \citep{1366} as the interaction visualization tool. These top hits may serve as potential starting points for subsequent wet experiments. Moreover, we observe that idock tends to output a substantially higher binding affinity for a top hit than RF-Score-v3 does, and certain types of scoring functions tend to favor certain ligand-only properties, which permit certain ligands to be ranked high regardless of the protein in study.
 
 \section{Future works}
 
-The top scoring compounds will be subjected to post-screening evaluations, including Lipinski's rule filter, visual inspection and consensus docking \citep{1590} using DOCK \citep{1222}, AutoDock Vina \citep{595}, or PLANTS \citep{610,607,779}. The commercially available compounds will be purchased for subsequent biological evaluations.
+Recently, two apo crystal structures of H1N1 and H7N9 PA\textsubscript{C} (PDB ID: 4IUJ, 4P9A) in the absence of PB1 have been reported to exhibit the same global topology as other strains, but differ extensively in the PB1 binding pocket \citep{1585}. These structural changes demonstrate plasticity in the PA\textsubscript{C}-PB1\textsubscript{N} binding interface, which can be exploited in the development of novel therapeutic drugs.
 
-The cytotoxicity of the compounds will first be tested by MTT assay. Influenza RNP (ribonucleoprotein) reconstitution assay will then be performed to investigate their ability to inhibit RNP transcriptional activity. Hit compounds causing significant reduction of RNP activity will be subjected to whole virus assay including plaque reduction assay and yield reduction assay using seasonal flu viruses. Surface plasmon resonance will also be performed to test the \textit{in vitro} binding affinity of the compounds to the target protein. 
+The top scoring compounds reported in this study will be subjected to post-screening evaluations, including Lipinski's rule filter, visual inspection and consensus docking \citep{1590} using DOCK \citep{1222}, AutoDock Vina \citep{595}, or PLANTS \citep{610,607,779}. The commercially available compounds will be purchased for subsequent biological evaluations.
+
+The cytotoxicity of the compounds will first be tested by MTT assay. Influenza RNP reconstitution assay will then be performed to investigate their ability to inhibit RNP transcriptional activity. Hit compounds causing significant reduction of RNP activity will be subjected to whole virus assay including plaque reduction assay and yield reduction assay using seasonal flu viruses. Surface plasmon resonance will also be performed to test the \textit{in vitro} binding affinity of the compounds to the target protein. 
 
 For compounds that exhibit substantial anti-influenza properties, chemical analogues will be purchased for further evaluation. Structure activity relationship study will be performed to further characterize the interaction between the compound and the target protein.
 
-Pure computational studies of prospective virtual screening for a target protein of interest, such as the methyltransferase of the dengue virus \citep{1435}, can be accepted for publication in some journals.
-
-Recently, two apo crystal structures of H1N1 and H7N9 PA\textsubscript{C} (PDB ID: 4IUJ, 4P9A) in the absence of PB1 have been reported to exhibit the same global topology as other strains, but differ extensively in the PB1 binding pocket \citep{1585}. These structural changes demonstrate plasticity in the PA\textsubscript{C}-PB1\textsubscript{N} binding interface, which can be exploited in the development of novel therapeutic drugs.
+%Pure computational studies of prospective virtual screening for a target protein of interest, such as the methyltransferase of the dengue virus \citep{1435}, can be accepted for publication in some journals.
 
 \chapterend
