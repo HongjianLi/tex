@@ -94,7 +94,7 @@ Cells were plated in 96-, 24-, or 6-well plates with 0.125\% FBS medium for 24 h
 
 \subsection{MTT assay}
 
-Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) were added. The absorbance was measured at 570 nm according the the standard protocol.
+Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) were added. The absorbance was measured at 570 nm according the the standard protocol. The IC50 values were calculated by Graphpad prime5.
 
 \subsection{Cell cycle analysis}
 
@@ -102,7 +102,7 @@ LOVO or DLD1 cells (4x10\textsuperscript{4}) were seeded in 24-well plates in RP
 
 \subsection{Western blotting}
 
-Cells were lysed with RIPA buffer containing 1 mM PMSF and protease inhibitor cocktail at 4°C for 30 minutes. After centrifugation at 13,000 rpm for 15 minutes, the supernatants were recovered and the protein concentration was measured by BCA Protein Assay Kit (Thermo). Equal amounts of cell lysates were resolved in 10\% SDS-PAGE and transferred onto nitrocellulose membranes (Sigma). After blocking, the membranes were incubated sequentially with the appropriate diluted primary and secondary antibodies. Proteins were detected by the enhanced chemiluminescence detection system (Amersham, Piscataway, New Jersey, USA). To ensure equal loading of the samples, the membranes were re-probed with an anti-GAPDH antibody (Cell Signalling Technologies).
+LOVO and DLD1 cells were plated at 6-well plates with 0.125\% FBS medium for 24 hours and then with 10\% FBS medium containing adapalene at concentration 3, 10, 30$\mu$M. Cells were harvested after 6 hours of incubation. Cells were lysed with RIPA buffer containing 1 mM PMSF and protease inhibitor cocktail at 4°C for 30 minutes. After centrifugation at 13,000 rpm for 15 minutes, the supernatants were recovered and the protein concentration was measured by BCA Protein Assay Kit (Thermo). Equal amounts of cell lysates were resolved in 10\% SDS-PAGE and transferred onto nitrocellulose membranes (Sigma). After blocking, the membranes were incubated sequentially with the appropriate diluted primary and secondary antibodies. Proteins were detected by the enhanced chemiluminescence detection system (Amersham, Piscataway, New Jersey, USA). To ensure equal loading of the samples, the membranes were re-probed with an anti-GAPDH antibody (Cell Signalling Technologies).
 
 \subsection{Adapalene treatment \textit{in vivo} in nude mice xenografted with colorectal cancer DLD1 cells}
 
@@ -121,106 +121,128 @@ Totally 4,914 FDA-approved drugs were docked and ranked according to their avera
 \begin{table}
 \caption{The nine top-scoring compounds purchased and validated.}
 \label{cdk2:Top9}
-\begin{tabular}{ccccc}
+\begin{tabular}{ccl}
 \hline
-ZINC ID & idock score (kcal/mol) & name & clinical usage & Ref.\\
+ZINC ID & idock score (kcal/mol) & name\\
 \hline
-06716957 & -10.46 & nilotinib & chronic myeloid leukemia & 18\\
-03830332 & -10.43 & LS-194959 & food, drug additive & 19\\
-03784182 & -10.38 & adapalene & acne & 20\\
-03830768 & -10.23 & estradiol benzoate & estrogen & 21\\
-03881613 & -10.08 & nandrolone phenylpropionate & osteoporosis & 22\\
-01542113 & -10.06 & vilazodone & major depressive disorder & 23\\
-00897240 & -10.01 & azelastine hydrochloride & seasonal allergic rhinitis and perennial allergic rhinitis & 24\\
-33974796 &  -9.98 & latuda & schizophrenia & 25\\
-01481956 &  -9.95 & paliperidone & schizophreni & 26\\
+06716957 & -10.46 & nilotinib\\
+03830332 & -10.43 & LS-194959\\
+03784182 & -10.38 & adapalene\\
+03830768 & -10.23 & estradiol benzoate\\
+03881613 & -10.08 & nandrolone phenylpropionate\\
+01542113 & -10.06 & vilazodone\\
+00897240 & -10.01 & azelastine hydrochloride\\
+33974796 &  -9.98 & latuda\\
+01481956 &  -9.95 & paliperidone\\
 \hline
 \end{tabular}
 \end{table}
 
-\subsection{Adapalene decreased the cell viability of colorectal cancer LOVO and DLD1}
+\subsection{Adapalene decreased cell viability of colorectal cancer LOVO and DLD1}
 
-We first evaluated the anti-cancer effect of the nine compounds by MTT assay. These nine compounds all decreased cell viability in LOVO and DLD1 cells. The IC50 was calculated by graphpad prime5. Among them, adapalene had the lowest IC50 (4.43$\mu$M for DLD1, and 7.135$\mu$M for LOVO) (Figure \ref{cdk2:MTT}A). The growth inhibition effect of adapalene was dose- and time-dependent (P<0.05) (Figure \ref{cdk2:MTT}B). Marked inhibition was observed at 10 and 30$\mu$M, while no significant effect was observed at concentrations below 3$\mu$M (0,1,3 $\mu$M)
+We first evaluated the anti-cancer effect of the nine compounds by MTT assay (Figure \ref{cdk2:CellViabilityAgainstConcentration}). All the nine compounds decreased cell viability in LOVO and DLD1 cells but had discrepant cyto-toxicity at different concentrationas. Among them, adapalene had the lowest IC50, i.e. 7.135$\mu$M for LOVO and 4.43$\mu$M for DLD1. In other words, adapalene exhibited the highest cyto-toxicity compared to control with statistical significance (※p<0.05).
 
 \begin{figure}
 \centering
-%\includegraphics[width=\linewidth]{../cdk2/MTT.png}
-\caption{Comparison of the effect of nine candidate CDK2 inhibitors on the viability of LOVO and DLD1 colorectal cancer cells.}
-\label{cdk2:MTT}
+\includegraphics[width=\linewidth]{../cdk2/CellViabilityAgainstConcentration.jpg}
+\caption{Comparison of the effect of the nine compounds on the viability of LOVO and DLD1 colorectal cancer cells.}
+\label{cdk2:CellViabilityAgainstConcentration}
 \end{figure}
-(A) The cell viability assay. Nine compounds had discrepant cyto-toxicity to LOVO and DLD1 cell lines at different concentrationas determined by MTT assay, with adapalene exhibited the highest cyto-toxicity compared with control(※P<0.05). (B) Adapalene exhibited dose- and time-dependent inhibition on cell viability in LOVO and DLD1 cell lines compared with control(※P<0.05)(the effect of 1, 3$\mu$M was as well as control).
 
-\subsection{Adapalene treatment caused cell cycle arrested at the G1 phase}
-
-To understand whether adapalene inhibited CDK2 activities in colorectal cancer cells, we analysed the effect of adapalene treatment (3, 10, 30 $\mu$M) for 6, 12, 24 hours on cell cycle profile in LOVO or DLD1 cells by flow cytometry. As shown in Figure \ref{cdk2:CellCycleDistribution}A, adapalene treatment significantly increased the percentage of cells in G1 phase as compared to the control in a dose- and time-dependent manner (P<0.05). After 24 hours adapalene treatment, the changes of cell cycle profile of G0-G1, S, and G2-M phases were shown in Figure \ref{cdk2:CellCycleDistribution}B, The increase of the G1 phase was accompanied by the simultaneous significant decrease of S and G2-M phases.
+Adapalene exhibited dose- and time-dependent inhibition effect on cell viability in LOVO and DLD1 cell lines compared to control (※p<0.05) (Figure \ref{cdk2:CellViabilityAgainstTime}). Marked inhibition was observed at 10 and 30 $\mu$M, but no significant effect was observed at concentrations below 3$\mu$M.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\linewidth]{../cdk2/CellCycleDistribution.png}
-\caption{Effects of adapalene on cell cycle distribution in LOVO and DLD1 colorectal cancer cell.}
+\includegraphics[width=\linewidth]{../cdk2/CellViabilityAgainstTime.jpg}
+\caption{The growth inhibition effect of adapalene on LOVO and DLD1 colorectal cancer cells.}
+\label{cdk2:CellViabilityAgainstTime}
+\end{figure}
+
+\subsection{Adapalene treatment arrested cell cycle at G1 phase}
+
+We analysed the effect of adapalene treatment with concentrations of 3, 10, 30 $\mu$M for 6, 12, 24 hours on cell cycle profile in LOVO and DLD1 cells by flow cytometry in order to understand if adapalene inhibited CDK2 activities in colorectal cancer cells. Figure \ref{cdk2:G1Distribution} shows that adapalene treatment significantly increased the percentage of cells in G1 phase compared to the control (※p<0.05) in a dose- and time-dependent manner. At 30$\mu$M or 10$\mu$M concentrations, adapalene treatment continuously increased the percentage of G1 phase for 24 hours.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../cdk2/G1Distribution.jpg}
+\caption{Dose- and time-dependent effect of adapalene treatment on the percentage of cells in G1 phase.}
+\label{cdk2:G1Distribution}
+\end{figure}
+
+Figure \ref{cdk2:CellCycleDistribution} shows the changes of cell cycle profile of G0-G1, S, and G2-M phases after 24 hours of adapalene treatment. The increase of the G1 phase was accompanied by the simultaneous significant decrease of S and G2-M phases.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../cdk2/CellCycleDistribution.jpg}
+\caption{Cell cycle distributions at 24 hours after adapalene treatment.}
 \label{cdk2:CellCycleDistribution}
 \end{figure}
-LOVO and DLD1 cells were treated with different concentrations (3, 10 and 30$\mu$M) of adapalene for 6, 12, 24hours, and cell cycle distributions were determined by flow cytometry. (A) adapalene treatment dose- and time-dependently increased the \% of cells in G1 phase. At 30$\mu$M, adapalene caused maximum \% of G1 phase at 6-10 hours; and at 10$\mu$M increased the \% of G1 phase continuously for 24 hours, as compared to control (※P<0.05). (B) The cell cycle distributions. The bar graph indicated the percentage of the G1, G2 and S phases at 24 hours after adapalene treatment.
 
-\subsection{Adapalene treatment decreased the expression of CDK2, Rb, cyclinE, pho-CDk2, pho-Rb but not cyclinD and cyclin B1 in LOVO and DLD1 cells}
+\subsection{Adapalene treatment decreased the expressions of CDK2, Rb, cyclin E, pho-CDK2 and pho-Rb but not cyclin D and cyclin B1 in LOVO and DLD1 cells}
 
-We investigated the effect of adapalene on the expression of important proteins involved in G1-to-S transition, including CDK2, cyclinE, Rb, pho-CDk2 and pho-Rb by Western blotting in LOVO and DLD1 cells. As shown in Figure \ref{cdk2:WesternBlot}, adapalene treatment reduced the expression of CDK2, Rb, pho-CDK2, pho-Rb and cyclin E. In contrast, the expression levels of cyclin D1 and cyclin B1 remained unchanged. These results are consistent with what is expected with a CDK2 inhibitor.
+We investigated the effect of adapalene on the expressions of critical proteins involved in G1-to-S transition, including CDK2, cyclin E, Rb, pho-CDK2 and pho-Rb, by Western blotting in LOVO and DLD1 cells. Figure \ref{cdk2:WesternBlot} shows that adapalene treatment reduced the expressions of CDK2, Rb, pho-CDK2, pho-Rb and cyclin E. In contrast, the expression levels of cyclin D1 and cyclin B1 remained unchanged. These results are consistent with what are expected from a CDK2 inhibitor.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\linewidth]{../cdk2/WesternBlot.png}
-\caption{Effects of adapalene treatment on the expressions of cyclins, CDk2 and Rb.}
+\includegraphics[width=\linewidth]{../cdk2/WesternBlot.jpg}
+\caption{Effects of adapalene treatment on the expressions of cyclins, CDK2 and Rb.}
 \label{cdk2:WesternBlot}
 \end{figure}
-LOVO and DLD1cells were plated at 6-well plates with 0.125\% FBS medium for 24 hours and then with 10\% FBS medium containing adapalene at concentration 3, 10, 30$\mu$M. Cells were harvested after 6 hours incubation and proterins analyzed by Western blotting. Western blotting results showed that adapalene treatment significantly reduced the expression of CDK2, Rb, pho-CDK2, pho-Rb and cyclinE in LOVO and DLD1 cells. In contrast, the expression levels of cyclin D1 and cyclin B1 remained unchanged in both cell lines.
 
 \subsection{Daily oral adapalene treatment reduced tumor growth \textit{in vivo} in BALB/C nude mice subcutaneously xenografted with DLD1 cells}
 
-To evaluate the effect of adapalene on the growth of colorectal carcinoma in vivo, BALB/C nude mice were subcutaneously injected with DLD1 cells. Carcinoma volumes were measured every 3 to 4 days after the appearance of the tumors. At 7 days after tumor inoculation, the volume of tumor reached 80-100mm3, various doses (15, 65 and 100mg/kg in 0.5\% CMC-Nacl) of adapalene were administered daily for 21 days by oral gavage. In a separate experiment, we also compared the efficacy of adapalene (20mg/kg), oxaliplatin (40mg/kg) and the combination of adapalene (20mg/kg) plus oxaliplatin (40mg/kg).
+To evaluate the effect of adapalene on the growth of colorectal carcinoma \textit{in vivo}, BALB/C nude mice were subcutaneously injected with DLD1 cells. Carcinoma volumes were measured every 3 to 4 days after the appearance of the tumors. At 7 days after tumor inoculation, the tumor volume reached 80 to 100 mm\textsuperscript{3}, then various doses (15, 65 and 100mg/kg in 0.5\% CMC-NaCl) of adapalene were administered daily for 21 days by oral gavage. Figure \ref{cdk2:AdapaleneOnTumorGrowth} shows that oral adapalene treatment significantly (p<0.05) inhibited tumor growth. At day 21 after treatment, 15 mg/kg adapalene produced significant reduction (p<0.05) of tumor weight and volume as compared to control (p<0.05). There is no significant difference between 15 and 65 mg/kg adapalene treatment.
 
-Our results demonstrated that oral adapalene treatment significantly (p<0.05) inhibited tumor growth. At day 21 after treatment, 15 mg/kg adapalene produced significant reduction (P<0.05) of tumor weight and volume as compared to control (P<0.05) (Figure \ref{cdk2:Figure4}). There is no significant difference between 15 and 65 mg/kg adapalene treatment.
-
-\begin{figure}
-\centering
-%\includegraphics[width=\linewidth]{../cdk2/Figure4.png}
-\caption{Oral adapalene treatment significantly reduced tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
-\label{cdk2:Figure4}
-\end{figure}
-(A) Daily oral adapalene treatment (from day 1 to day 21) dose-dependently (15, 65, 100 mg/kg) reduced the tumor volume. (B) Significantreduction of tumor weight were observed at as low as 15 mg/kg adapalene treatment compare with control at day 21 after adapalene treatment(※P<0.05). (C) The volume of tumor largely decreased at as low as 15 mg/kg adapalene treatment compare with control at day 21 after adapalene treatment(※P<0.05).
-
-In addition, the anti-tumor activity of oral adapalene (20 mg/kg) was comparable to that of oxaliplatin (40 mg/kg). Importantly, the combination therapy exhibited the highest therapeutic effect (Figure \ref{cdk2:Figure5}). These results suggested for the first time that adapalene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human colorectal cancer.
+(A) Daily oral adapalene treatment (from day 1 to day 21) dose-dependently (15, 65, 100 mg/kg) reduced the tumor volume. (B) Significantreduction of tumor weight were observed at as low as 15 mg/kg adapalene treatment compare with control at day 21 after adapalene treatment (※p<0.05). (C) The volume of tumor largely decreased at as low as 15 mg/kg adapalene treatment compare with control at day 21 after adapalene treatment (※p<0.05).
 
 \begin{figure}
 \centering
-%\includegraphics[width=\linewidth]{../cdk2/Figure5.png}
-\caption{Oral adapalene combinated oxaliplatin treatment significantly reduced tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
-\label{cdk2:Figure5}
+\includegraphics[width=\linewidth]{../cdk2/AdapaleneOnTumorGrowth.jpg}
+\caption{Effect of oral treatment of adapalene on tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
+\label{cdk2:AdapaleneOnTumorGrowth}
 \end{figure}
-(A) Daily oral adapalene 20mg/kg, oxaliplatin 40mg/kg and adapalene 20mg/kg combinated oxaliplatin 40mg/kg treatment (from day 1 to day 21) reduced the tumor volume. (B) Significantreduction of tumor weight were observed at adapalene 20mg/kg combinated oxaliplatin 20mg/kg compare with control at day 21 after combinated treatment(※P<0.05). (C) The volume of tumor largely decreased at adapalene 20mg /kg combinated oxaliplatin 40mg/kg treatment compared with adapalene 20mg/kg only or oxaliplatin 20mg/kg only at day 21 after combinated treatment(※P<0.05).
+
+In a separate experiment, we also compared the efficacy of adapalene (20mg/kg), oxaliplatin (40mg/kg) and the combination of adapalene (20mg/kg) plus oxaliplatin (40mg/kg).
+In addition, the anti-tumor activity of oral adapalene (20 mg/kg) was comparable to that of oxaliplatin (40 mg/kg). Importantly, the combination therapy exhibited the highest therapeutic effect (Figure \ref{cdk2:AdapaleneOxaliplatinOnTumorGrowth}). These results suggested for the first time that adapalene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human colorectal cancer.
+
+(A) Daily oral adapalene 20mg/kg, oxaliplatin 40mg/kg and adapalene 20mg/kg combinated oxaliplatin 40mg/kg treatment (from day 1 to day 21) reduced the tumor volume. (B) Significantreduction of tumor weight were observed at adapalene 20mg/kg combinated oxaliplatin 20mg/kg compare with control at day 21 after combinated treatment(※p<0.05). (C) The volume of tumor largely decreased at adapalene 20mg /kg combinated oxaliplatin 40mg/kg treatment compared with adapalene 20mg/kg only or oxaliplatin 20mg/kg only at day 21 after combinated treatment(※p<0.05).
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../cdk2/AdapaleneOxaliplatinOnTumorGrowth.jpg}
+\caption{Effect of oral treatment of adapalene combined with oxaliplatin on tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
+\label{cdk2:AdapaleneOxaliplatinOnTumorGrowth}
+\end{figure}
 
 \subsection{Structural analysis of the predicted conformation of adapalene docked against CDK2}
 
-As shown in Figure \ref{cdk2:Figure6}A, we plotted the predicted conformation of CDK2 in complex with adapalene in a 3D manner using iview \citep{1366}. Figure \ref{cdk2:Figure6}B plots the intermolecular interaction diagram in a 2D manner using PoseView \citep{748}. adapalene was predicted to reside in the ATP-binding site of CDK2 and interact with CDK2 mainly through hydrophobic contacts with Phe82, Ile10, Leu134, Lys33 and His84.
+Figure \ref{cdk2:1GZ8-ZINC03784182-ms} plots the predicted conformation of adapalene in complex with CDK2 in a 3D manner using iview \citep{1366}. Figure \ref{cdk2:1GZ8-ZINC03784182-pv} plots the intermolecular interaction diagram in a 2D manner using PoseView \citep{748}. Adapalene was predicted to reside in the ATP-binding site of CDK2 and interact with CDK2 mainly through hydrophobic contacts with Phe82, Ile10, Leu134, Lys33 and His84.
 
 \begin{figure}
 \centering
-%\includegraphics[width=\linewidth]{../cdk2/Figure6.png}
-\caption{The comformation of CDK2 and adapalene interactions.}
-\label{cdk2:Figure6}
+\includegraphics[width=\linewidth]{../cdk2/1GZ8-ZINC03784182-ms.jpg}
+\caption{The predicted conformation of adapalene in complex with CDK2.}
+\label{cdk2:1GZ8-ZINC03784182-ms}
 \end{figure}
-Figure 6A showed the predicted conformation of CDK2 in complex with adapalene in a 3D manner using iview \citep{1366}. The intermolecular interaction diagram in a 2D manner of adapalene was predicted to reside in the ATP-binding site of CDK2 and interact with CDK2 mainly through hydrophobic contacts with Phe82, Ile10, Leu134, Lys33 and His84 by PoseView \citep{748}. (Figure 6B).
 
-% Use openbabel to generate 2D png plots of hits. obabel -o png -xp 200
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../cdk2/1GZ8-ZINC03784182-pv.jpg}
+\caption{The putative interactions of adapalene with CDK2.}
+\label{cdk2:1GZ8-ZINC03784182-pv}
+\end{figure}
 
 \section{Discussion}
 
-We adopted the repurposing strategy. We concentrated on repurposing approved drugs \citep{1023,944} because developing a drug \textit{de novo} is a laborious and costly endeavor.
+Developing a new drug \textit{de novo} is a laborious and costly endeavor. Although a number of CDK2 inhibitors have been described in the literature, such as flavopiridol \citep{1596}, roscovitine \citep{1597} and olomoucine \citep{1598}, none of them is available for clinical use due to toxicity and multi-target specificity.
+
+We adopted the repurposing strategy. We concentrated on repurposing approved drugs \citep{1023,944}
 
 \citep{1384} reviewed drug repositioning by structure-based virtual screening (SBVS) and highlighted the powerful synergy of \textit{in silico} methods in drug repositioning. To name a few successful repurposing cases by SBVS, \citep{1507} rediscovered 2,4-Dichlorophenoxy acetic acid, a well-known plant auxin, as a new anti-inflammatory agent through an \textit{in silico} molecular modeling and docking studies along with drug formulation and \textit{in vivo} anti-inflammatory inspection; \citep{1506} attempted to repurpose FDA-approved drugs by an integrated SBVS approach and reported the discovery of piperacillin \textbf{1} as an inhibitor of NEDD8-activating enzyme (NAE) in cell-free and cell-based systems with high selectivity.
 
 In addition to SBVS, ligand-based virtual screening (LBVS) also finds its successful cases in repurposing. \citep{1504} used Ultrafast Shape Recognition (USR) \citep{1379} to search for compounds with similar shape to a previously reported inhibitor of protein arginine deiminase type 4 (PAD4), a new therapeutic target for the treatment of rheumatoid arthritis.
 
-Some freely accessible drug databases include DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
+Although we used the dbap and fda catalogs of ZINC, it is also possible to use some other freely accessible drug databases such as DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
 
 %\citep{565} A Machine Learning-Based Method To Improve Docking Scoring Functions in eHiTS and Its Application to Drug Repurposing.%Feb 2011
 %\citep{861} Identify drug repurposing candidates by mining the Protein Data Bank.%Apr 2011
