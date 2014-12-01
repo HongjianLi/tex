@@ -13,7 +13,7 @@ Cyclin-dependent kinase (CDK2) is one of the serine/threonine protein kinases. I
 
 \section{Motivation}
 
-Although a number of CDK2 inhibitors have been described in the literature, such as flavopiridol \citep{1596}, roscovitine \citep{1597} and olomoucine \citep{1598}, none of them is available for clinical use due to toxicity and multi-target specificity.
+Although a number of CDK2 inhibitors have been described in the literature and some have entered clinical trial phases \citep{1603}, e.g. flavopiridol \citep{1596}, roscovitine \citep{1597} and olomoucine \citep{1598}, none of them is available for clinical use due to various reasons such as toxicity and multi-target specificity.
 
 \section{Objective}
 
@@ -158,7 +158,7 @@ Adapalene exhibited dose- and time-dependent inhibition effect on cell viability
 \label{cdk2:CellViabilityAgainstTime}
 \end{figure}
 
-\subsection{Adapalene treatment arrested cell cycle at G1 phase in LOVO and DLD1 cells}
+\subsection{Adapalene treatment arrested cell cycle in G1 phase in LOVO and DLD1 cells}
 
 We analyzed the effect of adapalene treatment with concentrations of 3, 10, 30 $\mu$M for 6, 12, 24 hours on cell cycle profile in LOVO and DLD1 cells by flow cytometry (Figure \ref{cdk2:G1Distribution}) in order to understand if adapalene inhibited CDK2 activities in colorectal cancer cells. Adapalene treatment significantly increased the percentage of cells in G1 phase compared to control (※p<0.05) in a dose- and time-dependent manner. At 30$\mu$M or 10$\mu$M concentrations, adapalene treatment continuously increased the percentage of G1 phase for 24 hours.
 
@@ -229,58 +229,33 @@ Figure \ref{cdk2:1GZ8-ZINC03784182-ms} plots the predicted conformation of adapa
 
 \section{Discussion}
 
-Developing a new drug \textit{de novo} is a laborious and costly endeavor. Although a number of CDK2 inhibitors have been described in the literature, such as flavopiridol \citep{1596}, roscovitine \citep{1597} and olomoucine \citep{1598}, none of them is available for clinical use due to toxicity and multi-target specificity.
+Developing a new drug \textit{de novo} is a laborious and costly endeavor. Although a number of CDK2 inhibitors have been described in the literature and some have entered clinical trial phases, none has been approved for clinical use, probably because of their toxicity and multi-target specificity. To address this obstacle, repurposing toxicity-free old drugs for new uses is a favorable strategy.
 
-We adopted the repurposing strategy. We concentrated on repurposing approved drugs \citep{1023,944}
-
-\citep{1384} reviewed drug repositioning by structure-based virtual screening (SBVS) and highlighted the powerful synergy of \textit{in silico} methods in drug repositioning. To name a few successful repurposing cases by SBVS, \citep{1507} rediscovered 2,4-Dichlorophenoxy acetic acid, a well-known plant auxin, as a new anti-inflammatory agent through an \textit{in silico} molecular modeling and docking studies along with drug formulation and \textit{in vivo} anti-inflammatory inspection; \citep{1506} attempted to repurpose FDA-approved drugs by an integrated SBVS approach and reported the discovery of piperacillin \textbf{1} as an inhibitor of NEDD8-activating enzyme (NAE) in cell-free and cell-based systems with high selectivity.
+The powerful synergy of \textit{in silico} methods in drug repurposing by structure-based virtual screening (SBVS) was highlighted in several recent reports \citep{1384}. To name a few successful repurposing cases by SBVS, \citep{1507} rediscovered 2,4-Dichlorophenoxy acetic acid, a well-known plant auxin, as a new anti-inflammatory agent through \textit{in silico} molecular modeling and docking studies along with drug formulation and \textit{in vivo} anti-inflammatory inspection; \citep{1506} attempted to repurpose FDA-approved drugs by an integrated SBVS approach and reported the discovery of piperacillin \textbf{1} as an inhibitor of NEDD8-activating enzyme (NAE) in cell-free and cell-based systems with high selectivity.
 
 In addition to SBVS, ligand-based virtual screening (LBVS) also finds its successful cases in repurposing. \citep{1504} used Ultrafast Shape Recognition (USR) \citep{1379} to search for compounds with similar shape to a previously reported inhibitor of protein arginine deiminase type 4 (PAD4), a new therapeutic target for the treatment of rheumatoid arthritis.
 
-Although we used the dbap and fda catalogs of ZINC, it is also possible to use some other freely accessible drug databases such as DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
+Encouraged by these successful stories, in this study we adopted the repurposing strategy, and utilized the computational methodology of SBVS by protein-ligand docking to shortlist candidates from FDA-approved small molecule drugs. Specifically, we used our fast docking program idock \citep{1153,1362} in combination with our convenient visualizer iview \citep{1366} for the task of rediscovering existing drugs as CDK2 inhibitors. idock is an exciting development not only because it has been vigorously shown \citep{1362} to outperform the state-of-the-art docking software AutoDock Vina \citep{595} in terms of docking speed by at least 8.69 times and at most 37.51 times while maintaining comparable redocking success rates, but also because it is free and open source under a permissive license. The later guarantees that users from both industry and academia can freely utilize idock in their own projects that require protein-ligand docking.
 
-%\citep{565} A Machine Learning-Based Method To Improve Docking Scoring Functions in eHiTS and Its Application to Drug Repurposing.%Feb 2011
-%\citep{861} Identify drug repurposing candidates by mining the Protein Data Bank.%Apr 2011
+To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, so the existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Furthermore, to promote prospective SBVS by idock, a web server named istar \citep{1362} was developed, freely available at http://istar.cse.cuhk.edu.hk, where there are as many as 23,129,083 purchasable small molecule compounds ready for docking against any protein provided by the user. We believe both idock \citep{1153} and istar \citep{1362} can supplement the efforts of medicinal chemists in drug discovery research.
 
-In this study we adopted the computational methodology of structure-based virtual screening (SBVS) by protein-ligand docking to shortlist candidates from FDA approved small molecule drugs. SBVS has become a routine task in pharmaceutical institutions.
+Discuss ensemble docking, structural variability.
+Although we used the dbap and fda catalogs of the ZINC database \citep{532,1178}, it is also possible to use some other freely accessible drug databases such as DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
 
-CDK2 is an important target for cancer therapy. Through the interaction of CDKs and cyclins, cell cycle progress is sequentially and strictly processed29. Different cyclin/CDK complexes are activated in difference stages of the cell cycle30,32.When the cell cycle goes through G1 to S phase, the complex of cyclinD1–Cdk4/6 and cyclinE–CDK2 are ordinally activated and the retinoblastoma protein (pRB) is hyper-phosphorylated on serine and threonine residues33,34. The hyperphosphorylated pRB promotes the release of E2F transcription factors, which in turn facilitates the transcription of numerous genes required for G1 to S transition and S phase progression35. A host of CDK2 inhibitors have been described in the literature . (Table \ref{cdk2:KnownInhibitors}) However, up to now, due to drug toxicity and unselectivity, they are still not available for clinical use.
-
-\begin{table}
-\caption{CDK2 inhibitor in literature.}
-\label{cdk2:KnownInhibitors}
-\begin{tabular}{ccc}
-\hline
-name & research institution & Ref.\\
-\hline
-AG-24322 & Agouron & 36\\
-AT-7519 & Astex & 37\\
-AT-9311 & Astex & 38\\
-AZD-5438 & AstraZeneca & 39\\
-AZD-5597 & AstraZeneca & 40,41\\
-Compound 6b & Palacký University & 42\\
-SCH-727965 & Schering-Plough & 43,44\\
-flavopiridol & Sanofi-Aventis & 6\\
-Roscovitine & Emory University and Imperial College & 7\\
-Olomoucine & Laboratoire de PhysiologieVégétaleMoléculaire CNRS & 8\\
-\hline
-\end{tabular}
-\end{table}
-
-This study presents the first successful prospective application of idock \citep{1153,1362} in identifying CDK2 inhibitors using a repurposing strategy. idock is an exciting development not only because it has been vigorously shown10 to outperform the state-of-the-art docking software AutoDock Vina45 in terms of docking speed by at least 8.69 times and at most 37.51 times while maintaining comparable redocking success rates, but also because it is free and open source under a permissive license. The later guarantees that users from both industry and academia can freely utilize idock in their own projects that require protein-ligand docking.
-
-To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, so the existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Furthermore, to promote prospective SBVS by idock, a web server named istar10was developed by our team. istar is freely available at http://istar.cse.cuhk.edu.hk, where there are as many as 23,129,083 purchasable small molecule compounds ready for docking against any protein provided by the user. We believe both idock\citep{1153} and istar \citep{1362} can supplement the efforts of medicinal chemists in drug discovery research.
+CDK2 is a classical and important target for cancer therapy. Through the interaction of CDKs and cyclins, cell cycle progress is sequentially and strictly processed 29. Different cyclin/CDK complexes are activated in difference stages of the cell cycle 30,32. When the cell cycle goes through G1 to S phase, the complex of cyclin D1-CDK4/6 and cyclin E-CDK2 are ordinally activated and the retinoblastoma protein (pRB) is hyper-phosphorylated on serine and threonine residues 33,34. The hyperphosphorylated pRB promotes the release of E2F transcription factors, which in turn facilitates the transcription of numerous genes required for G1 to S transition and S phase progression 35.
 
 Adapalene was selected for further investigations because its IC50 was less than 10 umol/L as determined by MTT assay. Adapalene is the third generation of synthetic retinoids, mainly used for the topical therapy of acne vulgaris \citep{1599}. Its antiproliferative and proapoptotic effects \textit{in vitro} were first reported in colon carcinoma cell lines (CC-531, HT-29 and LOVO) \citep{1600} and hepatoma cells (HepG2 and Hep1B) \citep{1601} by increasing the activity of caspase 3 via up-regulating bax and down-regulating bcl-2.
 
 In this study, we reported for the first time that adapalene is a potential CDK2 inhibitor, and demonstrated for the first time that oral administration of adapalene (20 mg/kg) exhibited significant and strong anti-cancer efficacy as compared to the leading cancer drug oxaliplatin (40 mg/kg) \textit{in vivo} in nude mice xenografted with colorectal DLD1 cells. Importantly combination of effective dose of adapalene and oxaliplatin could produce even higher therapeutic effect, suggesting that adapalene with its different mechanism, could be combined with other chemotherapy drugs to achieve higher therapy effect.
 
-Previously, no obvious toxicity was reported by either i.p. injection of 100 mg/kg adapalene in carrageenan induced paw oedema rat, or topic use of 10\% (10 mg/ml) in UV induced erythema guinea pig46. In our study, we did not observe significant change in body weight by oral administration of adapalene (15-100 mg/kg) for 21 days, suggesting that oral or ip injection of adapalene administration is relatively safe. TASHIRO T47 and his colleagues reported that ip injection of 5 and 10 mg/kg oxaliplatin on d2 in B6D2F mice subcutaneously xenografted with colon38 significantly reduced tumor weight to average 16 and 38\% of the control level, respectively, at 21 day post-treatment. In this study, we tested oral oxaliplatin treatment by gavage at dose of 10, 20, and 40mg/kg. We found that 40mg/kg effectively reduced the tumor weight to 28\% of the control on day 21 post-treatment, without showing any body weight change, suggesting that oral administration of oxaliplatin is relative safe and effective.
-
-In recent years, a large number of CDK inhibitors have been reported in the literature. However, due to drug toxicity and selectivity, they are not available for clinic use up to now. As a FDA-approved drug, the application of adapalene and the combination of adapalene with other chemotherapy drugs for the treatment of colorect neoplasms and other cancers warrant further investigations.
+Previously, no obvious toxicity was reported by either i.p. injection of 100 mg/kg adapalene in carrageenan induced paw oedema rat, or topic use of 10\% (10 mg/ml) in UV induced erythema guinea pig46. In our study, we did not observe significant change in body weight by oral administration of adapalene (15-100 mg/kg) for 21 days, suggesting that oral or ip injection of adapalene administration is relatively safe. TASHIRO T 47 and his colleagues reported that ip injection of 5 and 10 mg/kg oxaliplatin on d2 in B6D2F mice subcutaneously xenografted with colon38 significantly reduced tumor weight to average 16 and 38\% of the control level, respectively, at 21 day post-treatment. In this study, we tested oral oxaliplatin treatment by gavage at dose of 10, 20, and 40mg/kg. We found that 40mg/kg effectively reduced the tumor weight to 28\% of the control on day 21 post-treatment, without showing any body weight change, suggesting that oral administration of oxaliplatin is relative safe and effective.
 
 \section{Conclusions}
 
+This study presents the first successful prospective application of idock \citep{1153,1362} in identifying CDK2 inhibitors using a repurposing strategy.
+
 Among the top compounds sorted by idock score, nine were selected and purchased for further studies. Among them, adapalene (CD271,6-[3-(1-adamantyl)-4-methoxyphenyl]-2-naphtoic acid) exhibited the highest anti-cancer effect in human colorectal LOVO and DLD1 cells. Consistent with the expected properties of CDK2 inhibitors, adapalene treatment significantly increased the percentage of cells in G1 phase, decreased the expressions of CDK2, cyclin E and Rb, as well as the phosphorylationsof CDK2 on Thr160 and Rb on Ser795. Finally, the anti-cancer effect of adapalene was examined \textit{in vivo} in a BALB/C nude mice model subcutaneously xenografted with human colorectal cancer DLD1 cells. Our results demonstrated that oral adapalene treatment significantly (p<0.05) and dose-dependently inhibited tumor growth. Adapalene (20 mg/kg) exhibited a strong anti-tumor activity comparable to that of oxaliplatin (40 mg/kg), with their combinatorial therapy exhibiting the highest therapeutic effect. These results suggested for the first time that adapalene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human colorectal cancer. The potential use of adapalene, a FDA approved drug, as an anti-cancer drug especially for the combination treatment in human colorectal cancer warrants further studies.
+
+As a FDA-approved drug, the application of adapalene and the combination of adapalene with other chemotherapy drugs for the treatment of colorect neoplasms and other cancers warrant further investigations.
 
 \chapterend
