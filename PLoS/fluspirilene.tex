@@ -72,19 +72,22 @@
 \\
 Xi-Nan Shi$^{1,3}$,%xilancixiang@163.com
 Hongjian Li$^{2}$,%JackyLeeHongJian@Gmail.com
+Hong Yao$^{5,6}$,%yaohong20055@hotmail.com
 Xu Liu$^{1}$,%liuxu1956@163.com
-Ling Li$^{1}$,%
+Ling Li$^{1}$,%kmli62@163.com
 Kwong-Sak Leung$^{2}$,%ksleung@cse.cuhk.edu.hk
-Man-Hon Wong$^{2}$,%mhwong@cse.cuhk.edu.hk
 Hsiang-fu Kung$^{1}$,%b110473@mailserv.cuhk.edu.hk
+Man-Hon Wong$^{2}$,%mhwong@cse.cuhk.edu.hk
 Marie Chia-mi Lin$^{1,4,\ast}$%mcmlin@163.com
 \\
-\bf{1} Biotechnology Center, Kunming Medical University, Kunming, Yunnan, China
-\bf{2} Department of Computer Science and Engineering, Chinese University of Hong Kong, Shatin, New Territories, Hong Kong
-\bf{3} Department of Medicine, Southwest Guizhou Vocational and Technical College for Nationalities, Guizhou, China
-\bf{4} Shenzhen Key Lab of Translational Medicine of Tumor, School of Medicine, Shenzhen University, Shenzhen, China
+\bf{1} Biotechnology Center, Kunming Medical University, Kunming, Yunnan, China\\
+\bf{2} Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong\\
+\bf{3} Department of Medicine, Southwest Guizhou Vocational and Technical College for Nationalities, Guizhou, China\\
+\bf{4} Shenzhen Key Lab of Translational Medicine of Tumor, School of Medicine, Shenzhen University, Shenzhen, China\\
+\bf{5} The Cancer Biotherapy Institute of Jiangsu Province, Xuzhou Medical College, Xuzhou, China\\
+\bf{6} School of Biomedical Sciences, Chinese University of Hong Kong, Hong Kong
 \\
-$\ast$ E-mail: mcmlin@163.com
+$\ast$ Corresponding author: Marie Chia-mi Lin. E-mail: mcmlin@163.com; Tel: +0086(0)13798346647; fax: +0086(0)87165922953
 \end{flushleft}
 
 % Please keep the abstract between 250 and 300 words
@@ -139,7 +142,7 @@ Female BALB/C nude mice, 4 to 5 weeks old from Vital River Laboratory Technology
 
 \subsection*{Statistical analysis}
 
-The results were obtained from at least three different experiments. Statistical analysis was performed by Student's t test and differences were considered to be statistically significant if p \textless\ 0.05. Statistically significant results are marked with the $\ast$ symbol in the figures.
+The results were obtained from at least three different experiments and expressed as mean $\pm$ SD. Statistical analysis was performed by Student's t test and differences were considered to be statistically significant if p \textless\ 0.05. Statistically significant results are marked with the $\ast$ symbol in the figures.
 
 \section*{Results}
 
@@ -185,15 +188,15 @@ Encouraged by these successful stories, in this study we adopted the repurposing
 
 To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, therefore existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Moreover, to promote prospective SBVS by idock, a web server called istar \cite{1362} was developed and made available at http://istar.cse.cuhk.edu.hk/idock, where there are as many as over 23 million purchasable small molecule compounds ready for docking against any protein supplied by the user. Both idock \cite{1153} and istar \cite{1362} would hopefully supplement the efforts of medicinal chemists in drug discovery research.
 
-Regarding the structural data in use, there are so far as many as 347 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
+Regarding the structural data in use, there are so far as many as 347 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \cite{1608}, DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
 
-After ensemble docking experiments with idock \cite{1153,1362} followed by careful visual inspections with iview \cite{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, fluspirilene was selected for further investigations because its IC50 was less than 10 umol/L as determined by MTT assay. Fluspirilene is currently used for the therapy of chronic schizophrenia.% Its anti-cancer effect \textit{in vitro} was recently reported \cite{}, but was never investigated \textit{in vivo}.
+After ensemble docking experiments with idock \cite{1153,1362} followed by careful visual inspections with iview \cite{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, fluspirilene was selected for further investigations because its IC50 was less than 10 umol/L as determined by MTT assay. Fluspirilene is currently used for the therapy of chronic schizophrenia.% Its anti-cancer effect \textit{in vitro} was recently reported \cite{1606}, but was never investigated \textit{in vivo}.
 
 In this study, we reported for the first time that fluspirilene is a potential CDK2 inhibitor, and demonstrated for the first time that oral administration of fluspirilene (15 mg/kg) exhibited significant and strong anti-cancer efficacy comparable to the leading cancer drug fluorouracil (10 mg/kg) \textit{in vivo} in nude mice xenografted with hepatoma Huh7 cells. Most importantly, the combination of effective dose of fluspirilene and fluorouracil produced even higher therapeutic effect, indicating that fluspirilene may work through a different mechanism than fluorouracil, which further indicates that fluspirilene could be combined with other chemotherapy drugs to achieve synergistic therapeutic effect.
 
-No obvious toxicity was previously reported by intraperitoneal injection of 8 mg/kg fluspirilene in male wistar rats \cite{1607}. In this study, we did not observe significant change in body weight by oral administration of fluspirilene (15 mg/kg) for 21 days, suggesting that oral or intraperitoneal injection of fluspirilene is relatively safe.
+No obvious toxicity was previously reported by intraperitoneal injection of 8 mg/kg fluspirilene in male wistar rats \cite{1610}. In this study, we did not observe significant change in body weight by oral administration of fluspirilene (15 mg/kg) for 21 days, suggesting that oral or intraperitoneal injection of fluspirilene is relatively safe.
 
-The inhibitory rate of 10 mg/kg fluorouracil on d2 in female BALB/C \textit{in situ} hepatocellular carcinoma models with HCM-Y89 cell by intravenous injection was 48.14\% at 20 day of post-treatment \cite{}. In this study, we found that the inhibitory rate of 10 mg/kg fluorouracil on d21 in female BALB/C nude mice xenografted models with Huh7 cells by intraperitoneal injection was 85.4\%, without showing any body weight change, suggesting that intraperitoneal administration of fluorouracil is relatively safe and effective.
+The inhibitory rate of 10 mg/kg fluorouracil on d2 in female BALB/C \textit{in situ} hepatocellular carcinoma models with HCM-Y89 cell by intravenous injection was 48.14\% at 20 day of post-treatment \cite{1609}. In this study, we found that the inhibitory rate of 10 mg/kg fluorouracil on d21 in female BALB/C nude mice xenografted models with Huh7 cells by intraperitoneal injection was 85.4\%, without showing any body weight change, suggesting that intraperitoneal administration of fluorouracil is relatively safe and effective.
 
 %Hepatocellular carcinoma (HCC) is the third cause of cancer-related deaths worldwide \cite{}. Only 30\% to 40\% of the patients with HCC are eligible for curative treatments, which include surgical resection as the first option, liver transplantation and percutaneous ablation. However, there is a high frequency of tumor recurrence after surgical resection and most HCC seem resistant to conventional chemotherapy and radiotherapy. Thus, the development of novel therapies against HCC is urgently required.
 
