@@ -24,6 +24,10 @@ We utilized our free and open-source protein-ligand docking software idock \cite
 \subsection{Docking}
 
 44 X-ray crystallographic structures of CDK2 in complex with a ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. The co-crystallized ligands and waters were manually removed. The structures of FDA-approved drugs were collected from the dbap and fda catalogs of the ZINC database \citep{532,1178}. The dbap catalog of version 2014-03-19 comprising 1,738 compounds and the fda catalog of version 2012-07-25 comprising 3,176 compounds were downloaded, of which 4,311 compounds were unique. The 44 CDK2 structures in PDB format and the 4,914 compounds in Mol2 format were then converted to PDBQT format using AutoDockTools \citep{596}. Our free and open-source docking software idock v2.1.2 \citep{1153,1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy. Finally the compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top commercially available compounds were queried and purchased via http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
+%box.conf
+%1st conformation selected, because >60% RMSD1=RMSDm \citep{1362}
+%Redocking success rates, RMSD distribution, histogram
+%256 Monte Carlo optimization tasks
 
 \begin{table}
 \caption{The 44 CDK2 holo structures used for ensemble docking.}
@@ -117,6 +121,7 @@ The results were obtained from at least three different experiments and expresse
 \subsection{Ensemble docking results and selection of candidate inhibitors}
 
 Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2. Based on commercial availability, nine top-scoring compounds (Table \ref{cdk2:Top9}) were selected and purchased for further investigations.
+%http://istar.cse.cuhk.edu.hk/idock/iview/?1gz8-dbap
 
 \begin{table}
 \caption{The nine top-scoring compounds purchased and validated.}
@@ -144,7 +149,7 @@ We first evaluated the anti-cancer effect of the nine compounds by MTT assay (Fi
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/CellViabilityAgainstConcentration.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/CellViabilityAgainstConcentration.jpg}
 \caption{Comparison of the effect of the nine compounds on the viability of LOVO and DLD1 colorectal cancer cells.}
 \label{cdk2:CellViabilityAgainstConcentration}
 \end{figure}
@@ -153,7 +158,7 @@ Adapalene exhibited dose- and time-dependent inhibition effect on cell viability
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/CellViabilityAgainstTime.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/CellViabilityAgainstTime.jpg}
 \caption{The growth inhibition effect of adapalene on LOVO and DLD1 colorectal cancer cells.}
 \label{cdk2:CellViabilityAgainstTime}
 \end{figure}
@@ -164,7 +169,7 @@ We analyzed the effect of adapalene treatment with concentrations of 3, 10, 30 $
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/G1Distribution.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/G1Distribution.jpg}
 \caption{Dose- and time-dependent effect of adapalene treatment on the percentage of cells in G1 phase.}
 \label{cdk2:G1Distribution}
 \end{figure}
@@ -173,7 +178,7 @@ Figure \ref{cdk2:CellCycleDistribution} shows the changes of cell cycle profile 
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/CellCycleDistribution.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/CellCycleDistribution.jpg}
 \caption{Cell cycle distributions at 24 hours after adapalene treatment.}
 \label{cdk2:CellCycleDistribution}
 \end{figure}
@@ -184,7 +189,7 @@ We investigated the effect of adapalene on the expressions of critical proteins 
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/WesternBlot.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/WesternBlot.jpg}
 \caption{Effect of adapalene treatment on the expressions of cyclins, CDK2 and Rb.}
 \label{cdk2:WesternBlot}
 \end{figure}
@@ -195,7 +200,7 @@ To evaluate the effect of adapalene on the growth of colorectal carcinoma \texti
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/AdapaleneOnTumorGrowth.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/AdapaleneOnTumorGrowth.jpg}
 \caption{Effect of oral treatment of adapalene on tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
 \label{cdk2:AdapaleneOnTumorGrowth}
 \end{figure}
@@ -204,7 +209,7 @@ In a separate experiment, we compared the efficacy of adapalene (20mg/kg), oxali
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/AdapaleneOxaliplatinOnTumorGrowth.jpg}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/AdapaleneOxaliplatinOnTumorGrowth.jpg}
 \caption{Effect of oral treatment of adapalene combined with oxaliplatin on tumor growth \textit{in vivo} in nude mice xenografted with DLD1 cells.}
 \label{cdk2:AdapaleneOxaliplatinOnTumorGrowth}
 \end{figure}
@@ -215,14 +220,14 @@ Figure \ref{cdk2:1GZ8-ZINC03784182-ms} plots the predicted conformation of adapa
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/1GZ8-ZINC03784182-ms.png}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/1GZ8-ZINC03784182-ms.png}
 \caption{The predicted conformation of adapalene in complex with CDK2.}
 \label{cdk2:1GZ8-ZINC03784182-ms}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=\linewidth]{../cdk2/1GZ8-ZINC03784182-pv.pdf}
+\includegraphics[width=\linewidth]{../cdk2-adapalene/1GZ8-ZINC03784182-pv.pdf}
 \caption{The putative interactions of adapalene with CDK2.}
 \label{cdk2:1GZ8-ZINC03784182-pv}
 \end{figure}
@@ -241,7 +246,7 @@ Encouraged by these successful stories, in this study we adopted the repurposing
 
 To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, therefore existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Moreover, to promote prospective SBVS by idock, a web server called istar \citep{1362} was developed and made available at http://istar.cse.cuhk.edu.hk/idock, where there are as many as over 23 million purchasable small molecule compounds ready for docking against any protein supplied by the user. Both idock \citep{1153} and istar \citep{1362} would hopefully supplement the efforts of medicinal chemists in drug discovery research.
 
-Regarding the structural data in use, there are so far as many as 347 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \citep{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \citep{1608}, DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
+Regarding the structural data in use, there are so far as many as 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \citep{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \citep{1608}, DrugBank \citep{1594}, KEGG DRUG \citep{1595} and e-Drug 3D \citep{1125}.
 
 After ensemble docking experiments with idock \citep{1153,1362} followed by careful visual inspections with iview \citep{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, adapalene was selected for further investigations because its IC50 was less than 10 umol/L as determined by MTT assay. Adapalene is the third generation of synthetic retinoids, currently used for the topical therapy of acne vulgaris \citep{1599}. Its anti-proliferative and proapoptotic effects \textit{in vitro} were first reported in colon carcinoma cell lines (CC-531, HT-29 and LOVO) \citep{1600} and hepatoma cells (HepG2 and Hep1B) \citep{1601} by increasing the activity of caspase 3 via up-regulating bax and down-regulating bcl-2.
 
