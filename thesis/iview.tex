@@ -5,7 +5,7 @@
 
 Visualization of protein-ligand complex plays an important role in elaborating protein-ligand interactions and aiding novel drug design. Most existing web visualizers either rely on slow software rendering, or lack the support of macromolecular surface construction. The useful feature of virtual reality is also unavailable.
 
-We have developed iview, an easy-to-use interactive WebGL visualizer for protein-ligand complex. It exploits hardware acceleration rather than software rendering, and supports four surface representations including Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface. It features four special effects in virtual reality settings, namely anaglyph, parallax barrier, oculus rift and stereo, leading to visually appealing identification of intermolecular interactions. Moreover, based on the feature-complete version of iview, we have also developed a concise and tailor-made version specifically for our istar::idock to aid online protein-ligand docking service. This demonstrates the excellent portability of iview.
+We have developed iview, an easy-to-use interactive WebGL visualizer for protein-ligand complex. It exploits hardware acceleration rather than software rendering, and supports four surface representations including Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface. It features four special effects in virtual reality settings, namely anaglyph, parallax barrier, oculus rift and stereo, leading to visually appealing identification of intermolecular interactions. Moreover, based on the feature-complete version of iview, we have also developed a concise and tailor-made version specifically for our idock@istar to aid online protein-ligand docking service. This demonstrates the excellent portability of iview.
 
 Using innovative 3D techniques, we provide a user friendly visualizer that is not intended to compete with professional visualizers, but to permit easy accessibility and platform independence. To the best of our knowledge, iview is the only web visualizer that utilizes GPU hardware acceleration and supports three unique features: protein surface construction, virtual reality effects, and PDBQT format input. iview is freely available at http://istar.cse.cuhk.edu.hk/iview.
 
@@ -23,7 +23,7 @@ Surface representation is a convenient way to visualize protein-ligand interacti
 
 \section{Objective}
 
-We aimed at designing iview as a convenient approach to visualize protein-ligand complex directly on the web. In iview, in addition to conventional visualization functionalities, we implemented macromolecular surface representations as well as special effects in virtual reality settings. Furthermore, we designed iview to be flexible enough so that it could be easily modified to adapt to different applications. As an application example, we refactored the feature-rich version of iview and derived a tailor-made version specifically for visualizing istar::idock input data and output results of user-submitted jobs.
+We aimed at designing iview as a convenient approach to visualize protein-ligand complex directly on the web. In iview, in addition to conventional visualization functionalities, we implemented macromolecular surface representations as well as special effects in virtual reality settings. Furthermore, we designed iview to be flexible enough so that it could be easily modified to adapt to different applications. As an application example, we refactored the feature-rich version of iview and derived a tailor-made version specifically for visualizing idock@istar input data and output results of user-submitted jobs.
 
 \section{Methods}
 
@@ -177,7 +177,7 @@ The cculus rift is a virtual reality head-mounted device, which features a high-
 
 \section{Application}
 
-We emphasize portability and usability, and illustrate that iview can be easily modified to suit one's particular application, given that iview is free and open source under a permissive license. We take protein-ligand docking as an example. Based on the feature-rich version of iview, our tailor-made version specifically for istar::idock cleans up many dispensable functions, enabling a very neat interface. It only retains the rendering of primary structure of protein and ligand, and the construction of protein surface. Most importantly, it implements new features especially for protein-ligand docking purpose. Figure \ref{iview:idock} shows this application-specific version and can be reproduced at http://istar.cse.cuhk.edu.hk/idock/iview/?525a0abab0717fe31a000001.
+We emphasize portability and usability, and illustrate that iview can be easily modified to suit one's particular application, given that iview is free and open source under a permissive license. We take protein-ligand docking as an example. Based on the feature-rich version of iview, our tailor-made version specifically for idock@istar cleans up many dispensable functions, enabling a very neat interface. It only retains the rendering of primary structure of protein and ligand, and the construction of protein surface. Most importantly, it implements new features especially for protein-ligand docking purpose. Figure \ref{iview:idock} shows this application-specific version and can be reproduced at http://istar.cse.cuhk.edu.hk/idock/iview/?525a0abab0717fe31a000001.
 
 In the input phase of a docking job, it merely requires a PDB file, which can be obtained either from the PDB database \citep{1357} or via homology modeling, and then constructs the protein surface asynchronously in a separate web worker to keep the web page responsive. It automatically detects a binding site from the largest co-crystallized ligand first by finding the smallest cubic box that covers the entire ligand and then by extending the box by 50\% in all the three dimensions in order to reserve space for conformational sampling. In case of non-existence of co-crystallized ligand, the binding site is defaulted to the geometric center of the protein. The binding site is visually depicted in the form of a cubic box whose center and size can be manually adjusted by users in real time.
 
@@ -187,13 +187,13 @@ In the output phase of a docking job, it displays the user-supplied cubic box fo
 \begin{center}
 \includegraphics[width=\linewidth]{../iview/idock.png}
 \end{center}
-\caption{Tailor-made version of iview specifically for visualizing istar::idock results of user-submitted jobs.}
+\caption{Tailor-made version of iview specifically for visualizing idock@istar results of user-submitted jobs.}
 \label{iview:idock}
 \end{figure}
 
 \section{Discussion}
 
-We developed iview with the purpose to simplify and promote the use of istar::idock. At first we tried ChemDoodle Web Components, but it had strong dependency on its server side components, whose source code we had no access to. Later we turned to GLmol, although which has been discontinued since 29 August 2012, was quite an exciting project because it gracefully built its geometric modeling and relevant functions on top of the three.js foundation, and thus greatly reduced the programming difficulty.
+We developed iview with the purpose to simplify and promote the use of idock@istar. At first we tried ChemDoodle Web Components, but it had strong dependency on its server side components, whose source code we had no access to. Later we turned to GLmol, although which has been discontinued since 29 August 2012, was quite an exciting project because it gracefully built its geometric modeling and relevant functions on top of the three.js foundation, and thus greatly reduced the programming difficulty.
 
 Based on GLmol, iview has fixed many bugs and meanwhile introduced new features. Their differences are as follows. iview supports four virtual reality effects, which GLmol lacks. iview allows users to choose a surface opacity between 1.0 and 0.5 so that users can inspect both protein surface and internal structures at the same time. iview can parse alternate atoms and reconstruct their covalent bonds, but GLmol simply ignores them. iview can identify metal ions and highlight their bonds by dashed lines. GLmol does not distinguish metal ions and displays their bonds by ordinary lines. iview supports as many as 100 atom types, from H to Fm, i.e. the first 100 atoms in the periodic table. GLmol can only recognize about 16 common atoms.
 

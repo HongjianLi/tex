@@ -1,11 +1,11 @@
-\chapter{istar::USR: ultrafast shape recognition}
+\chapter{USR@istar: ultrafast shape recognition}
 \label{usr}
 
 \section{Abstract}
 
 Finding compounds structurally similar to a query ligand has been an important but daunting problem for a long time. The USR (Ultrafast Shape Recognition) algorithm represents a whole new alignment-free method that encodes the shape information semantically and permits superfast screening of a large molecular database. A few extensions to USR improve the original method from various perspectives and three of some, UFSRAT, EDULISS and SwissTargetPrediction, are also available as web servers. However, UFSRAT and EDULISS are unable to discriminate between long, chain-like molecules, and their calculated distributions are not meaningful when some pharmacophoric features are rarer than others. SwissTargetPrediction uses a small bioactive compound database and is not generally for prospective virtual screening purposes.
 
-We propose a pragmatic implementation of USR and its USRCAT (USR with Credo Atom Types) extension based on our istar web platform. We use a huge molecular database of more than 230 million diverse and representative conformers, and exploit three levels of parallelism with a novel implementation of sum of absolute different using AVX (Advanced Vector Extensions) to accelerate job execution. Our istar::USR supports multiple query ligands in SDF, MOL2, XYZ, PDB or PDBQT formats, and interfaces with our iview WebGL visualizer for interactive visualization of high-score hits. istar::USR is freely available at http://istar.cse.cuhk.edu.hk/usr.
+We propose a pragmatic implementation of USR and its USRCAT (USR with Credo Atom Types) extension based on our istar web platform. We use a huge molecular database of more than 230 million diverse and representative conformers, and exploit three levels of parallelism with a novel implementation of sum of absolute different using AVX (Advanced Vector Extensions) to accelerate job execution. Our USR@istar supports multiple query ligands in SDF, MOL2, XYZ, PDB or PDBQT formats, and interfaces with our iview WebGL visualizer for interactive visualization of high-score hits. USR@istar is freely available at http://istar.cse.cuhk.edu.hk/usr.
 
 This is an ongoing collaborative project with Pedro J. Ballester from Cancer Research Center of Marseille, Marseille, France.
 
@@ -36,7 +36,7 @@ Among the USR variants mentioned above, only three of them \citep{1436,1437,1408
 
 \section{Objective}
 
-In this project we aim to provide an istar-based \citep{1362} web service for large-scale prospective virtual screening using USR-like methods. We choose to employ USR \citep{1379} and USRCAT \citep{1331} because they have demonstrated pragmatic usefulness in prospective \citep{1380,1281,1504,1502} and retrospective \citep{1331} virtual screening experiments, respectively, and their source code is freely available for studying the precise implementation and porting to other programming languages such as C++ and JavaScript. Our istar::USR has several distinctive features. First, it uses both USR and USRCAT to search a large database comprising 230 million low energy conformers of 23 million compounds collected from ZINC \citep{532,1178}. Second, it utilizes three levels of parallelism, both coarse grained and fine grained, to accelerate job execution. Third, it supports multiple query ligands in five formats in one job, and interfaces with the iview \citep{1366} WebGL visualizer to display results in an interactively manner.
+In this project we aim to provide an istar-based \citep{1362} web service for large-scale prospective virtual screening using USR-like methods. We choose to employ USR \citep{1379} and USRCAT \citep{1331} because they have demonstrated pragmatic usefulness in prospective \citep{1380,1281,1504,1502} and retrospective \citep{1331} virtual screening experiments, respectively, and their source code is freely available for studying the precise implementation and porting to other programming languages such as C++ and JavaScript. Our USR@istar has several distinctive features. First, it uses both USR and USRCAT to search a large database comprising 230 million low energy conformers of 23 million compounds collected from ZINC \citep{532,1178}. Second, it utilizes three levels of parallelism, both coarse grained and fine grained, to accelerate job execution. Third, it supports multiple query ligands in five formats in one job, and interfaces with the iview \citep{1366} WebGL visualizer to display results in an interactively manner.
 
 \section{Methods}
 
@@ -86,7 +86,7 @@ S(\mathbf M^i, \mathbf M^j)=(1
 
 \subsection{USR and USRCAT on istar}
 
-Like in istar::idock for prospective virtual screening, we use the same database, which comprises 23,129,083 ligands collected from the All Clean Subset of ZINC \citep{532,1178}.
+Like in idock@istar for prospective virtual screening, we use the same database, which comprises 23,129,083 ligands collected from the All Clean Subset of ZINC \citep{532,1178}.
 
 It is necessary to include more than one conformer per compound in the database since flexible molecules can adopt different shapes. Hence the more of these conformations that are included in the database, the less likely it is to miss molecules with the desired pattern. Each small organic molecule could have an average of about 200 conformations \citep{1332}, or up to 292 conformations \citep{1280}. The conformers of a particular molecule are in general geometrically distinct and have low potential energy, as conformers with high internal energy are in principle less likely to occur in nature.
 
@@ -153,13 +153,13 @@ First and foremost, our molecular database is populated with more than 230 milli
 
 Second, we estimate the storage size of all descriptors across the entire database, and suggest two approaches, i.e. preloading all descriptors at once and loading them chunk by chunk, and analyze their theoretical execution time. Based on the time analysis, we propose to exploit three levels of parallelism, which map multiple jobs to multiple servers, multiple queries to multiple CPU cores, and multiple descriptors to multiple registers, respectively, in order to fully utilize all available computational resources to accelerate job execution. Notably, we describe a novel AVX implementation of sum of absolute differences to calculate the USR or USRCAT scores between two moment vectors.
 
-Furthermore, our implementation of USR and USRCAT, denoted as istar::USR for short, supports multiple query ligands in SDF, MOL2, XYZ, PDB and PDBQT formats. It also features our iview WebGL visualizer to aid result interpretation in an interactive manner.
+Furthermore, our implementation of USR and USRCAT, denoted as USR@istar for short, supports multiple query ligands in SDF, MOL2, XYZ, PDB and PDBQT formats. It also features our iview WebGL visualizer to aid result interpretation in an interactive manner.
 
-We believe our istar::USR web service for ligand-based virtual screening purpose can perfectly supplement our istar::idock web service for structure-based virtual screening purpose.
+We believe our USR@istar web service for ligand-based virtual screening purpose can perfectly supplement our idock@istar web service for structure-based virtual screening purpose.
 
 \section{Availability}
 
-istar::USR is free and open source under Apache License 2.0. It is available at http://istar.cse.cuhk.edu.hk/usr.
+USR@istar is free and open source under Apache License 2.0. It is available at http://istar.cse.cuhk.edu.hk/usr.
 
 \section{Future works}
 
