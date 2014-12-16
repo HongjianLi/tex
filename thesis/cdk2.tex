@@ -23,11 +23,17 @@ We utilized our free and open-source protein-ligand docking software idock \cite
 
 \subsection{Docking}
 
-44 X-ray crystallographic structures of CDK2 in complex with a ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. The co-crystallized ligands and waters were manually removed. The structures of FDA-approved drugs were collected from the dbap and fda catalogs of the ZINC database \citep{532,1178}. The dbap catalog of version 2014-03-19 comprising 1,738 compounds and the fda catalog of version 2012-07-25 comprising 3,176 compounds were downloaded, of which 4,311 compounds were unique. The 44 CDK2 structures in PDB format and the 4,914 compounds in Mol2 format were then converted to PDBQT format using AutoDockTools \citep{596}. Our free and open-source docking software idock v2.1.2 \citep{1153,1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy. Finally the compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top commercially available compounds were queried and purchased via http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
-%box.conf
+44 X-ray crystallographic structures of CDK2 in complex with a ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. The co-crystallized ligands and waters were manually removed. The structures of FDA-approved drugs were collected from the dbap and fda catalogs of the ZINC database \citep{532,1178}. The dbap catalog of version 2014-03-19 comprising 1,738 compounds and the fda catalog of version 2012-07-25 comprising 3,176 compounds were downloaded, of which 4,311 compounds were unique. The 44 CDK2 structures in PDB format and the 4,914 compounds in Mol2 format were then converted to PDBQT format using AutoDockTools \citep{596}.
+
+Previously, a script was written to automatically define the search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions.
+
+Our free and open-source docking software idock v2.1.2 \citep{1153,1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy. For each compound, 256 Monte Carlo optimization tasks were run.
+
+For each molecule, idock returned a maximum number of nine docked poses, of which the one with the best idock score was used. A second script was written to compute their RMSD with respect to the corresponding co-crystallized pose.
+
+Finally the compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top commercially available compounds were queried and purchased via http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
 %1st conformation selected, because >60% RMSD1=RMSDm \citep{1362}
 %Redocking success rates, RMSD distribution, histogram
-%256 Monte Carlo optimization tasks
 
 \begin{table}
 \caption{The 44 CDK2 holo structures used for ensemble docking.}
