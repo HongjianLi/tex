@@ -12,4 +12,5 @@
 *.html
 *.png
 *.jpg
+*.eps
 */*.bib
