@@ -21,19 +21,9 @@ We utilized our free and open-source protein-ligand docking software idock \cite
 
 \section{Methods and Materials}
 
-\subsection{Docking}
+\subsection{Ensemble docking}
 
-44 X-ray crystallographic structures of CDK2 in complex with a ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. The co-crystallized ligands and waters were manually removed. The structures of FDA-approved drugs were collected from the dbap and fda catalogs of the ZINC database \citep{532,1178}. The dbap catalog of version 2014-03-19 comprising 1,738 compounds and the fda catalog of version 2012-07-25 comprising 3,176 compounds were downloaded, of which 4,311 compounds were unique. The 44 CDK2 structures in PDB format and the 4,914 compounds in Mol2 format were then converted to PDBQT format using AutoDockTools \citep{596}.
-
-Previously, a script was written to automatically define the search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions.
-
-Our free and open-source docking software idock v2.1.2 \citep{1153,1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy. For each compound, 256 Monte Carlo optimization tasks were run.
-
-For each molecule, idock returned a maximum number of nine docked poses, of which the one with the best idock score was used. A second script was written to compute their RMSD with respect to the corresponding co-crystallized pose.
-
-Finally the compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top commercially available compounds were queried and purchased via http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
-%1st conformation selected, because >60% RMSD1=RMSDm \citep{1362}
-%Redocking success rates, RMSD distribution, histogram
+44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. A previously written script \citep{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \citep{596}.
 
 \begin{table}
 \caption{The 44 CDK2 holo structures used for ensemble docking.}
@@ -90,15 +80,17 @@ PDB ID & Resolution (\AA) & UniProt ID\\
 \end{tabular}
 \end{table}
 
-\subsection{Chemicals and antibodies}
+The structures of FDA-approved drugs were obtained from the dbap and fda catalogs of the ZINC database \citep{532,1178}, where the dbap catalog comprises approved drugs collected from the DrugBank database \citep{1594} and the fda catalog comprises approved drugs collected via the DSSTox (Distributed Structure-Searchable Toxicity) project. The dbap catalog of version 2014-03-19 with 1,738 compounds and the fda catalog of version 2012-07-25 with 3,176 compounds were downloaded. Among these 4,914 compounds, 4,311 were unique in terms of ZINC ID. These 4,914 compounds in Mol2 format were then converted to PDBQT format using the prepare\_ligand4.py script of AutoDockTools \citep{596}.
+
+Our free and open-source docking software idock v2.1.2 \citep{1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy \citep{966,547,1128}. For each protein structure, free energy grid maps with a fine granularity of 0.08 \AA\ were constructed in parallel, and for each compound, 256 Monte Carlo conformational optimization tasks were run in parallel across multiple CPU cores.
+
+After docking, idock outputted a maximum number of nine predicted conformations for each input compound. The docked conformation with the best idock score was selected because it was previously shown to be the most likely one closest to the crystal conformation with a redocking success rate of more than 50\% on multiple benchmarks \citep{1362}. The 4,914 compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top-scoring ones were visually examined using iview \citep{1366} and PoseView \citep{748} in the context of CDK2 using the X-ray structure of the highest resolution, i.e. PDB ID 1GZ8 in this case (Table \ref{cdk2:PDBs}). Finally, commercially available compounds were queried and purchased via the Chemical Book website http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
+
+\subsection{Chemicals, antibodies, cell lines and cell culture}
 
 The selected chemicals and the leading cancer drug oxaliplatin were purchased from Sigma-Aldrich, USA. Anti-cyclin D, B1, E, CDK2, Rb, Pho-CDK2 (Thr160), Pho-Rb (Ser795) and GAPDH were obtained from Cell Signaling Technology, Inc., Danvers, Massachusetts, USA.
 
-\subsection{Cell lines and cell culture}
-
 Colorectal cancer cell lines LOVO and DLD1 were obtained from the American Type Culture Collection, Manassas, Virginia, USA. These cell lines were cultured in RPMI 1640 medium containing 10\% fetal bovine serum (FBS) (Invitrogen, Rockville, Maryland, USA) at 37°C in 5\% CO\textsubscript{2} and 95\% humidified air.
-
-\subsection{Cell culture experimental conditions}
 
 Cells were plated in 96-, 24-, or 6-well plates with 0.125\% FBS medium for 24 hours and then treated with 10\% FBS medium containing the testing compounds at various concentrations of 1, 3, 10, 30$\mu$M, and incubated for 24, 48, or 72 hours.
 
@@ -126,8 +118,7 @@ The results were obtained from at least three different experiments and expresse
 
 \subsection{Ensemble docking results and selection of candidate inhibitors}
 
-Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2. Based on commercial availability, nine top-scoring compounds (Table \ref{cdk2:Top9}) were selected and purchased for further investigations.
-%http://istar.cse.cuhk.edu.hk/idock/iview/?1gz8-dbap
+Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2. The docking prediction results with iview visualization \citep{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap. Based on commercial availability, nine top-scoring compounds (Table \ref{cdk2:Top9}) were selected and purchased for further investigations.
 
 \begin{table}
 \caption{The nine top-scoring compounds purchased and validated.}
