@@ -111,7 +111,7 @@ In this study, we used our free and open-source protein-ligand docking software 
 
 \subsection*{Ensemble docking and compound selection}
 
-44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Table \ref{PDBs}) were collected from the PDB (Protein Data Bank) \cite{540,537}. A previously written script \cite{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \cite{596}.
+44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Figure \ref{1HCK}; Table \ref{PDBs}) were collected from the PDB (Protein Data Bank) \cite{540,537}. A previously written script \cite{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \cite{596}.
 
 The structures of FDA-approved drugs were obtained from the dbap and fda catalogs of the ZINC database \cite{532,1178}, where the dbap catalog comprises approved drugs collected from the DrugBank database \cite{1594} and the fda catalog comprises approved drugs collected via the DSSTox (Distributed Structure-Searchable Toxicity) project. The dbap catalog of version 2014-03-19 with 1,738 compounds and the fda catalog of version 2012-07-25 with 3,176 compounds were downloaded. Among these 4,914 compounds, 4,311 were unique in terms of ZINC ID. These 4,914 compounds in Mol2 format were then converted to PDBQT format using the prepare\_ligand4.py script of AutoDockTools \cite{596}.
 
@@ -151,7 +151,7 @@ The results were obtained from at least three different experiments and expresse
 
 \subsection*{Ensemble docking results and selection of candidate inhibitors}
 
-Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (Table S2). The docking prediction results are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap. Based on commercial availability, nine top-scoring compounds (Table \ref{Top9}; Table S3) were selected and purchased for further investigations.
+Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (Table S2). The docking prediction results with iview visualization \cite{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap and http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-fda. 15 compounds had predicted free energy of -10 kcal/mol or lower, with the best one having -10.46 kcal/mol (Figure \ref{AvgScoreHistogram}). Based on commercial availability, 9 top-scoring compounds (Table \ref{Top9}; Table S3) were selected and purchased for further investigations.
 
 \subsection*{Fluspirilene decreased cell viability of hepatocellular carcinoma}
 
@@ -191,7 +191,7 @@ Encouraged by these successful stories, in this study we adopted the repurposing
 
 To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, therefore existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Moreover, to promote prospective SBVS by idock, a web server called istar \cite{1362} was developed and made available at http://istar.cse.cuhk.edu.hk/idock, where there are as many as over 23 million purchasable small molecule compounds ready for docking against any protein supplied by the user. Both idock \cite{1153} and istar \cite{1362} would hopefully supplement the efforts of medicinal chemists in drug discovery research.
 
-Regarding the structural data in use, there are so far as many as 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941 (Table S1). To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \cite{1608}, DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
+Regarding the structural data in use, there are so far as many as 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941 (Table S1). To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. Moreover, the standard deviation of scores across the 44 CDK2 structures was no greater than 0.8 kcal/mol for the top-scoring compounds (Table \ref{Top9}; Table S2), further indicating that the average score is a reliable metric. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \cite{1608}, DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
 
 After ensemble docking experiments with idock \cite{1153,1362} followed by careful visual inspections with iview \cite{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, fluspirilene was selected for further investigations because its IC$_{50}$ was less than 10 umol/L as determined by MTT assay. Fluspirilene is currently used for the therapy of chronic schizophrenia.% Its anti-cancer effect \textit{in vitro} was recently reported \cite{1606}, but was never investigated \textit{in vivo}.
 
@@ -221,6 +221,26 @@ Conceived and designed the experiments: MCL. Performed the experiments: XNS HL. 
 \bibliography{refworks}
 
 \section*{Figure Legends}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1HCK.eps}
+\end{center}
+\caption{
+{\bf Crystal structure of human CDK2 with ATP (PDB ID: 1HCK) \cite{1142}.} The molecular surface of CDK2 is colored by secondary structure, with an opacity of 0.9 to show the underlying secondary structure in cylinder \& plate representation. ATP is rendered in stick representation colored by atom type. Waters are shown as red dots and metal ions are shown as green dots. This figure was created by iview \cite{1366}.
+}
+\label{1HCK}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\linewidth]{../cdk2-fluspirilene/AvgScoreHistogram.eps}
+\end{center}
+\caption{
+{\bf Histogram distribution of the average idock score of the 4,914 compounds.} 842 and 783 compounds were in the ranges of [-7.5, -8.0) and [-7.0, -7.5), respectively, constituting the two largest bins. 15 and 63 compounds were in the ranges of [-10.0, -10.5) and [-9.5, -10.0), respectively, constituting the two bins appropriate for selection of candidate drugs.
+}
+\label{AvgScoreHistogram}
+\end{figure}
 
 \begin{figure}
 \begin{center}
@@ -364,19 +384,19 @@ PDB ID & Resolution (\AA) & UniProt ID\\
 \begin{table}
 \caption{
 \bf{The nine top-scoring compounds purchased and tested \textit{in vitro}.}}
-\begin{tabular}{ccl}
+\begin{tabular}{cccl}
 \hline
-ZINC ID & idock score (kcal/mol) & name\\
+ZINC ID & average score (kcal/mol) & standard deviation (kcal/mol) & name\\
 \hline
-06716957 & -10.46 & nilotinib\\
-03830332 & -10.43 & LS-194959\\
-03830768 & -10.23 & estradiol benzoate\\
-03881613 & -10.08 & nandrolone phenylpropionate\\
-01542113 & -10.06 & vilazodone\\
-00537755 & -10.02 & fluspirilene\\
-00897240 & -10.01 & azelastine hydrochloride\\
-33974796 &  -9.98 & latuda\\
-01481956 &  -9.95 & paliperidone\\
+06716957 & -10.46 & 0.52 & nilotinib\\
+03830332 & -10.43 & 0.50 & LS-194959\\
+03830768 & -10.23 & 0.75 & estradiol benzoate\\
+03881613 & -10.08 & 0.65 & nandrolone phenylpropionate\\
+01542113 & -10.06 & 0.51 & vilazodone\\
+00537755 & -10.02 & 0.66 & fluspirilene\\
+00897240 & -10.01 & 0.65 & azelastine hydrochloride\\
+33974796 &  -9.98 & 0.63 & latuda\\
+01481956 &  -9.95 & 0.50 & paliperidone\\
 \hline
 \end{tabular}
 \begin{flushleft}\label{Top9} The idock score is an estimation of binding free energy in kcal/mol units. A more negative value implies a higher predicted binding affinity.
@@ -387,7 +407,7 @@ ZINC ID & idock score (kcal/mol) & name\\
 
 Table S1. The 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. The table comprises the PDB ID, resolution, chain and positions.%P24941.tsv
 
-Table S2. Ensemble docking results of the 4,914 compounds. The table comprises the ZINC ID, the average score and the individual scores for the 44 selected CDK2 structures, and the molecular properties.%dbap+fda.csv
+Table S2. Ensemble docking results of the 4,914 compounds. The table comprises the ZINC ID, the catalog, the average score, standard deviation and individual scores for the 44 selected CDK2 structures, and the molecular properties.%dbap+fda.csv
 
 Table S3. Details of the nine top-scoring compounds purchased and tested \textit{in vitro}. The table comprises the ZINC ID, the average score, scientific name, clinical uses and references.%Purchased.pdf
 
