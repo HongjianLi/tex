@@ -1,5 +1,25 @@
 \chapter{Conclusions}
 
-TODO: write the conclusions after rewriting all chapters.
+Drug discovery has been an expensive and long-term practice over the decades. The cost of drug development has now reached US\$2.6B \citep{1611}. On the other hand, computer-aided drug discovery (CADD) methods are becoming cheaper and faster, and their predictive accuracy are continuously improving. This thesis presents our pragmatic CADD toolset as well as its prospective applications.
+
+Chapter \ref{idock} describes idock \citep{1153} for multithreaded flexible ligand docking. idock adopts a substantially simplified numerical model and implements dimension reduction for stochastic optimization. Compared to the competitive docking tool AutoDock Vina \citep{595}, idock obtains a speedup of 3.3 in CPU time and a speedup of 7.5 in elapsed time on average. A faster implementation permits testing more compounds or finding lower energy conformations in a large virtual screen.
+
+Chapter \ref{istar} describes istar \citep{1362} as a heterogeneous web platform for hosting diverse web services from multiple disciplines, including idock for large-scale prospective structure-based virtual screening. istar features a huge molecular database of over 23 million compounds, and provides comfortable and unique user experience via the proper use of modern web technologies. istar is now getting more attentions worldwide according to Google Analytics.
+
+Chapter \ref{iview} describes iview \citep{1366} for quick elucidation of molecular interactions on web pages interactively. iview eliminates the prerequisite of Java in browsers and utilizes WebGL instead, enabling GPU hardware acceleration. iview supports the helpful features of macromolecular surface construction and virtual reality effects. iview is also highly customizable that a specific version for visualizing idock results is derived and deployed on istar.
+
+Chapter \ref{isyn} describes iSyn \citep{1409,1387} for generating potent compounds \textit{de novo} from molecular fragments with desired molecular properties. iSyn circumvents the compound database diversity limitation imposed by virtual screening methods. iSyn guarantees synthetic feasibility with click chemistry, and interfaces with idock and iview to provide consistent experience. iSyn is capable of producing extraordinarly novel compounds within a reasonable runtime.
+
+Chapters \ref{rfcyscore}, \ref{rfscore3} and \ref{rfscore4} describe our separate studies \citep{1432,1433,1434} on the use of random forest (RF) to improve binding affinity prediction with related but different motivations. We show that the simple functional form typically implemented in classical scoring functions is detrimental for their predictive performance due to their incapability of exploiting abundant training samples, and substituting machine learning techniques like RF for the commonly-used multiple linear regression (MLR) model can substantially improve predictive accuracy \citep{1432,1433}. This finding is significant because RF-based scoring functions will continue to gain their competitive edge over MLR-based scoring functions given the future availability of more experimental data. We also investigate the impact of pose generation error on the predictive performance and find that re-training the scoring functions on docked poses can be a simple and quick solution to reduce the negative impact of pose generation error \citep{1434}.
+
+Chapter \ref{usr} describes USR@istar for convenient identification for compounds structurally similar to a query using the ultrafast shape recognition algorithm USR \citep{1379} and its extension USRCAT \citep{1331}. USR@istar exploits the AVX SIMD instructions of modern processors to accelerate similarity score computation. With the calculated features preloaded on the server side, searching 23 million compounds requires merely 30 seconds on average.
+
+It is noteworthy that all of our CADD tools are free and open source so as to promote their use. In addition to tool development, we also emphasize prospective applications.
+
+Chapter \ref{cdk2} presents our case study of cancers related to CDK2 (cyclin-dependent kinase 2). We use idock \citep{1153,1362} and \citep{1366} iview prospectively for the first time in identifying potential CDK2 inhibitors from approved small molecule drugs using a repurposing strategy and an ensemble docking methodology. The anti-acne drug adapalene exhibits the anti-proliferative effect in human colon cancer \textit{in vitro} and significantly inhibited tumor growth \textit{in vivo} in nude mice subcutaneously xenografted with human colorectal cancer cells, rendering adapalene a candidate anti-cancer drug.
+
+Chapter \ref{influenza} presents our case study of influenza A. We select three novel protein targets and utilize idock \citep{1153,1362} to screen 273,880 commercially cheap compounds, and identify hits predicted to establish strong interactions with their respective viral protein target and hence believed to yield strong inhibitory effects.
+
+In conclusion, we believe our toolset constitutes a step toward generalizing the use of CADD tools beyond the traditional purely experimental community, and our successful drug discovery endeavors in real life will inspire researchers in the CADD field.
 
 \chapterend
