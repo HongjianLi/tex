@@ -108,26 +108,26 @@ Due to the superior accuracy and speed of RDKit, in this study we proposed to us
 
 Suppose after generating approximately 10 conformers on average for each molecule, the database would contain 230 million conformers, each of which has a USRCAT moment vector of 60 elements of double precision floating point type, which requires 64 bits, or 8 bytes for storage. This sums up to $8B*60*230M=108GB$ for the size of the USRCAT descriptors of all conformers in the entire database.
 
-On one hand, given a server with sufficient capacity of memory, it is possible to preload all descriptors to enable fast screening. Mathematically, suppose $t_r$ is the reading time of a moment vector of a conformer in the database, $t_s$ is the scoring time of two moment vectors, $n_{conf}$ is the number of conformers in the database, $n_{query}$ is the number of query ligands of a single job, and $n_{job}$ is the number of jobs, the total screening time $t$ would be
+On one hand, given a server with sufficient capacity of memory, it is possible to preload all descriptors to enable fast screening. Mathematically, suppose $t_{read}$ is the reading time of a moment vector of a conformer in the database, $t_{score}$ is the scoring time of two moment vectors, $n_{conf}$ is the number of conformers in the database, $n_{query}$ is the number of query ligands of a single job, and $n_{job}$ is the number of jobs, the total screening time $t$ would be
 
 \begin{equation}
-t=t_r\times n_{conf}+t_s\times n_{conf}\times n_{query}\times n_{job}
+t=t_{read}\times n_{conf}+t_{score}\times n_{conf}\times n_{query}\times n_{job}
 \label{usr:time0}
 \end{equation}
 
 On the other hand, on a server with insufficient memory to preload all descriptors, it is possible to load the descriptors chunk by chunk whenever a new job gets executed. Suppose only $m_{conf} << n_{conf}$ moment vectors fit in the memory. The chunk-by-chunk approach is to loop for $n_{conf}/m_{conf}$ times, each time loading a different chunk with $m_{conf}$ moment vectors and then making the $n_{query}$ queries on this chunk. In this way, the total screening time $t$ would be
 
 \begin{eqnarray}
-t&=&(t_r\times m_{conf}+t_s\times m_{conf}\times n_{query})\times(n_{conf}/m_{conf})\times n_{job}\nonumber\\
- &=&t_r\times n_{conf}\times n_{job}+t_s\times n_{conf}\times n_{query}\times n_{job}
+t&=&(t_{read}\times m_{conf}+t_{score}\times m_{conf}\times n_{query})\times(n_{conf}/m_{conf})\times n_{job}\nonumber\\
+ &=&t_{read}\times n_{conf}\times n_{job}+t_{score}\times n_{conf}\times n_{query}\times n_{job}
 \label{usr:time1}
 \end{eqnarray}
 
-As seen from the above screening time analysis, there are apparently several levels of parallelism that can be potentially exploited. On the server side, there are millions of conformers, each of which has a moment vector of 60 elements. On the client side, there are multiple job submissions, each of which contains multiple queries. In the chunk-by-chunk approach, the scoring of the current chunk and the reading of the next chunk can even be pipelined.
+As seen from the above screening time analysis, there are apparently several levels of parallelism to exploit. On the server side, there are millions of conformers, each of which has a moment vector of 60 elements. On the client side, there are multiple job submissions, each of which contains multiple queries. In the chunk-by-chunk approach, the scoring of the current chunk and the reading of the next chunk can even be pipelined.
 
 Considering the fundamental architecture of our istar platform \citep{1362} as well as the nature of the problem, we decided to exploit three levels of parallelism: multiple jobs are broadcast to multiple daemons running on multiple servers; multiple queries are broadcast to multiple CPU cores of a server; multiple descriptors are broadcast to multiple vector registers of a CPU core. The first two levels of parallelism are coarse grained and easy to implement, whereas the third level is relatively fine grained and requires the support of, for instance, AVX (Advanced Vector Extensions).
 
-AVX are extensions to the x86 instruction set and expand the width of the SIMD (Single Instruction, Multiple Data) register file to 256 bits. Such a 256-bit register can hold four USR or USRCAT descriptors of 64-bit double precision floating point type. In view of the fact that a USR or USRCAT moment vector can be expressed as $\mathbf M=(M_1, M_2, M_3, M_4, \ldots, M_n)$ for indexing purpose, where $n=12$ for USR and $n=60$ for USRCAT, this moment vector can be decomposed into groups of four elements, which are processed using AVX in a SIMD fashion as shown in Figure \ref{usr:AVX}. Specifically, to compute the USR or USRCAT scores between two moment vectors $\mathbf M^i$ and $\mathbf M^j$ in equation \eqref{usr:usrscore}, the sum of absolute differences of their respective moments must be first calculated. This can be done ideally using AVX in four steps: firstly, the four elements are subtracted; secondly, the most significant bits of the four elements are set to zeros; thirdly, the four elements undergo a horizontal addition; and lastly, the first and third elements are summed up. Note that the above four steps compute the sum of absolute differences of four respective moments only, so they are wrapped inside a loop where the number of iterations is 3 for USR and 15 for USRCAT so as to compute the sum of absolute differences of all respective moments. The calculations of USR and USRCAT scores can be merged in one loop because the first 3 iterations for USRCAT are literally also for USR (see equation \eqref{usr:usrcatscore}). Since the loop count is constant and both the moment vectors are indexed constantly, unrolling is applicable here, resulting in a longer sequence of instructions but faster execution due to the circumvention of the use of a loop iterator.
+AVX are extensions to the x86 instruction set and expand the width of the SIMD (Single Instruction, Multiple Data) register file to 256 bits. Such a 256-bit register can hold four USR or USRCAT descriptors of 64-bit double precision floating point type. In view of the fact that a USR or USRCAT moment vector can be expressed as $\mathbf M=(M_1, M_2, M_3, M_4, \ldots, M_n)$ for indexing purpose, where $n=12$ for USR and $n=60$ for USRCAT, this moment vector can be decomposed into groups of four elements, which are processed using AVX in a SIMD fashion as shown in Figure \ref{usr:AVX}. Specifically, to compute the USR or USRCAT scores between two moment vectors $\mathbf M^i$ and $\mathbf M^j$ in equation \eqref{usr:usrscore}, the sum of absolute differences of their respective moments must be first calculated. This can be done ideally using AVX in four steps: firstly, the four elements are subtracted; secondly, the most significant bits of the four elements are set to zeros; thirdly, the four elements undergo a horizontal addition; and lastly, the first and third elements are summed up. Note that the above four steps compute the sum of absolute differences of four respective moments only, so they are wrapped inside a loop where the number of iterations is 3 for USR and 15 for USRCAT so as to compute the sum of absolute differences of all respective moments. The calculations of USR and USRCAT scores can be merged in one loop because the first 3 iterations for USRCAT are literally also for USR (equation \eqref{usr:usrcatscore}). Since the loop count is constant and both the moment vectors are indexed constantly, unrolling is applicable here, resulting in a longer sequence of instructions but faster execution due to the circumvention of the use of a loop iterator.
 
 \begin{figure}
 \begin{center}
@@ -141,29 +141,85 @@ Our daemon supports a query ligand in either SDF, MOL2, XYZ, PDB or PDBQT format
 
 \section{Results}
 
-%Query ligands with different number of heavy atoms.
-%06827693	4
-%03641271	7
-%00000882	10
-%03594299	13
-%01760831	16
-%00000163	19
-%00000931	22
-%00000706	25
-%00577115	28
-%03784182	31
-%00537755	35
-%33359785	39
-%53073961	42
-%34801951	46
-%29416466	49
-%08101127	53
-%08101051	57
-%85536932	60
-%96006018	65
-%Same query ligand in different formats, mol2, pdbqt.
-%Execution time
+We selected 19 query ligands with different number of heavy atoms, spanning from 4 to 65. Table \ref{usr:Queries}. 82\% (=137/167).
+
+\begin{table}
+\caption{Molecular properties of the 19 query ligands. HA: heavy atoms. MWT: molecular weight in Daltons. HBD: hydrogen bond donors. HBA: hydrogen bond acceptors. NRB: rotatable bonds.}
+\label{usr:Queries}
+\begin{tabular}{cccccc}
+\hline
+ZINC ID  & HA & MWT & HBD & HBA & NRB\\
+\hline
+06827693 &  4 &  60.008 & 0 &  3 &  0\\
+03641271 &  7 & 103.101 & 4 &  4 &  0\\
+00000882 & 10 & 135.130 & 3 &  5 &  0\\
+03594299 & 13 & 176.243 & 4 &  3 &  1\\
+01760831 & 16 & 206.244 & 0 &  1 &  0\\
+00000163 & 19 & 277.771 & 0 &  2 &  2\\
+00000931 & 22 & 314.796 & 2 &  4 &  1\\
+00000706 & 25 & 332.335 & 0 &  5 &  0\\
+00577115 & 28 & 382.449 & 1 &  1 &  5\\
+03784182 & 31 & 411.521 & 0 &  3 &  4\\
+00537755 & 35 & 476.591 & 2 &  4 &  7\\
+33359785 & 39 & 536.653 & 4 & 10 &  3\\
+53073961 & 42 & 588.552 & 1 &  6 & 10\\
+34801951 & 46 & 650.698 & 4 & 12 &  7\\
+29416466 & 49 & 671.863 & 7 & 11 & 13\\
+08101127 & 53 & 751.991 & 0 &  8 & 14\\
+08101051 & 57 & 806.987 & 4 & 14 &  9\\
+85536932 & 60 & 835.944 & 3 & 15 & 15\\
+96006018 & 65 & 914.187 & 3 & 14 &  6\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Matching ligands with different molecular properties}
+
 %Figure \ref{}
+Sort by USR. Sort by USRCAT.
+
+\subsection{Impact of file format on pharmacophoric atom set classification}
+
+USRCAT requires classification of atoms according to five predefined pharmacophoric subsets. Same query ligand in different formats, e.g. mol2, sdf, pdbqt, yields different classification results. We used ZINC00537755 as an example.
+
+This is not a problem with USR, which only replies on heavy atoms to calculate the features.
+
+\subsection{Execution time}
+
+\begin{table}
+\caption{Execution time in seconds of the 19 queries when the USRCAT features are loaded \textit{ad hoc} or in advance.}
+\label{usr:ExecutionTime}
+\begin{tabular}{cccc}
+\hline
+ZINC ID  & \textit{ad hoc} (s) & in advance (s) & difference (s)\\
+\hline
+06827693 & 171 & 34 & 137\\
+03641271 & 165 & 20 & 145\\
+00000882 & 172 & 29 & 143\\
+03594299 & 173 & 30 & 143\\
+01760831 & 172 & 30 & 142\\
+00000163 & 173 & 29 & 144\\
+00000931 & 164 & 31 & 133\\
+00000706 & 163 & 29 & 134\\
+00577115 & 163 & 30 & 133\\
+03784182 & 165 & 30 & 135\\
+00537755 & 167 & 32 & 135\\
+33359785 & 166 & 28 & 138\\
+53073961 & 167 & 31 & 136\\
+34801951 & 165 & 31 & 134\\
+29416466 & 166 & 32 & 134\\
+08101127 & 161 & 27 & 134\\
+08101051 & 164 & 31 & 133\\
+85536932 & 164 & 30 & 134\\
+96006018 & 164 & 30 & 134\\
+\hline
+ Average & 167 & 30 & 137\\
+ Std dev &   4 &  3 &   4\\
+\hline
+\end{tabular}
+\end{table}
+
+memory allocation 5s (could be more if from swap), $8B*60*23M=10GB$ hard disk reading cost 149s.
 
 \section{Conclusions}
 
