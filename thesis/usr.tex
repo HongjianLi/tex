@@ -141,10 +141,10 @@ Our daemon supports a query ligand in either SDF, MOL2, XYZ, PDB or PDBQT format
 
 \section{Results}
 
-We selected 19 query ligands with different number of heavy atoms, spanning from 4 to 65. Table \ref{usr:Queries}. 82\% (=137/167).
+We selected 19 query ligands with different number of heavy atoms, spanning from 4 to 65 with a step size of 3 or 4 (Table \ref{usr:Queries}. HA: heavy atoms. MWT: molecular weight in Daltons. HBD: hydrogen bond donors. HBA: hydrogen bond acceptors. NRB: rotatable bonds.).
 
 \begin{table}
-\caption{Molecular properties of the 19 query ligands. HA: heavy atoms. MWT: molecular weight in Daltons. HBD: hydrogen bond donors. HBA: hydrogen bond acceptors. NRB: rotatable bonds.}
+\caption{Molecular properties of the 19 query ligands.}
 \label{usr:Queries}
 \begin{tabular}{cccccc}
 \hline
@@ -219,7 +219,9 @@ ZINC ID  & \textit{ad hoc} (s) & in advance (s) & difference (s)\\
 \end{tabular}
 \end{table}
 
+The execution time is quite consistent with a small standard deviation across 19 query ligands regardless of their molecular size in terms of number of heavy atoms, molecular weight, or number of rotatable bonds.
 memory allocation 5s (could be more if from swap), $8B*60*23M=10GB$ hard disk reading cost 149s.
+82\% (=137/167).
 
 \section{Conclusions}
 
