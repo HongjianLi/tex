@@ -327,7 +327,7 @@ The benchmarks include 1) validation of Vina and idock to ensure their suitabili
 
 Vina x86 version 1.1.2 and idock x86\_64 version 1.0 were used because they were the most recent versions of both programs at the time when the benchmarks were carried out. Both programs were run on desktop computers with dual Intel Xeon Quad Core 2.4GHz and 32GB RAM under Ubuntu 10.04.1 x86\_64. The two CPUs support Intel's Hyper-Threading technology, so each computer consists of 8 physical cores and executes up to 16 logical threads simultaneously.
 
-\subsection{Program Validation}
+\subsection{Program validation}
 
 The four crystal ligands extracted from the four PDB complexes were conformationally randomized and redocked against their proteins by Vina and idock to see how much the predicted conformation would deviate from the crystal one. Figure \ref{idock:Redocking} shows the four proteins in complex with their corresponding crystal and docked ligands. The ligands rendered in green are the crystal conformations, the ligands rendered in red are the ones docked by Vina, and the ligands rendered in blue are the ones docked by idock. To quantify the differences, Table \ref{idock:RMSD} shows the root mean square deviations (RMSDs) between the crystal and docked conformations. The RMSDs are all below 2.0 \AA, a publicly accepted positive control for correct bound structure prediction, indicating both programs are suitable for docking ligands against the four proteins. The RMSDs obtained by Vina are slightly better than those obtained by idock, especially for the case of PNP. This is probably due to the coarse estimation of $e_{intra}$ in idock, which does not compute covalent bonds internally but simply relies on rotatable bonds to detect atom pair mobility.
 
@@ -372,7 +372,7 @@ PDB ID & Protein & Ligand & Vina (\AA) & idock (\AA)\\
 \label{idock:RMSD}
 \end{table}
 
-\subsection{Virtual Screening}
+\subsection{Virtual screening}
 
 Virtual screening of 10,928 drug-like ligands was then carried out. They were docked against the four proteins by Vina and idock. Because Vina can only dock one ligand in each run, a script containing 10,928 lines was generated and run instead, with each line being an execution of Vina to dock one individual ligand. Arguments to both programs were left as default. The GNU Time utility was used as a profiler.
 
