@@ -405,7 +405,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score      & score\\
 \hline
 \end{longtable}
 
-The success rate seemed to correlate with NRB. Table \ref{usr:RecoveryRate}.
+Define success rate: query ligand is present in the database queried against, and the rank 1 output turns out to be the query. The success rate seemed to correlate with NRB. Table \ref{usr:RecoveryRate} shows the 9 query ligands which are present in the database, their NRB as well as the output rank of the compound with the same ZINC ID as the query. It is observed that when NRB=0, the success rate is 100\%. when NRB increases to 1 or 2, the success rate dropped slightly. when NRB>=4, it was difficult to rank the same compound high. This result is to be expected because USR or USRCAT is dependent on torsions, though independent of position and orientation. When NRB is large, there is a high chance that the docked pose and the original pose of the same compound differ remarkably in their torsions.
 
 \begin{table}
 \caption{}
@@ -427,64 +427,293 @@ ZINC ID  & NRB & USR rank & USRCAT rank\\
 \end{tabular}
 \end{table}
 
-Figure \ref{usr:ZINC96006018}
+Figures \ref{usr:ZINC00000706}, \ref{usr:ZINC00577115}, \ref{usr:ZINC03784182}, \ref{usr:ZINC00537755} and \ref{usr:ZINC33359785} plot the 2D diagrams of five query ligands, which are ZINC00000706, ZINC00577115, ZINC03784182, ZINC00537755 and ZINC33359785, respectively. These five query ligands were selected for visualization because their molecular weight (Table \ref{usr:Queries}) is in the range of candidate leads, so they are of high chance of being selected as query ligands in real case studies.
 
 \begin{figure}
 \centering
 \subfloat[Query]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/input/ZINC96006018.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/input/ZINC00000706.png}
 }
 \subfloat[USR rank 1.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usr/ZINC40200504.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usr/ZINC65405747.png}
 }
 \subfloat[USR rank 2.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usr/ZINC35402146.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usr/ZINC40647363.png}
 }
 \\
 \subfloat[USR rank 3.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usr/ZINC10462892.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usr/ZINC93828780.png}
 }
 \subfloat[USR rank 4.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usr/ZINC09693915.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usr/ZINC72255543.png}
 }
 \subfloat[USR rank 5.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usr/ZINC40206470.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usr/ZINC00408247.png}
 }
 \\
 \subfloat[Query]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/input/ZINC96006018.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/input/ZINC00000706.png}
 }
 \subfloat[USRCAT rank 1.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usrcat/ZINC77320087.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usrcat/ZINC80448655.png}
 }
 \subfloat[USRCAT rank 2.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usrcat/ZINC31392738.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usrcat/ZINC78886065.png}
 }
 \\
 \subfloat[USRCAT rank 3.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usrcat/ZINC04536260.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usrcat/ZINC93775002.png}
 }
 \subfloat[USRCAT rank 4.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usrcat/ZINC89960170.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usrcat/ZINC78886066.png}
 }
 \subfloat[USRCAT rank 5.]
 {
-  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/96006018/output-usrcat/ZINC66730926.png}
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00000706/output-usrcat/ZINC78700739.png}
 }
-\caption{Top 5 matching compounds for ZINC96006018 (a \& g) using USR (b to f) and USRCAT (h to l).}
-\label{usr:ZINC96006018}
+\caption{Top 5 matching compounds for ZINC00000706 (a \& g) using USR (b to f) and USRCAT (h to l).}
+\label{usr:ZINC00000706}
 \end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/input/ZINC00577115.png}
+}
+\subfloat[USR rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usr/ZINC68658377.png}
+}
+\subfloat[USR rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usr/ZINC69389189.png}
+}
+\\
+\subfloat[USR rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usr/ZINC89143595.png}
+}
+\subfloat[USR rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usr/ZINC78399755.png}
+}
+\subfloat[USR rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usr/ZINC83027211.png}
+}
+\\
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/input/ZINC00577115.png}
+}
+\subfloat[USRCAT rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usrcat/ZINC22657173.png}
+}
+\subfloat[USRCAT rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usrcat/ZINC01550499.png}
+}
+\\
+\subfloat[USRCAT rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usrcat/ZINC11678289.png}
+}
+\subfloat[USRCAT rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usrcat/ZINC11662947.png}
+}
+\subfloat[USRCAT rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00577115/output-usrcat/ZINC08474264.png}
+}
+\caption{Top 5 matching compounds for ZINC00577115 (a \& g) using USR (b to f) and USRCAT (h to l).}
+\label{usr:ZINC00577115}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/input/ZINC03784182.png}
+}
+\subfloat[USR rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usr/ZINC67249641.png}
+}
+\subfloat[USR rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usr/ZINC79160658.png}
+}
+\\
+\subfloat[USR rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usr/ZINC66798033.png}
+}
+\subfloat[USR rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usr/ZINC78080377.png}
+}
+\subfloat[USR rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usr/ZINC44148945.png}
+}
+\\
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/input/ZINC03784182.png}
+}
+\subfloat[USRCAT rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usrcat/ZINC03784182.png}
+}
+\subfloat[USRCAT rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usrcat/ZINC71789431.png}
+}
+\\
+\subfloat[USRCAT rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usrcat/ZINC93106652.png}
+}
+\subfloat[USRCAT rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usrcat/ZINC93106649.png}
+}
+\subfloat[USRCAT rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/03784182/output-usrcat/ZINC90800223.png}
+}
+\caption{Top 5 matching compounds for ZINC03784182 (a \& g) using USR (b to f) and USRCAT (h to l).}
+\label{usr:ZINC03784182}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/input/ZINC00537755.png}
+}
+\subfloat[USR rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usr/ZINC33077240.png}
+}
+\subfloat[USR rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usr/ZINC71880803.png}
+}
+\\
+\subfloat[USR rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usr/ZINC10246617.png}
+}
+\subfloat[USR rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usr/ZINC34759207.png}
+}
+\subfloat[USR rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usr/ZINC03223873.png}
+}
+\\
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/input/ZINC00537755.png}
+}
+\subfloat[USRCAT rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usrcat/ZINC65623842.png}
+}
+\subfloat[USRCAT rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usrcat/ZINC65623840.png}
+}
+\\
+\subfloat[USRCAT rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usrcat/ZINC65623844.png}
+}
+\subfloat[USRCAT rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usrcat/ZINC65623838.png}
+}
+\subfloat[USRCAT rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/00537755/output-usrcat/ZINC91738997.png}
+}
+\caption{Top 5 matching compounds for ZINC00537755 (a \& g) using USR (b to f) and USRCAT (h to l).}
+\label{usr:ZINC00537755}
+\end{figure}
+
+\begin{figure}
+\centering
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/input/ZINC33359785.png}
+}
+\subfloat[USR rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usr/ZINC35770975.png}
+}
+\subfloat[USR rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usr/ZINC72004193.png}
+}
+\\
+\subfloat[USR rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usr/ZINC33435896.png}
+}
+\subfloat[USR rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usr/ZINC09254874.png}
+}
+\subfloat[USR rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usr/ZINC12807677.png}
+}
+\\
+\subfloat[Query]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/input/ZINC33359785.png}
+}
+\subfloat[USRCAT rank 1.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usrcat/ZINC79055171.png}
+}
+\subfloat[USRCAT rank 2.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usrcat/ZINC71923062.png}
+}
+\\
+\subfloat[USRCAT rank 3.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usrcat/ZINC77341431.png}
+}
+\subfloat[USRCAT rank 4.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usrcat/ZINC77341441.png}
+}
+\subfloat[USRCAT rank 5.]
+{
+  \includegraphics[width=0.33\linewidth]{../usr/1GZ8/33359785/output-usrcat/ZINC69046249.png}
+}
+\caption{Top 5 matching compounds for ZINC33359785 (a \& g) using USR (b to f) and USRCAT (h to l).}
+\label{usr:ZINC33359785}
+\end{figure}
+
 
 \subsection{Impact of file format on pharmacophoric atom set classification}
 
@@ -496,38 +725,38 @@ This is not a problem with USR, which only replies on heavy atoms to calculate t
 
 Table \ref{usr:ExecutionTime}
 The execution time is quite consistent with a small standard deviation across 19 query ligands regardless of their molecular size in terms of number of heavy atoms, molecular weight, or number of rotatable bonds.
-memory allocation 5s (could be more if from swap), $8B*60*23M=10GB$ hard disk reading cost 149s.
-82\% (=137/167).
+
+The size of precalculated features of the 23 million compounds is $8B*60*23M=10GB$. These features can be loaded \textit{ad hoc} or in advance. In the latter case, there are two steps: memory allocation and file reading. Memory allocation took 5s, which could be longer in case of insufficient free memory and therefore swaping from hard disk. File reading from hard disk took 149s. On average, it took 167s and 30s to complete a query when the features were loaded \textit{ad hoc} or in advance, respectively. In other words, the pairwise similarity score computation accounted only for 18\% (=30/167) for the time, while the majority 82\% time was spent in file reading.
 
 \begin{table}
 \caption{Execution time in seconds of the 19 queries when the USRCAT features are loaded \textit{ad hoc} or in advance.}
 \label{usr:ExecutionTime}
-\begin{tabular}{cccc}
+\begin{tabular}{ccc}
 \hline
-ZINC ID  & \textit{ad hoc} (s) & in advance (s) & difference (s)\\
+ZINC ID  & \textit{ad hoc} (s) & in advance (s)\\
 \hline
-06827693 & 171 & 34 & 137\\
-03641271 & 165 & 20 & 145\\
-00000882 & 172 & 29 & 143\\
-03594299 & 173 & 30 & 143\\
-01760831 & 172 & 30 & 142\\
-00000163 & 173 & 29 & 144\\
-00000931 & 164 & 31 & 133\\
-00000706 & 163 & 29 & 134\\
-00577115 & 163 & 30 & 133\\
-03784182 & 165 & 30 & 135\\
-00537755 & 167 & 32 & 135\\
-33359785 & 166 & 28 & 138\\
-53073961 & 167 & 31 & 136\\
-34801951 & 165 & 31 & 134\\
-29416466 & 166 & 32 & 134\\
-08101127 & 161 & 27 & 134\\
-08101051 & 164 & 31 & 133\\
-85536932 & 164 & 30 & 134\\
-96006018 & 164 & 30 & 134\\
+06827693 & 171 & 34\\
+03641271 & 165 & 20\\
+00000882 & 172 & 29\\
+03594299 & 173 & 30\\
+01760831 & 172 & 30\\
+00000163 & 173 & 29\\
+00000931 & 164 & 31\\
+00000706 & 163 & 29\\
+00577115 & 163 & 30\\
+03784182 & 165 & 30\\
+00537755 & 167 & 32\\
+33359785 & 166 & 28\\
+53073961 & 167 & 31\\
+34801951 & 165 & 31\\
+29416466 & 166 & 32\\
+08101127 & 161 & 27\\
+08101051 & 164 & 31\\
+85536932 & 164 & 30\\
+96006018 & 164 & 30\\
 \hline
- Average & 167 & 30 & 137\\
- Std dev &   4 &  3 &   4\\
+ Average & 167 & 30\\
+ Std dev &   4 &  3\\
 \hline
 \end{tabular}
 \end{table}
