@@ -717,7 +717,14 @@ Figures \ref{usr:ZINC00000706}, \ref{usr:ZINC00577115}, \ref{usr:ZINC03784182}, 
 
 \subsection{Impact of file format on pharmacophoric atom set classification}
 
-USRCAT requires classification of atoms according to five predefined pharmacophoric subsets. Same query ligand in different formats, e.g. mol2, sdf, pdbqt, yields different classification results. We used ZINC00537755 as an example.
+USRCAT requires classification of atoms according to five predefined pharmacophoric subsets. Same query ligand in different formats, e.g. mol2, sdf, pdbqt, yields different classification results. We used as an example ZINC00537755 in its low energy pose rather than in its docked pose. The N3 atom is connected with a polar hydrogen, and therefore should be a hydrogen bond donor, but pdbqt format SMARTS matching failed to recognize this donor.
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../usr/ZINC00537755-N3.png}
+\caption{ZINC00537755 with the N3 atom labeled.}
+\label{usr:ZINC00537755-N3}
+\end{figure}
 
 This is not a problem with USR, which only replies on heavy atoms to calculate the features.
 
