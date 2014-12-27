@@ -5,7 +5,7 @@
 
 Finding compounds structurally similar to a query ligand has been an important but daunting problem for a long time. The USR (Ultrafast Shape Recognition) algorithm represents a whole new alignment-free method that encodes the shape information semantically and permits superfast screening of a large molecular database. A few extensions to USR improve the original method from various perspectives and three of some, UFSRAT, EDULISS and SwissTargetPrediction, are also available as web servers. However, UFSRAT and EDULISS are unable to discriminate between long, chain-like molecules, and their calculated distributions are not meaningful when some pharmacophoric features are rarer than others. SwissTargetPrediction uses a small, well annotated, bioactive compound database and is generally for target fishing.
 
-For prospective virtual screening purposes, in this study we implementated USR and its USRCAT (USR with Credo Atom Types) extension on top of our istar web platform. We re-used the large molecular database of more than 23 million diverse ligands that originally came with idock, and exploited three levels of parallelism with a novel implementation of sum of absolute different using AVX (Advanced Vector Extensions) to accelerate similarity score calculation. Our USR@istar supports a query ligand in either SDF, MOL2, XYZ, PDB or PDBQT format, and interfaces with our iview WebGL visualizer for interactive visualization of high-score hits. USR@istar is freely available at http://istar.cse.cuhk.edu.hk/usr.
+For prospective virtual screening purposes, in this study we implemented USR and its USRCAT (USR with Credo Atom Types) extension on top of our istar web platform. We re-used the large molecular database of more than 23 million diverse ligands that originally came with idock, and exploited three levels of parallelism with a novel implementation of sum of absolute differences using AVX (Advanced Vector Extensions) to accelerate similarity score calculation. Our USR@istar supports a query ligand in either SDF, MOL2, XYZ, PDB or PDBQT format, and interfaces with our iview WebGL visualizer for interactive visualization of high-score hits. USR@istar is freely available at http://istar.cse.cuhk.edu.hk/usr.
 
 This is an ongoing collaborative project with Pedro J. Ballester from Cancer Research Center of Marseille, Marseille, France.
 
@@ -699,7 +699,7 @@ Next, we examined the capability of ranking high the particular compound in the 
 \label{usr:RecoveryRate}
 \begin{tabular}{cccc}
 \hline
-input    &     & USR rank of the     & USRCAT rank of the
+input    &     & USR rank of the     & USRCAT rank of the\\
 ZINC ID  & NRB & same input compound & same input compound\\
 \hline
 06827693 &   0 &     1 &     1\\
