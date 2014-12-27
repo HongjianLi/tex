@@ -67,7 +67,7 @@ In this study the first three moments are computed in the same way as in Electro
 \label{usr:moment3}
 \end{equation}
 
-After a molecule is encoded into a 12-element numerical moment vector $\mathbf M=(\mu_1^{ctd}, \mu_2^{ctd}, \mu_3^{ctd}, \mu_1^{cst}, \mu_2^{cst}, \mu_3^{cst}, \mu_1^{fct}, \mu_2^{fct}, \mu_3^{fct}, \mu_1^{ftf}, \mu_2^{ftf}, \mu_3^{ftf})$, the dissimilarity score of two molecules $\mathbf M^i$ and $\mathbf M^j$ can be defined as the sum of absolute differences of their respective moments, much like the city block distance. Thereafter, this dissimilarity is monotonically inverted using equation \eqref{usr:usrscore} so as to get transformed to a normalized similarity score, where the minimum shape similarity is represented by score 0 and the maximum similarity is represented by score 1. Any other inverse monotonic function can do this transformation if it preserves the ranking order.
+After a molecule is encoded into a 12-element moment vector $\mathbf M=(\mu_1^{ctd}, \mu_2^{ctd}, \mu_3^{ctd}, \mu_1^{cst}, \mu_2^{cst}, \mu_3^{cst}, \mu_1^{fct}, \mu_2^{fct}, \mu_3^{fct}, \mu_1^{ftf}, \mu_2^{ftf}, \mu_3^{ftf})$, the dissimilarity score of two molecules $\mathbf M^i$ and $\mathbf M^j$ can be defined as the sum of absolute differences of their respective moments, much like the city block distance. Thereafter, this dissimilarity is monotonically inverted using equation \eqref{usr:usrscore} so as to get transformed to a normalized similarity score, where the minimum shape similarity is represented by score 0 and the maximum similarity is represented by score 1. Any other inverse monotonic function can do this transformation if it preserves the ranking order.
 
 \begin{equation}
 S(\mathbf M^i, \mathbf M^j)=(1+\frac{1}{12}\sum_{k=1}^{12}|\mathbf M_k^i-\mathbf M_k^j|)^{-1}\in[0, 1]
@@ -183,7 +183,6 @@ Table \ref{usr:Matches} lists the top five matching compounds of the 19 selected
 \begin{longtable}{cccccc}
 \caption{Top 5 matches of 19 query ligands}
 \label{usr:Matches}
-\vspace{-3mm}
 \\
 \hline
 input    & sorting & output & output   & USR   & USRCAT\\
@@ -218,6 +217,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 03641271 & USRCAT & 4 & 04658602 & 0.89124510 & 0.91780849\\
 03641271 & USRCAT & 5 & 01666720 & 0.89345170 & 0.91692833\\
 \hline
+\pagebreak
 00000882 & USR    & 1 & 00000882 & 0.99992602 & 0.99993121\\%5497e0d861560ab5173f9632
 00000882 & USR    & 2 & 26995176 & 0.99597115 & 0.80645548\\
 00000882 & USR    & 3 & 72231352 & 0.99543539 & 0.82250290\\
@@ -240,6 +240,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 03594299 & USRCAT & 4 & 38532749 & 0.81227537 & 0.84324650\\
 03594299 & USRCAT & 5 & 19796009 & 0.84131930 & 0.84309403\\
 \hline
+\pagebreak
 01760831 & USR    & 1 & 01760831 & 0.99987949 & 0.99989913\\%5497e2283e01d9b717d1826e
 01760831 & USR    & 2 & 01709154 & 0.98699243 & 0.75851222\\
 01760831 & USR    & 3 & 00971553 & 0.98535056 & 0.81526150\\
@@ -262,6 +263,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 00000163 & USRCAT & 4 & 03830577 & 0.89135269 & 0.84555906\\
 00000163 & USRCAT & 5 & 71767467 & 0.79282467 & 0.84492369\\
 \hline
+\pagebreak
 00000931 & USR    & 1 & 33693318 & 0.96997742 & 0.78246622\\%5497e241de44fb911775c97a
 00000931 & USR    & 2 & 00000931 & 0.96952854 & 0.98807569\\
 00000931 & USR    & 3 & 66774020 & 0.96744933 & 0.69240859\\
@@ -284,6 +286,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 00000706 & USRCAT & 4 & 78886066 & 0.76913264 & 0.82370563\\
 00000706 & USRCAT & 5 & 78700739 & 0.89428224 & 0.81951128\\
 \hline
+\pagebreak
 00577115 & USR    & 1 & 68658377 & 0.95057414 & 0.39005121\\%5497e2573e01d9b717d1826f
 00577115 & USR    & 2 & 69389189 & 0.94579839 & 0.35499414\\
 00577115 & USR    & 3 & 89143595 & 0.94491604 & 0.46345807\\
@@ -306,6 +309,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 03784182 & USRCAT & 4 & 93106649 & 0.73848385 & 0.66623719\\
 03784182 & USRCAT & 5 & 90800223 & 0.64094384 & 0.66486802\\
 \hline
+\pagebreak
 00537755 & USR    & 1 & 33077240 & 0.92816370 & 0.46838130\\%5497e26bc666488b17d07c86
 00537755 & USR    & 2 & 71880803 & 0.92703459 & 0.44320682\\
 00537755 & USR    & 3 & 10246617 & 0.92144736 & 0.47914766\\
@@ -328,6 +332,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 33359785 & USRCAT & 4 & 77341441 & 0.75921732 & 0.70927376\\
 33359785 & USRCAT & 5 & 69046249 & 0.70287350 & 0.70695212\\
 \hline
+\pagebreak
 53073961 & USR    & 1 & 03280771 & 0.89422462 & 0.55998626\\%5497e2823e01d9b717d18271
 53073961 & USR    & 2 & 12509920 & 0.89370657 & 0.48547850\\
 53073961 & USR    & 3 & 34899971 & 0.89334569 & 0.59114533\\
@@ -350,6 +355,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 34801951 & USRCAT & 4 & 63600618 & 0.78591726 & 0.62978556\\
 34801951 & USRCAT & 5 & 02171971 & 0.81658623 & 0.62773804\\
 \hline
+\pagebreak
 29416466 & USR    & 1 & 63514587 & 0.91665219 & 0.46731155\\%5497e29761560ab5173f9635
 29416466 & USR    & 2 & 40292843 & 0.91468903 & 0.47087614\\
 29416466 & USR    & 3 & 40293083 & 0.91077708 & 0.45683873\\
@@ -372,6 +378,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 08101127 & USRCAT & 4 & 19788980 & 0.67787440 & 0.60600169\\
 08101127 & USRCAT & 5 & 40203919 & 0.72535625 & 0.60578330\\
 \hline
+\pagebreak
 08101051 & USR    & 1 & 34906112 & 0.81662557 & 0.38601073\\%5497e2b461560ab5173f9636
 08101051 & USR    & 2 & 12790633 & 0.81216532 & 0.38263829\\
 08101051 & USR    & 3 & 34905308 & 0.81088357 & 0.37345643\\
@@ -394,6 +401,7 @@ ZINC ID  & method  & rank   & ZINC ID  & score & score\\
 85536932 & USRCAT & 4 & 09713729 & 0.78048080 & 0.60555170\\
 85536932 & USRCAT & 5 & 26998174 & 0.74923801 & 0.59966269\\
 \hline
+\pagebreak
 96006018 & USR    & 1 & 40200504 & 0.83259667 & 0.31658414\\%5497e2c8f33d108f178516f0
 96006018 & USR    & 2 & 35402146 & 0.79559059 & 0.35874467\\
 96006018 & USR    & 3 & 10462892 & 0.78614715 & 0.34836142\\
