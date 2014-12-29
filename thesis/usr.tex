@@ -106,7 +106,7 @@ n_{conf}=
 \label{usr:n_c}
 \end{equation}
 
-Due to the superior accuracy and speed of RDKit, in this study we proposed to use RDKit together with the postprocessing algorithm to generate conformers. Precisely, we would use RDKit version 2014.09.1 and program against its C++ API instead of directly using the example Python script, and adopt the optimal parameter values suggested in \citep{1127}. Conformer generation is yet to be implemented in the near future considering the great efforts required, such as sufficient hard disk space.%TODO: add a histogram to show the number of conformers of each molecule, and mention the total and average number.
+Due to the superior accuracy and speed of RDKit, in this study we proposed to use RDKit together with the postprocessing algorithm to generate conformers. Precisely, we would use RDKit version 2014.09.2 and program against its C++ API instead of directly using the example Python script, and adopt the optimal parameter values suggested in \citep{1127}. Conformer generation is yet to be implemented in the near future considering the great efforts required, such as sufficient hard disk space.%TODO: add a histogram to show the number of conformers of each molecule, and mention the total and average number.
 
 Suppose after generating approximately 10 conformers on average for each molecule, the database would contain 230 million conformers, each of which has a USRCAT moment vector of 60 elements of double precision floating point type, which requires 64 bits, or 8 bytes for storage. This sums up to $8B*60*230M=108GB$ for the size of the USRCAT descriptors of all conformers in the entire database.
 
