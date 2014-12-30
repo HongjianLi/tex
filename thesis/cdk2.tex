@@ -21,9 +21,9 @@ We utilized our free and open-source protein-ligand docking software idock \cite
 
 \section{Methods and materials}
 
-\subsection{Ensemble docking}
+\subsection{Ensemble docking and compound selection}
 
-44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. A previously written script \citep{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \citep{596}.
+44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Table \ref{cdk2:PDBs}) were collected from the PDB (Protein Data Bank) \citep{540,537}. Figure \ref{cdk2:1HCK}, created by iview \cite{1366}, depicts human CDK2 in complex with ATP. The molecular surface of CDK2 is colored by secondary structure, with an opacity of 0.9 to show the underlying secondary structure in cylinder \& plate representation. ATP is rendered in stick representation colored by atom type. Waters are shown as red dots and metal ions are shown as green dots.
 
 \begin{table}
 \caption{The 44 CDK2 holo structures used for ensemble docking.}
@@ -79,6 +79,15 @@ PDB ID & Resolution (\AA) & UniProt ID\\
 \hline
 \end{tabular}
 \end{table}
+
+\begin{figure}
+\centering
+\includegraphics[width=\linewidth]{../cdk2-adapalene/1HCK.png}
+\caption{Crystal structure of human CDK2 with ATP (PDB ID: 1HCK) \cite{1142}.}
+\label{cdk2:1HCK}
+\end{figure}
+
+A previously written script \citep{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \citep{596}.
 
 The structures of FDA-approved drugs were obtained from the dbap and fda catalogs of the ZINC database \citep{532,1178}, where the dbap catalog comprises approved drugs collected from the DrugBank database \citep{1594} and the fda catalog comprises approved drugs collected via the DSSTox (Distributed Structure-Searchable Toxicity) project. The dbap catalog of version 2014-03-19 with 1,738 compounds and the fda catalog of version 2012-07-25 with 3,176 compounds were downloaded. Among these 4,914 compounds, 4,311 were unique in terms of ZINC ID. These 4,914 compounds in Mol2 format were then converted to PDBQT format using the prepare\_ligand4.py script of AutoDockTools \citep{596}.
 
