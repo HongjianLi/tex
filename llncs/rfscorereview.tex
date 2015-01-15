@@ -1,0 +1,53 @@
+% This is LLNCS.DEM the demonstration file of
+% the LaTeX macro package from Springer-Verlag
+% for Lecture Notes in Computer Science,
+% version 2.4 for LaTeX2e as of 16. April 2010
+%
+\documentclass{llncs}
+%
+\begin{document}
+%
+\frontmatter          % for the preliminaries
+%
+\pagestyle{headings}  % switches on printing of running heads
+%
+\mainmatter              % start of the contributions
+%
+\title{The use of Random Forest to predict binding affinity in docking}
+%
+\titlerunning{Review on RF-Score}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+\author{Hongjian Li\inst{1} \and Kwong-Sak Leung\inst{1} \and Man-Hon Wong\inst{1} \and Pedro J. Ballester\inst{2}}
+%
+\authorrunning{Hongjian Li et al.} % abbreviated author list (for running head)
+%
+\institute{
+Department of Computer Science and Engineering, Chinese University of Hong Kong, Sha Tin, New Territories, Hong Kong.\\
+\and
+Cancer Research Center of Marseille, INSERM U1068, F-13009 Marseille, France; Institut Paoli-Calmettes, F-13009 Marseille, France; Aix-Marseille Universit{\'e}, F-13284 Marseille, France; and CNRS UMR7258, F-13009 Marseille, France.\\
+\email{pedro.ballester@inserm.fr}
+}
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract} % 70 to 150 words
+
+Docking is a structure-based computational tool that can be used to predict the strength with which a small ligand molecule binds to a macromolecular target. Such binding affinity prediction is crucial to design molecules that bind more tightly to a target and thus are more likely to provide the most efficacious modulation of its biochemical function. Despite intense research over the years, improving this type of predictive accuracy has proven to be a very challenging task for any class of method.
+
+New scoring functions based on non-parametric machine-learning regression models, which are able to exploit effectively much larger volumes of experimental data and circumvent the need for a predetermined functional form, have become the most accurate to predict binding affinity of diverse protein-ligand complexes. This talk will review work on the inception and further development of RF-Score \cite{564}, which was the first machine-learning scoring function to achieve a substantial improvement over classical scoring functions at binding affinity prediction. RF-Score employs Random Forest (RF) regression to relate a structural description of the complex with its binding affinity. The review will cover adequate benchmarking practices \cite{908}, studies exploring optimal intermolecular features \cite{1370}, further improvements \cite{1432} and RF-Score software availability including a user-friendly docking webserver \cite{1362} and a standalone executable for rescoring docked poses. Some work has also been made on the application of RF-Score to the related problem of virtual screening, e.g. a prospective virtual screening study \cite{1281}. This will be briefly discussed and the required future work outlined.
+
+\keywords{random forest, machine learning, molecular docking, virtual screening, drug optimization}
+
+\end{abstract}
+
+\section{Introduction}
+
+%CIBB 3 \cite{1433}
+%CIBB 4 \cite{1434}
+
+\bibliographystyle{splncs03}
+\bibliography{../refworks}
+
+\end{document}
