@@ -13,4 +13,10 @@
 *.png
 *.jpg
 *.eps
+*.csv
+*.tsv
+*.sh
+*.sdf
+*.mol2
+*.pdbqt
 */*.bib
