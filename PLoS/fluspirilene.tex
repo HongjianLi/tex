@@ -1,5 +1,5 @@
 % Template for PLoS
-% Version 1.0 January 2009
+% Version 3.0 December 2014
 %
 % To compile to pdf, run:
 % latex plos.template
@@ -7,40 +7,119 @@
 % latex plos.template
 % latex plos.template
 % dvipdf plos.template
+%
+% % % % % % % % % % % % % % % % % % % % % %
+%
+% -- IMPORTANT NOTE
+%
+% This template contains comments intended 
+% to minimize problems and delays during our production 
+% process. Please follow the template instructions
+% whenever possible.
+%
+% % % % % % % % % % % % % % % % % % % % % % % 
+%
+% Once your paper is accepted for publication, 
+% PLEASE REMOVE ALL TRACKED CHANGES in this file and leave only
+% the final text of your manuscript.
+%
+% There are no restrictions on package use within the LaTeX files except that 
+% no packages listed in the template may be deleted.
+%
+% Please do not include colors or graphics in the text.
+%
+% Please do not create a heading level below \subsection. For 3rd level headings, use \paragraph{}.
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- FIGURES AND TABLES
+%
+% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
+%
+% DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
+% - Figures should be uploaded separately from your manuscript file. 
+% - Figures generated using LaTeX should be extracted and removed from the PDF before submission. 
+% - Figures containing multiple panels/subfigures must be combined into one image file before submission.
+% See http://www.plosone.org/static/figureGuidelines for PLOS figure guidelines.
+%
+% Tables should be cell-based and may not contain:
+% - tabs/spacing/line breaks within cells to alter layout or alignment
+% - vertically-merged cells (no tabular environments within tabular environments, do not use \multirow)
+% - colors, shading, or graphic objects
+% See http://www.plosone.org/static/figureGuidelines#tables for table guidelines.
+%
+% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
+%
+% IMPORTANT
+% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://www.plosone.org/static/latexGuidelines
+%
+% Please be sure to include all portions of an equation in the math environment.
+%
+% Do not include text that is not math in the math environment. For example, CO2 will be CO\textsubscript{2}.
+%
+% Please add line breaks to long display equations when possible in order to fit size of the column. 
+%
+% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
+%
+% % % % % % % % % % % % % % % % % % % % % % % % 
+%
+% Please contact latex@plos.org with any questions.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
 
-\documentclass[10pt]{article}
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
 
-% amsmath package, useful for mathematical formulas
-\usepackage{amsmath}
-% amssymb package, useful for mathematical symbols
-\usepackage{amssymb}
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
 
-% graphicx package, useful for including eps and pdf graphics
-% include graphics with the command %\includegraphics
-\usepackage{graphicx}
+% Use Unicode characters when possible
+\usepackage[utf8]{inputenc}
+
+% textcomp package and marvosym package for additional characters
+\usepackage{textcomp,marvosym}
+
+% fixltx2e package for \textsubscript
+\usepackage{fixltx2e}
+
+% amsmath and amssymb packages, useful for mathematical formulas and symbols
+\usepackage{amsmath,amssymb}
 
 % cite package, to clean up citations in the main text. Do not remove.
 \usepackage{cite}
 
-\usepackage{color} 
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
 
-% Use doublespacing - comment out for single spacing
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% rotating package for sideways tables
+\usepackage{rotating}
+
+% Remove comment for double spacing
 %\usepackage{setspace} 
 %\doublespacing
 
-
 % Text layout
-\topmargin 0.0cm
-\oddsidemargin 0.5cm
-\evensidemargin 0.5cm
-\textwidth 16cm 
-\textheight 21cm
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in 
+\textheight 8.75in
 
-% Bold the 'Figure #' in the caption and separate it with a period
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
 % Captions will be left justified
-\usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
 
-% Use the PLoS provided bibtex style
+% Use the PLoS provided BiBTeX style
 \bibliographystyle{plos2009}
 
 % Remove brackets from numbering in List of References
@@ -48,59 +127,93 @@
 \renewcommand{\@biblabel}[1]{\quad#1.}
 \makeatother
 
-
 % Leave date blank
 \date{}
 
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr,graphicx}
 \pagestyle{myheadings}
-%% ** EDIT HERE **
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{\includegraphics[natwidth=1.3in,natheight=0.4in]{PLOSlogo.png}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\sf PLOS}
 
+%% Include all macros below
 
-%% ** EDIT HERE **
-%% PLEASE INCLUDE ALL MACROS BELOW
+\newcommand{\lorem}{{\bf LOREM}}
+\newcommand{\ipsum}{{\bf IPSUM}}
 
 %% END MACROS SECTION
 
+
 \begin{document}
+\vspace*{0.35in}
 
 % Title must be 150 characters or less
 \begin{flushleft}
 {\Large
-\textbf{\textit{In silico} Identification and \textit{in vitro} and \textit{in vivo} Validation of Anti-Psychotic Drug Fluspirilene as a Potential CDK2 Inhibitor and a Candidate Anti-Cancer Drug}
+\textbf\newline{\textit{In silico} Identification and \textit{in vitro} and \textit{in vivo} Validation of Anti-Psychotic Drug Fluspirilene as a Potential CDK2 Inhibitor and a Candidate Anti-Cancer Drug}
 }
-% Insert Author names, affiliations and corresponding author email.
+\newline
 \\
-Xi-Nan Shi$^{1,3,\dagger}$,%xilancixiang@163.com
-Hongjian Li$^{2,\dagger}$,%JackyLeeHongJian@Gmail.com
-Hong Yao$^{5,6}$,%yaohong20055@hotmail.com
-Xu Liu$^{1}$,%liuxu1956@163.com
-Ling Li$^{1}$,%kmli62@163.com
-Kwong-Sak Leung$^{2,\ast}$,%ksleung@cse.cuhk.edu.hk
-Hsiang-fu Kung$^{1,6}$,%b110473@mailserv.cuhk.edu.hk
-Man-Hon Wong$^{2}$,%mhwong@cse.cuhk.edu.hk
-Marie Chia-mi Lin$^{1,4,\ast}$%mcmlin@163.com
+Xi-Nan Shi\textsuperscript{1,3,\dag},%xilancixiang@163.com
+Hongjian Li\textsuperscript{2,\dag},%JackyLeeHongJian@Gmail.com
+Hong Yao\textsuperscript{5,6},%yaohong20055@hotmail.com
+Xu Liu\textsuperscript{1},%liuxu1956@163.com
+Ling Li\textsuperscript{1},%kmli62@163.com
+Kwong-Sak Leung\textsuperscript{2,*},%ksleung@cse.cuhk.edu.hk
+Hsiang-fu Kung\textsuperscript{1,6},%b110473@mailserv.cuhk.edu.hk
+Man-Hon Wong\textsuperscript{2},%mhwong@cse.cuhk.edu.hk
+Marie Chia-mi Lin\textsuperscript{4,1,*}%mcmlin@163.com
 \\
-\bf{1} Biotechnology Center, Kunming Medical University, Kunming, Yunnan, China\\
-\bf{2} Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong\\
-\bf{3} Department of Medicine, Southwest Guizhou Vocational and Technical College for Nationalities, Guizhou, China\\
-\bf{4} Shenzhen Key Lab of Translational Medicine of Tumor, School of Medicine, Shenzhen University, Shenzhen, China\\
-\bf{5} The Cancer Biotherapy Institute of Jiangsu Province, Xuzhou Medical College, Xuzhou, China\\
-\bf{6} School of Biomedical Sciences, Chinese University of Hong Kong, Hong Kong\\
-$\dagger$ These authors contributed equally to this work.\\
-$\ast$ Corresponding authors: Marie Chia-mi Lin, E-mail: mcmlin@163.com, Tel: +0086(0)13798346647, Fax: +0086(0)87165922953; Kwong-Sak Leung, E-mail: ksleung@cse.cuhk.edu.hk.
+\bf{1} Biotechnology Center, Kunming Medical University, Kunming, Yunnan, China.\\
+\bf{2} Department of Computer Science and Engineering, Chinese University of Hong Kong, Hong Kong.\\
+\bf{3} Department of Medicine, Southwest Guizhou Vocational and Technical College for Nationalities, Guizhou, China.\\
+\bf{4} Shenzhen Key Lab of Translational Medicine of Tumor, School of Medicine, Shenzhen University, Shenzhen, China.\\
+\bf{5} The Cancer Biotherapy Institute of Jiangsu Province, Xuzhou Medical College, Xuzhou, China.\\
+\bf{6} School of Biomedical Sciences, Chinese University of Hong Kong, Hong Kong.\\
+
+% Insert additional author notes using the symbols described below. Insert symbol callouts after author names as necessary.
+% 
+% Remove or comment out the author notes below if they aren't used.
+%
+% Primary Equal Contribution Note
+\dag\ These authors contributed equally to this work.
+
+% Additional Equal Contribution Note
+%\ddag These authors also contributed equally to this work.
+
+% Current address notes
+% \textcurrency a Insert current address of first author with an address update
+% \textcurrency b Insert current address of second author with an address update
+% \textcurrency c Insert current address of third author with an address update
+
+% Deceased author note
+%\dag Deceased
+
+% Group/Consortium Author Note
+%\textpilcrow Insert Collaborative Author line here
+
+* Corresponding authors: Marie Chia-mi Lin, E-mail: mcmlin@163.com, Tel: +0086(0)13798346647, Fax: +0086(0)87165922953; Kwong-Sak Leung, E-mail: ksleung@cse.cuhk.edu.hk.
 \end{flushleft}
 
-% Please keep the abstract between 250 and 300 words
+% Please keep the abstract below 300 words
 \section*{Abstract}
 
 Cyclin-dependent kinase 2 (CDK2) is a key factor regulating the cell cycle G1 to S transition and a hallmark for cancers. In this study, we utilized our free and open-source protein-ligand docking software, idock, prospectively to identify potential CDK2 inhibitors from 4,311 FDA-approved small molecule drugs with a repurposing strategy and an ensemble docking methodology. Sorted by average idock score, nine compounds were purchased and tested \textit{in vitro}. Among them, the anti-psychotic drug fluspirilene exhibited the highest anti-proliferative effect in human hepatocellular carcinoma HepG2 and Huh7 cells. We demonstrated for the first time that fluspirilene treatment significantly increased the percentage of cells in G1 phase, and decreased the expressions of CDK2, cyclin E and Rb, as well as the phosphorylations of CDK2 on Thr160 and Rb on Ser795. We also examined the anti-cancer effect of fluspirilene \textit{in vivo} in BALB/C nude mice subcutaneously xenografted with human hepatocellular carcinoma Huh7 cells. Our results showed that oral fluspirilene treatment significantly inhibited tumor growth. Fluspirilene (15 mg/kg) exhibited strong anti-tumor activity, comparable to that of the leading cancer drug 5-fluorouracil (10 mg/kg). Moreover, the combination of fluspirilene and 5-fluorouracil exhibited the highest therapeutic effect. These results suggested for the first time that fluspirilene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human hepatocellular carcinoma.
 
 % Please keep the Author Summary between 150 and 200 words
-% Use first person. PLoS ONE authors please skip this step. 
-% Author Summary not valid for PLoS ONE submissions.
+% Use first person. PLOS ONE authors please skip this step. 
+% Author Summary not valid for PLOS ONE submissions.   
 \section*{Author Summary}
 
-Hepatocellular carcinoma (HCC) is one of the significant causes of cancer-related deaths worldwide. Only 30\% to 40\% of the HCC patients are eligible for curative treatments, which include surgical resection as the first option, liver transplantation and percutaneous ablation. However, there is a high frequency of tumor recurrence after surgical resection and most HCCs seem resistant to conventional chemotherapy and radiotherapy. Thus, the development of novel therapies against HCC is urgently required. Here, we present a computational and experimental study of fluspirilene, an approved drug currently used for the therapy of chronic schizophrenia. We have demonstrated for the first time that oral administration of fluspirilene in nude mice exhibited significant and strong anti-cancer efficacy comparable to that of the leading cancer drug 5-fluorouracil. We have also shown that the cocktail treatment of both fluspirilene and 5-fluorouracil produced synergistic therapeutic effect. In view of the fact that fluspirilene has a long history of safe human use, our discovery of fluspirilene as a potential anti-HCC drug may present an immediately-applicable clinical therapy.
+Hepatocellular carcinoma (HCC) is one of the leading causes of cancer-related deaths worldwide. Only 30\% to 40\% of the HCC patients are eligible for curative treatments, which include surgical resection as the first option, liver transplantation and percutaneous ablation. However, there is a high frequency of tumor recurrence after surgical resection and most HCCs seem resistant to conventional chemotherapy and radiotherapy. Thus, the development of novel therapies against HCC is urgently required. Here, we present a computational and experimental study of fluspirilene, an approved drug currently used for the therapy of chronic schizophrenia. We have demonstrated for the first time that oral administration of fluspirilene in nude mice exhibited significant and strong anti-cancer efficacy comparable to that of the leading cancer drug 5-fluorouracil. We have also shown that the cocktail treatment of both fluspirilene and 5-fluorouracil produced synergistic therapeutic effect. In view of the fact that fluspirilene has a long history of safe human use, our discovery of fluspirilene as a potential anti-HCC drug may present an immediately-applicable clinical therapy.
+
+\linenumbers
 
 \section*{Introduction}
 
@@ -110,6 +223,10 @@ Although a number of CDK2 inhibitors have been described in the literature and s
 
 In this study, we used our free and open-source protein-ligand docking software idock \cite{1153,1362} to screen FDA-approved small molecule drugs against CDK2. We adopted the approach of structure-based virtual screening to repurpose toxicity-free drugs for the treatment of cancers that involve CDK2 regulation.
 
+% You may title this section "Methods" or "Models". 
+% "Models" is not a valid title for PLoS ONE authors. However, PLoS ONE
+% authors may use "Analysis" 
+% Please do not create a heading level below \subsection. For 3rd level headings, use \paragraph{}.
 \section*{Methods and Materials}
 
 \subsection*{Ethics statement}
@@ -120,222 +237,14 @@ This study was approved by the laboratory animal ethics committee of Kunming Med
 
 44 X-ray crystallographic structures of CDK2 in complex with a bound ligand (Figure \ref{1HCK}; Table \ref{PDBs}) were collected from the PDB (Protein Data Bank) \cite{540,537}. A previously written script \cite{1362} was re-used to automatically define the docking search space by finding the smallest cubic box that covers the entire co-crystallized ligand and subsequently extending the box by 10\AA\ in all the three dimensions. The 44 CDK2 structures were manually extracted from their corresponding complexes with the co-crystallized ligands and waters removed, and then converted from PDB format to PDBQT format using the prepare\_receptor4.py script of AutoDockTools \cite{596}.
 
-The structures of FDA-approved drugs were obtained from the dbap and fda catalogs of the ZINC database \cite{532,1178}, where the dbap catalog comprises approved drugs collected from the DrugBank database \cite{1594} and the fda catalog comprises approved drugs collected via the DSSTox (Distributed Structure-Searchable Toxicity) project. The dbap catalog of version 2014-03-19 with 1,738 compounds and the fda catalog of version 2012-07-25 with 3,176 compounds were downloaded. Among these 4,914 compounds, 4,311 were unique in terms of ZINC ID. These 4,914 compounds in Mol2 format were then converted to PDBQT format using the prepare\_ligand4.py script of AutoDockTools \cite{596}.
-
-Our free and open-source docking software idock v2.1.2 \cite{1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy \cite{966,547,1128}. For each protein structure, free energy grid maps with a fine granularity of 0.08 \AA\ were constructed in parallel, and for each compound, 256 Monte Carlo conformational optimization tasks were run in parallel across multiple CPU cores.
-
-After docking, idock outputted a maximum number of nine predicted conformations for each input compound. The docked conformation with the best idock score was selected because it was previously shown to be the most likely one closest to the crystal conformation with a redocking success rate of more than 50\% on multiple benchmarks \cite{1362}. The 4,914 compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top-scoring ones were visually examined using iview \cite{1366} and PoseView \cite{748} in the context of CDK2 using the X-ray structure of the highest resolution, i.e. PDB ID 1GZ8 in this case (Table \ref{PDBs}). Finally, commercially available compounds were queried and purchased via the Chemical Book website http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
-
-\subsection*{Chemicals, antibodies, cell lines and cell culture}
-
-The selected chemicals and the leading cancer drug 5-fluorouracil were purchased from Sigma-Aldrich, USA. Anti-cyclin D, B1, E, CDK2, Rb, pho-CDK2 (Thr160), pho-Rb (Ser795) and GAPDH were obtained from Cell Signaling Technology, Inc., Danvers, Massachusetts, USA.
-
-Hepatoma cell lines HepG2 and Huh7 were obtained from the American Type Culture Collection, Manassas, Virginia, USA. These cell lines were cultured in RPMI 1640 medium containing 10\% fetal bovine serum (FBS) (Invitrogen, Rockville, Maryland, USA) at 37$^\circ$C in 5\% CO$_2$ and 95\% humidified air.
-
-Cells were plated in 96-, 24-, or 6-well plates with 0.125\% FBS medium for 24 hours and then treated with 10\% FBS medium containing the testing compounds at various concentrations of 1, 3, 10, 30$\mu$M, and incubated for 24, 48, or 72 hours.
-
-\subsection*{MTT assay}
-
-Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) was added. The absorbance was measured at 570 nm according the standard protocol. The IC$_{50}$ values were calculated by Graphpad prime5.
-
-\subsection*{Cell cycle analysis}
-
-HepG2 or Huh7 cells (4x10\textsuperscript{4}) were seeded in 24-well plates in RPMI 1640 medium containing 0.125\% FBS, and cultured for 24 hours. The cells were incubated in medium containing 10\% FBS and various doses of fluspirilene (1, 3, 10, 30 $\mu$M) for 12, 24, 36 hours at 37$^\circ$C, then fixed in ice-cold 70\% ethanol and stained with a Coulter DNA-Prep Reagents kit (Beckman Coulter, Fullerton, California, USA). Cellular DNA content of 1x10\textsuperscript{4} cells from each sample was determined with the use of an EPICS ALTRA flow cytometer (Beckman Coulter). Cell cycle phase distribution was analyzed with the ModFit LT 2.0 software (Verity Software House, Topsham, Maine, USA). All results were obtained from two separate experiments, each of which was done in triplicate.
-
-\subsection*{Western blotting}
-
-HepG2 and Huh7 cells were plated at 6-well plates with 0.125\% FBS medium for 24 hours and then with 10\% FBS medium containing fluspirilene at concentration 3, 10, 30$\mu$M. Cells were harvested after 6 hours of incubation. Cells were lysed with RIPA buffer containing 1 mM PMSF and protease inhibitor cocktail at 4$^\circ$C for 30 minutes. After centrifugation at 13,000 rpm for 15 minutes, the supernatants were recovered and the protein concentration was measured by BCA Protein Assay Kit (Thermo). Equal amounts of cell lysates were resolved in 10\% SDS-PAGE and transferred onto nitrocellulose membranes (Sigma). After blocking, the membranes were incubated sequentially with the appropriate diluted primary and secondary antibodies. Proteins were detected by the enhanced chemiluminescence detection system (Amersham, Piscataway, New Jersey, USA). To ensure equal loading of the samples, the membranes were re-probed with an anti-GAPDH antibody (Cell Signalling Technologies).
-
-\subsection*{Fluspirilene treatment \textit{in vivo}}
-
-Female BALB/C nude mice, 4 to 5 weeks old from Vital River Laboratory Technology Co. Ltd, Peking, China, were kept under specific pathogen-free conditions. For the xenografted tumor growth assay, 1x10\textsuperscript{6}/0.2ml PBS Huh7 cells were injected subcutaneously into the right flank of the mice. Tumor size was measured every day. Three weeks after inoculation when the tumors grew to a volume of 80 to 100 m\textsuperscript{3}, the mice were randomly divided into groups of 5 mice per group, and fed by oral gavage with 0.5\% CMC-NaCl containing fluspirilene (15mg/kg) and by intraperitoneal injection of 5-fluorouracil (10mg/kg) daily for 21 days. The mice were then sacrificed by cervical dislocation. Tumor volume was calculated by the formula $V=ab^2/2$, where $a$ is the longest axis and $b$ is shortest axis.
-
-\subsection*{Statistical analysis}
-
-The results were obtained from at least three different experiments and expressed as mean $\pm$ SD. Statistical analysis was performed by Student's t test and differences were considered to be statistically significant if p$<$0.05. Statistically significant results are marked with the $\ast$ symbol in the figures.
-
-\section*{Results}
-
-\subsection*{Ensemble docking results and selection of candidate inhibitors}
-
-Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (Table S2). The docking prediction results with iview visualization \cite{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap and http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-fda. 15 compounds had predicted free energy of -10 kcal/mol or lower, with the best one having -10.46 kcal/mol (Figure \ref{AvgScoreHistogram}). Based on commercial availability, 9 top-scoring compounds (Table \ref{Top9}; Table S3) were selected and purchased for further investigations.
-
-\subsection*{Fluspirilene decreased cell viability of hepatocellular carcinoma}
-
-We first evaluated the anti-cancer effect of the nine compounds by MTT assay (Figure \ref{CellViabilityAgainstConcentration}). All the nine compounds decreased cell viability in HepG2 and Huh7 cells, but had discrepant cytotoxicity at different concentrations. Among them, fluspirilene had the lowest IC$_{50}$, i.e. 4.017$\mu$M for HepG2 and 3.468$\mu$M for Huh7. In other words, fluspirilene exhibited the highest cytotoxicity compared to the control with statistical significance (p$<$0.05).
-
-Fluspirilene exhibited dose- and time-dependent inhibition effect on cell viability in HepG2 and Huh7 cell lines compared to the control (p$<$0.05) (Figure \ref{CellViabilityAgainstTime}). Marked inhibition was observed at 10$\mu$M and 30$\mu$M, but no significant effect was observed at concentrations below 3$\mu$M.
-
-\subsection*{Fluspirilene treatment arrested cell cycle in G1 phase}
-
-We analyzed the effect of fluspirilene treatment with concentrations of 3, 10, 30 $\mu$M for 6, 12, 24 hours on cell cycle profile in HepG2 and Huh7 cells by flow cytometry (Figure \ref{G1Distribution}) in order to understand if fluspirilene inhibited CDK2 activities in hepatocellular carcinoma cells. Fluspirilene treatment significantly increased the percentage of cells in G1 phase compared to the control (p$<$0.05) in a dose- and time-dependent manner. At 30$\mu$M or 10$\mu$M concentrations, fluspirilene treatment continuously increased the percentage of G1 phase for 24 hours.
-
-Figure \ref{CellCycleDistribution} shows the changes of cell cycle profile of G0-G1, S, and G2-M phases after 24 hours of fluspirilene treatment. The increase of the G1 phase was accompanied by the simultaneous decrease of S phase.
-
-\subsection*{Fluspirilene treatment decreased the expressions of CDK2, Rb, cyclin E, pho-CDK2 and pho-Rb, but not cyclin D1 and cyclin B1}
-
-We investigated the effect of fluspirilene on the expressions of critical proteins involved in G1-to-S transition by western blotting in HepG2 and Huh7 cells (Figure \ref{WesternBlot}). Fluspirilene treatment reduced the expressions of CDK2, Rb, pho-CDK2, pho-Rb and cyclin E. In contrast, the expression levels of cyclin D1 and cyclin B1 remained unchanged. These results are consistent with what are expected from a CDK2 inhibitor.
-
-\subsection*{Daily oral fluspirilene treatment reduced tumor growth \textit{in vivo}}
-
-To evaluate the effect of fluspirilene on the growth of hepatocellular carcinoma \textit{in vivo}, BALB/C nude mice were subcutaneously injected with Huh7 cells. Carcinoma volumes were measured every 3 to 4 days after tumor appearance. At week 3 after tumor inoculation, the tumor volume reached 80 to 100 mm\textsuperscript{3}, then fluspirilene (15mg/kg in 0.5\% CMC-NaCl by oral gavage), 5-fluorouracil (10 mg/kg by intraperitoneal injection), and the combination of fluspirilene (15mg/kg) plus 5-fluorouracil (10 mg/kg) were administered daily for 21 days. At day 21 after treatment, fluspirilene (15 mg/kg) resulted in significant reduction of tumor weight and volume compared to the control (p$<$0.05) (Figure \ref{FluspirileneFluorouracilOnTumorGrowth}). The anti-tumor activity of oral fluspirilene (15 mg/kg) was comparable to that of 5-fluorouracil (10 mg/kg). Importantly, their combined therapy exhibited the highest therapeutic effect. These results suggested for the first time that fluspirilene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human hepatocellular carcinoma.
-
-\subsection*{Structural analysis of the predicted conformation of fluspirilene docked against CDK2}
-
-Figure \ref{1GZ8-ZINC00537755-ms} plots the predicted conformation of fluspirilene in complex with CDK2 (PDB ID: 1GZ8) using iview \cite{1366}. Figure \ref{1GZ8-ZINC00537755-pv} plots the intermolecular interaction diagram using PoseView \cite{748}. Fluspirilene was predicted to reside in the ATP-binding site of CDK2 and interact with CDK2 mainly through hydrophobic contacts with Phe82, Ile10, His84 and Leu134, and a hydrogen bond with Lys33.
-
-\section*{Discussion}
-
-Cell cycle progress is sequentially and strictly processed through the interactions of CDKs and cyclins \cite{1612}. Different cyclin-CDK complexes are activated in different phases of the cell cycle. When the cell cycle goes through G1 to S phase, the cyclin D1-CDK4/6 and cyclin E-CDK2 complexes are ordinally activated and the retinoblastoma protein (pRB) is hyper-phosphorylated on serine and threonine residues \cite{1613}. The hyper-phosphorylated pRB promotes the release of E2F transcription factors, which in turn facilitate the transcription of numerous genes required for G1 to S transition and S phase progression \cite{1614}. From the medicinal perspective, CDK2 has long been a classical and important target for cancer therapy.
-
-Though a number of CDK2 inhibitors have entered clinical trial phases, none has been officially approved for clinical use, probably because of their toxicity and multi-target specificity. Given the obstacle that developing a new drug \textit{de novo} is a laborious and costly endeavor, repurposing toxicity-free old drugs for new uses is a favorable strategy.
-
-The powerful synergy of \textit{in silico} methods in drug repurposing by structure-based virtual screening (SBVS) was highlighted in several recent reports \cite{1384}. To name a few successful repurposing cases by SBVS, \cite{1507} rediscovered 2,4-Dichlorophenoxy acetic acid, a well-known plant auxin, as a new anti-inflammatory agent through \textit{in silico} molecular modeling and docking studies along with drug formulation and \textit{in vivo} anti-inflammatory inspection; \cite{1506} attempted to repurpose FDA-approved drugs by an integrated SBVS approach and reported the discovery of piperacillin \textbf{1} as an inhibitor of NEDD8-activating enzyme (NAE) in cell-free and cell-based systems with high selectivity.
-
-In addition to SBVS, ligand-based virtual screening (LBVS) also finds its successful applications in repurposing. \cite{1504} used Ultrafast Shape Recognition (USR) \cite{1379} to search for compounds with similar shape to a previously reported inhibitor of protein arginine deiminase type 4 (PAD4), a new therapeutic target for the treatment of rheumatoid arthritis, and identified a novel compound that has a strikingly different structure from the template inhibitor yet showed significant inhibition on the enzymatic activity of PAD4.
-
-Encouraged by these successful stories, in this study we adopted the repurposing strategy, and utilized the computational methodology of SBVS by protein-ligand docking to shortlist candidates from FDA-approved small molecule drugs. Specifically, we used our fast docking program idock \cite{1153,1362} in combination with our convenient visualizer iview \cite{1366} for the task of rediscovering existing drugs as CDK2 inhibitors. idock is an exciting development not only because it has been vigorously shown \cite{1362} to outperform the state-of-the-art docking software AutoDock Vina \cite{595} in terms of docking speed by at least 8.69 times and at most 37.51 times while maintaining comparable redocking success rates, but also because it is free and open source under a permissive license. The latter guarantees that users from both industry and academia can freely utilize idock in their own projects that require protein-ligand docking.
-
-To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, therefore existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Moreover, to promote prospective SBVS by idock, a web server called istar \cite{1362} was developed and made freely available at http://istar.cse.cuhk.edu.hk/idock, where there are as many as over 23 million purchasable small molecule compounds ready for docking against any protein supplied by the user. Both idock \cite{1153} and istar \cite{1362} would hopefully supplement the efforts of medicinal chemists in drug discovery research.
-
-Regarding the structural data in use, there are so far as many as 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941 (Table S1). To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. Moreover, the standard deviation of scores across the 44 CDK2 structures was no greater than 0.8 kcal/mol for the top-scoring compounds (Table \ref{Top9}; Table S2), further indicating that the average score is a reliable metric. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \cite{1608}, DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
-
-After ensemble docking experiments with idock \cite{1153,1362} followed by careful visual inspections with iview \cite{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, fluspirilene was selected for further investigations because its IC$_{50}$ was less than 10 $\mu$mol/L as determined by MTT assay. Fluspirilene is currently used for the therapy of chronic schizophrenia. It was recently identified as a potential p53-MDM2 inhibitor and its anti-cancer effect \textit{in vitro} was reported \cite{1606}, but was never investigated \textit{in vivo}.
-
-In this study, we reported for the first time that fluspirilene is a potential CDK2 inhibitor, and demonstrated for the first time that oral administration of fluspirilene (15 mg/kg) exhibited significant and strong anti-cancer efficacy comparable to the leading cancer drug 5-fluorouracil (10 mg/kg) \textit{in vivo} in nude mice xenografted with hepatoma Huh7 cells. Most importantly, the combination of effective dose of fluspirilene and 5-fluorouracil produced even higher therapeutic effect, indicating that fluspirilene may work through a different mechanism than 5-fluorouracil, which further indicates that fluspirilene could be combined with other chemotherapy drugs to achieve synergistic therapeutic effect.
-
-No obvious toxicity was previously reported by intraperitoneal injection of fluspirilene (8 mg/kg) in male wistar rats \cite{1610}. In this study, we did not observe significant change in body weight by oral administration of fluspirilene (15 mg/kg) for 21 days, suggesting that oral administration or intraperitoneal injection of fluspirilene is relatively safe.
-
-The inhibitory rate of 5-fluorouracil (10 mg/kg) on day 2 in female BALB/C \textit{in situ} hepatocellular carcinoma models with HCM-Y89 cell by intravenous injection was 48.14\% at 20 day of post-treatment \cite{1609}. In this study, we found that the inhibitory rate of 5-fluorouracil (10 mg/kg) on day 21 in female BALB/C nude mice xenografted models with Huh7 cells by intraperitoneal injection was 85.4\%, without showing any body weight change, suggesting that intraperitoneal administration of 5-fluorouracil is relatively safe and effective.
-
-\section*{Conclusions}
-
-This study presents a successful prospective application of idock \cite{1153,1362} in identifying CDK2 inhibitors from FDA-approved small molecule drugs using a repurposing strategy and an ensemble docking methodology. We showed that fluspirilene, currently used for the therapy of chronic schizophrenia, exhibited anti-cancer effect in human hepatoma HepG2 and Huh7 cells. We demonstrated for the first time that oral fluspirilene treatment significantly inhibited tumor growth. Most importantly, the combined therapy of fluspirilene and the leading cancer drug 5-fluorouracil produced higher therapeutic effect. These results suggested for the first time that fluspirilene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human hepatocellular carcinoma (HCC). Considering the fact that fluspirilene has a long history of safe human use, our discovery of fluspirilene as a potential anti-HCC drug may present an immediately-applicable clinical therapy. The potential application of fluspirilene combined with other chemotherapy drugs for the treatment of hepatoma neoplasms and other cancers warrants further studies.
-
-% Do NOT remove this, even if you are not including acknowledgments
-\section*{Acknowledgements}
-
-%This study was supported by grants from the Hsiang-fu Kung academician workstation of Kunming Medical University, National Natural Science Foundation of China (NSFC) 81272549, Key Lab project of Shenzhen (ZDSY20130329101130496) from China, the Direct Grant from the Chinese University of Hong Kong, the GRF Grant (Project References 414413, 772910 and 470911) from the Research Grants Council of Hong Kong.
-%http://www.ynstc.gov.cn/zxgz/guonkjhz/
-%http://www.nsfc.gov.cn/
-%http://www.szsti.gov.cn/services/resources/keylabs/detail.aspx?id=11e4-317f-c38924e1-926a-51a933b70eb8
-%http://www.cuhk.edu.hk/rao/rao_service.html
-%http://www.ugc.edu.hk/eng/rgc/grf/grf.htm
-
-\section*{Author Contributions}
-
-Conceived and designed the experiments: MCL HFK. Performed the experiments: XNS HL. Analyzed the data: XNS HL KSL MHW MCL. Contributed reagents/materials/analysis tools: XNS HL HY XL LL. Wrote the paper: XNS HL MCL.
-
-%\section*{References}
-% The bibtex filename
-\bibliography{refworks}
-
-\pagebreak
-\section*{Figure Legends}
-
-\begin{figure}[h!]
-\begin{center}
+\begin{figure}
 %\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1HCK.eps}
-\end{center}
-\caption{
-{\bf Crystal structure of human CDK2 with ATP (PDB ID: 1HCK) \cite{1142}.} The molecular surface of CDK2 is colored by secondary structure, with an opacity of 0.9 to show the underlying secondary structure in cylinder \& plate representation. ATP is rendered in stick representation colored by atom type. Waters are shown as red dots and metal ions are shown as green dots. This figure was created by iview \cite{1366}.
-}
+\caption{{\bf Crystal structure of human CDK2 with ATP (PDB ID: 1HCK) \cite{1142}.}
+The molecular surface of CDK2 is colored by secondary structure, with an opacity of 0.9 to show the underlying secondary structure in cylinder \& plate representation. ATP is rendered in stick representation colored by atom type. Waters are shown as red dots and metal ions are shown as green dots. This figure was created by iview \cite{1366}.}
 \label{1HCK}
 \end{figure}
 
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/AvgScoreHistogram.eps}
-\end{center}
-\caption{
-{\bf Histogram distribution of the average idock score of the 4,914 compounds.} 842 and 783 compounds were in the ranges of [-7.5, -8.0) and [-7.0, -7.5), respectively, constituting the two largest bins. 15 and 63 compounds were in the ranges of [-10.0, -10.5) and [-9.5, -10.0), respectively, constituting the two bins appropriate for selection of candidate drugs.
-}
-\label{AvgScoreHistogram}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellViabilityAgainstConcentration.eps}
-\end{center}
-\caption{
-{\bf Comparison of the effect of the nine compounds on the viability of HepG2 and Huh7 hepatocellular carcinoma cells.} The nine compounds had discrepant cytotoxicity to HepG2 and Huh7 cell lines at different concentrationas determined by MTT assay, with fluspirilene exhibiting the highest cytotoxicity compared to the control (p$<$0.05). IC$_{50}$ of fluspirilene is 4.017$\mu$M for HepG2 and 3.468$\mu$M for Huh7.
-}
-\label{CellViabilityAgainstConcentration}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellViabilityAgainstTime.eps}
-\end{center}
-\caption{
-{\bf The growth inhibition effect of fluspirilene on the viability of HepG2 and Huh7 hepatocellular carcinoma cells.} Fluspirilene exhibited dose- and time-dependent inhibition on cell viability in HepG2 and Huh7 cell lines compared to the control (p$<$0.05).
-}
-\label{CellViabilityAgainstTime}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/G1Distribution.eps}
-\end{center}
-\caption{
-{\bf Dose- and time-dependent effect of fluspirilene treatment on the percentage of cells in G1 phase.} Fluspirilene treatment dose- and time-dependently increased the percentage of cells in G1 phase. At 30$\mu$M or 10$\mu$M concentrations, fluspirilene treatment continuously increased the percentage of G1 phase for 24 hours.
-}
-\label{G1Distribution}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellCycleDistribution.eps}
-\end{center}
-\caption{
-{\bf Cell cycle distributions at 24 hours after fluspirilene treatment.} The increase of the G1 phase was accompanied by the simultaneous decrease of S phase.
-}
-\label{CellCycleDistribution}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/WesternBlot.eps}
-\end{center}
-\caption{
-{\bf Effect of fluspirilene treatment on the expressions of important proteins involved in G1-to-S transition by western blotting.} Fluspirilene treatment decreased the expressions of CDK2, Rb, cyclin E, pho-CDK2 and pho-Rb, but not cyclin D1 and cyclin B1.
-}
-\label{WesternBlot}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/FluspirileneFluorouracilOnTumorGrowth.eps}
-\end{center}
-\caption{
-{\bf Effect of oral treatment of fluspirilene combined with intraperitoneal injection of 5-fluorouracil on tumor growth \textit{in vivo} in nude mice xenografted with Huh7 cells.} The anti-tumor activity of oral fluspirilene (15 mg/kg) was comparable to that of 5-fluorouracil (10 mg/kg). Importantly, their combined therapy exhibited the highest therapeutic effect.
-}
-\label{FluspirileneFluorouracilOnTumorGrowth}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1GZ8-ZINC00537755-ms.eps}
-\end{center}
-\caption{
-{\bf The predicted conformation of fluspirilene in complex with CDK2.} CDK2 is rendered as molecular surface colored by atom type, with an opacity of 0.9 to show the underlying atoms. Fluspirilene is rendered as sticks colored by atom type. The green dashed box represents the docking search space. Fluspirilene was predicted to reside in the ATP-binding site of CDK2 and form putative hydrogen bonds. This figure was created by iview \cite{1366}.
-}
-\label{1GZ8-ZINC00537755-ms}
-\end{figure}
-
-\begin{figure}[h!]
-\begin{center}
-%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1GZ8-ZINC00537755-pv.eps}
-\end{center}
-\caption{
-{\bf The putative interactions of fluspirilene with CDK2.} Fluspirilene was predicted to interact with CDK2 through hydrophobic contacts with Phe82, Ile10, His84 and Leu134, and a hydrogen bond with Lys33. This figure was created by PoseView \cite{748}.
-}
-\label{1GZ8-ZINC00537755-pv}
-\end{figure}
-
-\section*{Tables}
-
-\begin{table}[h!]
+\begin{table}
 \caption{
 \bf{The 44 CDK2 holo structures used for ensemble docking.}}
 \begin{tabular}{ccc}
@@ -388,16 +297,63 @@ PDB ID & Resolution (\AA) & UniProt ID\\
 1W0X & 2.20 & P24941\\
 \hline
 \end{tabular}
-\begin{flushleft}\label{PDBs} The final score used to rank compounds was purposely designed to be the average score across these 44 structures of CDK2 so as to account for structural variability.
+\begin{flushleft} The final score used to rank compounds was purposely designed to be the average score across these 44 structures of CDK2 so as to account for structural variability.
 \end{flushleft}
+\label{PDBs}
 \end{table}
 
-\begin{table}[h!]
+The structures of FDA-approved drugs were obtained from the dbap and fda catalogs of the ZINC database \cite{532,1178}, where the dbap catalog comprises approved drugs collected from the DrugBank database \cite{1594} and the fda catalog comprises approved drugs collected via the DSSTox (Distributed Structure-Searchable Toxicity) project. The dbap catalog of version 2014-03-19 with 1,738 compounds and the fda catalog of version 2012-07-25 with 3,176 compounds were downloaded. Among these 4,914 compounds, 4,311 were unique in terms of ZINC ID. These 4,914 compounds in Mol2 format were then converted to PDBQT format using the prepare\_ligand4.py script of AutoDockTools \cite{596}.
+
+Our free and open-source docking software idock v2.1.2 \cite{1362} was then executed to predict the binding conformations and the binding affinities of the 4,914 compounds when docked against the 44 CDK2 structures using an ensemble docking strategy \cite{966,547,1128}. For each protein structure, free energy grid maps with a fine granularity of 0.08 \AA\ were constructed in parallel, and for each compound, 256 Monte Carlo conformational optimization tasks were run in parallel across multiple CPU cores.
+
+After docking, idock outputted a maximum number of nine predicted conformations for each input compound. The docked conformation with the best idock score was selected because it was previously shown to be the most likely one closest to the crystal conformation with a redocking success rate of more than 50\% on multiple benchmarks \cite{1362}. The 4,914 compounds were sorted in the ascending order of their predicted binding free energy averaged across the 44 CDK2 structures, and the top-scoring ones were visually examined using iview \cite{1366} and PoseView \cite{748} in the context of CDK2 using the X-ray structure of the highest resolution, i.e. PDB ID 1GZ8 in this case (Table \ref{PDBs}). Finally, commercially available compounds were queried and purchased via the Chemical Book website http://www.chemicalbook.com/ and subsequently validated \textit{in vitro} and \textit{in vivo}.
+
+\subsection*{Chemicals, antibodies, cell lines and cell culture}
+
+The selected chemicals and the leading cancer drug 5-fluorouracil were purchased from Sigma-Aldrich, USA. Anti-cyclin D, B1, E, CDK2, Rb, pho-CDK2 (Thr160), pho-Rb (Ser795) and GAPDH were obtained from Cell Signaling Technology, Inc., Danvers, Massachusetts, USA.
+
+Hepatoma cell lines HepG2 and Huh7 were obtained from the American Type Culture Collection, Manassas, Virginia, USA. These cell lines were cultured in RPMI 1640 medium containing 10\% fetal bovine serum (FBS) (Invitrogen, Rockville, Maryland, USA) at 37$^\circ$C in 5\% CO$_2$ and 95\% humidified air.
+
+Cells were plated in 96-, 24-, or 6-well plates with 0.125\% FBS medium for 24 hours and then treated with 10\% FBS medium containing the testing compounds at various concentrations of 1, 3, 10, 30$\mu$M, and incubated for 24, 48, or 72 hours.
+
+\subsection*{MTT assay}
+
+Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) was added. The absorbance was measured at 570 nm according the standard protocol. The IC$_{50}$ values were calculated by Graphpad prime5.
+
+\subsection*{Cell cycle analysis}
+
+HepG2 or Huh7 cells (4x10\textsuperscript{4}) were seeded in 24-well plates in RPMI 1640 medium containing 0.125\% FBS, and cultured for 24 hours. The cells were incubated in medium containing 10\% FBS and various doses of fluspirilene (1, 3, 10, 30 $\mu$M) for 12, 24, 36 hours at 37$^\circ$C, then fixed in ice-cold 70\% ethanol and stained with a Coulter DNA-Prep Reagents kit (Beckman Coulter, Fullerton, California, USA). Cellular DNA content of 1x10\textsuperscript{4} cells from each sample was determined with the use of an EPICS ALTRA flow cytometer (Beckman Coulter). Cell cycle phase distribution was analyzed with the ModFit LT 2.0 software (Verity Software House, Topsham, Maine, USA). All results were obtained from two separate experiments, each of which was done in triplicate.
+
+\subsection*{Western blotting}
+
+HepG2 and Huh7 cells were plated at 6-well plates with 0.125\% FBS medium for 24 hours and then with 10\% FBS medium containing fluspirilene at concentration 3, 10, 30$\mu$M. Cells were harvested after 6 hours of incubation. Cells were lysed with RIPA buffer containing 1 mM PMSF and protease inhibitor cocktail at 4$^\circ$C for 30 minutes. After centrifugation at 13,000 rpm for 15 minutes, the supernatants were recovered and the protein concentration was measured by BCA Protein Assay Kit (Thermo). Equal amounts of cell lysates were resolved in 10\% SDS-PAGE and transferred onto nitrocellulose membranes (Sigma). After blocking, the membranes were incubated sequentially with the appropriate diluted primary and secondary antibodies. Proteins were detected by the enhanced chemiluminescence detection system (Amersham, Piscataway, New Jersey, USA). To ensure equal loading of the samples, the membranes were re-probed with an anti-GAPDH antibody (Cell Signalling Technologies).
+
+\subsection*{Fluspirilene treatment \textit{in vivo}}
+
+Female BALB/C nude mice, 4 to 5 weeks old from Vital River Laboratory Technology Co. Ltd, Peking, China, were kept under specific pathogen-free conditions. For the xenografted tumor growth assay, 1x10\textsuperscript{6}/0.2ml PBS Huh7 cells were injected subcutaneously into the right flank of the mice. Tumor size was measured every day. Three weeks after inoculation when the tumors grew to a volume of 80 to 100 m\textsuperscript{3}, the mice were randomly divided into groups of 5 mice per group, and fed by oral gavage with 0.5\% CMC-NaCl containing fluspirilene (15mg/kg) and by intraperitoneal injection of 5-fluorouracil (10mg/kg) daily for 21 days. The mice were then sacrificed by cervical dislocation. Tumor volume was calculated by the formula $V=ab^2/2$, where $a$ is the longest axis and $b$ is shortest axis.
+
+\subsection*{Statistical analysis}
+
+The results were obtained from at least three different experiments and expressed as mean $\pm$ SD. Statistical analysis was performed by Student's t test and differences were considered to be statistically significant if p$<$0.05. Statistically significant results are marked with the $\ast$ symbol in the figures.
+
+\section*{Results}
+
+\subsection*{Ensemble docking results and selection of candidate inhibitors}
+
+Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (\nameref{S2_Table}). The docking prediction results with iview visualization \cite{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap and http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-fda. 15 compounds had predicted free energy of -10 kcal/mol or lower, with the best one having -10.46 kcal/mol (Figure \ref{AvgScoreHistogram}). Based on commercial availability, 9 top-scoring compounds (Table \ref{Top9}; \nameref{S3_Table}) were selected and purchased for further investigations.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/AvgScoreHistogram.eps}
+\caption{{\bf Histogram distribution of the average idock score of the 4,914 compounds.} 842 and 783 compounds were in the ranges of [-7.5, -8.0) and [-7.0, -7.5), respectively, constituting the two largest bins. 15 and 63 compounds were in the ranges of [-10.0, -10.5) and [-9.5, -10.0), respectively, constituting the two bins appropriate for selection of candidate drugs.}
+\label{AvgScoreHistogram}
+\end{figure}
+
+\begin{table}
 \caption{
 \bf{The nine top-scoring compounds purchased and tested \textit{in vitro}.}}
 \begin{tabular}{cccl}
 \hline
-ZINC ID & average score (kcal/mol) & standard deviation (kcal/mol) & name\\
+ZINC ID & average score & standard deviation & name\\
 \hline
 06716957 & -10.46 & 0.52 & nilotinib\\
 03830332 & -10.43 & 0.50 & LS-194959\\
@@ -410,16 +366,165 @@ ZINC ID & average score (kcal/mol) & standard deviation (kcal/mol) & name\\
 01481956 &  -9.95 & 0.50 & paliperidone\\
 \hline
 \end{tabular}
-\begin{flushleft}\label{Top9} The idock score is an estimation of binding free energy in kcal/mol units. A more negative value implies a higher predicted binding affinity.
+\begin{flushleft} The idock score is an estimation of binding free energy in kcal/mol units. A more negative value implies a higher predicted binding affinity.
 \end{flushleft}
+\label{Top9}
 \end{table}
 
-\section*{Supporting Information Legends}
+\subsection*{Fluspirilene decreased cell viability of hepatocellular carcinoma}
 
-Table S1. The 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941. The table comprises the PDB ID, resolution, chain and positions.%P24941.tsv
+We first evaluated the anti-cancer effect of the nine compounds by MTT assay (Figure \ref{CellViabilityAgainstConcentration}). All the nine compounds decreased cell viability in HepG2 and Huh7 cells, but had discrepant cytotoxicity at different concentrations. Among them, fluspirilene had the lowest IC$_{50}$, i.e. 4.017$\mu$M for HepG2 and 3.468$\mu$M for Huh7. In other words, fluspirilene exhibited the highest cytotoxicity compared to the control with statistical significance (p$<$0.05).
 
-Table S2. Ensemble docking results of the 4,914 compounds. The table comprises the ZINC ID, the catalog, the average score, standard deviation and individual scores for the 44 selected CDK2 structures, and the molecular properties.%dbap+fda.csv
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellViabilityAgainstConcentration.eps}
+\caption{{\bf Comparison of the effect of the nine compounds on the viability of HepG2 and Huh7 hepatocellular carcinoma cells.} The nine compounds had discrepant cytotoxicity to HepG2 and Huh7 cell lines at different concentrationas determined by MTT assay, with fluspirilene exhibiting the highest cytotoxicity compared to the control (p$<$0.05). IC$_{50}$ of fluspirilene is 4.017$\mu$M for HepG2 and 3.468$\mu$M for Huh7.}
+\label{CellViabilityAgainstConcentration}
+\end{figure}
 
-Table S3. Details of the nine top-scoring compounds purchased and tested \textit{in vitro}. The table comprises the ZINC ID, the average score, scientific name, clinical uses and references.%Purchased.pdf
+Fluspirilene exhibited dose- and time-dependent inhibition effect on cell viability in HepG2 and Huh7 cell lines compared to the control (p$<$0.05) (Figure \ref{CellViabilityAgainstTime}). Marked inhibition was observed at 10$\mu$M and 30$\mu$M, but no significant effect was observed at concentrations below 3$\mu$M.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellViabilityAgainstTime.eps}
+\caption{{\bf The growth inhibition effect of fluspirilene on the viability of HepG2 and Huh7 hepatocellular carcinoma cells.} Fluspirilene exhibited dose- and time-dependent inhibition on cell viability in HepG2 and Huh7 cell lines compared to the control (p$<$0.05).}
+\label{CellViabilityAgainstTime}
+\end{figure}
+
+\subsection*{Fluspirilene treatment arrested cell cycle in G1 phase}
+
+We analyzed the effect of fluspirilene treatment with concentrations of 3, 10, 30 $\mu$M for 6, 12, 24 hours on cell cycle profile in HepG2 and Huh7 cells by flow cytometry (Figure \ref{G1Distribution}) in order to understand if fluspirilene inhibited CDK2 activities in hepatocellular carcinoma cells. Fluspirilene treatment significantly increased the percentage of cells in G1 phase compared to the control (p$<$0.05) in a dose- and time-dependent manner. At 30$\mu$M or 10$\mu$M concentrations, fluspirilene treatment continuously increased the percentage of G1 phase for 24 hours.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/G1Distribution.eps}
+\caption{{\bf Dose- and time-dependent effect of fluspirilene treatment on the percentage of cells in G1 phase.} Fluspirilene treatment dose- and time-dependently increased the percentage of cells in G1 phase. At 30$\mu$M or 10$\mu$M concentrations, fluspirilene treatment continuously increased the percentage of G1 phase for 24 hours.}
+\label{G1Distribution}
+\end{figure}
+
+Figure \ref{CellCycleDistribution} shows the changes of cell cycle profile of G0-G1, S, and G2-M phases after 24 hours of fluspirilene treatment. The increase of the G1 phase was accompanied by the simultaneous decrease of S phase.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/CellCycleDistribution.eps}
+\caption{{\bf Cell cycle distributions at 24 hours after fluspirilene treatment.} The increase of the G1 phase was accompanied by the simultaneous decrease of S phase.}
+\label{CellCycleDistribution}
+\end{figure}
+
+\subsection*{Fluspirilene treatment decreased the expressions of CDK2, Rb, cyclin E, pho-CDK2 and pho-Rb, but not cyclin D1 and cyclin B1}
+
+We investigated the effect of fluspirilene on the expressions of critical proteins involved in G1-to-S transition by western blotting in HepG2 and Huh7 cells (Figure \ref{WesternBlot}). Fluspirilene treatment reduced the expressions of CDK2, Rb, pho-CDK2, pho-Rb and cyclin E. In contrast, the expression levels of cyclin D1 and cyclin B1 remained unchanged. These results are consistent with what are expected from a CDK2 inhibitor.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/WesternBlot.eps}
+\caption{{\bf Effect of fluspirilene treatment on the expressions of important proteins involved in G1-to-S transition by western blotting.} Fluspirilene treatment decreased the expressions of CDK2, Rb, cyclin E, pho-CDK2 and pho-Rb, but not cyclin D1 and cyclin B1.}
+\label{WesternBlot}
+\end{figure}
+
+\subsection*{Daily oral fluspirilene treatment reduced tumor growth \textit{in vivo}}
+
+To evaluate the effect of fluspirilene on the growth of hepatocellular carcinoma \textit{in vivo}, BALB/C nude mice were subcutaneously injected with Huh7 cells. Carcinoma volumes were measured every 3 to 4 days after tumor appearance. At week 3 after tumor inoculation, the tumor volume reached 80 to 100 mm\textsuperscript{3}, then fluspirilene (15mg/kg in 0.5\% CMC-NaCl by oral gavage), 5-fluorouracil (10 mg/kg by intraperitoneal injection), and the combination of fluspirilene (15mg/kg) plus 5-fluorouracil (10 mg/kg) were administered daily for 21 days. At day 21 after treatment, fluspirilene (15 mg/kg) resulted in significant reduction of tumor weight and volume compared to the control (p$<$0.05) (Figure \ref{FluspirileneFluorouracilOnTumorGrowth}). The anti-tumor activity of oral fluspirilene (15 mg/kg) was comparable to that of 5-fluorouracil (10 mg/kg). Importantly, their combined therapy exhibited the highest therapeutic effect. These results suggested for the first time that fluspirilene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human hepatocellular carcinoma.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/FluspirileneFluorouracilOnTumorGrowth.eps}
+\caption{{\bf Effect of oral treatment of fluspirilene combined with intraperitoneal injection of 5-fluorouracil on tumor growth \textit{in vivo} in nude mice xenografted with Huh7 cells.} The anti-tumor activity of oral fluspirilene (15 mg/kg) was comparable to that of 5-fluorouracil (10 mg/kg). Importantly, their combined therapy exhibited the highest therapeutic effect.}
+\label{FluspirileneFluorouracilOnTumorGrowth}
+\end{figure}
+
+\subsection*{Structural analysis of the predicted conformation of fluspirilene docked against CDK2}
+
+Figure \ref{1GZ8-ZINC00537755-ms} plots the predicted conformation of fluspirilene in complex with CDK2 (PDB ID: 1GZ8) using iview \cite{1366}. Figure \ref{1GZ8-ZINC00537755-pv} plots the intermolecular interaction diagram using PoseView \cite{748}. Fluspirilene was predicted to reside in the ATP-binding site of CDK2 and interact with CDK2 mainly through hydrophobic contacts with Phe82, Ile10, His84 and Leu134, and a hydrogen bond with Lys33.
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1GZ8-ZINC00537755-ms.eps}
+\caption{{\bf The predicted conformation of fluspirilene in complex with CDK2.} CDK2 is rendered as molecular surface colored by atom type, with an opacity of 0.9 to show the underlying atoms. Fluspirilene is rendered as sticks colored by atom type. The green dashed box represents the docking search space. Fluspirilene was predicted to reside in the ATP-binding site of CDK2 and form putative hydrogen bonds. This figure was created by iview \cite{1366}.}
+\label{1GZ8-ZINC00537755-ms}
+\end{figure}
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/1GZ8-ZINC00537755-pv.eps}
+\caption{{\bf The putative interactions of fluspirilene with CDK2.} Fluspirilene was predicted to interact with CDK2 through hydrophobic contacts with Phe82, Ile10, His84 and Leu134, and a hydrogen bond with Lys33. This figure was created by PoseView \cite{748}.}
+\label{1GZ8-ZINC00537755-pv}
+\end{figure}
+
+\section*{Discussion}
+
+Cell cycle progress is sequentially and strictly processed through the interactions of CDKs and cyclins \cite{1612}. Different cyclin-CDK complexes are activated in different phases of the cell cycle. When the cell cycle goes through G1 to S phase, the cyclin D1-CDK4/6 and cyclin E-CDK2 complexes are ordinally activated and the retinoblastoma protein (pRB) is hyper-phosphorylated on serine and threonine residues \cite{1613}. The hyper-phosphorylated pRB promotes the release of E2F transcription factors, which in turn facilitate the transcription of numerous genes required for G1 to S transition and S phase progression \cite{1614}. From the medicinal perspective, CDK2 has long been a classical and important target for cancer therapy.
+
+Though a number of CDK2 inhibitors have entered clinical trial phases, none has been officially approved for clinical use, probably because of their toxicity and multi-target specificity. Given the obstacle that developing a new drug \textit{de novo} is a laborious and costly endeavor, repurposing toxicity-free old drugs for new uses is a favorable strategy.
+
+The powerful synergy of \textit{in silico} methods in drug repurposing by structure-based virtual screening (SBVS) was highlighted in several recent reports \cite{1384}. To name a few successful repurposing cases by SBVS, \cite{1507} rediscovered 2,4-Dichlorophenoxy acetic acid, a well-known plant auxin, as a new anti-inflammatory agent through \textit{in silico} molecular modeling and docking studies along with drug formulation and \textit{in vivo} anti-inflammatory inspection; \cite{1506} attempted to repurpose FDA-approved drugs by an integrated SBVS approach and reported the discovery of piperacillin \textbf{1} as an inhibitor of NEDD8-activating enzyme (NAE) in cell-free and cell-based systems with high selectivity.
+
+In addition to SBVS, ligand-based virtual screening (LBVS) also finds its successful applications in repurposing. \cite{1504} used Ultrafast Shape Recognition (USR) \cite{1379} to search for compounds with similar shape to a previously reported inhibitor of protein arginine deiminase type 4 (PAD4), a new therapeutic target for the treatment of rheumatoid arthritis, and identified a novel compound that has a strikingly different structure from the template inhibitor yet showed significant inhibition on the enzymatic activity of PAD4.
+
+Encouraged by these successful stories, in this study we adopted the repurposing strategy, and utilized the computational methodology of SBVS by protein-ligand docking to shortlist candidates from FDA-approved small molecule drugs. Specifically, we used our fast docking program idock \cite{1153,1362} in combination with our convenient visualizer iview \cite{1366} for the task of rediscovering existing drugs as CDK2 inhibitors. idock is an exciting development not only because it has been vigorously shown \cite{1362} to outperform the state-of-the-art docking software AutoDock Vina \cite{595} in terms of docking speed by at least 8.69 times and at most 37.51 times while maintaining comparable redocking success rates, but also because it is free and open source under a permissive license. The latter guarantees that users from both industry and academia can freely utilize idock in their own projects that require protein-ligand docking.
+
+To facilitate the use of idock, its input arguments and output results were purposely designed to be similar to those of AutoDock Vina, therefore existing users can easily transit to idock and benefit from considerable speedup in SBVS performance. Moreover, to promote prospective SBVS by idock, a web server called istar \cite{1362} was developed and made freely available at http://istar.cse.cuhk.edu.hk/idock, where there are as many as over 23 million purchasable small molecule compounds ready for docking against any protein supplied by the user. Both idock \cite{1153} and istar \cite{1362} would hopefully supplement the efforts of medicinal chemists in drug discovery research.
+
+Regarding the structural data in use, there are so far as many as 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941 (\nameref{S1_Table}). To account for their structural variability and to mine knowledge from multiple structures of CDK2, we selected 44 holo structures of CDK2 in a bound state with a ligand in complex to carry out ensemble docking. The final score used to prioritize compounds was purposely designed to be the average score of that compound when docked to the 44 selected structures of CDK2 with their native ligand removed manually before docking. In this way the top-scoring compounds would guarantee a consistent binding strength on average. Moreover, the standard deviation of scores across the 44 CDK2 structures was no greater than 0.8 kcal/mol for the top-scoring compounds (Table \ref{Top9}; \nameref{S2_Table}), further indicating that the average score is a reliable metric. In the aspect of data source of approved drugs, although we chose the dbap and fda catalogs of the ZINC database \cite{532,1178}, it is also possible to use some other freely accessible drug databases such as NCGC \cite{1608}, DrugBank \cite{1594}, KEGG DRUG \cite{1595} and e-Drug 3D \cite{1125}.
+
+After ensemble docking experiments with idock \cite{1153,1362} followed by careful visual inspections with iview \cite{1366}, we purchased nine top-ranking compounds for subsequent wet experiments. Among them, fluspirilene was selected for further investigations because its IC$_{50}$ was less than 10 $\mu$mol/L as determined by MTT assay. Fluspirilene is currently used for the therapy of chronic schizophrenia. It was recently identified as a potential p53-MDM2 inhibitor and its anti-cancer effect \textit{in vitro} was reported \cite{1606}, but was never investigated \textit{in vivo}.
+
+In this study, we reported for the first time that fluspirilene is a potential CDK2 inhibitor, and demonstrated for the first time that oral administration of fluspirilene (15 mg/kg) exhibited significant and strong anti-cancer efficacy comparable to the leading cancer drug 5-fluorouracil (10 mg/kg) \textit{in vivo} in nude mice xenografted with hepatoma Huh7 cells. Most importantly, the combination of effective dose of fluspirilene and 5-fluorouracil produced even higher therapeutic effect, indicating that fluspirilene may work through a different mechanism than 5-fluorouracil, which further indicates that fluspirilene could be combined with other chemotherapy drugs to achieve synergistic therapeutic effect.
+
+No obvious toxicity was previously reported by intraperitoneal injection of fluspirilene (8 mg/kg) in male wistar rats \cite{1610}. In this study, we did not observe significant change in body weight by oral administration of fluspirilene (15 mg/kg) for 21 days, suggesting that oral administration or intraperitoneal injection of fluspirilene is relatively safe.
+
+The inhibitory rate of 5-fluorouracil (10 mg/kg) on day 2 in female BALB/C \textit{in situ} hepatocellular carcinoma models with HCM-Y89 cell by intravenous injection was 48.14\% at 20 day of post-treatment \cite{1609}. In this study, we found that the inhibitory rate of 5-fluorouracil (10 mg/kg) on day 21 in female BALB/C nude mice xenografted models with Huh7 cells by intraperitoneal injection was 85.4\%, without showing any body weight change, suggesting that intraperitoneal administration of 5-fluorouracil is relatively safe and effective.
+
+\section*{Conclusions}
+
+This study presents a successful prospective application of idock \cite{1153,1362} in identifying CDK2 inhibitors from FDA-approved small molecule drugs using a repurposing strategy and an ensemble docking methodology. We showed that fluspirilene, currently used for the therapy of chronic schizophrenia, exhibited anti-cancer effect in human hepatoma HepG2 and Huh7 cells. We demonstrated for the first time that oral fluspirilene treatment significantly inhibited tumor growth. Most importantly, the combined therapy of fluspirilene and the leading cancer drug 5-fluorouracil produced higher therapeutic effect. These results suggested for the first time that fluspirilene is a potential CDK2 inhibitor and a candidate anti-cancer drug for the treatment of human hepatocellular carcinoma (HCC). Considering the fact that fluspirilene has a long history of safe human use, our discovery of fluspirilene as a potential anti-HCC drug may present an immediately-applicable clinical therapy. The potential application of fluspirilene combined with other chemotherapy drugs for the treatment of hepatoma neoplasms and other cancers warrants further studies.
+
+\section*{Supporting Information}
+
+% Include only the SI item label in the subsection heading. Use the \nameref{label} command to cite SI items in the text.
+
+\subsection*{S1 Table}
+\label{S1_Table}
+{\bf The 346 solved X-ray crystal structures of CDK2 with a UniProt ID of P24941.} The table comprises the PDB ID, resolution, chain and positions.%P24941.tsv
+
+\subsection*{S2 Table}
+\label{S2_Table}
+{\bf Ensemble docking results of the 4,914 compounds.} The table comprises the ZINC ID, the catalog, the average score, standard deviation and individual scores for the 44 selected CDK2 structures, and the molecular properties.%dbap+fda.csv
+
+\subsection*{S3 Table}
+\label{S3_Table}
+{\bf Details of the nine top-scoring compounds purchased and tested \textit{in vitro}.} The table comprises the ZINC ID, the average score, scientific name, clinical uses and references.%Purchased.pdf
+
+% Do NOT remove this, even if you are not including acknowledgments.
+\section*{Acknowledgments}
+
+This study was supported by grants from the Hsiang-fu Kung academician workstation of Kunming Medical University, National Natural Science Foundation of China (NSFC) 81272549, Key Lab project of Shenzhen (ZDSY20130329101130496) from China, the Direct Grant from the Chinese University of Hong Kong, the GRF Grant (Project References 414413, 772910 and 470911) from the Research Grants Council of Hong Kong.
+%http://www.ynstc.gov.cn/zxgz/guonkjhz/
+%http://www.nsfc.gov.cn/
+%http://www.szsti.gov.cn/services/resources/keylabs/detail.aspx?id=11e4-317f-c38924e1-926a-51a933b70eb8
+%http://www.cuhk.edu.hk/rao/rao_service.html
+%http://www.ugc.edu.hk/eng/rgc/grf/grf.htm
+
+\section*{Author Contributions}
+
+Conceived and designed the experiments: MCL HFK. Performed the experiments: XNS HL. Analyzed the data: XNS HL KSL MHW MCL. Contributed reagents/materials/analysis tools: XNS HL HY XL LL. Wrote the paper: XNS HL MCL.
+
+\nolinenumbers
+
+%\section*{References}
+% Either type in your references using
+% \begin{thebibliography}{}
+% \bibitem{}
+% Text
+% \end{thebibliography}
+%
+% OR
+%
+% Compile your BiBTeX database using our plos2009.bst
+% style file and paste the contents of your .bbl file
+% here.
+% 
+%\begin{thebibliography}{10}
+%\bibitem{bib1}
+%Lorem M, Ipsum VE (1990) Rank Correlation Methods. New York: Oxford University Press, 5th edition.
+
+%\bibitem{bib2}
+%Ipsum M, Ipsum JD (1990) Rank Correlation Methods. New York: Oxford University Press, 5th edition.
+
+%\end{thebibliography}
+
+\bibliography{refworks}
 
 \end{document}
