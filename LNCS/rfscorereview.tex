@@ -49,11 +49,11 @@ New scoring functions based on non-parametric machine-learning regression models
 
 Molecular docking is a key computational method in structure-based drug design, which has several applications. First, given a X-ray crystal structure of a protein, docking can be used to identify 3D conformations of a known ligand that is closer to the co-crystallised conformation (native pose identification). Second, docking can discriminate between known binders and non-binders with the goal of finding previously unknown binders in large databases of candidate molecules (virtual screening). Third, docking can be used to predict the binding strength of known binders and/or derivatives in order to identify more potent binders against the target (increasing potency) or less potent binders against an off-target (increasing selectivity).
 
-Docking has two stages: predicting the position, orientation and conformation of a molecule when docked to the target's binding site (pose generation), and predicting how strongly the docked pose of such putative ligand binds to the target (scoring). The single most important limitation of docking is the low accuracy of the scoring functions that predict the strength of binding of a bound ligand. This binding affinity can thereafter be used to select those molecules predicted to bind tightly for wet-lab confirmatory testing. Classical scoring functions [7] assume a functional form that relates the atomic-level description of the protein-ligand complex as specified by an X-ray crystal structure to its binding affinity, usually through Multiple Linear Regression (MLR).
+Docking has two stages: predicting the position, orientation and conformation of a molecule when docked to the target's binding site (pose generation), and predicting how strongly the docked pose of such putative ligand binds to the target (scoring). The single most important limitation of docking is the low accuracy of the scoring functions that predict the strength of binding of a bound ligand. This binding affinity can thereafter be used to select those molecules predicted to bind tightly for wet-lab confirmatory testing. Classical scoring functions \cite{1313} assume a functional form that relates the atomic-level description of the protein-ligand complex as specified by an X-ray crystal structure to its binding affinity, usually through Multiple Linear Regression (MLR).
 
-Fig. 1. Put an illustration of a co-crystallised ligand that we haven’t used before. The problem is predict how strongly binds to the target. The plots were generated with iview [9], an interactive WebGL visualizer freely available at http://istar.cse.cuhk.edu.hk/iview/ (iview requires no Java plugins, yet supports macromolecular surface construction and virtual reality effects).
+Fig. 1. Put an illustration of a co-crystallised ligand that we haven’t used before. The problem is predict how strongly binds to the target. The plots were generated with iview \cite{1366}, an interactive WebGL visualizer freely available at http://istar.cse.cuhk.edu.hk/iview/ (iview requires no Java plugins, yet supports macromolecular surface construction and virtual reality effects).
 
-Non-parametric machine learning, which circumvents the need of modelling assumptions implicit in functional forms, has recently been shown [4][5] to introduce a large improvement in the accuracy of scoring functions. 
+Non-parametric machine learning, which circumvents the need of modelling assumptions implicit in functional forms, has recently been shown \cite{564,908} to introduce a large improvement in the accuracy of scoring functions. 
 
 In this paper, we describe the inception and further development of RF-Score, which was the first machine-learning scoring function to achieve a substantial improvement over classical scoring functions at binding affinity prediction. RF-Score employs Random Forest (RF) regression to relate a structural description of the complex with its binding affinity. The review will cover adequate benchmarking practices, studies exploring optimal intermolecular features, further improvements and RF-Score software availability including a user-friendly docking webserver and a standalone executable for rescoring docked poses. Some work has also been made on the application of RF-Score to the related problem of virtual screening, e.g. a prospective virtual screening study. This will be briefly discussed and the required future work outlined. [from abstract – please rewrite]
 
@@ -63,15 +63,15 @@ section 2 has to explain a bit of Random Forest, especially parts relevant to SF
 
 \subsection{RF-score}
 
-Start explaining a bit first: RF-Score [4], the first scoring function using Random Forest (RF) [6] as the regression model, was found to outperform a range of widely-used classical scoring functions by a large margin.
+Start explaining a bit first: RF-Score \cite{564}, the first scoring function using Random Forest (RF) \cite{1309} as the regression model, was found to outperform a range of widely-used classical scoring functions by a large margin.
 
 \subsection{Model 3 – RF::Vina}
 
-While Vina’s ability to predict binding affinity is among the best provided by classical scoring functions, it is still limited by the assumption of additivity in its functional form. Random Forest (RF) [6] can be used to circumvent modeling assumptions. We therefore built a RF model with the 11 Vina features using the default number of trees (500). Instead of using all features, RF selects the best split at each node of the tree from a typically small number (mtry) of randomly chosen features. The mtry value with the lowest RMSE on Out-of-Bag (OOB) data is selected.
+While Vina’s ability to predict binding affinity is among the best provided by classical scoring functions, it is still limited by the assumption of additivity in its functional form. Random Forest (RF) \cite{1309} can be used to circumvent modeling assumptions. We therefore built a RF model with the 11 Vina features using the default number of trees (500). Instead of using all features, RF selects the best split at each node of the tree from a typically small number (mtry) of randomly chosen features. The mtry value with the lowest RMSE on Out-of-Bag (OOB) data is selected.
 
 \subsection{Model 4 – RF::VinaElem}
 
-This is essentially model 3 using a total of 47 features: the 36 RF-Score features [4] in addition to the 6 Vina features. Therefore, for a given random seed, a RF for each mtry value from 1 to 47 is built and that with the lowest RMSE on OOB data is selected as the scoring function. RF-Score features are elemental occurrence counts of a set of protein-ligand atom pairs in a complex. To calculate these features, atom types are selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered the sparser the resulting features will be. Therefore, a minimal set of atom types is selected by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions. In this way, the features are defined as the occurrence count of intermolecular contacts between elemental atom types i and j:
+This is essentially model 3 using a total of 47 features: the 36 RF-Score features \cite{564} in addition to the 6 Vina features. Therefore, for a given random seed, a RF for each mtry value from 1 to 47 is built and that with the lowest RMSE on OOB data is selected as the scoring function. RF-Score features are elemental occurrence counts of a set of protein-ligand atom pairs in a complex. To calculate these features, atom types are selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered the sparser the resulting features will be. Therefore, a minimal set of atom types is selected by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions. In this way, the features are defined as the occurrence count of intermolecular contacts between elemental atom types i and j:
 
 %Formula here
 
@@ -83,7 +83,7 @@ where dkl is the Euclidean distance between the kth protein atom of type j and t
 
 %Some figure here
 
-The PDBbind benchmark [7] is an excellent and common choice for validating generic scoring functions. Based on the 2007 version of the PDBbind database, it contains a particularly diverse collection of protein-ligand complexes from a systematic mining of the entire Protein Data Bank. This procedure led to a refined set of 1300 protein-ligand complexes along with their binding affinities. The PDBbind benchmark essentially consists of testing the predictions of scoring functions on the 2007 core set, which comprises 195 diverse complexes with measured binding affinities spanning more than 12 orders of magnitude, while using the remaining 1105 refined set complexes for training (i.e. both sets have no complexes in common). In this way, a set of protein-ligand complexes with measured binding affinity can be processed to give two non-overlapping data sets, where each complex is represented by its feature vector x(n) and its binding affinity y(n):
+The PDBbind benchmark \cite{1313} is an excellent and common choice for validating generic scoring functions. Based on the 2007 version of the PDBbind database, it contains a particularly diverse collection of protein-ligand complexes from a systematic mining of the entire Protein Data Bank. This procedure led to a refined set of 1300 protein-ligand complexes along with their binding affinities. The PDBbind benchmark essentially consists of testing the predictions of scoring functions on the 2007 core set, which comprises 195 diverse complexes with measured binding affinities spanning more than 12 orders of magnitude, while using the remaining 1105 refined set complexes for training (i.e. both sets have no complexes in common). In this way, a set of protein-ligand complexes with measured binding affinity can be processed to give two non-overlapping data sets, where each complex is represented by its feature vector x(n) and its binding affinity y(n):
 
 %Formula here
 
@@ -91,7 +91,7 @@ The PDBbind benchmark [7] is an excellent and common choice for validating gener
 
 %update-rewrite
 
-Performance is commonly measured [7] by the Root Mean Square Error (RMSE), Pearson correlation (Rp) and Spearman rank-correlation (Rs) between predicted and measured binding affinity. RMSE reflects the ability of the scoring function to report an accurate binding affinity estimation, whereas Rs shows how well it can rank bound ligands according to binding strength. Rp simply shows how linear the correlation is and thus it is a less relevant indicator of the quality of the prediction. Their expressions are:
+Performance is commonly measured \cite{1313} by the Root Mean Square Error (RMSE), Pearson correlation (Rp) and Spearman rank-correlation (Rs) between predicted and measured binding affinity. RMSE reflects the ability of the scoring function to report an accurate binding affinity estimation, whereas Rs shows how well it can rank bound ligands according to binding strength. Rp simply shows how linear the correlation is and thus it is a less relevant indicator of the quality of the prediction. Their expressions are:
 
 %Formulae here
 
@@ -104,15 +104,15 @@ where Na is the number of heavy atoms,  is the 3D coordinate of the nth heavy at
 
 \subsection{RF-Score}
 
-RF-Score [4], the first scoring function using Random Forest (RF) [6] as the regression model, was found to outperform a range of widely-used classical scoring functions by a large margin.
+RF-Score \cite{564}, the first scoring function using Random Forest (RF) \cite{1309} as the regression model, was found to outperform a range of widely-used classical scoring functions by a large margin.
 
 \subsection{SFC-ScoreRF}
 
-I commented this SF in http://pubs.acs.org/doi/abs/10.1021/ci500091r
+I commented this SF in \cite{1370}
 
 \subsection{RF-Score-2}
 
-Here explained: http://pubs.acs.org/doi/abs/10.1021/ci500091r
+Here explained: \cite{1370}
 
 \subsection{RF-Score-3}
 
@@ -124,9 +124,9 @@ Fig. 3. Performance on the 195 test set complexes in the PDBbind benchmark: Auto
 
 \subsection{RF for virtual screening}
 
-RF-Score has recently been used [2] to discover a large number of innovative binders of antibacterial targets and has now been incorporated [8] into a large-scale docking tool for prospective virtual screening (http://istar.cse.cuhk.edu.hk/idock/). To avoid confounding factors introduced by pose generation, these studies on scoring accuracy are carried out on data consisting of large sets of X-ray structures of protein-ligand complexes. However, scoring of the docked poses of a molecule is required in those cases where the experimentally-determined pose is not available.
+RF-Score has recently been used \cite{1281} to discover a large number of innovative binders of antibacterial targets and has now been incorporated \cite{1362} into a large-scale docking tool for prospective virtual screening (http://istar.cse.cuhk.edu.hk/idock/). To avoid confounding factors introduced by pose generation, these studies on scoring accuracy are carried out on data consisting of large sets of X-ray structures of protein-ligand complexes. However, scoring of the docked poses of a molecule is required in those cases where the experimentally-determined pose is not available.
 
-With binary classifiers, not SF, one work showing RF promising (i.e. better than classical SFs also in this application): http://www.ncbi.nlm.nih.gov/pubmed/20038188 
+With binary classifiers, not SF, one work showing RF promising (i.e. better than classical SFs also in this application): \cite{1632}
 
 In the future, retrospective virtual screening (stress another application).
 
@@ -136,20 +136,12 @@ Not too long, perhaps mentioning that what we will do next is important.
 
 \section{Acknowledgements}
 
-This work has been carried out thanks to the support of the A*MIDEX grant (n° ANR-11-IDEX-0001-02) funded by the French Government « Investissements d’Avenir » program, the Direct Grant from the Chinese University of Hong Kong and the GRF Grant (Project Reference 414413) from the Research Grants Council of Hong Kong SAR.
+This work has been carried out thanks to the support of the A*MIDEX grant (n$^\circ$ ANR-11-IDEX-0001-02) funded by the French Government $\ll$ Investissements d'Avenir $\gg$ program, the Direct Grant from the Chinese University of Hong Kong and the GRF Grant (Project Reference 414413) from the Research Grants Council of Hong Kong SAR.
 
-1.	Ballester, P.J. et al.: Does a More Precise Chemical Description of Protein-Ligand Complexes Lead to More Accurate Prediction of Binding Affinity? J. Chem. Inf. Model. 54, 3, 944–955 (2014).
-2.	Ballester, P.J. et al.: Hierarchical virtual screening for the discovery of new molecular scaffolds in antibacterial hit identification. J. R. Soc. Interface. 9, 77, 3196–207 (2012).
-3.	Ballester, P.J.: Machine Learning Scoring Functions based on Random Forest and Support Vector Regression. Lect. Notes Bioinforma. 7632, 14–25 (2012).
-4.	Ballester, P.J., Mitchell, J.B.O.: A machine learning approach to predicting protein-ligand binding affinity with applications to molecular docking. Bioinformatics. 26, 9, 1169–1175 (2010).
-5.	Ballester, P.J., Mitchell, J.B.O.: Comments on “leave-cluster-out cross-validation is appropriate for scoring functions derived from diverse protein data sets”: significance for the validation of scoring functions. J. Chem. Inf. Model. 51, 8, 1739–1741 (2011).
-6.	Breiman, L.: Random Forests. Mach. Learn. 45, 1, 5–32 (2001).
-7.	Cheng, T. et al.: Comparative Assessment of Scoring Functions on a Diverse Test Set. J. Chem. Inf. Model. 49, 4, 1079–1093 (2009).
-8.	Li, H. et al.: istar: A Web Platform for Large-Scale Protein-Ligand Docking. PLoS One. 9, 1, e85678 (2014).
-9.	Li, H. et al.: iview: an interactive WebGL visualizer for protein-ligand complex. BMC Bioinformatics. 15, 1, 56 (2014).
-10.	Morris, G.M. et al.: AutoDock4 and AutoDockTools4: Automated docking with selective receptor flexibility. J. Comput. Chem. 30, 16, 2785–91 (2009).
-11.	Morris, G.M. et al.: Automated docking using a Lamarckian genetic algorithm and an empirical binding free energy function. J. Comput. Chem. 19, 14, 1639–1662 (1998).
-12.	Trott, O., Olson, A.J.: AutoDock Vina: Improving the speed and accuracy of docking with a new scoring function, efficient optimization, and multithreading. J. Comput. Chem. 31, 2, 455–461 (2010). 
+3.	1295 LNCS
+10.	596 AutoDock4
+11.	597 AutoDock
+12.	595 AutoDock Vina
 
 \bibliographystyle{splncs03}
 \bibliography{../refworks}
