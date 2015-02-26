@@ -1,8 +1,6 @@
 \chapter{RF-Score-v4: pose generation error}
 \label{rfscore4}
 
-\section{Abstract}
-
 In prospective virtual screening, accurate prediction of binding affinity of docked poses is crucial for ranking compounds. However, many existing studies focus on scoring crystal complexes only, without considering the impact of pose generation error. Therefore the high accuracy claimed in those studies would potentially lead to degradation of predictive performance when their methods are applied to scoring docked poses.
 
 In this study we investigate the impact of pose generation error on the predictive performance of both classical and machine-learning scoring functions. We also study their capability of predicting the near-native pose that is most conformationally closest to the crystal pose. Our results show that pose generation error affects the accuracy of scoring functions, which is well anticipated. To minimize this negative impact, re-training the scoring functions on docked poses instead of crystal poses can be a straightforward solution. On the other hand, we find that although machine-learning scoring functions are generally good at binding affinity prediction, they do not perform as well as classical scoring functions on native pose prediction. This indicates that predictions of binding affinity and native pose are two different tasks and no single scoring function performs optimally for both tasks.
@@ -44,7 +42,7 @@ This is a multiple linear regression (MLR) model using the 11 unweighted Vina te
 
 \subsection{Model 3 - RF::Vina}
 
-This is a random forest (RF) model with the 11 Vina features using the default 500 trees and mtry values from 1 to 11. The selected model was the one that provided the lowest RMSE on the OOB (Out of Bag) data. This process was repeated ten times with ten different random seeds because RF is stochastic.
+This is a random forest (RF) model with the 11 Vina features using the default 500 trees and mtry values from 1 to 11. The selected model was the one that provided the lowest RMSE (Root Mean Square Error) on the OOB (Out of Bag) data. This process was repeated ten times with ten different random seeds because RF is stochastic.
 
 \subsection{Model 4 - RF::VinaElem}
 

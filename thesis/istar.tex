@@ -1,8 +1,6 @@
 \chapter{istar: software as a service}
 \label{istar}
 
-\section{Abstract}
-
 Protein-ligand docking is a key computational method in the design of starting points for the drug discovery process. Performing large-scale docking requires tedious configurations of necessary tools and preparations of mandatory materials. Although a few online docking platforms exist, they neither support fine-grained ligand selection based on molecular properties and previewing the number of ligands to dock, nor be able to monitor job progress in real time. They also lack convenient visualization of docking results and straightforward output of compound suppliers.
 
 We are intrigued to automate large-scale docking using our popular docking engine idock and thus have developed a publicly accessible web platform called istar. Without cumbersome software installation, users can submit jobs using our website. Our istar website supports 1) filtering ligands by desired molecular properties and previewing the number of ligands to dock, 2) monitoring job progress in real time, and 3) visualizing ligand conformations and outputting free energy predicted by idock, binding affinity predicted by RF-Score, putative hydrogen bonds, and supplier information for easy purchasing, three useful features commonly lacked on other online docking platforms like DOCK Blaster or iScreen. We have collected 23,129,083 ligands from the All Clean subset of the ZINC database, and revamped our idock to version 2.0, further improving docking speed and accuracy, and integrating RF-Score as an alternative rescoring function.
@@ -11,7 +9,7 @@ To compare idock 2.0 with the state-of-the-art AutoDock Vina 1.1.2, we carried o
 
 This was a collaborative project with Pedro J. Ballester from European Bioinformatics Institute, Cambridge, United Kingdom. It was published in \textit{PLoS ONE} on 24 January 2014 \citep{1362}.
 
-%Shiv Gupta, using literature search for the project I came through istar a wonderful platform for protein-ligand interaction prediction.
+%Shiv Gupta, "Using literature search for the project I came through istar a wonderful platform for protein-ligand interaction prediction."
 
 \section{Background}
 
@@ -306,7 +304,7 @@ Figure \ref{istar:RedockingVisualization} visualizes the redocking results of fo
 \label{istar:RedockingVisualization}
 \end{figure}
 
-Table \ref{istar:RedockingSuccessRate} shows the success rates of idock and AutoDock Vina on the PDBbind v2012 refined set ($N$ = 2,897), the PDBbind v2011 refined set ($N$ = 2,455), and the CSAR NRC HiQ Set 24Sept2010 ($N$ = 343) under various conditions regarding the $RMSD$ values between the crystal and docked conformations. By default, both programs output 9 predicted conformations per ligand. Given a redocking case, $RMSD_i (i = 1,2,...,9)$ refers to the $RMSD$ value between the crystal conformation and the $i$th docked conformation, i.e. the one with the $i$th highest predicted binding affinity, whereas $RMSD_{min}$ refers to the $RMSD$ value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum $RMSD$ value. $RMSD_{min} = \displaystyle\min_{i\in[1, 9]}RMSD_i$. The condition $RMSD_1$ = $RMSD_{min}$ therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations to the crystal conformation. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on the CSAR NRC HiQ Set 24Sept2010 are consistently higher than the PDBbind v2012 and v2011 refined sets, probably because the scoring function performs well on carefully refined structures. Using a $RMSD$ value of 2.0\AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand as the first conformation in over half of the cases, without any manual tweaking of the protein model.
+Table \ref{istar:RedockingSuccessRate} and Figure \ref{istar:RedockingSuccessRateFigures} show the redocking success rates of idock and AutoDock Vina on the PDBbind v2012 refined set ($N$ = 2,897), the PDBbind v2011 refined set ($N$ = 2,455), and the CSAR NRC HiQ Set 24Sept2010 ($N$ = 343) under various conditions regarding the $RMSD$ values between the crystal and docked conformations. By default, both programs output 9 predicted conformations per ligand. Given a redocking case, $RMSD_i (i = 1,2,...,9)$ refers to the $RMSD$ value between the crystal conformation and the $i$th docked conformation, i.e. the one with the $i$th highest predicted binding affinity, whereas $RMSD_{min}$ refers to the $RMSD$ value between the crystal conformation and the closest docked conformation, i.e. the one with the minimum $RMSD$ value. $RMSD_{min} = \displaystyle\min_{i\in[1, 9]}RMSD_i$. The condition $RMSD_1$ = $RMSD_{min}$ therefore tests for how many percent the docked conformation with the highest predicted binding affinity actually turns out to be the closest one among the 9 predicted conformations to the crystal conformation. It can be seen that the success rates of idock are comparable to, albeit slightly lower than, AutoDock Vina, and the success rates on the CSAR NRC HiQ Set 24Sept2010 are consistently higher than the PDBbind v2012 and v2011 refined sets, probably because the scoring function performs well on carefully refined structures. Using a $RMSD$ value of 2.0\AA, a publicly accepted positive control for correct bound structure prediction, both programs managed to predict a conformation sufficiently close to that of the co-crystallized ligand as the first conformation in over half of the cases, without any manual tweaking of the protein model.
 
 \begin{table}
 \caption{Redocking success rates of idock and AutoDock Vina.}
@@ -340,6 +338,25 @@ $RMSD_{min}$ \textless\ 2.5 \AA & 77\% & 85\% & 79\% & 84\% & 91\% & 94\%\\
 \hline
 \end{tabular}
 \end{table}
+
+\begin{figure}
+\centering
+\subfloat[$RMSD_1$ success rate.]
+{
+  \includegraphics[width=0.48\linewidth]{../istar/RMSD1SuccessRate.pdf}
+}
+\subfloat[$RMSD_{min}$ success rate.]
+{
+  \includegraphics[width=0.48\linewidth]{../istar/RMSDmSuccessRate.pdf}
+}
+\\
+\subfloat[$RMSD_{min}$ conformation distribution.]
+{
+  \includegraphics[width=\linewidth]{../istar/RMSDmDistribution.pdf}
+}
+\caption{Redocking success rates of idock and AutoDock Vina.}
+\label{istar:RedockingSuccessRateFigures}
+\end{figure}
 
 We attempted to examine two possible reasons that might cause idock to fail in some redocking test cases. They are the number of rotatable bonds of the ligand and the number of metal ions in the binding site. Figure \ref{istar:Program-NRB} plots the impact of rotatable bonds of the ligand on the redocking success rates of idock and AutoDock Vina benchmarked on PDBbind v2012 core set ($N$ = 201). Out of the 201 cases, there are 109 and 114 successful cases for idock and AutoDock Vina respectively. The average number of rotatable bonds of the ligand in successful cases are 7.52 and 7.30 respectively for idock and AutoDock Vina. The average number of rotatable bonds of the ligand in unsuccessful cases are 10.36 and 10.82 respectively for idock and AutoDock Vina. Both programs tended to do well when the ligand contains fewer than 10 rotatable bonds.
 
@@ -470,7 +487,9 @@ In computational biology, ten simple rules have been summarized for providing a 
 
 We compare our istar to DOCK Blaster \citep{557}, an expert system created to investigate the feasibility of full automation of large-scale protein-ligand docking. It uses DOCK 3 \citep{1445} as the docking engine and ZINC \citep{532,1178} as the ligand repository. Although DOCK is open source, DOCK Blaster itself is closed source. istar is indeed much easier to use than DOCK Blaster. Given the structure of a target protein, both istar and DOCK Blaster can dock and score a large set of ligands against the target protein and provide a ranked list which users may review and prioritize for purchasing and wet-lab testing. From the perspective of binding site indication, istar automatically detects a site from the co-crystallized ligand, while DOCK Blaster uses PocketPickker (CLIPPERS) \citep{395}. From the perspective of ligand selection, istar features ligand filtering by nine desired molecular properties in a fine-grained fashion, while DOCK Blaster predefines several subsets either by property, by vendor, or by user. From the perspective of documentation and user manual, the istar website presents a series of graphical tutorials on how to submit a new job and other related issues, while DOCK Blaster deploys a wiki with very rich contents covering all the relevant procedures. As extra features, DOCK Blaster allows the input of known active and inactive binders as heuristic information for docking. In summary, although istar and DOCK Blaster share the identical motivation of automating large-scale protein-ligand docking, their internal implementations and methodologies differ greatly. Users are encouraged to utilize both istar and DOCK Blaster as well as other docking servers to reach a consensus of promising candidate ligands.
 
-According to Google Analytics, throughout September 2014, istar had 647 sessions, 334 users, and 1848 pageviews from 43 countries. According to our internal statistics, from October 2013 to October 2014, there had been 635 job submissions with 46,581,105 ligands docked. These jobs came from 126 email addresses, 64 of which were associated with multiple jobs while the other 62 were associated with one single job. Due to limited budget, we cannot offer as much hardware resource as DOCK Blaster (i.e. 700 CPU cores plus 20TB RAID-6 storage). However, we emphasize full reproducibility \citep{965} and we have released istar under a permissive open source license so that anyone who possesses sufficient hardware resource is welcome to deploy a copy of istar to his/her own infrastructure with no charge. On a related issue, we can draw on the experience of QMachine \citep{1405}, an open-sourced, publicly available web service that acts as a messaging system for posting tasks and retrieving results over HTTP in a PaaS (Platform as a Service) manner. It aggregates commodity hardware and volunteer compute cycles to enable commodity supercomputing in web browsers. Few server resources are required because all analytical and data retrieval tasks are executed by volunteer machines.
+According to Google Analytics, throughout 2014, istar had served 460 sessions, 271 users, and 631 pageviews from 33 countries on 6 continents, except Antarctica merely. According to our internal statistics, from October 2013 to October 2014, there had been 635 job submissions with 46,581,105 ligands docked. These jobs came from 126 email addresses, 64 of which were associated with multiple jobs while the other 62 were associated with one single job. In the future, we may ask users to fill in some forms of questionaire in order to systematically collect comments and feedback, as well as their successful drug discovery endeavors using istar.
+
+Due to limited budget, we cannot offer as much hardware resource as DOCK Blaster (i.e. 700 CPU cores plus 20TB RAID-6 storage). However, we emphasize full reproducibility \citep{965} and we have released istar under a permissive open source license so that anyone who possesses sufficient hardware resource is welcome to deploy a copy of istar to his/her own infrastructure with no charge. On a related issue, we can draw on the experience of QMachine \citep{1405}, an open-sourced, publicly available web service that acts as a messaging system for posting tasks and retrieving results over HTTP in a PaaS (Platform as a Service) manner. It aggregates commodity hardware and volunteer compute cycles to enable commodity supercomputing in web browsers. Few server resources are required because all analytical and data retrieval tasks are executed by volunteer machines.
 
 \section{Conclusions}
 
