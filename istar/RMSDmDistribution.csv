@@ -1,0 +1,55 @@
+b,p,x,y
+PDBbind v2012,idock,1,0.49
+PDBbind v2012,idock,2,0.15
+PDBbind v2012,idock,3,0.08
+PDBbind v2012,idock,4,0.06
+PDBbind v2012,idock,5,0.05
+PDBbind v2012,idock,6,0.05
+PDBbind v2012,idock,7,0.04
+PDBbind v2012,idock,8,0.05
+PDBbind v2012,idock,9,0.04
+PDBbind v2012,Vina,1,0.53
+PDBbind v2012,Vina,2,0.16
+PDBbind v2012,Vina,3,0.07
+PDBbind v2012,Vina,4,0.06
+PDBbind v2012,Vina,5,0.04
+PDBbind v2012,Vina,6,0.03
+PDBbind v2012,Vina,7,0.04
+PDBbind v2012,Vina,8,0.03
+PDBbind v2012,Vina,9,0.03
+PDBbind v2011,idock,1,0.47
+PDBbind v2011,idock,2,0.16
+PDBbind v2011,idock,3,0.08
+PDBbind v2011,idock,4,0.06
+PDBbind v2011,idock,5,0.05
+PDBbind v2011,idock,6,0.05
+PDBbind v2011,idock,7,0.05
+PDBbind v2011,idock,8,0.04
+PDBbind v2011,idock,9,0.04
+PDBbind v2011,Vina,1,0.54
+PDBbind v2011,Vina,2,0.14
+PDBbind v2011,Vina,3,0.08
+PDBbind v2011,Vina,4,0.05
+PDBbind v2011,Vina,5,0.05
+PDBbind v2011,Vina,6,0.04
+PDBbind v2011,Vina,7,0.04
+PDBbind v2011,Vina,8,0.03
+PDBbind v2011,Vina,9,0.03
+CSAR NRC HiQ,idock,1,0.59
+CSAR NRC HiQ,idock,2,0.18
+CSAR NRC HiQ,idock,3,0.04
+CSAR NRC HiQ,idock,4,0.07
+CSAR NRC HiQ,idock,5,0.03
+CSAR NRC HiQ,idock,6,0.03
+CSAR NRC HiQ,idock,7,0.02
+CSAR NRC HiQ,idock,8,0.03
+CSAR NRC HiQ,idock,9,0.01
+CSAR NRC HiQ,Vina,1,0.71
+CSAR NRC HiQ,Vina,2,0.13
+CSAR NRC HiQ,Vina,3,0.04
+CSAR NRC HiQ,Vina,4,0.03
+CSAR NRC HiQ,Vina,5,0.01
+CSAR NRC HiQ,Vina,6,0.03
+CSAR NRC HiQ,Vina,7,0.02
+CSAR NRC HiQ,Vina,8,0.02
+CSAR NRC HiQ,Vina,9,0.02
