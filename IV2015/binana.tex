@@ -1,0 +1,126 @@
+% -----------------------------------------------------
+% By Jonathan C. Roberts
+% File modified: 15.01.2003 - nb29
+% -----------------------------------------------------
+\documentclass{article}
+
+\usepackage[dvips]{graphics}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+%set dimensions of columns, gap between columns, and paragraph indent
+\setlength{\textheight}{8.75in}
+\setlength{\columnsep}{2.0pc}
+\setlength{\textwidth}{6.8in}
+%\setlength{\footheight}{0.0in}
+\setlength{\topmargin}{0.25in}
+\setlength{\headheight}{0.0in}
+\setlength{\headsep}{0.0in}
+\setlength{\oddsidemargin}{-.19in}
+\setlength{\parindent}{1pc}
+
+\makeatletter
+%to get 12 point spacing for normalsize text, must set it to 10 points
+\def\@normalsize{\@setsize\normalsize{10pt}\xpt\@xpt
+\abovedisplayskip 10pt plus2pt minus5pt\belowdisplayskip
+\abovedisplayskip \abovedisplayshortskip \z@
+plus3pt\belowdisplayshortskip 6pt plus3pt
+minus3pt\let\@listi\@listI}
+
+%need an 10 pt font size for subsection and abstract headings
+\def\subsize{\@setsize\subsize{10pt}\xipt\@xipt}
+
+%make section titles bold and 12 point, 2 blank lines before, 1 after
+\def\section{\@startsection {section}{1}{\z@}{1.0ex plus
+1ex minus .2ex}{.2ex plus .2ex}{\large\bf}}
+
+%make subsection titles bold and 11 point, 1 blank line before, 1 after
+\def\subsection{\@startsection {subsection}{2}{\z@}{.2ex
+plus 1ex}{.2ex plus .2ex}{\subsize\bf}}
+
+\def\keywords{\vspace{.6em}
+    \if@twocolumn
+	\small{\itshape Keywords\/}\bfseries---$\!$%
+    \else
+	\small{\itshape Keywords\/}\bfseries---$\!$%\end{center}\quotation\small
+      %\begin{center}\small\bfseries Keywords\end{center}\quotation\small
+    \fi}
+\def\endkeywords{\vspace{0.6em}\par\if@twocolumn\else\endquotation\fi
+    \normalsize\rm}
+
+\makeatother
+\begin{document}
+
+\date{}
+
+\newcommand{\mytitle}{Identifying and visualizing protein-ligand binding interactions with the WebGL visualizer iview}
+\title{\Large\bf \mytitle}
+
+\author{Hongjian Li, Kwong-Sak Leung, Man-Hon Wong\\
+       Department of Computer Science and Engineering, Chinese University of Hong Kong\\
+       JackyLeeHongJian@Gmail.com}
+
+\maketitle
+% I don't know why I have to reset thispagestyle, but
+% otherwise get page numbers
+\pagestyle{empty}
+\thispagestyle{empty}
+
+\begin{multicols}{2}
+
+\subsection*{\centering Abstract}
+{\em
+Visualization of protein-ligand complex plays an important role in elaborating protein-ligand interactions and aiding novel drug design. Most existing web visualizers either rely on slow software rendering, or lack virtual reality support. The vital feature of macromolecular surface construction is also unavailable.
+
+We have developed iview, an easy-to-use interactive WebGL visualizer of protein-ligand complex. It exploits hardware acceleration rather than software rendering. It features three special effects in virtual reality settings, namely anaglyph, parallax barrier and oculus rift, resulting in visually appealing identification of intermolecular interactions. It supports four surface representations including Van der Waals surface, solvent excluded surface, solvent accessible surface and molecular surface. Moreover, based on the feature-rich version of iview, we have also developed a neat and tailor-made version specifically for our istar web platform for protein-ligand docking purpose. This demonstrates the excellent portability of iview.
+
+Using innovative 3D techniques, we provide a user friendly visualizer that is not intended to compete with professional visualizers, but to enable easy accessibility and platform independence.
+}
+
+\begin{keywords}
+Molecular binding visualization, molecular docking
+\end{keywords}
+
+
+\section*{Introduction} 
+
+Visualization of protein-ligand complex plays an important role in elaborating protein-ligand interactions and aiding novel drug design. To date, dozens of visualization tools already exist. VMD \cite{1220}, PyMOL (http://www.pymol.org) and Chimera \cite{1219} are very well-known and highly cited. They can interpret multiple file formats and generate multiple representations to supply precise and powerful control. AutoDockTools4 \cite{596} provides native support for the PDBQT file format, which is widely used in various protein-ligand docking software such as AutoDock \cite{596}, AutoDock Vina \cite{595}, and our idock \cite{1153}. We also developed our own method \cite{1265} to visualize structures in virtual reality settings and employ fragment-based \textit{de novo} ligand design strategy for interactive drug design. PoseView \cite{748} and LigPlot+ \cite{951}, on the other hand, plot 2D diagrams of protein-ligand interactions from 3D coordinates.
+
+In addition, there are web visualizers based on either Java applet, Adobe Flash, or HTML5 canvas. Jmol (http://www.jmol.org), an open source Java viewer for chemical structures in 3D, has been deployed worldwide and recognized as the \textit{de facto} molecular viewer on the web. GIANT \cite{1359}, a web visualizer based on Jmol, supports analyzing protein-ligand interactions on the basis of patterns of atomic contacts obtained from the statistical analyses of 3D structures. However, Java is being disabled on more and more systems due to security concerns so that Java-free visualizers are highly required. JSmol \cite{1314}, a JavaScript-only version of Jmol, includes the full implementation of the entire set of Jmol functionalities. Although Jmol and JSmol support a large set of advanced features including scripting, they rely on software rendering which is slow on large display areas and thus prevents detailed inspection of the structure. In contrast, WebGL visualizers benefit from GPU acceleration. For instance, ChemDoodle Web Components (http://web.chemdoodle.com), a pure JavaScript chemical graphics and cheminformatics library, presents 2D and 3D graphics and animations for chemical structures, reactions and spectra, but it lacks protein surface construction. GLmol (http://webglmol.sourceforge.jp), a molecular viewer on WebGL/JavaScript using the three.js library, supports multiple file formats and representations, and features an experimental version of surface construction based on the EDTSurf algorithm \cite{1297,1350}. Another study \cite{1262} also presents a WebGL technology for rendering molecular surface using the SpiderGL library \cite{1320}. Nevertheless, none of these WebGL visualizers support virtual reality effects.
+
+Surface representation is a convenient way to visualize protein-ligand interactions. However, macromolecular surface calculation is computationally and memory intensive. Furthermore, the calculated mesh is very complex, often exceeding 500,000 polygons. Therefore its implementation in JavaScript/WebGL was considered to be very difficult. Most existing web visualizers either rely on slow software rendering, or lack virtual reality support. Moreover, the vital feature of protein surface construction is usually unavailable, and the support for PDBQT format is not implemented.
+
+To address the above obstacles, we have developed iview, an interactive WebGL visualizer of protein-ligand complex, featuring three special effects in virtual reality settings and four surface representations (Table \ref{tbl:features}). Furthermore, we show that iview can be easily modified to adapt to different applications. As an application example, we have recently developed a web platform called istar \cite{1362} to automate large-scale protein-ligand docking using our idock \cite{1153}. Refactored from the feature-rich version of iview, we have also developed tailor-made version specifically for visualizing docking input data and output results of user-submitted jobs.
+
+\section*{Methods}
+
+iview is refactored from GLmol 0.47, using three.js as its primary 3D engine with antialiasing support. It is based on WebGL canvas and can be easily integrated into existing HTML5 web pages to display molecular models without requiring Java or browser plugins. It loads a protein-ligand structure from the PDB (Protein Data Bank) \cite{1357} as its data source via a RESTful interface. It renders four standard representations of primary structure, namely line, stick, ball \& stick and sphere, and five standard representations of secondary structure, namely ribbon, strand, cylinder \& plate, C alpha trace and B factor tube. It colors the structure by either atom spectrum, protein chain, protein secondary structure, B factor, residue name, residue polarity, or atom type, by setting the vertex colors of the geometry object of the corresponding representation. It supports user interactions including rotation, translation, zooming and slab with mouse or hand touch manipulation. It provides both perspective and orthographic cameras, and anaglyph, parallax barrier and oculus rift effects from three.js examples for use in a virtual reality environment.
+
+\section*{Results}
+
+We take as example the CCR5 chemokine receptor-HIV entry inhibitor maraviroc complex \cite{1348} (PDB code: 4MBS).
+
+Figure \ref{fig:ribbon} shows the human CCR5 secondary structure rendered as ribbon, and the ligands rendered as sphere.
+
+We have successfully tested iview in Chrome 30, Firefox 25, Safari 6.1 and Opera 17. Support for IE 11 is experimental because gl\_FrontFacing is unsupported in IE 11. Refer to http://caniuse.com/webgl for compatibility of WebGL support in desktop and mobile browsers.
+
+\section*{Conclusions}
+
+We have designed and developed iview to be a simple and straightforward way to visualize protein-ligand complex. It enables non-experts to quickly elucidate protein-ligand interactions in a 3D manner. Furthermore, iview is free and open source, and can be easily integrated into any bioinformatics application that requires interactive protein-ligand visualization.
+
+\section*{Availability}
+
+We emphasize full reproducibility. Both idock and istar are free and open source under Apache License 2.0. For idock, its C++ source code, precompiled executables for 32-bit and 64-bit Linux, Windows, Mac OS X, FreeBSD and Solaris, 13 docking examples, and a doxygen file for generating API documentations are available at https://github.com/HongjianLi/idock. For istar, its C++ and JavaScript source code and REST API documentation are available at https://github.com/HongjianLi/istar. Our istar website is running at http://istar.cse.cuhk.edu.hk/idock. It has been tested successfully in Chrome 30, Firefox 25, Safari 6.1 and Opera 17. Support for IE 11 is experimental.
+
+\section*{Acknowledgements}
+
+This work was supported by the Direct Grant from the Chinese University of Hong Kong and the GRF Grant (Project Reference 414413) from the Research Grants Council of Hong Kong SAR.
+
+\bibliographystyle{plain}
+\bibliography{../refworks}
+
+\end{multicols}
+
+\end{document}
+
