@@ -253,50 +253,50 @@ The molecular surface of CDK2 is colored by secondary structure, with an opacity
 \hline
 PDB ID & Resolution (\AA)\\
 \hline
-1AQ1 & 2.00\\
-1CKP & 2.05\\
-1DI8 & 2.20\\
-1DM2 & 2.10\\
-1E1V & 1.95\\
-1E1X & 1.85\\
-1FVT & 2.20\\
-1G5S & 2.61\\
-1GIH & 2.80\\
-1GII & 2.00\\
-1GIJ & 2.20\\
 1GZ8 & 1.30\\
-1H00 & 1.60\\
-1H01 & 1.79\\
-1H07 & 1.85\\
-1H08 & 1.80\\
-1H0V & 1.90\\
-1H0W & 2.10\\
-1JSV & 1.96\\
 1JVP & 1.53\\
-1KE5 & 2.20\\
+1H00 & 1.60\\
+1OIT & 1.60\\
+1URW & 1.60\\
+1H01 & 1.79\\
+1H08 & 1.80\\
+1E1X & 1.85\\
+1H07 & 1.85\\
+1H0V & 1.90\\
+1OIR & 1.91\\
+1E1V & 1.95\\
+1PXI & 1.95\\
+1JSV & 1.96\\
+1PXO & 1.96\\
+1AQ1 & 2.00\\
+1GII & 2.00\\
 1KE6 & 2.00\\
 1KE7 & 2.00\\
 1KE8 & 2.00\\
 1KE9 & 2.00\\
-1OIQ & 2.31\\
-1OIR & 1.91\\
-1OIT & 1.60\\
-1P2A & 2.50\\
-1PF8 & 2.51\\
-1PXI & 1.95\\
-1PXJ & 2.30\\
-1PXK & 2.80\\
-1PXL & 2.50\\
-1PXM & 2.53\\
-1PXN & 2.50\\
-1PXO & 1.96\\
-1PXP & 2.30\\
 1PYE & 2.00\\
 1R78 & 2.00\\
-1URW & 1.60\\
-1V1K & 2.31\\
-1VYZ & 2.21\\
+1CKP & 2.05\\
+1DM2 & 2.10\\
+1H0W & 2.10\\
+1DI8 & 2.20\\
+1FVT & 2.20\\
+1GIJ & 2.20\\
+1KE5 & 2.20\\
 1W0X & 2.20\\
+1VYZ & 2.21\\
+1PXJ & 2.30\\
+1PXP & 2.30\\
+1OIQ & 2.31\\
+1V1K & 2.31\\
+1P2A & 2.50\\
+1PXL & 2.50\\
+1PXN & 2.50\\
+1PF8 & 2.51\\
+1PXM & 2.53\\
+1G5S & 2.61\\
+1GIH & 2.80\\
+1PXK & 2.80\\
 \hline
 \end{tabular}
 \begin{flushleft} The final score used to rank compounds was purposely designed to be the average score across these 44 structures of CDK2 so as to account for structural variability.
@@ -320,7 +320,7 @@ Cells were plated in 96-, 24-, or 6-well plates with 0.125\% FBS medium for 24 h
 
 \subsection*{MTT assay}
 
-Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) was added. The absorbance was measured at 570 nm according the standard protocol. The IC$_{50}$ values were calculated by Graphpad prime5.
+Cells were plated at an initial density of 9x10\textsuperscript{3} cells/well in 96 well plates and incubated with 0.5mg/ml 3-(4,5-methylthiazol-2-yl)-2,5-diphenyl-tetrazolium bromide for 4 hours. The medium was then discarded and 200$\mu$l of formazan in dimethylsulphoxide (DMSO) was added. The absorbance was measured at 570 nm according to the standard protocol. The IC$_{50}$ values were calculated by GraphPad Prism 5.
 
 \subsection*{Cell cycle analysis}
 
@@ -342,7 +342,7 @@ The results were obtained from at least three different experiments and expresse
 
 \subsection*{Ensemble docking results and selection of candidate inhibitors}
 
-Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (\nameref{S2_Table}). The docking prediction results with iview visualization \cite{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap and http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-fda. 15 compounds had predicted free energy of -10 kcal/mol or lower, with the best one having -10.46 kcal/mol (Figure \ref{AvgScoreHistogram}). Based on commercial availability, 9 top-scoring compounds (Table \ref{Top9}; \nameref{S3_Table}) were selected and purchased for further investigations.
+Totally 4,914 FDA-approved drugs were docked and ranked according to their average predicted binding affinity across 44 X-ray crystal structures of CDK2 (\nameref{S2_Table}). The docking prediction results with iview visualization \cite{1366} are freely available at http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-dbap and http://istar.cse.cuhk.edu.hk/idock/iview/?1GZ8-fda. 15 compounds had predicted free energy of -10 kcal/mol or lower, with the best one having -10.46 kcal/mol (Figure \ref{AvgScoreHistogram}). Based on commercial availability, 9 top-scoring compounds (Table \ref{Top9}; Figure \ref{Top9F}; \nameref{S3_Table}) were selected and purchased for further investigations.
 
 \begin{figure}
 %\includegraphics[width=\linewidth]{../cdk2-fluspirilene/AvgScoreHistogram.eps}
@@ -372,6 +372,12 @@ ZINC ID & average score & standard deviation & name\\
 \end{flushleft}
 \label{Top9}
 \end{table}
+
+\begin{figure}
+%\includegraphics[width=\linewidth]{../cdk2-fluspirilene/Top9.eps}
+\caption{{\bf The nine top-scoring compounds purchased and tested \textit{in vitro}.}}
+\label{Top9F}
+\end{figure}
 
 \subsection*{Fluspirilene decreased cell viability of hepatocellular carcinoma}
 
