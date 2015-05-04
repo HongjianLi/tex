@@ -19,4 +19,5 @@
 *.sdf
 *.mol2
 *.pdbqt
+*.doc
 */*.bib
