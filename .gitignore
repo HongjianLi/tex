@@ -20,5 +20,6 @@
 *.mol2
 *.pdbqt
 *.doc
+*.docx
 */*.bib
 */*.ris
