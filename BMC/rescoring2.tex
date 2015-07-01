@@ -339,7 +339,7 @@ This is the model described in the previous subsection with an expanded set of 4
 
 To calculate RF-Score features, atom types were selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered, the sparser the resulting features will be. Therefore, we selected a minimal set of atom types by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions.
 
-RF-Score features are defined as the occurrence count of intermolecular contacts between elemental atom types $i$ and $j$, as shown in equations \eqref{rfscore3:x_ij} and \eqref{rfscore3:x}, where $d_{kl}$ is the Euclidean distance between the $k$th protein atom of type $j$ and the $l$th ligand atom of type $i$ calculated from a structure; $K_j$ is the total number of protein atoms of type $j$ ($\#\{j\}=9$) and $L_i$ is the total number of ligand atoms of type $i$ ($\#\{i\}=4$) in the considered complex; $\mathcal{H}$ is the Heaviside step function that counts contacts within a $d_{cutoff}$ neighbourhood. For example, $x_{7,8}$ is the number of occurrences of protein oxygen atoms hypothetically interacting with ligand nitrogen atoms within a chosen neighbourhood. Full details on RF-Score features are available at \cite{564,1295}.
+RF-Score features are defined as the occurrence count of intermolecular contacts between elemental atom types $i$ and $j$, as shown in equations \ref{rfscore3:x_ij} and \ref{rfscore3:x}, where $d_{kl}$ is the Euclidean distance between the $k$th protein atom of type $j$ and the $l$th ligand atom of type $i$ calculated from a structure; $K_j$ is the total number of protein atoms of type $j$ ($\#\{j\}=9$) and $L_i$ is the total number of ligand atoms of type $i$ ($\#\{i\}=4$) in the considered complex; $\mathcal{H}$ is the Heaviside step function that counts contacts within a $d_{cutoff}$ neighbourhood. For example, $x_{7,8}$ is the number of occurrences of protein oxygen atoms hypothetically interacting with ligand nitrogen atoms within a chosen neighbourhood. Full details on RF-Score features are available at \cite{564,1295}.
 
 \begin{equation}
 \label{rfscore3:x_ij}
@@ -351,7 +351,7 @@ x_{ij}=\sum_{k=1}^{K_j}\sum_{l=1}^{L_i}\mathcal{H}(d_{cutoff}-d_{kl})
 \mathbf x=\{x_{ij}\}\in N^{36}
 \end{equation}
 
-\subsection{Performance measures}
+\subsection*{Performance measures}
 
 As usual \cite{1313}, performance will be measured by the Standard Deviation (SD), Root Mean Square Error (RMSE), Pearson correlation (Rp) and Spearman rank-correlation (Rs) between predicted and measured binding affinity. SD is included to permit comparison to previously-tested scoring functions on this benchmark. RMSE, on the other hand, reflects the ability of the scoring function to report an accurate binding affinity value. Rs shows how well it can rank bound ligands according to binding strength. Rp simply shows how linear the correlation is and thus it is a less relevant indicator of the quality of the prediction. The mathematical expressions of these four metrics can be found in \cite{1432}.
 
