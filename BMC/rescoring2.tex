@@ -96,7 +96,7 @@
 %%                                          %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Correcting docking pose generation error on binding affinity prediction}
+\title{Correcting the docking pose generation error on binding affinity prediction}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
@@ -271,51 +271,89 @@ In practice, binding affinity prediction is carried out on the docking pose of a
 
 Molecular docking tools are routinely utilised to predict the binding pose as well as the binding affinity of a ligand, usually a small organic molecule, when it is bound to a target protein of interest. The predicted pose helps to reveal the putative intermolecular interactions and therefore understand the mechanism of protein-ligand binding, whereas the predicted affinity reflects the binding strength and therefore prioritizes strong-binding ligands over weak-binding ones from a large library of compounds to evaluate.
 
-A typical docking program implements a sampling algorithm to generate possible binding poses and a scoring function to estimate their binding affinity. The former operation is known as pose generation, and the latter is known as scoring. Modern docking tools such as AutoDock4 \cite{596}, AutoDock Vina \cite{595} and idock \cite{1362} are already capable of generating near-native poses with a redocking success rate of more than 50\% on three diverse benchmarks \cite{1362}.
+A typical docking program implements a sampling algorithm to generate possible binding poses and a scoring function to estimate their binding affinity. The former operation is known as pose generation, and the latter is known as scoring. Modern docking tools such as AutoDock Vina \cite{595} and idock \cite{1362} are already capable of generating near-native poses with a redocking success rate of more than 50\% on three diverse benchmarks \cite{1362}.
 
-On the other hand, recent years have seen the emergence and prosperity of a new class of scoring functions that use machine learning techniques to increase the accuracy of binding affinity prediction, with RF-Score \cite{564} being the first machine-learning scoring function that introduced a significant improvement over classical, non-machine-learning scoring functions. Since then, numerous enhancements have been applied to the original RF-Score \cite{564} and thereby resulting in RF-Score-v2 \cite{1370} and RF-Score-v3 \cite{1647}, and other relevant studies \cite{1432}. RF-Score has been utilised \cite{1281} to discover a large number of innovative binders of antibacterial DHQase2 targets, demonstrating its practical utility. To promote its use, RF-Score-v3 has been incorporated into a popular web platform called istar \cite{1362}, available at http://istar.cse.cuhk.edu.hk/idock. A recent study \cite{1663} has highlighted the benefit of training machine-learning scoring functions with low-quality structural and interaction data.
+Meanwhile, recent years have seen the emergence and prosperity of a new class of scoring functions that use machine learning techniques to increase the accuracy of binding affinity prediction, with RF-Score \cite{564} being the first machine-learning scoring function that introduced a significant improvement over classical, non-machine-learning scoring functions. Since then, numerous enhancements have been applied to the original RF-Score \cite{564} and thereby resulting in RF-Score-v2 \cite{1370} and RF-Score-v3 \cite{1647}, and other relevant studies \cite{1432}. RF-Score has been utilised \cite{1281} to discover a large number of innovative binders of antibacterial DHQase2 targets, demonstrating its practical utility. To promote its use, RF-Score-v3 has been incorporated into a popular web platform called istar \cite{1362}, available at http://istar.cse.cuhk.edu.hk/idock, for large-scale docking. A recent study \cite{1663} has highlighted the benefit of training machine-learning scoring functions with low-quality structural and interaction data.
 
-In prospective virtual screening, accurate prediction of binding affinity of docked poses, rather than co-crystallised poses, is crucial for ranking compounds from a large molecular database. Nevertheless, to the best of our knowledge, all existing machine-learning scoring functions are trained on numerical features derived from crystal poses exclusively, without considering the impact of pose generation error. Therefore the high accuracy claimed in those studies would potentially lead to degradation of predictive performance when their methods are applied to scoring docked poses.
+In prospective virtual screening, accurate prediction of binding affinity of docked poses, rather than co-crystallised poses, is crucial for ranking compounds from a large molecular database. Nevertheless, to the best of our knowledge, all existing machine-learning scoring functions are trained on numerical features derived from crystal poses exclusively, without considering the impact of pose generation error. Hence their applicability to re-scoring docked poses remains unexamined, and the high accuracy vigorously claimed in their corresponding studies would thus potentially downgrade when their methods are applied to scoring docked poses.
 
-Pose generation error is typically measured by comparing the geometry of the pose generated by the docking software and that of the same molecule co-crystallised with the considered protein. However, the impact of this error on binding affinity prediction is yet to be systematically analysed across diverse protein-ligand complexes. All the existing scoring functions are trained on crystal poses. Their performance on docked poses is yet to be evaluated.
-
-In this study we investigate the impact of pose generation error on the predictive performance of both classical and machine-learning scoring functions. We also study their capability of predicting the near-native pose that is most conformationally closest to the crystal pose. Our results show that pose generation error affects the accuracy of scoring functions, which is well anticipated. To minimize this negative impact, re-training the scoring functions on docked poses instead of crystal poses can be a straightforward solution. On the other hand, we find that although machine-learning scoring functions are generally good at binding affinity prediction, they do not perform as well as classical scoring functions on native pose prediction. This indicates that predictions of binding affinity and native pose are two different tasks and no single scoring function performs optimally for both tasks.
-
-Although we only used RF in this study, we believe our conclusions are also applicable to SVR (support vector regression)-based scoring functions \cite{1295,963} as well as other machine-learning scoring functions.
+Pose generation error is typically measured by comparing the geometry of the pose generated by the docking software and that of the same molecule co-crystallised with the considered protein (Figure \ref{fig:4WAF}). The impact of this error on binding affinity prediction is yet to be systematically analysed across diverse protein-ligand complexes. In this study we investigate the impact of pose generation error on the predictive performance of both classical and machine-learning scoring functions. We also study their capability of predicting the near-native pose that is conformationally close to the crystal pose.
 
 \section*{Methods}
 
-Preamble
+Preamble: Four models are purposely constructed for evaluation and comparison.
 
-\subsection*{Multiple Linear Regression (MLR) with Cyscore features}
+\subsection*{Model 1 - AutoDock Vina}
 
-Model 1 – AutoDock Vina
+The AutoDock series \cite{597,596,595} is the most cited docking software by the research community, with over 8,000 citations to date between these three publications, according to Google Scholar. As a completely new counterpart of AutoDock 4 \cite{596}, AutoDock Vina \cite{595} substantially improved the average accuracy of the binding mode predictions, while running two orders of magnitude faster with multithreading. Vina was an exciting development, not only because of its remarkable pose generation performance in terms of both effectiveness and efficiency, but also because it is an open source tool and is among the most accurate classical scoring functions for binding affinity prediction.
 
-The AutoDock series [2][3][4] is arguably the most widely used docking software by the research community. AutoDock Vina significantly improved [2] the average accuracy of the binding mode predictions offered by AutoDock 4 [4], while running two orders of magnitude faster with multithreading. Vina was an exciting development, not only due to its remarkable pose generation performance, both in terms of effectiveness and efficiency, but also because it is an open source tool that aids docking method development. 
-Vina’s score for the kth pose of a molecule is given by the estimated free energy of binding to the target protein and calculated in Vina as:
+Like all classical scoring functions, Vina assumes a predetermined functional form. In this case, Vina's score for the $k$th conformer, $e_k$, is calculated as:
 
-	                                               
+\begin{equation}
+\label{rfscore3:e_k}
+e_k=\frac{e_{k,inter}+e_{k,intra}-e_{1,intra}}{1+w_6N_{rot}}
+\end{equation}
+
+Now because studies on binding affinity prediction are benchmarked on co-crystallised ligands to avoid confounding factors, there is only one conformer per molecule ($k=1$) and thus the intramolecular contribution cancels out giving:
+
+\begin{equation}
+\label{rfscore3:e_1}
+e_1=\frac{e_{1,inter}}{1+w_6N_{rot}}
+\end{equation}
 
 where
- 
- 
- 
 
-e1 is the predicted free energy of binding reported by Vina when re-scoring the structure of a protein-ligand complex. As usual, to compare to binding affinities (pKd or pKi), the predicted free energy of binding in kcal/mol units is converted into pKd with pKd=-0.73349480509e1 (see for instance [5] for an explanation of how this conversion factor is derived). The values for these weights were found by minimising the difference between predicted and measured binding affinity using a nonlinear optimisation algorithm (this process was not detailed in the original publication [2]).  Further details on each of these Vina terms can be found in [5], including the expressions for intermolecular and intramolecular energetic terms (respectively distinguished with ‘r’ and ‘a’ subscripts above). 
+\begin{eqnarray}
+\label{rfscore3:e_1_inter}
+e_{1,inter} &=& w_1 \cdot Gauss1_1 \nonumber \\
+            &+& w_2 \cdot Gauss2_1 \nonumber \\
+		    &+& w_3 \cdot Repulsion_1 \nonumber \\
+		    &+& w_4 \cdot Hydrophobic_1 \nonumber \\
+		    &+& w_5 \cdot HBonding_1
+\end{eqnarray}
 
-Model 2 – MLR::Vina
+\begin{equation}
+\label{rfscore3:w}
+\mathbf w=(-0.035579,-0.005156,0.840245,-0.035069,-0.587439,0.05846)
+\end{equation}
 
-In studies based on structural data, there is only one 3D geometry or pose of the molecule (k=1), the co-crystallized ligand, and thus the intramolecular contributions in equation 1 cancel out. This means that, once a co-crystallized ligand is redocked, each of the resulting poses is described by 11 Vina terms. Here, a MLR model, effectively a classical scoring function, is built using the 11 unweighted Vina terms as features. In order to make the problem amenable to MLR, we made a grid search on the w6 weight and thereafter run MLR on the remaining weights as explained in the next section.
+$e_1$ is the predicted free energy of binding reported by the Vina software when scoring the structure of a protein-ligand complex. The values for the six weights were found by Ordinary Least Squares (OLS) using a nonlinear optimisation algorithm as it has been the case in related force-field scoring functions \cite{1454}, although this process was not detailed in the original publication \cite{595}. The training data was PDBbind v2007 refined set (N=1300). $N_{rot}$ is the number of rotatable bonds. Unlike other classical scoring functions, Vina is not exactly a sum of energy terms because $w_6\neq0$, although it is quasi-linear since $1+w_6N_{rot}$ takes values close to 1 for most protein-ligand complexes. As usual, e.g. \cite{1362}, the predicted free energy of binding in kcal/mol units is converted into pKd with $pK_d=-0.73349480509e_1$ in order to compare to binding affinities ($pK_d$ or $pK_i$). Expressions and further details for the five $e_{k, inter}$ terms can be found in \cite{595,1362}.
 
-Model 3 – RF::Vina
+\subsection*{Model 2 - MLR::Vina}
 
-While Vina’s ability to predict binding affinity is among the best provided by classical scoring functions, it is still limited by the assumption of additivity in its functional form. Random Forest (RF) [6] can be used to circumvent modeling assumptions. We therefore built a RF model with the 11 Vina features using the default number of trees (500). Instead of using all features, RF selects the best split at each node of the tree from a typically small number (mtry) of randomly chosen features. The mtry value with the lowest RMSE on Out-of-Bag (OOB) data is selected. 
+This is a multiple linear regression (MLR) model using the six unweighted Vina terms as features. The use of MLR as the regression model implies an additive functional form and hence MLR::Vina is a classical scoring function. It adopts the philosophy of empirical scoring functions.
 
-Model 4 – RF::VinaElem
+In order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining five weights. Specifically, we sampled 101 values for $w_6$ from 0 to 1 with a step size of 0.01. Interesting we found that the $w_6$ values of the best models were always between 0.005 and 0.020. Then we again sampled 16 values for $w_6$ in this range with step size 0.001, and used the best of them in terms of the lowest RMSE (Root Mean Square Error) on the training set.
 
-This is essentially model 3 using a total of 47 features: the 36 RF-Score features [7] in addition to the 11 Vina features. Therefore, for a given random seed, a RF for each mtry value from 1 to 47 is built and that with the lowest RMSE on OOB data is selected as the scoring function. RF-Score features are elemental occurrence counts of a set of protein-ligand atom pairs in a complex. To calculate these features, atom types are selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered the sparser the resulting features will be. Therefore, a minimal set of atom types is selected by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions. In this way, the features are defined as the occurrence count of intermolecular contacts between elemental atom types i and j:
- 
-where dkl is the Euclidean distance between the kth protein atom of type j and the lth ligand atom of type i calculated from a structure; Kj is the total number of protein atoms of type j and Li is the total number of ligand atoms of type i in the considered complex; $\mathcal{H}$ is the Heaviside step function that counts contacts within a dcutoff neighbourhood. For example, x7,8 is the number of occurrences of protein nitrogen atoms hypothetically interacting with ligand oxygen atoms within a chosen neighbourhood. This representation led to a total of 81 features, of which 45 are zero due to the lack of proteinogenic amino acids with F, P, Cl, Br and I atoms. Therefore, each complex was characterized by a vector with 36 integer-valued features.
+\subsection*{Model 3 - RF::Vina}
+
+While Vina's ability to predict binding affinity is among the best provided by classical scoring functions, it is still limited by the assumption of a functional form. To investigate the impact of this modelling assumption, we used Random Forest (RF) \cite{1309} to implicitly learn the functional form from the data. Other machine learning techniques can of course be applied to this problem, e.g. SVR (Support Vector Regression) \cite{1295}, although this is out of the scope of the study.
+
+A RF is an ensemble of many different decision trees randomly generated from the same training data \cite{1309}. RF trains its constituent trees using the CART algorithm \cite{1310}. Instead of using all features, RF selects the best data split at each node of the tree from a typically small number (mtry) of randomly chosen features. In regression problems, the RF prediction is given by arithmetic mean of all the individual tree predictions in the forest.
+
+Here we built a RF model with the six Vina features using the default number of trees (500) and values of the mtry control parameter from 1 to all 6 features. The selected model was that with the mtry value providing the lowest RMSE on a subset of training data known as the OOB (Out of Bag) data. This process was repeated ten times with ten different random seeds because RF is stochastic. The predictive performance was reported for the RF with the best seed that led to the lowest RMSE on the test set. Further details on RF model building in this context can be found in \cite{564}.
+
+\subsection*{Model 4 - RF::VinaElem}
+
+This is the model described in the previous subsection with an expanded set of 42 features once the 36 RF-Score features are added to the six Vina features. For a given random seed, a RF for each mtry value from 1 to 42 was built and that with the lowest RMSE on OOB data was selected as the scoring function. Like in the training process of model 3, the same ten seeds were used, and the predictive performance was reported for the RF with the best seed that resulted in the lowest RMSE on the test set.
+
+To calculate RF-Score features, atom types were selected so as to generate features that are as dense as possible, while considering all the heavy atoms commonly observed in PDB complexes (C, N, O, F, P, S, Cl, Br, I). As the number of protein-ligand contacts is constant for a particular complex, the more atom types are considered, the sparser the resulting features will be. Therefore, we selected a minimal set of atom types by considering atomic number only. Furthermore, a smaller set of interaction features has the additional advantage of leading to computationally faster scoring functions.
+
+RF-Score features are defined as the occurrence count of intermolecular contacts between elemental atom types $i$ and $j$, as shown in equations \eqref{rfscore3:x_ij} and \eqref{rfscore3:x}, where $d_{kl}$ is the Euclidean distance between the $k$th protein atom of type $j$ and the $l$th ligand atom of type $i$ calculated from a structure; $K_j$ is the total number of protein atoms of type $j$ ($\#\{j\}=9$) and $L_i$ is the total number of ligand atoms of type $i$ ($\#\{i\}=4$) in the considered complex; $\mathcal{H}$ is the Heaviside step function that counts contacts within a $d_{cutoff}$ neighbourhood. For example, $x_{7,8}$ is the number of occurrences of protein oxygen atoms hypothetically interacting with ligand nitrogen atoms within a chosen neighbourhood. Full details on RF-Score features are available at \cite{564,1295}.
+
+\begin{equation}
+\label{rfscore3:x_ij}
+x_{ij}=\sum_{k=1}^{K_j}\sum_{l=1}^{L_i}\mathcal{H}(d_{cutoff}-d_{kl})
+\end{equation}
+
+\begin{equation}
+\label{rfscore3:x}
+\mathbf x=\{x_{ij}\}\in N^{36}
+\end{equation}
+
+\subsection{Performance measures}
+
+As usual \cite{1313}, performance will be measured by the Standard Deviation (SD), Root Mean Square Error (RMSE), Pearson correlation (Rp) and Spearman rank-correlation (Rs) between predicted and measured binding affinity. SD is included to permit comparison to previously-tested scoring functions on this benchmark. RMSE, on the other hand, reflects the ability of the scoring function to report an accurate binding affinity value. Rs shows how well it can rank bound ligands according to binding strength. Rp simply shows how linear the correlation is and thus it is a less relevant indicator of the quality of the prediction. The mathematical expressions of these four metrics can be found in \cite{1432}.
 
 \begin{equation}
 RMSE = \sqrt{\frac{1}{N}\sum_{n=1}^N(p^{(n)}-y^{(n)})^2}
@@ -338,8 +376,6 @@ R_s = \frac{N\sum_{n=1}^Np_r^{(n)}y_r^{(n)}-\sum_{n=1}^Np_r^{(n)}\sum_{n=1}^Ny_r
 \end{equation}
 
 \section*{Results}
-
-NB: remove discussion of results and put in next section. Just motivate and present results. For instance, remove all the subsections and put them in “Discussion”, here just the raw results. 
 
 \subsection*{Redocking the ligand of each test set complex}
 
@@ -374,6 +410,10 @@ Until now using one docking pose per molecule, multi-pose schemes 5 and 6 did no
 \section*{Discussion}
 
 We should release RF-Score-v4: trained on docking poses with the latest PDBbind refined set.
+
+Our results show that pose generation error affects the accuracy of scoring functions, which is well anticipated. To minimize this negative impact, re-training the scoring functions on docked poses instead of crystal poses can be a straightforward solution. On the other hand, we find that although machine-learning scoring functions are generally good at binding affinity prediction, they do not perform as well as classical scoring functions on native pose prediction. This indicates that predictions of binding affinity and native pose are two different tasks and no single scoring function performs optimally for both tasks.
+
+Although we only used RF in this study, we believe our conclusions are also applicable to SVR (support vector regression)-based scoring functions \cite{1295,963} as well as other machine-learning scoring functions.
 
 \section*{Conclusions}
 
@@ -437,7 +477,7 @@ This work has been carried out thanks to the support of the A*MIDEX grant (n$^{\
 %\includegraphics[natwidth=15in,natheight=20in,width=0.98\linewidth]{../rescoring2/4WAF-3K6.png}
 \caption{\csentence{Example of pose generation error.} Top: crystal structure of PI3K$\alpha$ in complex of a tetrahydropyrazolo[1,5-a]pyrazine codenamed 3K6 (PDB ID: 4WAF). Bottom: re-docked pose of 3K6, generated by idock \cite{1362}. Hydrogen bonds are rendered as dashed cyan lines, and $\pi$ stackings are rendered as dashed pink lines. The RMSD (Root-Mean Square Deviation) between the co-crystallised pose and the re-docked pose is 1.15 \AA, which is a quantitative measure of pose generation error. These two plots were created by iview \cite{1366}, an interactive WebGL visualizer that circumvents the requirement of Java, yet supports the construction of macromolecular surface and the display of virtual reality effects and molecular interactions. iview is freely available at http://istar.cse.cuhk.edu.hk/iview/.
 }
-\label{fig:stat}
+\label{fig:4WAF}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
