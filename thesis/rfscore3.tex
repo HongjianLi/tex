@@ -82,7 +82,7 @@ $e_1$ is the predicted free energy of binding reported by the Vina software when
 
 This is a multiple linear regression (MLR) model using the six unweighted Vina terms as features. The use of MLR as the regression model implies an additive functional form and hence MLR::Vina is a classical scoring function. It adopts the philosophy of empirical scoring functions.
 
-In order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining five weights. Specifically, we sampled 101 values for $w_6$ from 0 to 1 with a step size of 0.01. Interesting we found that the $w_6$ values of the best models were always between 0.005 and 0.020. Then we again sampled 16 values for $w_6$ in this range with step size 0.001, and used the best of them in terms of the lowest RMSE (Root Mean Square Error) on the training set.
+In order to make the problem amenable to MLR, we made a grid search on the $w_6$ weight and thereafter ran MLR on the remaining five weights. Specifically, we sampled 101 values for $w_6$ from 0 to 1 with a step size of 0.01. Interesting we found that the $w_6$ values of the best models were always between 0.005 and 0.020. Then we again sampled 16 values for $w_6$ in this range with step size 0.001, and used the best of them in terms of the lowest RMSE (Root Mean Square Error) on the test set.
 
 \subsection{Model 3 - RF::Vina}
 
