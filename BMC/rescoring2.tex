@@ -431,8 +431,7 @@ Figures \ref{rescoring2:set-1-pdbbind-2007-trn-2-tst-2-de} and \ref{rescoring2:s
 
 Besides using either crystal or docked poses (schemes 1 and 2) for training, we additionally evaluated several strategies (schemes 3, 4, 5 and 6), aiming to see if using other docked pose, or even multiple docked poses, could possibly increase the predictive performance of the resultant models. Recall that scheme 3 uses the docked pose with the lowest RMSD, scheme 4 uses the docked pose with a Vina score closest the measured binding affinity, scheme 5 uses all the 9 docked poses, and scheme 6 uses the two top-scoring docked poses. The results on the two benchmarks are shown in Tables \ref{rescoring2:set-1-pdbbind-2007-trn-3456-tst-1256-raw} and \ref{rescoring2:set-2-pdbbind-2012-trn-3456-tst-1256-raw}. Note that schemes 3 and 4 could not be used as test schemes because neither the RMSD nor the measured binding affinity of test set complexes are known in practice. Hence, models 2, 3 and 4 trained in schemes 3 and 4 were tested in schemes 1 and 2 instead. On the other hand, models trained in schemes 5 and 6 can only be tested in schemes 5 and 6, respectively, because their feature set has a different size than that of schemes 1 to 4.
 
-
-[Talk about schemes 3, 4, 5, 6] Until now using one docking pose per molecule, multi-pose schemes 5 and 6 did not improve, but it is worth communicating that they did not work.
+Interestingly, when tested on crystal poses (in scheme 1), none of the models trained in schemes 3 to 6 outperformed their counterparts trained in scheme 1. Similarly, when tested on docked poses (in scheme 2), none of the models trained in schemes 3 to 6 outperformed their counterparts trained in scheme 2, either. The interpretation of such results is twofold. First, training with the docked pose with the lowest RMSD (scheme 3) or the docked pose with a Vina score closest the measured binding affinity (scheme 4) did not help to improve predictive performance on the test set. Second, training with multiple docked poses, instead of a specific single docked pose, of a molecule did not help to improve predictive performance either.
 
 \section*{Discussion}
 
@@ -442,7 +441,7 @@ Here we study the impact of pose generation error on classical and machine-learn
 
 Our results show that pose generation error only introduces a small degradation in the accuracy of scoring functions. To minimize this negative impact, we found that re-training the scoring functions on docked poses instead of crystal poses results in correcting a substantial part of this degradation. Until now existing machine-learning scoring functions are trained on crystal poses and tested on re-docked poses without changing composition of training or test sets. Here still testing on re-docked poses, but now training on re-docked poses which improves test set performance with respect to the SF trained on crystal.
 
-Scheme 2 is determinable, i.e. the lowest Vina score. Schemes 3 and 4 are not because RMSD and binding affinity are not known in advance. So scheme 2 is practically implementable while schemes 3 and 4 are not.
+Scheme 2 is determinable, i.e. the lowest Vina score. Schemes 3 and 4 are not because RMSD and binding affinity are not known in advance. So scheme 2 is practically implementable while schemes 3 and 4 are not. Until now using one docking pose per molecule, multi-pose schemes 5 and 6 did not improve, but it is worth communicating that they did not work.
 
 Another contribution of this study is the release of software implementing RF::VinaElem trained on docked poses so that it can be directly used by the large number of Vina users (poses from other docking programs can also be re-scored by our software once these are converted to AutoDock’s pdbqt format). With this purpose, we have trained the best of our models on the most comprehensive set of high-quality complexes (RF-Score-v4; RF::VinaElem trained on the 3441 complexes from 2014 refined set) and implemented it as easy-to-use software that directly re-scores Vina-generated poses. See the abstract for availability and the README file therein for operating instructions.
 
@@ -613,7 +612,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \end{table}
 
 \begin{table}[ht]
-\caption{Performance of the four models trained in schemes 3, 4, 5, 6 and tested in schemes 1, 2, 5, 6 on the PDBbind v2007 benchmark.}
+\caption{Performance of models 2, 3, 4 trained in schemes 3, 4, 5, 6 and tested in schemes 1, 2, 5, 6 on the PDBbind v2007 benchmark.}
 \label{rescoring2:set-1-pdbbind-2007-trn-3456-tst-1256-raw}
 \begin{tabular}{cccrrrr}
 \hline
@@ -647,7 +646,7 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 \end{table}
 
 \begin{table}[ht]
-\caption{Performance of the four models trained in schemes 3, 4, 5, 6 and tested in schemes 1, 2, 5, 6 on the PDBbind v2013 blind benchmark.}
+\caption{Performance of models 2, 3, 4 trained in schemes 3, 4, 5, 6 and tested in schemes 1, 2, 5, 6 on the PDBbind v2013 blind benchmark.}
 \label{rescoring2:set-2-pdbbind-2012-trn-3456-tst-1256-raw}
 \begin{tabular}{cccrrrr}
 \hline
