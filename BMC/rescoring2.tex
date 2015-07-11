@@ -409,29 +409,25 @@ Tables \ref{rescoring2:tbl-set-1-pdbbind-2007} and \ref{rescoring2:tbl-set-2-pdb
 
 From these results, several interesting observations can be made. First, for model 1, its performance tested on docked poses was always better than its performance tested on crystal poses (except for just a small degradation in the Rs performance on the PDBbind v2007 benchmark). Particularly, the RMSE error was greatly dropped from 2.41 to 2.02 on the PDBbind v2007 benchmark and from 2.30 to 1.87 on the PDBbind v2013 blind benchmark. The result that Vina made better prediction of binding affinity from docked poses than from crystal poses is possibly due to the fact that docked poses are by construction optima of the objective function spanned by the Vina score, which may favor prediction of docked poses over unoptimized crystal poses.
 
-Second, for models 2, 3 and 4 trained on crystal poses, their performance tested on docked poses was always worse than their performance tested on crystal poses. This is well anticipated because of the presence of pose generation error. For instance, on the PDBbind v2013 blind benchmark, model 4 trained on crystal poses obtained RMSE=1.43, SD=1.43, Rp=0.689, Rs=0.662 when tested on crystal poses. Its performance degraded when tested on docked poses of the same molecules with RMSE=1.49, SD=1.49, Rp=0.656, Rs=0.633 (Additional file \ref{set-1-pdbbind-2007-trn-1-tst-2-yp}).
+Second, for models 2, 3 and 4 trained on crystal poses, their performance tested on docked poses was always worse than their performance tested on crystal poses. This is well anticipated because of the presence of pose generation error. For instance, on the PDBbind v2013 blind benchmark, model 4 trained on crystal poses obtained RMSE=1.43, SD=1.43, Rp=0.689, Rs=0.662 when tested on crystal poses (Additional file 1). Its performance degraded when tested on docked poses of the same molecules with RMSE=1.49, SD=1.49, Rp=0.656, Rs=0.633 (Additional file 2).
 
-Third, for models 2, 3 and 4 tested on docked poses, their performance was better when they were trained on docked poses than their counterparts trained on crystal poses. For instance, on the PDBbind v2013 blind benchmark, model 4 trained on docked poses obtained RMSE=1.47, SD=1.48, Rp=0.665, Rs=0.643 when tested on docked poses. This means that a way to improve performance on docked poses is to train the model on docked poses instead of on crystal poses. In practice, different scoring functions can be built depending on whether one wants to score crystal poses or docked poses.
+Third, for models 2, 3 and 4 tested on docked poses, their performance was better when they were trained on docked poses than their counterparts trained on crystal poses. For instance, on the PDBbind v2013 blind benchmark, model 4 trained on docked poses obtained RMSE=1.47, SD=1.48, Rp=0.665, Rs=0.643 when tested on docked poses (Additional file 3). This means that a way to improve performance on docked poses is to train the model on docked poses instead of on crystal poses. In practice, different scoring functions can be built depending on whether one wants to score crystal poses or docked poses.
 
-Fourth, for models 2, 3 and 4 tested on crystal poses, the models trained on docked poses did not outperform their counterparts trained on crystal poses. This is also well anticipated due to the impact of pose generation error, and suggests that it is not feasible to improve the predictive performance on crystal poses by using docked poses for training. To sum up, if the application is to score a crystal pose, it would be better to train the scoring function on crystal poses; and if the application is to score a docked pose, it would be better to train the scoring function on docked poses.
+Fourth, for models 2, 3 and 4 tested on crystal poses, the models trained on docked poses did not outperform their counterparts trained on crystal poses (Additional file 4). This is also well anticipated due to the impact of pose generation error, and suggests that it is not feasible to improve the predictive performance on crystal poses by using docked poses for training. To sum up, if the application is to score a crystal pose, it would be better to train the scoring function on crystal poses; and if the application is to score a docked pose, it would be better to train the scoring function on docked poses.
 
 Fifth, regardless of the training or test schemes, model 4 consistently outperformed model 3, which in turn outperformed model 2, which in turn outperformed model 1. It is remarkable that the best scoring function, RF::VinaElem, when trained on docked poses, achieved the highest performance in the literature on the PDBbind v2007 benchmark in the more common application of re-scoring docked poses, as it is required when carrying out docking-based prospective virtual screening. Here we denote this version of RF::VinaElem as RF-Score-v4 specifically for the purpose of binding affinity prediction given a docked pose from Vina. Importantly, since Vina and RF::Vina used the same features and were trained on the same data, RF::Vina performed much better in predicting binding affinity than the widely-used Vina software while having the same applicability domain.
 
 \subsection*{Training with more complexes on docked poses still improves performance}
 
-We showed in a previous study \cite{1647} that  greatly improves with more data
-Again, not only the difference in performance is substantial but grows as more data is available for training, thus increasing the importance of using RF in the future.
-Figure \ref{rescoring2:set-2-trn-2-tst-2-boxplot}
+In a previous study \cite{1647} we showed that training RF models with larger datasets greatly improved their predictive performance on scoring crystal poses, while the performance of MLR::Vina nearly stayed flat. Here we observe similar results when the models were trained on docked poses and tested also on docked poses of the PDBbind v2013 blind benchmark. As shown in Figure \ref{rescoring2:set-2-trn-2-tst-2-boxplot}, when more complexes were used for model training, RF::VinaElem consistently increased its predictive accuracy in terms of all the four metrics. In contrast, for MLR::Vina, its accuracy improvement obtained from larger training sets was just marginal. Not only the performance gap between MLR::Vina and RF::VinaElem is substantial, but grows as more data is available for training, thus increasing the importance of using RF in scoring function development. More importantly, the availability of crystal poses is limited by the number of experimentally resolved structures, whereas docked poses can be easily generated by docking tools. This means that, by using docked poses for training, the training data size can be remarkably larger than limiting the training data to crystal poses, and therefore even higher performance could be achieved.
 
-This is important to state that even when we trained on docking poses improvements with more data size are obtained because there are many non-crystallized molecules that could be docked and used as training data.
+\subsection*{Correlation between pose generation error and binding affinity prediction error is low}
 
-\subsection*{Dependency of RMSD with binding affinity prediction}
+We analyse how different RMSD values affect binding affinity prediction by comparing the RMSD of the docked pose with the individual absolute error in its binding affinity prediction by the four models (note that the square root of the summation of the square of these errors is the RMSE measure). It is widely believed that the higher the pose generation error, the larger the error on predicting that pose will be. Nevertheless, this is not the case here.
 
-Next, we analyse how different RMSD values affect binding affinity prediction by comparing the RMSD of the redocked pose with the individual absolute error in its binding affinity prediction by the four models (note that the square root of the summation of the square of these errors is the RMSE measure). It is widely believed that the higher the pose generation error the larger the error on predicting that pose will be. Nevertheless, this is not the case here.
+Figures \ref{rescoring2:set-1-pdbbind-2007-trn-2-tst-2-de} and \ref{rescoring2:set-2-pdbbind-2012-trn-2-tst-2-de} plot this information for each of the four scoring functions trained and tested on docked poses of the two benchmarks, respectively. Strikingly, the four scoring functions are particularly robust to pose generation error, with reasonably accurate prediction still being obtained in poses with RMSDs of almost 15. The Rp and Rs values stated at the top of these plots quantify how little the pose generation error generally correlates with the binding affinity prediction error, at least when using these scoring functions. This is likely to be connected to uncertainty associated to relating a static crystal structure of the complex with its measured binding affinity which is the outcome of the dynamic process of binding, as discussed in \cite{1370}. To the best of our knowledge, these behaviour has not been communicated yet for classical scoring functions, which is very surprising given that these have been around for more than 30 years. On the other hand, it is noteworthy that, while the binding affinities of some complexes are very well predicted (pKd error close to 0), some others have errors of more than 7 pKd units (see the topleft plots for Vina).
 
-Figures \ref{rescoring2:set-1-pdbbind-2007-trn-2-tst-2-de} and \ref{rescoring2:set-2-pdbbind-2012-trn-2-tst-2-de} plot this information for each of the four scoring functions trained and tested on docked poses. Strikingly, the four scoring functions are particularly robust to pose generation error, with accurate prediction still being obtained in poses with RMSDs of almost 15. The Rp and Rs stated at the top of these plots quantifies how little the RMSD of the complex generally influences binding affinity prediction, at least when using these scoring functions. This is likely to be connected to uncertainty associated to relating a static crystal structure of the complex with its measured pKd which is the outcome of the dynamic process of binding, as discussed in \cite{1370}. To the best of our knowledge, these behaviour has not been communicated yet for classical SFs, which is very surprising given that these have been around for more than 30 years. On the other hand, it is noteworthy that, while some complexes are very well predicted (pKd error is close to 0), some other have errors of more than 7 orders of magnitude (see the topleft plots for Vina). However, the performance over all the test complexes remains high (see Figure 3). %[by the way was was the role of e\_intra features? Compared to set 1 or results from LNBI-1 only small improvement, right?, state with which SFs are we using here e\_intra features]
-
-\subsection*{Results from other schemes}
+\subsection*{Using multiple docked poses for training does not improve performance}
 
 Besides using just 
 [Talk about schemes 3, 4, 5, 6] Until now using one docking pose per molecule, multi-pose schemes 5 and 6 did not improve, but it is worth communicating that they did not work.
@@ -538,13 +534,13 @@ This work has been carried out thanks to the support of the A*MIDEX grant (n$^{\
 
 \begin{figure}[h]
 %\includegraphics[natwidth=720,natheight=720,width=0.98\linewidth]{../rescoring2/set-1-pdbbind-2007-trn-2-tst-2-de.pdf}
-\caption{\csentence{RMSD from redocking the 195 test set complexes in the PDBbind v2007 benchmark.} Model 1 is AutoDock Vina, model 2 is MLR::Vina, model 3 is RF::Vina, and model 4 is RF::VinaElem. The four models were trained on docked poses and tested on docked poses. The y axis shows the absolute error in predicting binding affinity in pKd or pKi units for each complex.}
+\caption{\csentence{Correlation plots of predicted binding affinity absolute errors achieved by the four models trained on docked poses and tested on docked poses of the PDBbind v2007 benchmark against the RMSD values from redocking the 195 test set complexes by Vina.} Model 1 is AutoDock Vina, model 2 is MLR::Vina, model 3 is RF::Vina, and model 4 is RF::VinaElem.}
 \label{rescoring2:set-1-pdbbind-2007-trn-2-tst-2-de}
 \end{figure}
 
 \begin{figure}[h]
 %\includegraphics[natwidth=720,natheight=720,width=0.98\linewidth]{../rescoring2/set-2-pdbbind-2012-trn-2-tst-2-de.pdf}
-\caption{\csentence{RMSD from redocking the 382 test set complexes in the PDBbind v2013 blind benchmark.} Model 1 is AutoDock Vina, model 2 is MLR::Vina, model 3 is RF::Vina, and model 4 is RF::VinaElem. The four models were trained on docked poses and tested on docked poses. The y axis shows the absolute error in predicting binding affinity in pKd or pKi units for each complex.}
+\caption{\csentence{Correlation plots of predicted binding affinity absolute errors achieved by the four models trained on docked poses and tested on docked poses of the PDBbind v2013 blind benchmark against the RMSD values from redocking the 382 test set complexes by Vina.} Model 1 is AutoDock Vina, model 2 is MLR::Vina, model 3 is RF::Vina, and model 4 is RF::VinaElem.}
 \label{rescoring2:set-2-pdbbind-2012-trn-2-tst-2-de}
 \end{figure}
 
@@ -622,24 +618,26 @@ Model & Training & Test & RMSE & SD & Rp & Rs\\
 
 \section*{Additional Files}
 
-\subsection*{Additional file 1 --- set-1-pdbbind-2007-trn-1-tst-2-yp.pdf}
-Correlation plots of measured and predicted binding affinites by the four models trained on crystal poses and tested on docked poses of the PDBbind v2007 benchmark.
+\subsection*{Additional file 1 --- set-2-pdbbind-2012-trn-1-tst-1-yp.pdf}
+Correlation plots of measured and predicted binding affinities by the four models trained on crystal poses and tested on crystal poses of the PDBbind v2013 blind benchmark.
 
-\subsection*{Additional file 2 --- set-1-pdbbind-2007-trn-2-tst-2-yp.pdf}
-Correlation plots of measured and predicted binding affinites by the four models trained on docked poses and tested on docked poses of the PDBbind v2007 benchmark.
+\subsection*{Additional file 2 --- set-2-pdbbind-2012-trn-1-tst-2-yp.pdf}
+Correlation plots of measured and predicted binding affinities by the four models trained on crystal poses and tested on docked poses of the PDBbind v2013 blind benchmark.
 
-\subsection*{Additional file 3 --- set-2-pdbbind-2012-trn-1-tst-2-yp.pdf}
-Correlation plots of measured and predicted binding affinites by the four models trained on crystal poses and tested on docked poses of the PDBbind v2013 blind benchmark.
+\subsection*{Additional file 3 --- set-2-pdbbind-2012-trn-2-tst-2-yp.pdf}
+Correlation plots of measured and predicted binding affinities by the four models trained on docked poses and tested on docked poses of the PDBbind v2013 blind benchmark.
 
-\subsection*{Additional file 4 --- set-2-pdbbind-2012-trn-2-tst-2-yp.pdf}
-Correlation plots of measured and predicted binding affinites by the four models trained on docked poses and tested on docked poses of the PDBbind v2013 blind benchmark.
+\subsection*{Additional file 4 --- set-2-pdbbind-2012-trn-2-tst-1-yp.pdf}
+Correlation plots of measured and predicted binding affinities by the four models trained on docked poses and tested on crystal poses of the PDBbind v2013 blind benchmark.
 
-\subsection*{Additional file 5 --- set-2-trn-1-tst-2-boxplot.pdf}
-Box plots of performance of the four models trained on crystal poses and tested on docked poses of the PDBbind v2013 blind benchmark, with four incrementally-sized training sets.
+%\subsection*{Additional file X --- set-2-trn-1-tst-2-boxplot.pdf}
+%Box plots of performance of the four models trained on crystal poses and tested on docked poses of the PDBbind v2013 blind benchmark, with four incrementally-sized training sets.
 
-\subsection*{Additional file 6 --- set-1-pdbbind-2007-trn-1-tst-2-de.pdf}
+%\subsection*{Additional file X --- set-1-pdbbind-2007-trn-1-tst-2-de.pdf}
+%Correlation plots of predicted binding affinity absolute errors achieved by the four models trained on crystal poses and tested on docked poses of the PDBbind v2007 benchmark against the RMSD values from redocking the 195 test set complexes by Vina.
 
-\subsection*{Additional file 7 --- set-2-pdbbind-2012-trn-1-tst-2-de.pdf}
+%\subsection*{Additional file X --- set-2-pdbbind-2012-trn-1-tst-2-de.pdf}
+%Correlation plots of predicted binding affinity absolute errors achieved by the four models trained on crystal poses and tested on docked poses of the PDBbind v2013 blind benchmark against the RMSD values from redocking the 382 test set complexes by Vina.
 
 \end{backmatter}
 \end{document}
