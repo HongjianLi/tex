@@ -208,7 +208,7 @@ Pose generation error is usually quantified as the difference between the geomet
 Against commonly-held views, we have found that pose generation error has generally a small impact on the accuracy of binding affinity prediction. This is also true for large pose generation errors and it is not only observed with machine-learning scoring functions, but also with classical scoring functions such as AutoDock Vina. Furthermore, we propose a procedure to correct a substantial part of this error which consists of calibrating the scoring functions with re-docked, rather than co-crystallised, poses. In this way, the relationship between Vina-generated protein-ligand poses and their binding affinities is directly learned. As a result, test set performance after this error-correcting procedure is much closer to that of predicting the binding affinity in the absence of pose generation error (i.e. on crystal structures). We evaluated several strategies, obtaining better results for those using a single docked pose per ligand than those using multiple docked poses per ligand.
 
 \parttitle{Conclusions}
-Often, binding affinity prediction is typically carried out on the docked pose of a known binder rather than its co-crystallised pose. Our results suggest than pose generation error is in general far less damaging for binding affinity prediction than it is believed. Another contribution of our study is the proposal of a procedure that largely corrects for this error. The resulting machine-learning scoring function is freely available at http://istar.cse.cuhk.edu.hk/rf-score-4.tgz and http://crcm.marseille.inserm.fr/fileadmin/rf-score-4.tgz.
+Often, binding affinity prediction is typically carried out on the docked pose of a known binder rather than its co-crystallised pose. Our results suggest than pose generation error is in general far less damaging for binding affinity prediction than it is believed. Another contribution of our study is the proposal of a procedure that largely corrects this error. The resulting machine-learning scoring function is freely available at http://istar.cse.cuhk.edu.hk/rf-score-4.tgz and http://crcm.marseille.inserm.fr/fileadmin/rf-score-4.tgz.
 
 \end{abstract}
 
@@ -445,7 +445,7 @@ Meanwhile, we studied the effect of using docked pose ensemble of a molecule, in
 
 Another contribution of this study is the release of free software implementing RF::VinaElem trained on docked poses, named RF-Score-v4, so that it can be directly used by the large number of Vina users (poses generated from other docking programs can also be re-scored by our software once these are converted to AutoDock's pdbqt format). With this purpose, we have trained the best of RF-Score-v4 on the most comprehensive set of high-quality complexes (the 3441 complexes from the PDBbind v2014 refined set) and implemented it as easy-to-use software that directly re-scores Vina-generated poses. See the abstract for availability and the README file therein for operating instructions.
 
-Last but not the least, although we only used RF in this study as a proof of concept, we believe our conclusions can be applicable to other machine-learning scoring functions, which could possibly achieve even better results.
+Last but not least, although we only used RF in this study as a proof of concept, we believe our conclusions can be applicable to other machine-learning scoring functions, which could possibly achieve even better results.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%                                          %%
