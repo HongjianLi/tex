@@ -8,6 +8,7 @@
 *.toc
 *.out
 *.dvi
+*.idx
 *.ps
 *.html
 *.png
