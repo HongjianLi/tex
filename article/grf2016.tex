@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{times}
+\usepackage[compact]{titlesec}
 \usepackage[numbers,sort&compress]{natbib}
 \linespread{1.0}
 
@@ -8,21 +9,21 @@
 
 \section*{Background of Research}
 
-The stages of modern drug discovery typically include target identification, hit identification, lead optimization and clinical trials. A biological target is usually a protein that can potentially be modulated by a molecule to produce beneficial effects. Hits are compounds that show activity at a predetermined level against a target. Leads are optimized hits that exhibit strong potency and physicochemical characteristics. Successful candidate leads are to be submitted to the health authorities to get permission to conduct clinical trials on animals and humans.
+The stages of modern drug discovery typically include target identification, hit identification, lead optimization and clinical trials. A biological target is usually a protein that can potentially be modulated by a molecule. Hits are compounds that show activity at a predetermined level against a target. Leads are optimized hits that exhibit strong potency and physicochemical characteristics. Candidate leads are to be submitted to the health authorities to get permission to conduct clinical trials on animals and humans.
 
-Computer-aided drug discovery (CADD) has now been widely recognized as a cost- and time-efficient approach alternative to purely biochemical means. Robust and reliable computational tools and methods are indeed highly demanded by the industry in order to automate the early phases of modern drug discovery, and they have been thriving over the past decade.
+Computer-aided drug discovery (CADD) has now been recognized as a cost- and time-efficient approach alternative to purely biochemical means. Robust and reliable computational tools and methods are indeed highly demanded by the industry in order to automate the early phases of modern drug discovery, and they have been thriving over the past decade.
 
-From a practical view, we observe that most CADD tools are either commercial, proprietary, not portable, or difficult to use and update. This places a great obstacle on users, and hinders the progression of new drug discovery. Often, these tools are evaluated merely on retrospective benchmarks. Their performance in prospective applications remains unknown in many cases. Some tools are declared dead upon their initial release due to zero maintenance afterwards.
+From a practical view, we observe that most CADD tools are either commercial, proprietary, not portable, or difficult to use and update. This imposes a great obstacle on users, and hinders the progression of new drug discovery. Often, these tools are evaluated merely on retrospective benchmarks. Their performance in prospective applications remains unknown in many cases. Some tools are declared dead upon their initial release due to zero maintenance afterwards.
 
-Therefore in the past five years, we have been constructing a next-generation CADD toolset, which encapsulates several modules: 1) idock, a high-throughput molecular docking program, 2) istar, a web platform for large-scale chemoinformatics, 3) iview, an interactive WebGL visualizer, 4) RF-Score versions 3 and 4, accurate scoring functions for predicting intermolecular binding affinity, 5) iSyn, an automatic drug design tool, and 6) USR@istar, a 3D molecular shape- and pharmacophore-matching web server. It is important to highlight that our tools are all free and open source, and well maintained and recognized. Thus far, our web server has served \textgreater48,000 page views by \textgreater7000 users from \textgreater90 countries worldwide.
+Therefore in the past five years, we have been constructing a next-generation CADD toolset, which encapsulates several modules: 1) idock, a high-throughput molecular docking program, 2) istar, a web platform for large-scale chemoinformatics, 3) iview, an interactive WebGL visualizer, 4) RF-Score versions 3 and 4, accurate scoring functions for predicting intermolecular binding affinity, 5) iSyn, an automatic drug design tool, and 6) USR@istar, a 3D molecular shape- and pharmacophore-matching web server. It is important to highlight that our tools are all free and open source, and well maintained and recognized. Thus far, our web server at http://istar.cse.cuhk.edu.hk has served \textgreater48,000 page views by \textgreater7000 users from \textgreater90 countries worldwide.
 
-Meanwhile, we have also conducted empirical research. We have found the limiting factor of predictive performance of classical scoring function, and shown that substituting multiple linear regression by machine-learning techniques as well as incorporating low-quality structural and interaction data can substantially increase the accuracy of binding affinity prediction.
+Meanwhile, we have also conducted empirical research. We have found the limiting factor of predictive performance of classical scoring functions, and shown that substituting multiple linear regression by machine-learning algorithms as well as incorporating low-quality structural and interaction data can substantially increase the accuracy of binding affinity prediction.
 
-In addition to tool development, we have also collected and curated several drug databases, which are essential data sources for inputting to our tools. On one hand, we collected a huge database of more than 23 million compounds in 3D format, together with annotations of their molecular properties. On the other hand, we manually curated several catalogs of approved drugs, resulting in an unified collection of clinically approved drugs, not only in US, but also in Europe, Canada and Japan, together with purchasing information and vendors available.
+In addition to tool development, we have also collected and curated several drug databases, which are essential data sources for inputting to our tools. On one hand, we collected a huge database of more than 23 million compounds in 3D format, together with annotations of their molecular properties. On the other hand, we manually curated several catalogs of approved drugs, resulting in a unified collection of clinically approved drugs, not only in US, but also in Europe, Canada and Japan, together with purchasing information available.
 
-Most importantly, collaborating with a clinical biology team, we have prospectively utilized our toolset and successfully repurposed four approved drugs that exhibited submicromolar inhibitory effects to hepatocellular carcinoma, both \textit{in vitro} and \textit{in vivo}. These newly identified medications of marketed drugs, which have a history of safe human use, may present an immediately-applicable clinical therapy for the treatment of liver cancer, hopefully saving millions of lives. These inspiring results have thus vigorously demonstrated the validity and utility of our toolset. Furthermore, we have filed a patent application for one of the four drugs.
+Most importantly, collaborating with a clinical biology team, we have prospectively utilized our toolset and successfully repurposed four approved drugs that exhibited submicromolar inhibitory effects to hepatocellular carcinoma, both \textit{in vitro} and \textit{in vivo}. These newly identified medications of marketed drugs, which have a history of safe human use, may present an immediately-applicable clinical therapy for the treatment of liver cancer, hopefully saving millions of lives. These inspiring results have thus vigorously demonstrated the validity and utility of our toolset. For one of the four drugs, we have filed a patent application in China (application ID: 201510501028.8).
 
-In the following subsections, we outline the works done by others and their deficiencies, followed by the works done by us and their strengths, categorized by sub-areas of CADD.
+In the following subsections, we outline the works done by others and their deficiencies, followed by the works done by us and their strengths, which are categorized by sub-areas of CADD.
 
 \subsection*{Molecular docking and scoring}
 
@@ -40,7 +41,7 @@ However, Vina has to parse the input protein structure and create energy grid ma
 
 In 2011, we developed a new docking tool called idock \cite{1153}, which substantially revises the numerical approximation model and enhances the fundamental implementation of various components with modern C++11 tricks, such as multithreading. Compared with Vina, our idock obtained a speedup of 3.3x in terms of CPU time and a speedup of 7.5x in terms of elapsed time on average, making it particularly suitable for carrying out large-scale virtual screening.
 
-\subsection*{Web server and data source}
+\subsection*{Web server and databases}
 
 Standalone docking tools are usually for a small portion of users only, as they require intensive settings. Medicinal chemists generally seek for web servers that are easy to use. One obvious advantage of web servers over standalone tools are the transparent handling of internal logics.
 
@@ -48,13 +49,13 @@ Standalone docking tools are usually for a small portion of users only, as they 
 
 A few online docking platforms exist. DOCK Blaster \cite{557} investigates the feasibility of full automation of protein-ligand docking. It utilizes DOCK \cite{1222} as the docking engine and ZINC \cite{532,1178} as the ligand database. iScreen \cite{899} is a compacted web server for TCM (Traditional Chinese Medicine) docking and followed by customized \textit{de novo} drug design. It utilizes PLANTS \cite{610,607,779} as the docking engine and TCM@Taiwan \cite{528} as the ligand database.
 
-Nevertheless, these platforms neither support property-based ligand selection, nor be able to monitor job progress in real time. They also lack post-docking analysis, a hurdle that prevents users from studying and understanding the binding mode of candidate compounds.
+Nevertheless, these platforms neither support property-based ligand selection, nor are able to monitor job progress in real time. They also lack post-docking analysis, a hurdle that prevents users from studying and understanding the binding mode of candidate compounds.
 
 \subsubsection*{Works done by us}
 
 In 2012, we designed a modern web platform called istar \cite{1362}, which is freely available at http://istar.cse.cuhk.edu.hk. We believe istar is a remarkable improvement to existing web servers because it hides implementation details of data preparation, format conversion, docking, analysis and visualization, and thus provides the whole set of functionalities as an automatic pipeline, which considerably relaxes the requirements on users' knowledge and skills.
 
-As a side product, we collected a huge database of more than 23 million small-molecule compounds, covering a large space of chemical diversity. This is thus far the largest open source web server ever available for performing structure-based virtual screening. To ensure smooth operations of istar, we invested HK\$4M in the underlying computing infrastructure.
+As a side product, we collected a huge database of more than 23 million small-molecule compounds, covering a large space of chemical diversity. This is thus far the largest open source web server ever available for performing structure-based virtual screening. To ensure smooth operations of istar, we utilized the departmental HK\$4M-worth supercomputing infrastructure equipped with 736 CPU cores and 79,872 GPU cores.
 
 \subsection*{Molecular visualization}
 
@@ -70,7 +71,7 @@ However, none of these web visualizers are tailor-made for virtual screening. Mo
 
 \subsubsection*{Works done by us}
 
-In 2014, we developed an interactive WebGL visualizer called iview \cite{1366}, permitting easy accessibility and platform independence. It exploits hardware rendering, and supports macromolecular surface representations as well as special effects in virtual reality settings \cite{1265}. The unique feature that distinguishes iview from other visualizers are its inherent support for docking input preparation and result analysis with detection of binding interactions. We have seamlessly integrated iview into our istar platform, freely available at http://istar.cse.cuhk.edu.hk/iview.
+In 2014, we developed an interactive WebGL visualizer called iview \cite{1366}, permitting easy accessibility and platform independence. It exploits hardware rendering, and supports macromolecular surface representations as well as special effects in virtual reality settings \cite{1265}. The unique feature that distinguishes iview from other visualizers is its inherent support for docking input preparation and result analysis with detection of binding interactions. We have seamlessly integrated iview into our istar platform, freely available at http://istar.cse.cuhk.edu.hk/iview.
 
 \subsection*{Binding affinity prediction}
 
@@ -78,72 +79,54 @@ Docking consists of two main operations: predicting the conformation of a ligand
 
 \subsubsection*{Works done by others}
 
-Classical scoring functions, e.g. Cyscore \cite{1372}, are defined by the assumption of a fixed functional form to relate between the numerical features that characterize the protein-ligand complex and its predicted binding affinity. They often employ standard multivariate linear regression (MLR) on experimental data to calibrate the coefficients in a weighted sum of physically meaningful terms as an estimation of binding affinity. Recent years have seen a growing number of new developments of machine-learning scoring functions, with RF-Score \cite{564} being the first that introduced a large improvement over classical approaches.
+Classical scoring functions, e.g. Cyscore \cite{1372}, are defined by the assumption of a fixed functional form to relate the predicted binding affinity to the numerical features that characterize the protein-ligand complex. They often employ standard multivariate linear regression (MLR) on experimental data to calibrate the coefficients in a weighted sum of physically meaningful terms as an estimation of binding affinity. Recent years have seen a growing number of new developments of machine-learning scoring functions, with RF-Score \cite{564} being the first that introduced a large improvement over classical approaches.
 
 \subsubsection*{Works done by us}
 
-We first investigated under what circumstances would machine-learning scoring functions outperform classical ones \cite{1432}, and found that this is the case when there are sufficient numberical features and training samples. Based on this finding, we further improved RF-Score by incorporating six additional features from Vina \cite{595} and by expanding the training set to all available structures in the PDBbind refined set \cite{1633}. This led to the release of RF-Score-v3 \cite{1647}.
+First, we investigated under what circumstances machine-learning scoring functions would outperform classical ones \cite{1432}, and found that this is the case when there are sufficient numerical features and training samples. Based on this finding, we improved RF-Score by incorporating six additional features derived from Vina \cite{595} and by expanding the training set to all available structures in the refined set of PDBbind \cite{1633}. This led to the release of our RF-Score-v3 \cite{1647}.
 
-To improve the predictive accuracy of binding affinity, we exploited machine learning techniques from multiple perspectives, and resulted in different but related publications [6-13]. Our RF-Score-v3 tool [6,8,11] substantially increases the predictive accuracy of binding affinity of crystal structures. Moreover, our RF-Score-v4 tool [7,9] employs our proposed novel procedure and corrects a substantial part of the impact of pose generation error on binding affinity prediction. Both tools obtain the best performance on their respective benchmarks. As for our other studies, [10] suggests possible ways to improve existing scoring functions, [12] reveals for the first time that training with low-quality structural and interaction data can still improve performance, and [13] reviews the use of random forest in this area.
+Next, we studied the impact of docking pose generation error on the accuracy of machine-learning scoring functions \cite{1434}, and proposed a procedure to correct a substantial part of this error which consists of calibrating the scoring functions with re-docked, rather than co-crystallised, poses. As a result, test set performance after this error-correcting procedure is much closer to that of predicting the binding affinity in the absence of pose generation error. This led to the release of our RF-Score-v4.
 
-The impact of docked pose generation error on the accuracy of machine-learning scoring functions \cite{1434}
-Low-Quality Structural and Interaction Data Improves Binding Affinity Prediction via Random Forest \cite{1663}
+Last but not least, we demonstrated for the first time that training with low-quality structural and interaction data can still improve predictive performance \cite{1663}, contrary to the widely-held belief that additional performance can only be gained from high-quality data.
 
-\subsection*{Molecular drug design}
+\subsection*{Real-world applications of our toolset in anticancer drug repurposing}
 
-\subsubsection*{Works done by others}
-
-
-\subsubsection*{Works done by us}
-
-iSyn \cite{1409,1387}
-
-To synthesize novel compounds and therefore explore a much larger chemical space, we adopted click chemistry rules and developed a fragment-based drug design tool called iSyn [14,15]. It features an evolutionary algorithm that automatically designs new ligands with drug-like properties and synthetic feasibility from molecular fragments. iSyn interfaces with our idock [2], iview [4] and RF-Score [11] to provide additional capability and functionality.
-
-\subsection*{Shape- and pharmacophore-matching}
-
-This process is known as ligand-based virtual screening (LBVS).
-
-\subsubsection*{Works done by others}
-
-
-\subsubsection*{Works done by us}
-
-To find geometrically similar compounds and therefore jump out of the “patented chemical space” by others, we enhanced the original ultrafast shape recognition algorithms (USR [16] and USRCAT [17]) and encapsulated them to istar [3]. Unlike idock [2], our USR tool does not require the availability of protein structure, hence remarkably extending the applicability domain. By preloading the calculated features and exploiting Intel’s latest AVX-256 SIMD intrinsics, our USR tool is able to search the entire database of as many as 94 million conformers in just two seconds, four orders of magnitude faster than another tool ROCS.
-
-\subsection*{Real world applications}
-
-
-\subsubsection*{Works done by others}
-
-
-\subsubsection*{Works done by us}
-
-adapalene
-fluspirilene \cite{1606}
-
-The prospective applications of our toolset have led to the important discovery of two approved drugs, adapalene [19] and fluspirilene [20], as immediately-applicable clinical therapy for the treatment of liver cancer [19] and colon cancer [20], respectively. Furthermore, we are now filing a patent application for the third drug that we have identified by using our toolset (the name of this drug cannot be disclosed at the moment). 
-
-We realize that a pure toolset without actual applications in real life is no more than just a toolset. Indeed, we jointly worked on anti-cancer drug discovery together with a research team from Kunming Medical University. In this collaboration, we utilized our own toolset and successfully identified three approved drugs as potential inhibitors of cyclin-dependent kinases 2, 4, 6. Subsequent biological assays in vitro in various cell lines and in vivo in animal models by our research partner further established the roles of our identified drugs for the treatment of cancers. Our results for the first two drugs, adapalene [19] and fluspirilene [20], have been published, and we are now filing a patent for the third drug. Considering the fact that fluspirilene has a long history of safe human use, our discovery may present an immediately applicable clinical therapy for the treatment of hepatocellular carcinoma, one of the leading causes of cancer-related deaths worldwide.
-
-A new use of drug vanoxerine dihydrochloride. PRC patent application ID: 201510501028.8. Issued on 17 Aug 2015.
+We worked on anticancer drug repurposing jointly with a clinical biology team from Kunming Medical University (the Co-I's affiliation). In this collaboration, we utilized our toolset and successfully identified four approved drugs as potential inhibitors of cyclin-dependent kinases (CDK) 2/4/6, which have been long established as key factors regulating the cell cycle and hallmarks for cancers. Subsequent biological assays \textit{in vitro} in various cancer cell lines and \textit{in vivo} in nude mice further established their roles for the treatment of hepatocellular carcinoma. Our results have been published for the first two drugs \cite{1606}. Meanwhile, we have filed a patent in China for the third drug. The patent was issued on 17 Aug 2015 with an application ID of 201510501028.8. We believe our findings may present immediately-applicable clinical therapies for the treatment of liver cancer, one of the leading causes of cancer-related deaths worldwide.
 
 \section*{Research Plan and Methodology}
 
-In this project, we propose to unify and comprehend our toolset, with the ultimate goal to fully automate the early phases of modern drug discovery process, and use it to study and combat a vast variety of diseases beyond just cancers. Specifically, we plan to develop new tools 1) that can intelligently adjust a compound’s chemical components with knowledge from binding pockets to lead to stronger potency and selectivity against a protein, 2) that can predict the on- and off-targets of a compound based on its 3D shape similarity to other annotated compounds, 3) that can perform ultrahigh-throughput virtual screening of large-scale molecular databases. Practically we will apply our toolset to the discovery of novel inhibitors of colorectal, ovarian, prostate cancers, as well as influenza A, herpes, HBV viruses.
+In this project, we propose to unify and comprehend our toolset, with the ultimate goal to fully automate the early phases of modern drug discovery process, and use it to study and combat a vast variety of diseases beyond just cancers. Practically we will apply our toolset to the discovery of novel inhibitors of colorectal, ovarian, prostate cancers, as well as influenza A, herpes, HBV viruses.
 
 \section*{Data collection and curation}
 
+TCM
+Thai herbals
+South African products
 
-\section*{New tool development and benchmark}
+\subsection*{New tool development and benchmark}
+
+Specifically, we plan to develop new tools 1) that can intelligently adjust a compound’s chemical components with knowledge from binding pockets to lead to stronger potency and selectivity against a protein, 2) that can predict the on- and off-targets of a compound based on its 3D shape similarity to other annotated compounds, 3) that can perform ultrahigh-throughput virtual screening of large-scale molecular databases.
+
+\subsubsection*{GPU hardware acceleration}
 
 idock 3
 agrep \cite{1138}
 
-\section*{New target identification}
+\subsubsection*{Shape and pharmacophore matching}
 
+Molecular shape has been widely acknowledged as a key factor for biological activity and is thus regarded as a very important pattern for drug searching. Searching a molecular database for compounds that resemble the shape of a given query molecule, be it a known inhibitor of a target protein, a natural product, or even a patented compound, finds applications in ligand-based virtual screening (LBVS) \citep{1332,1380,1281,1504,1502,1615} and target fishing \citep{1528,1407,1408,1402}.
 
-\section*{Prospective applications}
+USR (Ultrafast Shape Recognition) \citep{1379} was the first non-superposition method for molecular shape comparison, and exhibited superior computational performance at least three orders of magnitude faster than previously existing alignment-based methods. Since then, there have been a few extensions \citep{1333,1436,1437,1334,1335,1337,1338,1331,1407,1408} to augment the original method, but only two of them \citep{1436,1437} have been made available as web servers that accompany compound databases for LBVS purposes. They both employ the UFSRAT \citep{1436} method for ligand similarity search.
+
+Nevertheless, as pointed out in \citep{1331}, UFSRAT is incapable of discriminating between long, chain-like molecules such as certain heteropeptides and long alkylchains because aromaticity is not considered as a pharmacophoric subset; besides, calculating the four centroids for each set of atoms individually is problematic because either the parameters cannot be calculated at all or the underlying distance distributions are not with respect to the overall shape of a molecule and not meaningful when some pharmacophoric features are rarer than others.
+
+We ported USR \citep{1379} and USRCAT \citep{1331} to our istar platform, and exploit Intel's AVX-256 SIMD intrinsics to accelerate similarity score computation. Unlike idock, our USR@istar does not require the availability of protein structure, hence remarkably expanding the applicability domain and allowing jumping out of the so-called ``patented chemical space". By preloading the calculated features, our implementation is able to search the entire database of as many as 94 million conformers of 23 million compounds in just two seconds.
+
+\subsection*{New target identification}
+
+CDK2,4,6, PI3K, EGFR, FGFR3
+
+\subsection*{Prospective applications}
 
 In summary, our toolset is the product of four years’ in-depth pragmatic research in the area of computer-aided drug discovery, and it keeps evolving. Its usefulness has been vigorously demonstrated, both retrospectively and prospectively. Most importantly, it can produce high-impact and patentable findings that could possibly save human lives.
 
