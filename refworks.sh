@@ -10,6 +10,7 @@ do
 	then
 		break
 	fi
+	sed -i 's/\r//g' $f
 	case ${f##*.} in
 	bib)
 		printf "\n%s{%s,\n" $(grep '@.*{' $f | cut -d{ -f1 | tr '[:upper:]' '[:lower:]') $id
@@ -49,7 +50,7 @@ do
 				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//' | head -c -1 | tr '\n' '=' | sed 's/=/ and /g')${suffix}"
 			elif [[ $bibfield == "pages" ]]
 			then
-				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//' | head -c -1 | tr '\n' '-')${suffix}"
+				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//' | awk '{if (length($0)) print $0}' | head -c -1 | tr '\n' '-')${suffix}"
 			else
 				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//')${suffix}"
 			fi
