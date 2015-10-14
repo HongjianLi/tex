@@ -17,7 +17,10 @@ do
 		do
 			prefix="\t${bibfield}\t=\t{"
 			regexp="${bibfield[@]}[[:space:]]*=[[:space:]]*"
-			if [[ $bibfield == "title" ]]
+			if [[ $bibfield == "author" ]]
+			then
+				printf "${prefix}$(grep -i "${regexp}" $f | cut -d{ -f2 | cut -d} -f1 | sed 's/ AND / and /g')${suffix}"
+			elif [[ $bibfield == "title" ]]
 			then
 				printf "${prefix}{$(grep -i "${regexp}" $f | cut -d{ -f2 | cut -d} -f1)}${suffix}"
 			else
