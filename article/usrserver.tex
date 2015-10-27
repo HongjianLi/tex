@@ -1,0 +1,41 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[compact]{titlesec}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{fancyhdr}
+\usepackage{authblk}
+
+\fancypagestyle{title}{
+  \fancyhead[C]{This website is free and open to all users and there is no login requirement.}
+}
+\title{USR@istar: a large-scale ligand-based virtual screening webserver using ultrafast shape recognition methods}
+\author[1]{Hongjian Li}
+\author[1]{Kwong-Sak Leung}
+\author[1]{Man-Hon Wong}
+\author[2]{Pedro J. Ballester}
+\affil[1]{Department of Computer Science and Engineering, Chinese University of Hong Kong.}
+\affil[ ]{\{hjli,ksleung,mhwong\}@cse.cuhk.edu.hk}
+\affil[2]{Cancer Research Center of Marseille, INSERM U1068; Institut Paoli-Calmettes; Aix-Marseille Universit\'{e}; CNRS UMR7258, Marseille, France.}
+\affil[ ]{pedro.ballester@inserm.fr}
+
+\begin{document}
+\date{}
+\maketitle
+\thispagestyle{title}
+\noindent Keywords: ligand-based virtual screening, ultrafast shape recognition, molecular visualization
+
+We present a brand new large-scale and ultrafast ligand-based virtual screening webserver named USR@istar, freely available at http://usr.marseille.inserm.fr. The significance is threefold: i) a huge database of 23,129,049 diverse small molecules with vendor information was collected from ZINC \cite{532,1178} and 93,903,333 low-energy conformers were generated for prospective virtual screening, ii) a highly optimized and multithreaded implementation of the alignment-free methods USR \cite{1379} and USRCAT \cite{1331} was developed to realize a ultrahigh screening throughput of 55 million 3D conformers per second, iii) an integration of the hardware-accelerated WebGL visualizer iview \cite{1366} to permit interactive visualization and interpretation of the results without the use of Flash nor Java plugins.
+
+The input to USR@istar is extraordinarily simple, which requires merely a file of query molecules in SDF format. A sample query file is provided in the home page. Upon clicking the submit button, the user will be redirected to a unique result page, which is only available to the particular user and refreshes job status in a user-friendly manner. In the server side, each query molecule will be compared against each of the 93M conformers, and their USR \cite{1379} and USRCAT \cite{1331} similarity scores will be calculated to rank the 23M molecules. The output is the top 100 hit molecules geometrically and pharmacophorically similar to each of the query molecules. These 3D hits are visualized in a WebGL canvas, allowing users to interactively translate, rotate, zoom in/out the structure and view the similarity scores, chemical properties and suppliers.
+
+The USR \cite{1379} and USRCAT \cite{1331} methods have been vigorously validated in other publications, both prospectively and retrospectively. USR \cite{1379} was applied to the discovery of inhibitors of arylamine NATs (N-acetyltransferases) \cite{1380}, DHQase2 (dehydroquinase type 2) \cite{1281}, PAD4 (protein arginine deiminase type 4) \cite{1504}, p53-MDM2 (murine double minute 2) \cite{1502}, and PRL-3 (phosphatase of regenerating liver) \cite{1615}. USRCAT \cite{1331} was shown to outperform USR in a retrospective virtual screening benchmark.
+
+The server has been up and running since May 2014. It will be maintained for at least five years.
+
+\linespread{0.5}
+\tiny
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
+
