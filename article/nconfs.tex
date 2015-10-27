@@ -1,0 +1,46 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\begin{document}
+
+Input ZINC molecules: 23,129,083
+
+\begin{table}[h!]
+\centering
+\begin{tabular}
+{rrrr|rrrr}
+\toprule
+ver & num\_confs & rmsThresh & seed & \#molecules & \#conformers & USRCAT size & SDF size\\
+0 &  20 & 2.5 & 72551 & 23,129,037 &    38,026,686 &  17G & 145G\\
+1 &  50 & 2.0 & 89757 & 23,129,049 &    93,903,333 &  42G & 367G\\
+2 & 100 & 1.5 & 35577 & 23,129,046 &   365,544,249 & 164G & 1.5T\\
+3 & 200 & 1.0 & 51105 & 23,129,049 & 1,737,652,473 & 777G & 6.8T\\
+\midrule
+\bottomrule
+\end{tabular}
+\end{table}
+
+\newpage
+\begin{figure}
+\includegraphics[natwidth=600px,natheight=600px]{/media/li/5c90da60-9f7e-49e4-a095-0b0a05ab318e/usr/v4/16_nconfs.pdf}
+\end{figure}
+
+\newpage
+\begin{figure}
+\includegraphics[natwidth=600px,natheight=600px]{/media/li/5c90da60-9f7e-49e4-a095-0b0a05ab318e/usr/v1/16_nconfs.pdf}
+\end{figure}
+
+\newpage
+\begin{figure}
+\includegraphics[natwidth=600px,natheight=600px]{/media/li/5c90da60-9f7e-49e4-a095-0b0a05ab318e/usr/v2/16_nconfs.pdf}
+\end{figure}
+
+\newpage
+\begin{figure}
+\includegraphics[natwidth=600px,natheight=600px]{/media/li/5c90da60-9f7e-49e4-a095-0b0a05ab318e/usr/v3/16_nconfs.pdf}
+\end{figure}
+
+\end{document}
+
