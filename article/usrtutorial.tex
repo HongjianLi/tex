@@ -1,0 +1,50 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[compact]{titlesec}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{fancyhdr}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+\fancypagestyle{title}{
+  \fancyhead[C]{This website is free and open to all users and there is no login requirement.}
+}
+\title{USR-VS: a webserver for large-scale prospective virtual screening using ultrafast shape recognition techniques}
+\author[1]{Hongjian Li}
+\author[1]{Kwong-Sak Leung}
+\author[1]{Man-Hon Wong}
+\author[2]{Pedro J. Ballester}
+\affil[1]{Department of Computer Science and Engineering, Chinese University of Hong Kong.}
+\affil[ ]{\{hjli,ksleung,mhwong\}@cse.cuhk.edu.hk}
+\affil[2]{Cancer Research Center of Marseille, INSERM U1068; Institut Paoli-Calmettes; Aix-Marseille Universit\'{e}; CNRS UMR7258, Marseille, France.}
+\affil[ ]{pedro.ballester@inserm.fr}
+
+\begin{document}
+\maketitle
+\thispagestyle{title}
+
+USR-VS, freely available at \url{http://usr.marseille.inserm.fr}, is the first webserver for large-scale prospective virtual screening using USR \cite{1379} and USRCAT \cite{1331}, two validated ligand-based 3D methods.
+
+To submit a new job, the user must provide a query molecule file in SDF format (file size within 10KB), choose either USR or USRCAT as the ranking score (USR by default), and press the Submit button. These three steps are illustrated in Figure \ref{index}. Regardless of the ranking score, both USR and USRCAT similarities will be calculated.
+
+\begin{figure}
+\includegraphics[natwidth=1906,natheight=1270,width=1.4\textwidth]{../usr/index.png}
+\caption{Submitting a new job in three steps indicated in red color.}
+\label{index}
+\end{figure}
+
+Upon job submission, the user will be redirected to the result webpage (Figure \ref{iview}) with a unique URL that is only available to the user. Users are suggested to bookmark the result webpage if they want to browse the result at a later time. In the result webpage, a table shows a link to the input file for download, and keeps refreshing to show the latest status of the job, including the time of its submission, execution and completion, as well as the actual screening speed.
+
+\begin{figure}
+\includegraphics[natwidth=1906,natheight=1415,width=1.4\textwidth]{../usr/iview.png}
+\caption{Visualizing the query and hit molecules in iview.}
+\label{iview}
+\end{figure}
+
+Upon job completion, the 100 most similar molecules to the query molecule and their similarity scores are written to two output files for download. By using the WebGL visualizer iview \cite{1366}, the query molecule is shown in the left canvas, and the hit molecules are shown in the right canvas. Users can switch among different hit molecules by pressing the button below the right canvas, and interactively translate, rotate and zoom in/out the 3D structure of the selected hit molecule.
+
+\bibliographystyle{unsrtnat}
+\bibliography{../refworks}
+
+\end{document}
