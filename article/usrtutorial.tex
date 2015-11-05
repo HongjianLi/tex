@@ -26,15 +26,15 @@
 
 USR-VS, freely available at \url{http://usr.marseille.inserm.fr}, is the first webserver for large-scale prospective virtual screening using USR \cite{1379} and USRCAT \cite{1331}, two validated ligand-based 3D methods.
 
-To submit a new job, the user must provide a single-molecule query file in SDF format (file size within 10KB), choose either USR or USRCAT as the ranking score (USR by default), and press the submit button. These three steps are illustrated in Figure \ref{index}. Regardless of the ranking score, both USR and USRCAT similarities will be calculated.
+To run a virtual screen, the user must provide a single-molecule query file in SDF format (file size within 10KB), choose either USR or USRCAT as the ranking score (USR by default), and press the submit button. These three steps are illustrated in Figure \ref{index}. Regardless of the ranking score, both USR and USRCAT similarities will be calculated.
 
 \begin{figure}
 \includegraphics[natwidth=1906,natheight=1270,width=1.4\textwidth]{../usr/index.png}
-\caption{Submitting a new job in three steps indicated in red color.}
+\caption{Run a virtual screen in three steps indicated in blue color.}
 \label{index}
 \end{figure}
 
-Upon job submission, the user will be redirected to the result webpage (Figure \ref{iview}) with a unique URL that is only available to the user. Users are suggested to bookmark the result webpage if they want to browse the result at a later time. In the result webpage, a table shows a link to the input file for download, and keeps refreshing to show the latest status of the job, including the time of its submission, execution and completion, as well as the screening speed, which is calculated from dividing the 94 million conformers by the time taken to compute similarity scores, sort the scores and write the top hits.
+When the virtual screen is submitted, the user will be redirected to the result webpage (Figure \ref{iview}) with a unique URL that is only available to the user. Users are suggested to bookmark the result webpage if they want to browse the result at a later time. In the result webpage, a table shows a link to the input file for download, and keeps refreshing to show the latest status of the virtual screen, including the time of its submission, execution and completion, as well as the screening speed, which is calculated from dividing the 94 million conformers by the time taken to compute similarity scores, sort the scores and write the top hits.
 
 \begin{figure}
 \includegraphics[natwidth=1906,natheight=1415,width=1.4\textwidth]{../usr/iview.png}
@@ -42,7 +42,7 @@ Upon job submission, the user will be redirected to the result webpage (Figure \
 \label{iview}
 \end{figure}
 
-Upon job completion, the 100 most similar molecules to the query molecule and their similarity scores are written to two output files for download. By using the WebGL visualizer iview \cite{1366}, the query molecule is shown in the left canvas, and the hit molecules are shown in the right canvas. Users can switch among different hit molecules by pressing the button below the right canvas, and interactively translate, rotate and zoom in/out the 3D structure of the selected hit molecule. Furthermore, USR and USRCAT scores, chemical properties and different options to purchase the hit moecule are displayed. This visualization stage is intended to help the user decide which hits to purchase and how to purchase them to experimentally measure their activity against selected targets of the query molecule. These targets can be molecular (e.g. a protein of a known pathway) or non-molecular (a cancer celll line).
+When the virtual screen is completed, the 100 most similar molecules to the query molecule and their similarity scores are written to two output files for download. By using the WebGL visualizer iview \cite{1366}, the query molecule is shown in the left canvas, and the hit molecules are shown in the right canvas. Users can switch among different hit molecules by pressing the button below the right canvas, and interactively translate, rotate and zoom in/out the 3D structure of the selected hit molecule. Furthermore, USR and USRCAT scores, chemical properties and different options to purchase the hit moecule are displayed. This visualization stage is intended to help the user decide which hits to purchase and how to purchase them to experimentally measure their activity against selected targets of the query molecule. These targets can be molecular (e.g. a protein of a known pathway) or non-molecular (a cancer celll line).
 
 \bibliographystyle{unsrtnat}
 \bibliography{../refworks}
