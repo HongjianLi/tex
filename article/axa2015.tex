@@ -1,0 +1,40 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[margin=0.6in]{geometry}
+\usepackage[compact]{titlesec}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{authblk}
+\usepackage{graphicx}
+
+\title{Predicting the whole-cell activity of post-phase I drugs on PDAC cancer cell lines using phenotypic-based repurposing and machine learning}
+\author[ ]{Hongjian Li}
+\affil[ ]{Department of Computer Science and Engineering, Chinese University of Hong Kong}
+\affil[ ]{hjli@cse.cuhk.edu.hk}
+
+\begin{document}
+\date{}
+\maketitle
+
+Pancreatic ductal adenocarcinoma (PDAC) is the fifth most common cause of cancer-related death worldwide and constitutes the most lethal of the common malignancies. Even with available treatments, PDAC has a particularly poor prognosis with very few patients surviving more than one year after diagnosis and an extremely low five-year survival rate. This situation emphasizes the urgent need for improved PDAC treatments and this proposed research project aims at advancing towards this ambitious goal by searching for innovative drugs for PDAC using phenotypic-based drug repurposing and machine learning techniques.
+
+Traditional anticancer drug discovery methods typically investigate whether a drug candidate binds to a molecular target validated for the considered disease, using either experimental or virtual screening technologies. These methods have the drawback that a molecule with strong affinity for the target may have poor whole-cell activity due to target co-location, membrane permeability or polypharmacology issues. An alternative approach consists in directly predicting the whole-cell activity of drug candidates on the considered cancer subtype. The major merit of this phenotypic screening approach is the tremendous opportunity that there is to find novelty in targets and mechanisms. However, little work using this phenotypic approach has been carried out thus far and the screening library has been limited to FDA-approved drugs only.
+
+Recently, Garnett et al. \cite{1683} assembled 639 human tumour cell lines (including 17 PDAC cell lines), and experimentally measured their intrinsic sensitivity against 138 anticancer drugs \textit{in vitro}. Each cell line was profiled to determine the presence of various genetic abnormalities, including point mutations, gene amplifications, gene deletions, microsatellite instability, frequently occurring DNA rearrangements and changes in gene expression. The resulting data were later made freely available by the Genomics of Drug Sensitivity in Cancer (GDSC) project \cite{1684}, whose latest version v5.0 provides 79,903 IC50 values of 140 anticancer drugs against 1217 cancer cell lines, permiting us to build \textit{in silico} models capable of predicting the whole-cell activity of the drug molecule against PDAC cell lines.
+
+Figure \ref{IDCS} sketches the GDSC data and our proposed research, which is novel and particularly promising from the following perspectives. First, we will use advanced machine learning techniques to integrate both genomic features from cell lines and chemical properties from drugs, constituting an innovative multi-disciplinary approach with respect to QSAR models that only consider the chemical properties of the molecules. This approach not only combines two complementary streams of information, but also allows the \textit{in silico} pharmacogenomics model to be trained with much larger amount of data, which is often a key factor to improve predictive performance. We will incorporate forthcoming data, new features and modelling approaches, which are thus likely to increase performance further. Moreover, from this model, we will be able to mine intrinsic associations between drugs and genomic markers as well as between drugs and molecular targets. Later we will also extend the model from predicting cancer cell sensitivity against a drug to a combination of two drugs, allowing estimating synergistic efficacy computationally.
+
+Second, we will employ a drug repurposing strategy, as finding new uses for existing drugs is much cheaper, faster and has lower attrition rates than discovering a new drug. Notably, we will expand the drug dataset from approved drugs to all experimental drugs that have passed phase I clinical trials, as the latter contains four times more drug molecules. This approach has the advantage that all the toxicity-related requirements in the preclinical and clinical stages have already been met by the post-phase I drug molecules. Therefore, if the predicted whole-cell activity is experimentally confirmed, the repositioned clinically-safe drug should follow a faster and cheaper route to phase II clinical trials for the new indication. Specifically, we will concentrate on PDAC and perform large-scale predictions prospectively on PDAC cell lines and thereafter on \textit{in vitro}, \textit{ex vivo} and \textit{in vivo} models, which we excel at.
+
+Lastly, we are simultaneously developing a web server for predicting single-protein targets of small molecules. With it, we will be able to elucidate the Mechanism of Action (MoA) of a drug, which is a puzzle whose pieces are the targets that the molecule is hitting (i.e. the drug’s polypharmacology).
+
+\begin{figure}[t!]
+\includegraphics[natwidth=960,natheight=504,width=1.4\textwidth]{../axa2015/IDCS.png}
+\caption{Predicting cell sensitivity to drugs via machine learning trained on genomic, chemical and activity data.}
+\label{IDCS}
+\end{figure}
+
+\linespread{0.5}
+\bibliographystyle{abbrv}
+\bibliography{../refworks}
+
+\end{document}
+
