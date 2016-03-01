@@ -1,0 +1,87 @@
+\documentclass{bioinfo}
+\copyrightyear{2016} \pubyear{2016}
+
+\access{Advance Access Publication Date: Day Month Year}
+\appnotes{Manuscript Category}
+
+\begin{document}
+\firstpage{1}
+
+\subtitle{Databases and ontologies}
+
+\title[Collection of approved drugs worldwide]{ADW: a unified and curated colleciton of clinically approved drugs worldwide for repurposing and virtual screening}
+\author[Hongjian Li \textit{et~al}.]{Hongjian Li\,$^{\text{\sfb 1,2}*}$, Yee Leung\,$^{\text{\sfb 1,2}}$, Kwong-Sak Leung\,$^{\text{\sfb 2,1}}$ and Man-Hon Wong\,$^{\text{\sfb 2,1}}$}
+\address{
+$^{\text{\sf 1}}$Institute of Future Cities, Chinese University of Hong Kong, Sha Tin, Hong Kong.\\
+$^{\text{\sf 2}}$Department of Computer Science and Engineering, Chinese University of Hong Kong, Sha Tin, Hong Kong.
+}
+
+\corresp{$^\ast$To whom correspondence should be addressed.}
+
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+\editor{Associate Editor: XXXXXXX}
+
+\abstract{\textbf{Motivation:} Identifying novel therapeutic medications for approved drugs, also known as repurposing or repositioning, represents an economically feasible strategy compared to developing new drugs. Although there have been compiled lists of approved drug for virtual screening purposes, they omit the drugs approved in countries other than the US, therefore the chance of discovering novelty is intrinsically limited.\\
+\textbf{Results:} We collected approved drugs worldwide (ADW) from multiple catalogs of the ZINC database. After careful curation and deduplication, we extracted 3,167 well characterized drugs with molecular structures, chemical properties, vendors and annotations. We also generated diverse 3D conformers for structural alignment or shape recognition. By conducting structure-based virtual screening of ADW followed by \textit{in vitro} and \textit{in vivo} validations, we have recently repurposed five marketed drugs as anticancer agents. To facilitate the use of ADW, we have also provided a web server for ligand-based virtual screening of ADW.\\
+\textbf{Availability:} ADW is freely available at http://istar.cse.cuhk.edu.hk/adw. Ligand-based virtual screening of ADW is freely available at http://istar.cse.cuhk.edu.hk/usr.\\
+\textbf{Contact:} \href{JackyLeeHongJian@Gmail.com}{JackyLeeHongJian@Gmail.com}\\
+\textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics} online.}
+
+\maketitle
+
+\section{Introduction}
+
+Approved drugs are often well studied and well annotated, representing an attractive starting point for drug discovery. Finding new therapeutic indications for already approved drugs is commonly referred to as repurposing or repositioning. The rationale is that a drug typically acts on more than one target and may exhibit previously unknown activities due to promiscuous off-target interactions explaining efficacy or side effects. This approach is substantially faster and cheaper with a lower attrition rate than discovering new drugs. To promote drug repurposing, in 2012 the National Institutes of Health (NIH) announced an initiative to bring academic scientists and eight of the world's largest pharmaceutical companies together to find new uses for shelved compounds \citep{1715}. Hence, a worldwide collection of small-molecule drugs approved for human use would be invaluable for systematic repositioning across human diseases, especially for rare and neglected diseases, which often require economically prohibitive amount of cost and time to develop a new chemical entity.
+
+There have been previous efforts at compiling drug lists for virtual screening purposes. For instance, e-Drug3D \citep{1125} is a database of 3D chemical structures of drugs that provides several collections of SD files of drugs and drug fragments. However, upon our examination, these collections have suffered from the intrinsic problem that they limited the scope of drug sources to those approved by the US FDA only, without considering drugs approved in other developed countries. Indeed, drugs are frequently approved by governmental agencies in other countries but not approved by FDA. Incorporating these drugs will constitute a larger and more diverse chemical space where a significantly higher degree of novelty can be explored.
+
+We report here the creation of a unified and curated set of clinically approved drugs worldwide, termed ADW. The database comprises 3,167 non-redundant drugs that have been approved for clinical use by US (FDA), UK (NHS), EU (EMA), Japanese (NHI), and Canadian (HC) authorities. It is freely available as an electronic resource amenable to high-throughput virtual screening and possibly fragment-based drug design.
+
+\begin{methods}
+\section{Methods}
+
+The raw data of ADW were retrieved from three catalogs of the ZINC database \citep{1178}, which are DrugBank-approved \citep{1594} of version 2014-03-19, FDA-approved drugs (via DSSTOX) of version 2012-07-25, and the NCGC Pharmaceutical Collection (NPC) \citep{1608} of version 2012-03-13. These constituted a set of 6,787 raw compound records. Then a three-step curation was applied. First, 223 compounds whose web page returned a HTTP 404 error code were removed, as some compounds deposited in ZINC at an early time were later tagged as depleted. Second, 1,691 compounds without a valid CAS registry number were removed, as CAS numbers, which are unique numerical identifiers assigned by Chemical Abstracts Service to every chemical substance described in the open scientific literature, are normally required to query for commercial availability of the compounds. Third, 1,706 compounds with a duplicate canonical SMILES string were removed, as these actually refer to different conformations of the same structure. Having applied these filtering criteria, we finally composed a healthy, useful and non-redundant set of 3,167 approved drugs worldwide.
+
+%The DrugBank database is a unique bioinformatics and cheminformatics resource that combines detailed drug data with comprehensive drug target information. The NPC is a comprehensive collection of approved and investigational drugs in multiple countries for high-throughput screening.
+
+In addition to the ID of the compounds, also downloaded from ZINC and included into ADW were their popular name, CAS numbers, 3D structures in ready-to-screen SDF and MOL2 formats, nine calculated chemical properties, SMILES string, vendors and annotations. To further broaden the applicability domain of ADW, the MOL2 structures were converted to PDBQT formats to enable the use of relevant virtual screening tools such as AutoDock Vina \citep{595}, idock \citep{1362}, and QuickVina \citep{1664}.
+
+%AutoDockTools4 \citep{596}
+
+To permit structural superimposition and shape recognition, 23,016 low-energy and diverse conformers were generated from the 3,167 SMILES strings using the latest version of RDKit (release 2015.09.2), which features a better algorithm named ETKDG \citep{1697} that combines the computationally efficient distance geometry approach with empirical knowledge in the form of experimental torsion-angle preferences mined from small-molecule crystallographic data.
+
+%conformer statistics, on average 7 conformers per molecule.
+
+For more details on the construction of ADW, please refer to http://istar.cse.cuhk.edu.hk/adw.
+
+\end{methods}
+
+\section{Applications}
+
+ADW was designed for the main objective of \textit{in silico} drug repositioning through various virtual screening methods. By performing ensemble docking of ADW followed by \textit{in vitro} cytotoxicity assays on cancer cell lines and \textit{in vivo} experiments on nude mice, we have recently repositioned two marketed drugs, adapalene \citep{1681} and fluspirilene \citep{1667}, as anticancer agents. Moreover, from ADW we have identified three other more potent compounds, which are not found in e-Drug3D \citep{1125} or DrugBank \citep{1594}. Once these repurposed compounds are put to and pass clinical trial phases II and III, they will become immediately applicable clinical therapies for the treatment of liver cancer. This prospective application example has vigorously demonstrated that much more novelty can be explored from ADW than from previously compiled drug databases, which are limited to FDA approved drugs only. For confidential reasons, we cannot disclose the name of these three compounds because we have recently submitted them for patent applications.
+
+To promote the use of ADW, we have also implemented a web server for ligand-based virtual screening of ADW, freely available at http://istar.cse.cuhk.edu.hk/usr. It is named USR@istar and powered by ultrafast shape recognition techniques \citep{1379,1331}. The input is a query molecule, be it an bioactive or a patented compound, and the output is 1000 hit molecules from ADW that are geometrically and pharmacophorically similar to the query molecule. The similarity between the query and the hit molecules can be easily inspected with the help of the WebGL visualizer iview \citep{1366}. Such screened hits, if desired, can be purchased for wet validations and subsequently put to phase II clinical trials, skipping preclinical tests as well as phase I trials.
+
+%Figure~1\vphantom{\ref{56d43554b48a7698034597b6}} shows that
+
+%\begin{figure}[!tpb]
+%%\centerline{\includegraphics{ZINC01493878.png}}
+%\caption{Screening ADW for geometrically similar compounds to sorafenib (ZINC ID: 01493878).}
+%\label{56d43554b48a7698034597b6}
+%\end{figure}
+
+In the near future, we will provide another web server for structure-based virtual screening of ADW.
+
+\section*{Acknowledgements}
+
+We thank Professor John J. Irwin for granting us permission to use ZINC with three conditions stated at http://istar.cse.cuhk.edu.hk/usr.
+
+\section*{Funding}
+
+This study was supported by the Direct Grant from the Chinese University of Hong Kong and the GRF Grant from the Research Grants Council of Hong Kong (Project References 414413, 4055008 and 4055046).
+
+\bibliographystyle{natbib}
+\bibliography{../refworks}
+
+\end{document}
