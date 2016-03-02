@@ -10,7 +10,7 @@
 \subtitle{Databases and ontologies}
 
 \title[Collection of approved drugs worldwide]{ADW: a unified and curated colleciton of clinically approved drugs worldwide for repurposing and virtual screening}
-\author[Hongjian Li \textit{et~al}.]{Hongjian Li\,$^{\text{\sfb 1,2}*}$, Yee Leung\,$^{\text{\sfb 1,2}}$, Kwong-Sak Leung\,$^{\text{\sfb 2,1}}$ and Man-Hon Wong\,$^{\text{\sfb 2,1}}$}
+\author[Hongjian Li \textit{et~al}.]{Hongjian Li\,$^{\text{\sfb 1}*}$, Yee Leung\,$^{\text{\sfb 1}}$, Kwong-Sak Leung\,$^{\text{\sfb 2}}$ and Man-Hon Wong\,$^{\text{\sfb 2}}$}
 \address{
 $^{\text{\sf 1}}$Institute of Future Cities, Chinese University of Hong Kong, Sha Tin, Hong Kong.\\
 $^{\text{\sf 2}}$Department of Computer Science and Engineering, Chinese University of Hong Kong, Sha Tin, Hong Kong.
@@ -23,7 +23,7 @@ $^{\text{\sf 2}}$Department of Computer Science and Engineering, Chinese Univers
 \editor{Associate Editor: XXXXXXX}
 
 \abstract{\textbf{Motivation:} Identifying novel therapeutic medications for approved drugs, also known as repurposing or repositioning, represents an economically feasible strategy compared to developing new drugs. Although there have been compiled lists of approved drug for virtual screening purposes, they omit the drugs approved in countries other than the US, therefore the chance of discovering novelty is intrinsically limited.\\
-\textbf{Results:} We collected approved drugs worldwide (ADW) from multiple catalogs of the ZINC database. After careful curation and deduplication, we extracted 3,167 well characterized drugs with molecular structures, chemical properties, vendors and annotations. We also generated diverse 3D conformers for structural alignment or shape recognition. By conducting structure-based virtual screening of ADW followed by \textit{in vitro} and \textit{in vivo} validations, we have recently repurposed five marketed drugs as anticancer agents. To facilitate the use of ADW, we have also provided a web server for ligand-based virtual screening of ADW.\\
+\textbf{Results:} We collected approved drugs worldwide (ADW) from multiple catalogs of the ZINC database. After careful curation and deduplication, we extracted 3,167 well characterized drugs with molecular structures, chemical properties, vendors and annotations. We also generated diverse 3D conformers for structural alignment or shape recognition. By conducting structure-based virtual screening of ADW followed by \textit{in vitro} and \textit{in vivo} validations, we have successfully repurposed as anticancer agents five marketed drugs, three of which are not found in previous collections of drugs approved by US FDA only, thus demonstrating the value and utility of ADW. To facilitate its use, we have also provided a web server for ligand-based virtual screening of ADW.\\
 \textbf{Availability:} ADW is freely available at http://istar.cse.cuhk.edu.hk/adw. Ligand-based virtual screening of ADW is freely available at http://istar.cse.cuhk.edu.hk/usr.\\
 \textbf{Contact:} \href{JackyLeeHongJian@Gmail.com}{JackyLeeHongJian@Gmail.com}\\
 \textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics} online.}
@@ -53,7 +53,7 @@ To permit structural superimposition and shape recognition, 23,016 low-energy an
 
 %conformer statistics, on average 7 conformers per molecule.
 
-For more details on the construction of ADW, please refer to http://istar.cse.cuhk.edu.hk/adw.
+For more details on the construction and statistics of ADW, please refer to http://istar.cse.cuhk.edu.hk/adw.
 
 \end{methods}
 
@@ -61,7 +61,7 @@ For more details on the construction of ADW, please refer to http://istar.cse.cu
 
 ADW was designed for the main objective of \textit{in silico} drug repositioning through various virtual screening methods. By performing ensemble docking of ADW followed by \textit{in vitro} cytotoxicity assays on cancer cell lines and \textit{in vivo} experiments on nude mice, we have recently repositioned two marketed drugs, adapalene \citep{1681} and fluspirilene \citep{1667}, as anticancer agents. Moreover, from ADW we have identified three other more potent compounds, which are not found in e-Drug3D \citep{1125} or DrugBank \citep{1594}. Once these repurposed compounds are put to and pass clinical trial phases II and III, they will become immediately applicable clinical therapies for the treatment of liver cancer. This prospective application example has vigorously demonstrated that much more novelty can be explored from ADW than from previously compiled drug databases, which are limited to FDA approved drugs only. For confidential reasons, we cannot disclose the name of these three compounds because we have recently submitted them for patent applications.
 
-To promote the use of ADW, we have also implemented a web server for ligand-based virtual screening of ADW, freely available at http://istar.cse.cuhk.edu.hk/usr. It is named USR@istar and powered by ultrafast shape recognition techniques \citep{1379,1331}. The input is a query molecule, be it an bioactive or a patented compound, and the output is 1000 hit molecules from ADW that are geometrically and pharmacophorically similar to the query molecule. The similarity between the query and the hit molecules can be easily inspected with the help of the WebGL visualizer iview \citep{1366}. Such screened hits, if desired, can be purchased for wet validations and subsequently put to phase II clinical trials, skipping preclinical tests as well as phase I trials.
+To promote the use of ADW, we have also implemented a web server for ligand-based virtual screening of ADW, freely available at http://istar.cse.cuhk.edu.hk/usr. It is named USR@istar and powered by ultrafast shape recognition techniques \citep{1379,1331}. The input is a query molecule, be it an bioactive or a patented compound. The output is 1000 hit molecules from ADW that are geometrically and pharmacophorically similar to the query molecule. The similarity between the query and the hit molecules can be easily inspected with the integration of the WebGL visualizer iview \citep{1366}. Such screened hits, if desired, can be purchased for wet validations and subsequently taken to phase II clinical trials, skipping preclinical tests as well as phase I trials.
 
 %Figure~1\vphantom{\ref{56d43554b48a7698034597b6}} shows that
 
