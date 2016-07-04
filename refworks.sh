@@ -20,12 +20,12 @@ do
 			regexp="${bibfield[@]}[[:space:]]*=[[:space:]]*"
 			if [[ $bibfield == "author" ]]
 			then
-				printf "${prefix}$(grep -i "${regexp}" $f | cut -d{ -f2 | cut -d} -f1 | sed 's/ AND / and /g')${suffix}"
+				printf "${prefix}$(grep -i "${regexp}" $f | cut -d{ -f2- | cut -d} -f1 | sed 's/ AND / and /g')${suffix}"
 			elif [[ $bibfield == "title" ]]
 			then
-				printf "${prefix}{$(grep -i "${regexp}" $f | cut -d{ -f2 | cut -d} -f1)}${suffix}"
+				printf "${prefix}{$(grep -i "${regexp}" $f | cut -d{ -f2- | cut -d} -f1)}${suffix}"
 			else
-				printf "${prefix}$(grep -i "${regexp}" $f | cut -d{ -f2 | cut -d} -f1)${suffix}"
+				printf "${prefix}$(grep -i "${regexp}" $f | cut -d{ -f2- | cut -d} -f1)${suffix}"
 			fi
 		done
 	;;
@@ -44,15 +44,15 @@ do
 			regexp="${risfield[@]}[[:space:]]*-[[:space:]]*"
 			if [[ $bibfield == "title" ]]
 			then
-				printf "${prefix}{$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//')}${suffix}"
+				printf "${prefix}{$(grep "${regexp}" $f | cut -d- -f2- | sed 's/[[:space:]]*//')}${suffix}"
 			elif [[ $bibfield == "author" ]]
 			then
-				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//' | head -c -1 | tr '\n' '=' | sed 's/=/ and /g')${suffix}"
+				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2- | sed 's/[[:space:]]*//' | head -c -1 | tr '\n' '=' | sed 's/=/ and /g')${suffix}"
 			elif [[ $bibfield == "pages" ]]
 			then
-				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//' | awk '{if (length($0)) print $0}' | head -c -1 | tr '\n' '-')${suffix}"
+				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2- | sed 's/[[:space:]]*//' | awk '{if (length($0)) print $0}' | head -c -1 | tr '\n' '-')${suffix}"
 			else
-				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2 | sed 's/[[:space:]]*//')${suffix}"
+				printf "${prefix}$(grep "${regexp}" $f | cut -d- -f2- | sed 's/[[:space:]]*//')${suffix}"
 			fi
 		done
 	;;
