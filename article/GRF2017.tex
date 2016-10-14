@@ -51,7 +51,7 @@ This proposal is designed to significantly increase drug discovery success rate 
 %  \item To rewrite, modulize, accelerate and standardize iview by exploiting the new features of JavaScript's latest specification codenamed ECMAScript 6, for instance, asynchronous programming.
   \item To create a new web server to seamlessly consolidate the above-mentioned data sources, docking methods, profiling algorithms and visualization features in order to streamline automatic ensemble docking of various types of compounds on a personalized basis.\label{objective:edock}
   \item To understand and elaborate molecular binding mechanism and analyze binding patterns at a fine-grained atomic level, and to suggest directions to strengthen or weaken intermolecular interactions so as to maximize selectivity and minimize side effect.\label{objective:iview}
-  \item To utilize edock in identifying novel inhibitors of selected oncoproteins of patient-specific subtypes to achieve personalized oncology.\label{objective:edockapp}
+  \item To utilize the new web server in identifying novel inhibitors of selected oncoproteins of patient-specific subtypes to achieve personalized oncology.\label{objective:edockapp}
   \item To evaluate the efficacy and cytotoxicity of candidate anticancer compounds in vitro and in vivo, and file patent applications for those showing significant inhibitory activities.\label{objective:wetval}
 \end{enumerate}
 
@@ -71,7 +71,7 @@ The AutoDock suite \citep{1730} is unquestionably the most cited free software f
 
 Although docking has managed to produce reasonably good binding poses with a success rate of more than 50\% \citep{1362}, it has been reviewed \citep{1695} that the traditionally low accuracy of the scoring function is a critical limitating factor of precisely estimating the affinity upon binding. To address this limitation, numerous scoring functions have been proposed. Linear scoring functions (e.g. Cyscore \citep{1372} and WScore \citep{1736}) are defined by the assumption of a fixed functional form to relate the predicted binding affinity to the numerical features that characterize the protein-ligand complex. They often employ standard multivariate linear regression (MLR) on experimental data to calibrate the coefficients in a weighted sum of physically meaningful terms as an estimation of binding affinity. Recent years have seen a fast growing number of new developments of machine-learning scoring functions, with RF-Score \citep{564} being the first that introduced a large improvement over classical approaches. RF-Score employed random forest and its second version RF-Score-v2 \citep{1370} increased predictive performance by substituting more precise distance-dependent features. CScore \citep{1194}, B2Bscore \citep{1410} and SFCscoreRF \citep{1347} are other examples which are also based on random forest. Apart from random forest, other machine-learning algorithms have been applied too. SVR-KB and SVR-EP \citep{963}, ID-Score \citep{1305} and MD-SVR \citep{1452} are representative scoring functions based on support vector regression, whereas NNScore 2.0 \citep{977} is based on neural networks.
 
-As a downstream procedure of docking, visualization plays an important role in elucidating intermolecular interactions at an atomic level and aiding candidate compound selection. Thanks to the popularity of web servers and services, a number of online molecular visualizers have arisen in the past few years. Compared with offline counterparts, web-based visualizers have the apparent advantage of allowing users to conveniently visualize and inspect 3D structures directly in a modern browser, saving the trivial effort of downloading and installing any prerequisite. JSmol \citep{1314} is a JavaScript rewrite of the tradional and defacto visualizer Jmol (http://www.jmol.org). GLmol (http://webglmol.sourceforge.jp), 3Dmol.js \citep{1652} and NGL Viewer \citep{1666} are prevalent WebGL molecular viewers exploiting hardware rendering.
+As a downstream procedure of docking, visualization plays a key role in elucidating intermolecular interactions at an atomic level and aiding candidate compound selection. Thanks to the popularity of web servers and services, a number of online molecular visualizers have arisen in the past few years. Compared with offline counterparts, web-based visualizers have the apparent advantage of allowing users to conveniently visualize and inspect 3D structures directly in a modern browser, saving the trivial effort of downloading and installing any prerequisite. JSmol \citep{1314} is a JavaScript rewrite of the tradional and defacto visualizer Jmol (http://www.jmol.org). GLmol (http://webglmol.sourceforge.jp), 3Dmol.js \citep{1652} and NGL Viewer \citep{1666} are prevalent WebGL molecular viewers exploiting hardware rendering.
 
 Described above are solitary pieces of standalone tools which were designed to solve a specific problem of CADD. There are some attempts on the feasibility of full automation of protein-ligand docking, analysis and visualization. DOCK Blaster \citep{557} utilizes DOCK \citep{1222} as the docking engine and ZINC \citep{1178} as the compound database. iScreen \citep{899} utilizes PLANTS \citep{607,779} as the docking engine and TCM@Taiwan \citep{528} as the compound database.
 
@@ -81,11 +81,11 @@ In the past six years, we have been constructing a next-generation CADD toolset,
 
 In 2012 we developed a protein-ligand docking program called idock \citep{1153}. The goal was to further improve the computational performance so as to screen larger databases of compounds within a reasonable time. To this end, we substantially revised the numerical approximation algorithm of atomic free energy calculation from linear interpolation to table loookup, and introduced a heuristic of disabling inactive torsions to reduce the dimension of variables in conformational optimization. Unlike Vina where the input protein structure has to be parsed and energy grid maps have to be populated every time it attempts to dock a single ligand, in idock these are just one-off tasks and the results will be cached and reused. Compared with Vina, idock obtained a speedup of 3.3x in terms of CPU time and a speedup of 7.5x in terms of elapsed time on average, making it particularly suitable for performing large-scale DBVS.
 
-In 2013 we implemented a modern software-as-a-service platform called istar \citep{1362}, originally motivated by the desire to realize molecular data preparation, format conversion, DBVS, analysis and visualization in one go, considerably relaxing the requirements on user's knowledge and expertise. Unlike DOCK Blaster or iScreen which neither support selecting compounds to dock with physiochemical properties nor allowing monitoring job progress in real time, our istar supports both features and additionally enables post-docking analysis such as interaction profiling and visualization, permitting users to easily study and investigate the binding mode of candidate compounds. As a byproduct, a huge database of more than 23 million purchasable compounds covering a large space of chemical diversity was provided for screening. This is thus far the largest open source web server ever available for performing DBVS. To date, istar has served 24583 web sessions to 11507 users from 2201 cities in 114 countries worldwide, according to Google Analytics.
+In 2013 we implemented a modern software-as-a-service (SaaS) platform called istar \citep{1362}, originally motivated by the desire to realize molecular data preparation, format conversion, DBVS, analysis and visualization in one go, considerably relaxing the requirements on user's knowledge and expertise. Unlike DOCK Blaster or iScreen which neither support selecting compounds to dock with physiochemical properties nor allowing monitoring job progress in real time, our istar supports both features and additionally enables post-docking analysis such as interaction profiling and visualization, permitting users to easily study and investigate the binding mode of candidate compounds. As a byproduct, a huge database of more than 23 million purchasable compounds covering a large space of chemical diversity was provided for screening. This is thus far the largest open source web server ever available for performing DBVS. To date, istar has served 24583 web sessions to 11507 users from 2201 cities in 114 countries worldwide, according to Google Analytics.
 
 In 2014 we developed an interactive molecular visualizer called iview \citep{1366,1265} embracing the WebGL technology, thus exploiting hardware rendering and implementing easy accessibility and platform independence. The unique feature that distinguishes iview from all other visualizers is its inherent support for docking entity extraction, binding cavity identification and binding pose analysis, tailor-made for virtual screening, both DBVS and LBVS. In terms of DBVS functionalities, iview enables macromolecular surface generation ported from the EDTSurf algorithm \citep{1297} and binding interaction profiling ported from the BINANA algorithm \citep{1413}.
 
-In addition to tool development, we have meanwhile conducted empirical research on the feasibility of using machine-learning algorithms to enhance scoring function precision. First, we investigated under what circumstances machine-learning scoring functions would outperform classical ones, and found that this is the case when there are sufficient numerical features and training samples \citep{1432}. Based on this finding, we improved RF-Score by incorporating six additional features derived from Vina and by expanding the training set to all available structures in the refined set of PDBbind \citep{1633}. This led to the release of RF-Score-v3 \citep{1647}, a new tool for accurately predicting the binding affinity of a crystal pose.
+In addition to tool development, we have meanwhile conducted empirical research on the feasibility of using machine-learning algorithms to enhance scoring function precision. First, we investigated under what circumstances machine-learning scoring functions would outperform classical ones, and found that this is the case when there are sufficient numerical features and training samples \citep{1432}. Based on this finding, we improved RF-Score by incorporating six additional features derived from Vina and by inflating the training set to all available structures in the refined set of PDBbind \citep{1633}. This led to the release of RF-Score-v3 \citep{1647}, a new tool for accurately predicting the binding affinity of a crystal pose.
 
 Next, we studied the impact of docking pose generation error on the accuracy of machine-learning scoring functions \citep{1795,1797,1434}, and proposed a procedure to correct a substantial part of this error which consists of calibrating the scoring functions with re-docked poses, rather than co-crystallised poses. As a result, test set performance after this error-correcting procedure was much closer to that of predicting the binding affinity in the absence of pose generation error. This led to the release of RF-Score-v4 \citep{1795}, a new tool offering accurate estimation of binding affinity of a docked pose.
 
@@ -101,16 +101,34 @@ The following subsections describe our plan to collect and cleanse compound data
 
 \subsection*{Collection and curation of compound data from multiple sources}
 
-Compound data collection is the very first step. There are a lot of external sources of compound data. Manipulating a wide spectrum of data could be challenging, so we set up selection criteria to ensure effectiveness. To achieve project objective \ref{objective:cdata}, we decide to choose databases that are a) free and publicly available, b) popular and reliable, and c) of potential use in diverse scenarios. Therefore, we will focus on the following data sources: DrugBank \citep{1594}, which contains approved, experimental and withdrawn drugs; TCM@Taiwan \citep{528}, which contains traditional Chinese medicines; SCUBIDOO \citep{1682}, which contains computationally created chemical compounds optimized toward high likelihood of synthetic tractability. There are important reasons of choosing these data. As a matter of fact, among the 84 drug products introduced to market in 2013, new indications of existing drugs accounted for 20\%. It is well known that medicinal plants and natural products generally cause fewer side effects than western drugs, which implies a higher success rate and a shorter time to marketing. Easily synthesizable compounds represent novel structures that are largely unexplored, enabling unpatented and diverse compounds to be discovered.
-%Create a table to list these databases and number of compounds. Plot statistics and histogram distributions of physiochemcal properties.
+Compound data collection is the very first step. There are a lot of external sources of compound data. Manipulating a wide spectrum of data could be challenging, so we set up selection criteria to ensure effectiveness. To achieve project objective \ref{objective:cdata}, we decide to choose databases that are a) free and publicly available, b) popular and reliable, and c) of potential use in diverse scenarios. Therefore, we will focus on the following data sources (Table \ref{table:cdata}): DrugBank \citep{1594}, which contains approved, experimental and withdrawn drugs; TCM@Taiwan \citep{528}, which contains traditional Chinese medicines; SCUBIDOO \citep{1682}, which contains computationally created chemical compounds optimized toward high likelihood of synthetic tractability. There are important reasons of choosing these data. As a matter of fact, among the 84 drug products introduced to market in 2013, new indications of existing drugs accounted for 20\%. It is well known that medicinal plants and natural products generally cause fewer side effects than western drugs, which implies a higher success rate and a shorter time to marketing. Easily synthesizable compounds represent novel structures that are largely unexplored, enabling unpatented and diverse compounds to be discovered.
+%Plot statistics and histogram distributions of physiochemcal properties.
 
-After data collection, the next step would be data curation. Here a three-step curation procedure is proposed, consisting of deduplication, conformer generation, and format conversion. First, we will filter out compounds containing missing or incomplete information (e.g. without a SMILES string), and remove duplicate compounds by calculating and comparing their canonical SMILES representation. Next, we will use a recent protocol, namely ETKDG \citep{1697}, to generate low-energy 3D conformers for each compound. The ETKDG protocol is chosen because it includes experimental torsional-angle preferences and additional knowledge of flat aromatic rings and linear triple bonds into the original distance geometry algorithm, which, by combining a post-processing step, was found to offer the best results in accuracy and second best in terms of efficiency comparing to four other popular conformer generators \citep{1127}. Finally we will convert the generated conformers to appropriate file formats to feed to idock for DBVS, aggregate individual records to form a unified dataset, and create an index and an interface for database query. Precalculated physiochemical properties will be retained and organized as key-value pairs. Note that the above steps will not be performed manually, which would be tedious and error-prone. Instead, we will write computer scripts to automatically download and cleanse data. Unlike many other works where multiple data sources are to be integrated maually and the external data are collected only once, our use of computer scripts enables automatic data synchronization whenever the external sources are updated. This ensures our data will always be current.
+\begin{table}
+\caption{External sources of compound data}
+\label{table:cdata}
+\begin{tabular}{l|l|r}
+  \hline
+  Database & Content & \# of compounds\\
+  \hline
+  DrugBank & Approved, experimental, withdrawn drugs & 8,232\\
+  \hline
+  TCM@Taiwan & Traditional Chinese medicines & 37,170\\
+  \hline
+  SCUBIDOO & Computationally created chemical compounds & 999,794\\
+  \hline
+\end{tabular}
+\end{table}
 
-The above-proposed compound data organization scheme is easy to manipulate and extend, making including future data sources as easy as just running the scripts. Depending on different applications, we will later consider supplementing the database with more types of compounds from ZINC15 \citep{1688}, WITHDRAWN \citep{1718}, SWEETLEAD \citep{1511}, TTD \citep{1790}, TCMSP \citep{1375}, SANCDB \citep{1680}, PubChem \citep{1701} and ChEMBL \citep{1424}, further inflating the significance of our work. This project is innovative in that different sources of compound data will be analyzed, which represents a new opportunity given the recent availability of compiled sets of such molecules. The collected databases can be meanwhile used in the context of LBVS \citep{1749}, though it is out of the scope of this proposal.
+After data collection, the next step would be data curation. Here a three-step curation procedure is proposed, consisting of deduplication, conformer generation, and format conversion. First, we will filter out compounds containing missing or incomplete information (e.g. without a SMILES string), and remove duplicate compounds by calculating and comparing their canonical SMILES representation. Next, we will use a recent protocol, namely ETKDG \citep{1697}, to generate low-energy 3D conformers for each compound. The ETKDG protocol is chosen because it includes experimental torsional-angle preferences and additional knowledge of flat aromatic rings and linear triple bonds into the original distance geometry algorithm, which, by combining a post-processing step, was found to offer the best results in accuracy and second best in terms of efficiency comparing to four other popular conformer generators \citep{1127}. Finally we will convert the generated conformers to appropriate file formats to feed to idock for DBVS, aggregate individual records to form a unified dataset, and create an index and an interface for database query. Precalculated physiochemical properties will be retained and organized as key-value pairs. This proposed curation procedure merely requires a compound ID and a SMILES string for each compound, and is thus universally applicable to all data sources. Note that the above steps will not be performed manually, which would be tedious and error-prone. Instead, we will write computer scripts to automatically download and cleanse data. Unlike many other works where multiple data sources are to be integrated maually and the external data are collected only once, our use of computer scripts enables automatic data synchronization whenever the external sources are updated. This ensures our data will always be current.
 
-\subsection*{Calibration of scoring function parameters}
+The above-proposed compound data organization scheme is easy to manipulate and extend, making including future data sources as easy as just running the scripts. Depending on different applications, we will later consider supplementing the database with more types of compounds from ZINC15 \citep{1688}, WITHDRAWN \citep{1718}, SWEETLEAD \citep{1511}, TTD \citep{1790}, TCMSP \citep{1375}, SANCDB \citep{1680}, PubChem \citep{1701} and ChEMBL \citep{1424}, further magnifying the significance of our work. This project is innovative in that different sources of compound data will be analyzed, which represents a new opportunity given the recent availability of compiled sets of such molecules. The collected databases can be meanwhile used in the context of LBVS \citep{1749}, though it is out of the scope of this proposal.
 
-Vinardo \citep{1741} suggested an easy approach to fine tweaking the docking parameters. new version of idock incorporating revisions from Vinardo \citep{1741}.
+\subsection*{Calibration of scoring function to improve docking performance}
+
+It is a widespread observation that scoring functions are either apt at predicting binding conformation (docking capability), or apt at predicting binding affinity (scoring capability) \citep{1411,1695}. Here our interest is to calibrate the scoring function of idock \citep{1153} to improve its docking capability by following the same procedure as how Vinardo \citep{1741} was developed through calibrating the scoring function of Vina \citep{595}. An interesting finding from Vinardo was that the correlation coefficient between experimental and calculated binding affinities of a set of 72 scoring functions with small variations in the number of terms, parameters, weights and atom radii was poorly correlated to the percentage of correctly docked structures with a Pearson correlation coefficient of merely 0.47, whereas the average root mean square error (RMSD) between experimental and predicted binding conformations of the same 72 scoring functions was much better correlated to the percentage of correctly docked structures with an increased Pearson correlation coefficient of 0.78. This means scoring functions that excel in binding affinity prediction are unlikely to excel in binding conformation prediction. Therefore to improve docking capability, a reliable way is to develop scoring functions that minimize the average RMSD rather than maximizing scoring capability. This is the exact reason why we wish to follow the protocol used in the development of Vinardo.
+
+In idock, the conformation-dependent binding energy $e$ is calculated as a weighted sum of five terms over all pairs of atoms $i$ and $j$ that can move relative to one another (equations \eqref{eqn:e} and \eqref{eqn:eij}) excluding 1-4 interactions, i.e. atoms separated by three consecutive covalent bonds. The five terms (equations \eqref{eqn:Gauss1} to \eqref{eqn:HBonding}) are essentially functions of the surface distance $d_{ij}$ of the considered atom pair, which can be calculated from the interatomic distance $r_{ij}$ and the Van der Waals radii $R_{t_i}$ and $R_{t_j}$ (equation \eqref{eqn:dij}). The first three terms account for steric interaction, as the general shape of a typical Lennard-Jones interaction can be approximated with a combination of an attractive Gaussian function and a repulsive parabolic function, given that the Gaussian term is negative and the parabolic function is positive. The last two terms are simple piecewise linear functions assessing hydrophobic effect and hydrogen bonding, which will be included in computation only when the atom types of the considered atom pair satisfy the formation condition of such physiochemical effect.
 
 \begin{equation}
 \label{eqn:e}
@@ -118,23 +136,23 @@ e = \sum_{i < j} e_{ij}
 \end{equation}
 \begin{eqnarray}
 \label{eqn:eij}
-e_{ij} &=& (-0.035579) * Gauss_1(t_i, t_j, r_{ij}) \nonumber \\
-       &+& (-0.005156) * Gauss_2(t_i, t_j, r_{ij}) \nonumber \\
-       &+& (+0.840245) * Repulsion(t_i, t_j, r_{ij}) \nonumber \\
-       &+& (-0.035069) * Hydrophobic(t_i, t_j, r_{ij}) \nonumber \\
-       &+& (-0.587439) * HBonding(t_i, t_j, r_{ij})
+e_{ij} &=& w_1 * Gauss_1(d_{ij}) \nonumber \\
+       &+& w_2 * Gauss_2(d_{ij}) \nonumber \\
+       &+& w_3 * Repulsion(d_{ij}) \nonumber \\
+       &+& w_4 * Hydrophobic(d_{ij}) \nonumber \\
+       &+& w_5 * HBonding(d_{ij})
 \end{eqnarray}
 \begin{equation}
 \label{eqn:Gauss1}
-Gauss_1(t_i, t_j, r_{ij}) = e^{-(d_{ij} / 0.5)^2}
+Gauss_1(d_{ij}) = e^{-((d_{ij} - \sigma_1) / s_1)^2}
 \end{equation}
 \begin{equation}
 \label{eqn:Gauss2}
-Gauss_2(t_i, t_j, r_{ij}) = e^{-((d_{ij} - 3) / 2)^2}
+Gauss_2(d_{ij}) = e^{-((d_{ij} - \sigma_2) / s_2)^2}
 \end{equation}
 \begin{equation}
 \label{eqn:Repulsion}
-Repulsion(t_i, t_j, r_{ij}) =
+Repulsion(d_{ij}) =
 \begin{cases}
 d_{ij}^2 & \text{if } d_{ij} < 0\\
 0 &\text{if } d_{ij} \geq 0
@@ -142,19 +160,19 @@ d_{ij}^2 & \text{if } d_{ij} < 0\\
 \end{equation}
 \begin{equation}
 \label{eqn:Hydrophobic}
-Hydrophobic(t_i, t_j, r_{ij}) =
+Hydrophobic(d_{ij}) =
 \begin{cases}
-1 & \text{if } d_{ij} \leq 0.5\\
-1.5 - d_{ij} & \text{if } 0.5 < d_{ij} < 1.5\\
-0 & \text{if } d_{ij} \geq 1.5\\
+1 & \text{if } d_{ij} \leq p_1\\
+p_2 - d_{ij} & \text{if } p_1 < d_{ij} < p_2\\
+0 & \text{if } d_{ij} \geq p_2\\
 \end{cases}
 \end{equation}
 \begin{equation}
 \label{eqn:HBonding}
-HBonding(t_i, t_j, r_{ij}) =\citep{1667,1681}
+HBonding(d_{ij}) =
 \begin{cases}
-1 & \text{if } d_{ij} \leq -0.7\\
-d_{ij} / (-0.7) & \text{if } -0.7 < d_{ij} < 0\\
+1 & \text{if } d_{ij} \leq h_1\\
+d_{ij} / h_1 & \text{if } h_1 < d_{ij} < 0\\
 0 & \text{if } d_{ij} \geq 0\\
 \end{cases}
 \end{equation}
@@ -163,11 +181,31 @@ d_{ij} / (-0.7) & \text{if } -0.7 < d_{ij} < 0\\
 d_{ij} = r_{ij} - (R_{t_i} + R_{t_j})
 \end{equation}
 
-Rebuild RF-Score v4 \citep{1795} from docked poses generated by idock.
+Apparently, weights $w_1$, $w_2$, $w_3$, $w_4$, $w_5$, parameters $\sigma_1$, $\sigma_2$, $s_1$, $s_2$, $p_1$, $p_2$, $h_1$, and Van der Waals radii $R_{t_i}$, $R_{t_j}$ are all tunable. Even the number of terms can be adjusted, i.e. some terms could be excluded. Here we propose a calibration protocol which consists of generating a variety of trial scoring functions with small perturbations in the number of terms, parameters, weights and Van der Waals radii, systematically exploring the vast combinatorial possibilities. Then each trial scoring function will be evaluated in terms of the average RMSD they result in. A combination of scoring, minimization, and redocking on carefully curated training datasets would warrant the development of a simplified scoring function with optimum docking performance.
 
-Deep neural network. Deep Learning in Drug Discovery \citep{1810}
+In terms of computational performance, docking can be remarkably accelerated by utilizing GPU chips, which are programmable parallel processores providing extremely high computational throughput and tremendous memory bandwidth compared to conventional CPU chips. The PI's department has recently installed 52 GPU cards of GeForce GTX TITAN X and 32 GPU cards of Tesla K20m, mounting up to 239,616 cores, delivering a computational throughput of 456 TFLOPS and a memory bandwidth of 24 TB/s in total. These powerful computing facilities lay the hardware foundation for us to develop GPU-accelerated version of idock.
 
-It is worth mentioning that our department has recently installed gpu7 to gpu9 TITAN Z and 32 NVIDIA Tesla K20m GPU chips (79,872 CUDA cores in total). These programmable parallel processores provide extremely high computational throughput and tremendous memory bandwidth compared to conventional CPU chips. So future work: GPU acceleration.
+% Host & Card & \#\\
+% gpu5 & K20m & 8\\
+% gpu6 & K20m & 8\\
+% gpu7 & TITAN X & 8\\
+% gpu8 & TITAN X & 8\\
+% gpu9 & TITAN X & 8\\
+% gpu10 & TITAN X & 4\\
+% gpu11 & TITAN X & 4\\
+% gpu12 & TITAN X & 4\\
+% gpu13 & TITAN X & 4\\
+% gpu14 & TITAN X & 4\\
+% gpu15 & TITAN X & 4\\
+% gpu16 & TITAN X & 4\\
+
+%We will optimize the GPU performance by maximizing parallel execution, memory bandwidth, and instruction throughput. Maximizing parallel execution can be achieved by exposing as much data parallelism as possible and mapping the parallelism to the hardware as efficiently as possible. We will develop a novel parallelization optimization algorithm based on Genetic Parallel Programming. In idock, we have parallelized both the pre-calculation of grid maps and the Monte Carlo global optimization using our novel thread pool in order to thoroughly utilize multi-core CPU. We plan to port these two most computationally demanding functions to the GPU, map Monte Carlo tasks directly to CUDA threads, and use NVIDIA's occupancy calculator to carefully choose the execution configuration of each kernel launch so as to maintain a high GPU utilization.
+
+%Besides, we can efficiently utilize the memory bandwidth by (i) minimizing CPU-to-GPU data transfers and (ii) optimizing the access patterns to global memory and shared memory in the GPU. Since CPU-to-GPU and GPU-to-CPU data transfer bandwidths are much lower than that of the internal GPU, we will maximize the amount of data stored in the GPU global memory. In idock, constant data such as structure of receptor, definition of search space, pre-calculation of scoring function, and configurations for the BFGS Quasi-Newton local optimizer will be kept in constant cache, and atomic energy grid maps, due to its huge size, will be kept in global memory, while temporary variables will be kept in per-thread registers.
+
+%To maximize global memory bandwidth, we will carefully design the access patterns, e.g. maximum bandwidth is achieved when the 32 threads of a warp access adjacent 4-byte words in a 128B L1 cache line because a single coalesced transaction would be enough to service that memory access. In our new docking program, we will adopt this aligned and sequential access patterns and organize array of structures (AOS) into structure of arrays (SOA).
+
+Now we turn our attention from improving docking capability to improving scoring capability, which we have intensively studied \citep{1432,1647,1796,1433,1795,1797,1434,1663}. We demonstrated that substituting random forest for linear regression substantially improved binding affinity prediction. We believe this conclusion can be generalized to other advanced machine-learning regression methods, so we will attempt to exploit deep neural networks in the field of CADD \citep{1810}. The recent availability of software libraries for deep learning (such as Google's TensorFlow) grants us the feasibility of further increasing the predictive accuracy of state-of-the-art scoring functions such as RF-Score-v3 \citep{1647} and RF-Score-v4 \citep{1795}. This approach is extensible, which means besides binding affinity, pharmacokinetic properties such as acid dissociation constant pKa and octanol/water partition coefficient logP can be similarly predicted.
 
 %\subsection*{Interaction profiling and visualization}
 
@@ -177,25 +215,26 @@ It is worth mentioning that our department has recently installed gpu7 to gpu9 T
 
 %ES6 features, garbage collection, arrow methods, modules, asynchronous programming
 
-\subsection*{Development of a brand new web server for automatic personalized medicine}
+\subsection*{Creation of a brand new web server to realize personalized medicine}
 
-Purpose is to streamline protein chain extraction, search box auto definition, file format conversion.
+Building upon our initial work on istar \citep{1362} as a general-purpose software-as-a-service (SaaS) platform, we feel confident to create a brand new web server, tentatively named edock, to seamlessly encapsulate the above-described curated compound data and tuned docking engine. A major advantage of edock over existing DBVS web servers will be its inherant support for personalized medicine. Take oncology for example. It is well known that drug resistence is common in cancers, often caused by mutations of oncogenes and oncoproteins. A drug therapy would be ineffective if it cannot precisely target the particular mutant of the intended oncoprotein of the patient on a personalized basis. In view of this problem, edock will be designed to intelligently instruct the user to correctly choose the desired protein structure carrying patient-specific mutations as DBVS target in order to circumvent resistence. As a result, the predicted candidate ligands would have a high chance of being bioactive and sensitive to the particular patient.
 
-In our hands, roughly half of the systems we have used for docking simulations will give useful results using the default rigid model for the receptor \citep{1730}. In other cases, protein motion will cause problems for the prediction of reasonable poses. 
+Another substantial advantage of edock will be its inherant support for ensemble docking, which uses an ensemble of multiple probable conformations of the protein as docking targets (Figure ). It has been repeatedly reported that for protein systems with large motions of loops or domains, prediction of reasonable poses of the ligand would be difficult if a rigid model is assumed for the receptor \citep{1730}. In many cases, ensemble docking results in an improvement over using a single protein structure \citep{1128}. Two successful real-world cases of ensemble docking are the discovery of approved drugs adapalene and fluspirilene as anticancer agents by the PI and the Co-I \citep{1667,1681}.
 
-For systems with larger motions of loops or domains, the relaxed complex method \citep{26} has shown success by sampling a variety of receptor conformations using molecular dynamics and then performing docking simulations on these snapshots.
-
-Hence ensemble docking (Figure , to show multiple conformations). How to select structures? \citep{1704} Inexpensive Method for Selecting Receptor Structures for Virtual Screening. The discovery of adapalene and fluspirilene were our two previous successful cases of ensemble docking \citep{1667,1681}. Predicted protein structures of value for virtual ligand screening \citep{1322,1277}.
+A straightforward question arisen from ensemble docking is how to select appropriate protein structures and how many should be selected. There are multiple answers to this question. In a recent publication it is concluded that using \textit{holo} structures containing small ligands could give poorer performance than using \textit{apo} structures \citep{1704}. Sampling a variety of receptor conformations using molecular dynamics and then performing docking simulations on these snapshots has also shown success \citep{1730}. Even computationally modeled or predicted protein structures are of value for DBVS \citep{1322,1277}. Taken together these advices, here forms our suggested guideline: for popular proteins having a bunch of experimentally solved structures, pick those with large ligands bound, even though they might not be of the highest resolution; for rare proteins having few structures, use the snapshots sampled from molecular dynamics; for rare proteins with no experimental structures at all, use the predictions generated from homology modeling. Hence edock will be applicable in any case, except that a higher success rate can be anticipated in the first case given more available protein structures.
 
 \subsection*{Prospective interdisciplinary applications in anticancer drug discovery}
 
 Practically we will apply our tools and datasets to realizing personalized medicine, with the first attempt on personalized oncology.
 
+PI3K, ALK, Bcr-Abl, MDM2
+Influenza, we will target the tail-loop binding domain of NP, the PB1-binding domain of PA, and the cap-binding domain of PB2. we concentrate on discovering inhibitors of three influenza A proteins: NP, PA and PB2. These viral proteins are structurally related in that NP forms homo-oligomers and multiple copies of NP wrap around genomic RNA, along with a trimeric RNA-dependent RNA polymerase (RdRP) of subunits PA, PB1 and PB2 making up a ribonucleoprotein (RNP) complex.
+
 Based on our previous successful experience in repurposing clinically approved drugs as anticancer agents, we will first collect as many structures of these oncogenic targets as possible from the PDB database \citep{537}. Good targets: CDK2/4/6, FGFR3, EGFR, PI3K, ALK, Bcr-Abl, XDH. Cyclin-dependent kinases (CDK) 2/4/6 have been widely acknowledged and thoroughly documented as key proteins regulating the cell cycle and hallmarks for cancers. Epidermal growth factor receptor (EGFR), fibroblast growth factor receptor (FGFR) 3, phosphoinositide 3-kinase (PI3K), and murine double minute 2 (MDM2) are other important therpeutic targets of cancers. For instances, CDK2/4/6: colorectal, hepatocellular cancers; FGFR3: bladder cancer; PI3K: lung cancer;
 
 Use edock to automate the following steps: analyze the desired binding cavity with our iview \citep{1366}. We will then extract the protein entity, convert file formats, and invoke our idock \citep{1153} to perform ensemble docking, which has the advantage of guaranteeing a consistent binding strength on average over multiple structures of the same oncogenic target with structural variabilities. Next we will rank the compounds, visualize their predicted conformations using iview \citep{1366}, analyze their putative binding interactions. Incidentally, this whole computational pipeline can be automated via advanced scripting as soon as our next-generation CADD framework is developed.
 
-survey their reported usages from literature, and shortlist candidates for wet verifications. Lastly we will conduct cell viability assays, cell apotosis assays, cell cycle assays, western blotting, clinical trials on animals, and finally on humans. We expect this project to be of great impact, as our findings could possibly save human lives in millions.
+survey their reported usages from literature, and shortlist candidates for wet verifications. Lastly we will conduct cell viability assays, cell apotosis assays, cell cycle assays, western blotting, clinical trials on animals, and finally on humans. We expect this project to be of great impact, as our findings could possibly save human lives in millions. Figure 2.
 
 In the long run, beyond just cancers, we will utilize our toolset for computer-aided drug discovery in much wider areas, including but not limited to gout, hyperuricemia, influenza, herpes, HBV and HIV viruses.
 
@@ -203,13 +242,13 @@ In the long run, beyond just cancers, we will utilize our toolset for computer-a
 
 Existing facilities and equipments are sufficient to complete the proposed project.
 
-In the PI’s affiliation, which is CUHK’s department of computer science and engineering, there are high-performance computers.
+In the PI's affiliation, which is CUHK's department of computer science and engineering, there are high-performance computers.
 
-In the Co-I’s affiliation, which is KMU’s biotechnology center, there are wet laboratories and devices, and cancer cell lines and animal models.
+In the Co-I's affiliation, which is KMU's biotechnology center, there are wet laboratories and devices, and cancer cell lines and animal models.
 
 \section*{Release of Completion Report and Data Archive Possibilities and Public Access of Publications Resulting from Research Funded by the RGC}
 
-We will release the brand new webserver named edock to the public upon project completion.
+We will release the brand new web server named edock to the public free of charge upon project completion.
 
 %We will release the following datasets to the public upon project completion:
 %1) Curated collections of ~3000 approved drugs in US, Europe, Canada and Japan, with molecular properties and purchasing information.
@@ -218,13 +257,11 @@ We will release the brand new webserver named edock to the public upon project c
 
 \section*{Education Plan}
 
-A senior postdoctoral fellow will be hired to lead the project and to train two PhD students to conduct theoretical and systematic research in the field of computer-aided drug discovery.
+A senior postdoctoral fellow will be hired to lead the project under the supervision of the PI. Two research assistants will be hired to help conduct empirical and systematic research. Seminars and tutorials will be organized every year. Financial support will be provided for the researchers to attend prestigious conferences overseas.
 
-Every year the PI supervises several groups of postgraduatea and undergraduate students for MSc and final year projects. We will choose some groups and instruct them to use and evaluate our toolset. Then we will show them how to refine existing functionalities and possibly implement new features.
+Every year the PI supervises several groups of postgraduate and undergraduate students for their MSc and final year projects. Some of them will be guided to the field of CADD and educated to use and evaluate our toolset and platform. They will also be instructed to refine existing functionalities and possibly implement new features.
 
-We plan to conduct seminars and tutorials every semester, and provide financial support for our trainees to attend prestigious conferences overseas.
-
-The Co-I will also foster a PhD student to perform interdisciplinary laboratory experiments such as cytotoxicity assays, western blotting, and oral dosage of drugs in mice.
+The Co-I will foster a PhD student to perform interdisciplinary laboratory experiments such as cytotoxicity assays, western blotting, and oral dosage of drugs in mice, so as to validate the utility of the proposed platform.
 
 \newpage
 \linespread{0.5}
